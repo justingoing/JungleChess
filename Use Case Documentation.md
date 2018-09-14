@@ -5,8 +5,7 @@
 | Use case name: | - |
 | Overview: | - |
 | Primary actors: | - |
-| Secondary actors: | - |
+| Properties: | - |
 | Pre-conditions: | - |
-| Main flow: | - |
+| Flow: | - |
 | Post-conditions: | - |
-| Alternative flows: | - |
