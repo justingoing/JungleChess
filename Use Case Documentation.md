@@ -3,12 +3,12 @@
 | Use case id: | R1 |
 | :--- | :--- |
 | Use case name: | Register |
-| Overview: | - |
-| Primary actors: | - |
+| Overview: | The player registers an account with their email, username, and password |
+| Primary actors: | Player |
 | Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Pre-conditions: | Player is prompted to either sign in or register. The user chooses register. |
+| Flow: | **Main Flow:** 1. Player enters their email, username, and password. <br> 2. Player is informed that the email and username are valid. <br> 3. Player is automatically logged in to the newly created account. <br> **Alternate flow:** 1. User is prompted that their email address or username is invalid. <br> 2. User is allowed another attempt. |
+| Post-conditions: | User is automatically logged in to the newly created account |
 
 | Use case id: | R2 |
 | :--- | :--- |
