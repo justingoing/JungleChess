@@ -5,5 +5,6 @@ Group Project #1 for CS414: Object Oriented Design Course at Colorado State Univ
 * Connor Carey - [Connor13C](https://github.com/Connor13C)
 * Julien Pecquet - [jjpk1123](https://github.com/jjpk1123)
 * Justin Going - [jgoing](https://github.com/jgoing)
+* Marcel Fiore - [marcelaf](https://github.com/marcelaf7)
 * Mike Smith - [Mas9311](https://github.com/Mas9311)
 * Zane Womeldorph - [zwomeldorph](https://github.com/zwomeldorph)
