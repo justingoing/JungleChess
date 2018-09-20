@@ -13,12 +13,14 @@
 | Use case id: | R2 |
 | :--- | :--- |
 | Use case name: | Sign In |
-| Overview: | - |
-| Primary actors: | - |
+| Overview: | The player signs into their account |
+| Primary actors: | Player |
+| Secondary actors: | System |
 | Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Pre-conditions: | The player selects Sign In from the My Account page. |
+| Main Flow: | 1. The player enters their username and password and clicks the Sign In button. <br> 2. The systems informs the player that the provided username and passwords are valid and verified in the account database. <br> 3. The session is saved in the log file. <br> 4. The player is redirected to the main screen. |
+| Post-conditions: | The player successfully signs into their pre-existing account. |
+| Alternate flow: | 1. The player enters an invalid username and/or password combination. <br> 2. The player is informed of the invalid login. <br> 3. The player is allowed another sign in attempt. |
 
 | Use case id: | R3 |
 | :--- | :--- |
