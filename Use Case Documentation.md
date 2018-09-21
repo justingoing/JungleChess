@@ -6,7 +6,7 @@
 | Overview: | The user registers an account with their email, username, and password |
 | Actors: | User [primary, initiator] |
 | Pre-conditions: | User is prompted to either sign in or register. The user chooses register. |
-| Flow: | **Main Flow:** 1. User enters their email, username, and password. <br> 2. User is informed that the email and username are valid. <br> 3. User is automatically logged in to the newly created account. <br> **Alternate flow:** 1. User enters their email, username, and password. <br> 2. User is informed that their email address or username is invalid. <br> 3. User is allowed another attempt. |
+| Flow: | **Main Flow:** 1. User enters their email, username, and password. <br> 2. User is informed that the email and username are valid. <br> 3. User is automatically logged in to the newly created account. <br> **Alternate flow:** 2a. User is informed that their email address or username is invalid. <br> 3a. User is allowed another attempt. |
 | Post-conditions: | User is automatically logged in to the newly created account |
 
 | Use case id: | R2 |
