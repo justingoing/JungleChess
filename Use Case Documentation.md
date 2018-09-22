@@ -124,12 +124,11 @@
 | Use case id: | R13 |
 | :--- | :--- |
 | Use case name: | Record Match History |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The results of the match are stored in the database |
+| Actors: | Database [primary], User [initiator] |
+| Pre-conditions: | The match has ended. |
+| Flow: | **Main Flow**: 1. include(End Game) <br> 2. The user that lost is recorded in the database as the losing user. <br> 3. The user that won is recorded as the winning user. <br> **Alternate Flows**: 1a. include(Quit Game) <br> 2a. The user that quit the match is recorded as the losing user. <br> 3a. The user that did not quit is recorded as the winning user. |
+| Post-conditions: | The results are stored in the database |
 
 | Use case id: | R14 |
 | :--- | :--- |
