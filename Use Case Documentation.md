@@ -14,9 +14,8 @@
 | Use case name: | Sign In |
 | Overview: | The user signs into their prexisting account with username and password |
 | Actors: | User [primary, initiator], Database |
-| Properties: | - |
 | Pre-conditions: | User is prompted to either sign in or register. The user chooses sign in. |
-| Flow: | **Main Flow** 1. User enters a username and a password. <br> 2. User attempts to sign in. <br> 3. User is informed of the successful login attempt and the session is saved in the database. <br> 4. The user is redirected to the lobby. <br> **Alternate Flows** 3a. User is informed of the invalid login attempt. <br> 4a. User is allowed another attempt. <br> 3b. User is informed that the given username is not associated to an account. 4a. User is allowed another attempt. |
+| Flow: | **Main Flow** 1. User enters a username and a password. <br> 2. User attempts to sign in. <br> 3. User is informed of the successful login attempt and the session is saved in the database. <br> 4. The user is redirected to the lobby. <br> **Alternate Flows** 3a. User is informed of the invalid login attempt. <br> 4a. User is allowed another attempt. <br> 3b. User is informed that the given username is not associated to an account. <br> 4b. User is allowed another attempt. |
 | Post-conditions: | User signs into their preexisting account |
 
 | Use case id: | R3 |
