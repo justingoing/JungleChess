@@ -127,7 +127,7 @@
 | Overview: | The results of the match are stored in the database |
 | Actors: | Database [primary], User [initiator] |
 | Pre-conditions: | The match has ended. |
-| Flow: | **Main Flow**: 1. The start and end times and dates are recorded to the database. 2. The winner and loser are recorded to the database. <br> **Alternate Flows**: 2a. The user that quit the match is recorded to the database as the loser and the other user is recorded as the winner. <br> 3a. The user that quit is recorded to have withdrawn from the match. |
+| Flow: | **Main Flow**: 1. The start and end times and dates are recorded to the database. <br> 2. The winner and loser are recorded to the database. <br> **Alternate Flows**: 2a. The user that quit the match is recorded to the database as the loser and the other user is recorded as the winner. <br> 3a. The user that quit is recorded to have withdrawn from the match. |
 | Post-conditions: | The times, dates and results are stored in the database |
 
 | Use case id: | R14 |
