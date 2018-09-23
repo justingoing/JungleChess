@@ -151,29 +151,26 @@
 | Use case id: | R16 |
 | :--- | :--- |
 | Use case name: | Save Game State |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The system saves the game state for a potentially long period of time. |
+| Primary actors: | User |
+| Pre-conditions: | User is currently playing a game. |
+| Flow: | **Main Flow**: 1. User or opponent makes move. <br> 2. User leaves game physically, but does not forfeit. <br> 3. User returns. |
+| Post-conditions: | The game is ready to be played where the user left off. |
 
 | Use case id: | R17 |
 | :--- | :--- |
 | Use case name: | Notify User When It Is Their Turn |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The opponent's turn is ended and the user receives a notification of it being their turn. |
+| Primary actors: | User |
+| Pre-conditions: | The user is playing a game and the opponent makes a move on their turn. |
+| Flow: | **Main Flow**: 1. The user receives a notification that it is their turn. |
+| Post-conditions: | It is the user's turn. |
 
 | Use case id: | R18 |
 | :--- | :--- |
 | Use case name: | Enforce Rules |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The user or opponent makes a move and the system resolves the move. |
+| Primary actors: | User |
+| Pre-conditions: | The user is playing a game. |
+| Flow: | **Main Flow**: 1. A player makes a move. <br> 2. The game state is resolved according to the rules. |
+| Post-conditions: | It is the other players turn. |
