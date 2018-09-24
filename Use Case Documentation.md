@@ -31,32 +31,29 @@
 | Use case id: | R4 |
 | :--- | :--- |
 | Use case name: | Join Match |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | User joins the match |
+| Primary actors: | User [primary, initiator] |
+| Pre-conditions: | A user is invited to join a match |
+| Flow: | 1. User accepts invitation to join a match <br> 2. User is loaded into match |
+| Post-conditions: | User is now in a match |
 
 | Use case id: | R5 |
 | :--- | :--- |
 | Use case name: | Invite Player |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | Initiating User invites Primary User to match |
+| Primary actors: | User [primary, initiator] |
+| Pre-conditions: | Initiating User created a game |
+| Flow: | **Main Flow** 1. Initiating User invites Primary User to match <br> 2. Primary User joins Match <br> **Alternate Flow** 2a1. Primary User does not join match 2a2. Initiating user can invite a friend |
+| Post-conditions: | Primary User and Initiating User are in a match |
 
 | Use case id: | R6 |
 | :--- | :--- |
 | Use case name: | Accept Invite |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | Primary User receives Invitation for a match |
+| Primary actors: | User [primary, initiator] |
+| Pre-conditions: | Initiating user has created a game |
+| Flow: | **Main Flow** 1. Primary user receives invite from Initiating User <br> 2. Primary user accepts invite <br> **Alternate flow** 2a1. Primary User rejects invitation |
+| Post-conditions: | Primary User is now in game with Initiating User |
 
 | Use case id: | R7 |
 | :--- | :--- |
