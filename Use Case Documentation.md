@@ -61,12 +61,11 @@
 | Use case id: | R7 |
 | :--- | :--- |
 | Use case name: | Reject Invite |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The user rejects an invitation to play a game with another user |
+| Primary actors: | User[primary] |
+| Pre-conditions: | The user is sent an invitation to play a game by another user. |
+| Flow: | Main flow: 1. The user chooses to reject the invitation and does not join the game. |
+| Post-conditions: | The user is not added to the game. |
 
 | Use case id: | R8 |
 | :--- | :--- |
