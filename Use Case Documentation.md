@@ -68,32 +68,32 @@
 | Use case id: | R8 |
 | :--- | :--- |
 | Use case name: | Start Game |
-| Overview: | - |
-| Primary actors: | - |
+| Overview: | A game is started |
+| Primary actors: | User [primary], User [secondary] |
 | Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Pre-conditions: | A game has been created, Secondary user accepted invite from primary user |
+| Flow: | 1. Either user starts the game |
+| Post-conditions: | A game is in progress |
 
 | Use case id: | R9 |
 | :--- | :--- |
-| Use case name: | Play Game |
-| Overview: | - |
-| Primary actors: | - |
+| Use case name: | Play Match |
+| Overview: | Primary User makes a move |
+| Primary actors: | User [primary, initiator] |
 | Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Pre-conditions: | The game has been created and started |
+| Flow: | 1. Primary user attempts to move a piece <br> 2. The move is verified as valid <br> 3. The piece is moved <br> 4. The Secondary User is notified that it is their turn <br> **Alternate Flow** 2a. The User is notified that the move is invalid <br> 4a. The Primary User's move is verified as a winning move and both players are notified the Primary user has won the game |
+| Post-conditions: | The primary user executed a valid move and the game state has been updated |
 
 | Use case id: | R10 |
 | :--- | :--- |
 | Use case name: | End Game |
-| Overview: | - |
-| Primary actors: | - |
+| Overview: | The game data is saved in the database|
+| Primary actors: | Database |
 | Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Pre-conditions: | A user executed a winning move or quit the game |
+| Flow: | 1. The database is updated with the result of the game 2. The user profiles are updated with the results of the game |
+| Post-conditions: | The database and user profiles have been updated with the correct results of the match |
 
 | Use case id: | R11 |
 | :--- | :--- |
