@@ -73,7 +73,7 @@
 | Overview: | All users are added to a new game and game is marked in progress |
 | Actors: | User [primary, initiator] <br> Database [secondary]|
 | Pre-conditions: | The minimum number of users to start the game are in game lobby |
-| Flow: | **Main Flow:** 1. The users choose to start the game<br> 2. A new game instance is made<br> 3. All users in lobby are added to the game<br> **Alternate Flow:** 1. The users quit the lobby<br> 2. The game lobby is removed from the Database<br> 3. The start game use case is cancelled|
+| Flow: | **Main Flow:** 1. The users choose to start the game<br> 2. A new game instance is made<br> 3. All users in lobby are added to the game<br> **Alternate Flow:** 1a. The users quit the lobby<br> 2a. The game lobby is removed from the Database<br> 3a. The start game use case is cancelled|
 | Post-conditions: | A new game instance is started and all users are added to the game |
 
 | Use case id: | R9 |
@@ -112,7 +112,7 @@
 | Overview: | The user deletes their existing account from the system |
 | Actors: |  User [primary, initiator] |
 | Pre-conditions: | The user is signed in |
-| Flow: | **Main Flow:** 1. The user chooses to delete their account<br> 2. The system asks user to confirm delete account<br> 3. The user confirms account deletion<br> The system deletes the user's account<br> 4. The user is signed out<br> **Alternate Flow:** 3. The user cancels account deletion<br> 4.The unregister use case is cancelled|
+| Flow: | **Main Flow:** 1. The user chooses to delete their account<br> 2. The system asks user to confirm delete account<br> 3. The user confirms account deletion<br> The system deletes the user's account<br> 4. The user is signed out<br> **Alternate Flow:** 3a. The user cancels account deletion<br> 4a.The unregister use case is cancelled|
 | Post-conditions: | The user's account is deleted and they are signed out |
 
 | Use case id: | R13 |
