@@ -89,7 +89,7 @@
 | Overview: | The game data is saved in the database|
 | Primary actors: | Database |
 | Pre-conditions: | A user executed a winning move or quit the game |
-| Flow: | **Main Flow** 1. The database is updated with the result of the game 2. The user profiles are updated with the results of the game |
+| Flow: | **Main Flow** 1. The database is updated with the result of the game <br> 2. The user profiles are updated with the results of the game |
 | Post-conditions: | The database and user profiles have been updated with the correct results of the match |
 
 | Use case id: | R11 |
