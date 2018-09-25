@@ -6,8 +6,8 @@
 | Overview: | The user registers an account with their email, username, and password |
 | Actors: | User [primary, initiator] |
 | Pre-conditions: | User is prompted to either sign in or register. The user chooses register. |
-| Flow: | **Main Flow** <br> 1. User enters their email, username, and password. <br> 2. User is informed that the email and username are valid. <br> 3. User is automatically logged in to the newly created account. <br> **Alternate Flows** <br> 2a. User is informed that their email address or username is invalid. <br> 3a. User is allowed another attempt. |
-| Post-conditions: | User is automatically logged in to the newly created account |
+| Flow: | **Main Flow** <br> 1. User enters their email, username, and password. <br> 2. User is informed that the email and username are valid. <br> 3. User is automatically signed in in to the newly created account. <br> **Alternate Flows** <br> 2a. User is informed that their email address or username is invalid. <br> 3a. User is allowed another attempt. |
+| Post-conditions: | User is automatically signed in in to the newly created account |
 
 | Use case id: | R2 |
 | :--- | :--- |
@@ -15,7 +15,7 @@
 | Overview: | The user signs into their prexisting account with username and password |
 | Actors: | User [primary, initiator], Database |
 | Pre-conditions: | User is prompted to either sign in or register. The user chooses sign in. |
-| Flow: | **Main Flow** <br> 1. User enters a username and a password. <br> 2. User attempts to sign in. <br> 3. User is informed of the successful login attempt and the session is saved in the database. <br> 4. The user is redirected to the lobby. <br> **Alternate Flows** <br> 3a. User is informed of the invalid login attempt. <br> 4a. User is allowed another attempt. <br> 3b. User is informed that the given username is not associated to an account. <br> 4b. User is allowed another attempt. |
+| Flow: | **Main Flow** <br> 1. User enters a username and a password. <br> 2. User attempts to sign in. <br> 3. User is informed of the successful sign in attempt and the session is saved in the database. <br> 4. The user is redirected to the lobby. <br> **Alternate Flows** <br> 3a. User is informed of the invalid sign in attempt. <br> 4a. User is allowed another attempt. <br> 3b. User is informed that the given username is not associated to an account. <br> 4b. User is allowed another attempt. |
 | Post-conditions: | User signs into their preexisting account |
 
 | Use case id: | R3 |
@@ -123,7 +123,7 @@
 | Overview: | The user selects a profile to view and the selected user's data is displayed |
 | Actors: | Database [primary], User [initiator] |
 | Pre-conditions: | User is signed in |
-| Flow: | **Main Flow**: 1. The user selects a user's profile they want to view. <br> 2. Database retrieves the selected user's data. <br> 3. Retrieved data is displayed to the user. |
+| Flow: | **Main Flow**: 1. The user selects a user's profile they want to view. <br> 2. The selected user's data is retrieved from the database. <br> 3. Retrieved data is displayed to the user. |
 | Post-conditions: | The selected user's match history is displayed |
 
 | Use case id: | R15 |
@@ -132,7 +132,7 @@
 | Overview: | The database saves the game state indefinitely. |
 | Primary actors: | User [Primary, Initiator] |
 | Pre-conditions: | User is currently playing a game. |
-| Flow: | **Main Flow**: 1. User or opponent makes move. <br> 2. User logs off or stops playing. <br> 3. State is saved. <br> 4. User returns. |
+| Flow: | **Main Flow**: 1. User or opponent makes move. <br> 2. User signs off or stops playing. <br> 3. State is saved. <br> 4. User returns. |
 | Post-conditions: | The game is ready to be played where the user left off. |
 
 | Use case id: | R16 |
