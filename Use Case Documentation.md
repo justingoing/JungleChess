@@ -131,16 +131,6 @@
 | Flow: | - |
 | Post-conditions: | - |
 
-| Use case id: | R15 |
-| :--- | :--- |
-| Use case name: | Create Game Instance |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
-
 | Use case id: | R16 |
 | :--- | :--- |
 | Use case name: | Save Game State |
