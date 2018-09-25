@@ -6,7 +6,7 @@
 | Overview: | The user registers an account with their email, username, and password |
 | Actors: | User [primary, initiator] |
 | Pre-conditions: | User is prompted to either sign in or register. The user chooses register. |
-| Flow: | **Main Flow:** <br> 1. User enters their email, username, and password. <br> 2. User is informed that the email and username are valid. <br> 3. User is automatically logged in to the newly created account. <br> **Alternate flow:** 2a. User is informed that their email address or username is invalid. <br> 3a. User is allowed another attempt. |
+| Flow: | **Main Flow** <br> 1. User enters their email, username, and password. <br> 2. User is informed that the email and username are valid. <br> 3. User is automatically logged in to the newly created account. <br> **Alternate Flows** <br> 2a. User is informed that their email address or username is invalid. <br> 3a. User is allowed another attempt. |
 | Post-conditions: | User is automatically logged in to the newly created account |
 
 | Use case id: | R2 |
@@ -43,7 +43,7 @@
 | Overview: | Initiating User invites Primary User to match |
 | Primary actors: | User [primary, initiator] |
 | Pre-conditions: | Initiating User created a game |
-| Flow: | **Main Flow** <br> 1. Initiating User invites Primary User to match <br> 2. Primary User joins Match <br> **Alternate Flow** <br> 2a. Primary User does not join match 2a. Initiating user can invite a friend |
+| Flow: | **Main Flow** <br> 1. Initiating User invites Primary User to match <br> 2. Primary User joins Match <br> **Alternate Flows** <br> 2a. Primary User does not join match 2a. Initiating user can invite a friend |
 | Post-conditions: | Primary User and Initiating User are in a match |
 
 | Use case id: | R6 |
@@ -52,7 +52,7 @@
 | Overview: | Primary User receives Invitation for a match |
 | Primary actors: | User [primary, initiator] |
 | Pre-conditions: | Initiating user has created a game |
-| Flow: | **Main Flow** <br> 1. Primary user receives invite from Initiating User <br> 2. Primary user accepts invite <br> **Alternate flow** <br> 2a. Primary User rejects invitation |
+| Flow: | **Main Flow** <br> 1. Primary user receives invite from Initiating User <br> 2. Primary user accepts invite <br> **Alternate Flows** <br> 2a. Primary User rejects invitation |
 | Post-conditions: | Primary User is now in game with Initiating User |
 
 | Use case id: | R7 |
@@ -80,7 +80,7 @@
 | Overview: | Primary User makes a move |
 | Primary actors: | User [primary, initiator] |
 | Pre-conditions: | The game has been created and started |
-| Flow: | **Main Flow** <br> 1. Primary user attempts to move a piece <br> 2. The move is verified as valid <br> 3. The piece is moved <br> 4. The secondary user is notified that it is their turn <br> **Alternate Flow** 2a. The user is notified that the move is invalid <br> 4a. The primary user's move is verified as a winning move and both players are notified the primary user has won the game |
+| Flow: | **Main Flow** <br> 1. Primary user attempts to move a piece <br> 2. The move is verified as valid <br> 3. The piece is moved <br> 4. The secondary user is notified that it is their turn <br> **Alternate Flows** 2a. The user is notified that the move is invalid <br> 4a. The primary user's move is verified as a winning move and both players are notified the primary user has won the game |
 | Post-conditions: | The primary user executed a valid move and the game state has been updated |
 
 | Use case id: | R10 |
