@@ -21,12 +21,11 @@
 | Use case id: | R3 |
 | :--- | :--- |
 | Use case name: | Create Match |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The user adds a new game info into the database |
+| Actors: | User [primary, initiator]<br> Database [secondary]|
+| Pre-conditions: | The user is signed in |
+| Flow: | **Main Flow:** 1. The user chooses to start a new match<br> 2. A new game is added to the Database<br> 3. The user is added to the new game lobby|
+| Post-conditions: | A new game is added to the Database and the user is added to it |
 
 | Use case id: | R4 |
 | :--- | :--- |
@@ -68,11 +67,11 @@
 | Use case id: | R8 |
 | :--- | :--- |
 | Use case name: | Start Game |
-| Overview: | A game is started |
-| Primary actors: | User [primary], User [secondary] |
-| Pre-conditions: | A game has been created, Secondary user accepted invite from primary user |
-| Flow: | **Main Flow** <br> 1. Either user starts the game |
-| Post-conditions: | A game is in progress |
+| Overview: | All users are added to a new game and game is marked in progress |
+| Actors: | User [primary, initiator] <br> Database [secondary]|
+| Pre-conditions: | The minimum number of users to start the game are in game lobby |
+| Flow: | **Main Flow:** 1. The users choose to start the game<br> 2. A new game instance is made<br> 3. All users in lobby are added to the game<br> **Alternate Flow:** 1a. The users quit the lobby<br> 2a. The game lobby is removed from the Database<br> 3a. The start game use case is cancelled|
+| Post-conditions: | A new game instance is started and all users are added to the game |
 
 | Use case id: | R9 |
 | :--- | :--- |
@@ -104,22 +103,20 @@
 | Use case id: | R12 |
 | :--- | :--- |
 | Use case name: | Unregister |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The user deletes their existing account from the system |
+| Actors: |  User [primary, initiator] |
+| Pre-conditions: | The user is signed in |
+| Flow: | **Main Flow:** 1. The user chooses to delete their account<br> 2. The system asks user to confirm delete account<br> 3. The user confirms account deletion<br> The system deletes the user's account<br> 4. The user is signed out<br> **Alternate Flow:** 3a. The user cancels account deletion<br> 4a.The unregister use case is cancelled|
+| Post-conditions: | The user's account is deleted and they are signed out |
 
 | Use case id: | R13 |
 | :--- | :--- |
 | Use case name: | Record Match History |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The results of the match are stored in the database |
+| Actors: | Database [primary], User [initiator] |
+| Pre-conditions: | The match has ended. |
+| Flow: | **Main Flow**: 1. The start and end times and dates are recorded to the database. <br> 2. The winner and loser are recorded to the database. <br> **Alternate Flows**: 2a. The user that quit the match is recorded to the database as the loser and the other user is recorded as the winner. <br> 3a. The user that quit is recorded to have withdrawn from the match. |
+| Post-conditions: | The times, dates and results are stored in the database |
 
 | Use case id: | R14 |
 | :--- | :--- |
