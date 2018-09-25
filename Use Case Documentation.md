@@ -65,7 +65,7 @@
 
 | Use case id: | R8 |
 | :--- | :--- |
-| Use case name: | Start Game |
+| Use case name: | Start Match |
 | Overview: | All users are added to a new game and game is marked in progress |
 | Actors: | User [primary, initiator] <br> Database [secondary]|
 | Pre-conditions: | The minimum number of users to start the game are in game lobby |
@@ -83,7 +83,7 @@
 
 | Use case id: | R10 |
 | :--- | :--- |
-| Use case name: | End Game |
+| Use case name: | Finish Match |
 | Overview: | The game data is saved in the database|
 | Primary actors: | Database, User[secondary, initiator] |
 | Pre-conditions: | A user executed a winning move or quit the game |
@@ -128,7 +128,7 @@
 
 | Use case id: | R15 |
 | :--- | :--- |
-| Use case name: | Save Game State |
+| Use case name: | Save Match State |
 | Overview: | The database saves the game state indefinitely. |
 | Primary actors: | User [Primary, Initiator] |
 | Pre-conditions: | User is currently playing a game. |
