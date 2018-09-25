@@ -1,0 +1,22 @@
+Julien -
+R16 - Save Game St)te
+R17 - Notify User When Itʼs Their Turn
+R18 - Enforce Rules
+
+Justin -
+R4 - Join M)tch
+R5 - Invite Player
+R6 - Accept invite
+
+Mike -
+R13
+R14
+
+Zane -
+R9
+R10
+R11
+
+Marcel -
+R7
+R15

@@ -57,12 +57,11 @@
 | Use case id: | R7 |
 | :--- | :--- |
 | Use case name: | Reject Invite |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The user rejects an invitation to play a game with another user |
+| Primary actors: | User[primary] |
+| Pre-conditions: | The user is sent an invitation to play a game by another user. |
+| Flow: | Main flow: 1. The user chooses to reject the invitation and does not join the game. |
+| Post-conditions: | The user is not added to the game. |
 
 | Use case id: | R8 |
 | :--- | :--- |
@@ -130,40 +129,27 @@
 
 | Use case id: | R15 |
 | :--- | :--- |
-| Use case name: | Create Game Instance |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
-
-| Use case id: | R15 |
-| :--- | :--- |
 | Use case name: | Save Game State |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The database saves the game state indefinitely. |
+| Primary actors: | User [Primary, Initiator] |
+| Pre-conditions: | User is currently playing a game. |
+| Flow: | **Main Flow**: 1. User or opponent makes move. <br> 2. User logs off or stops playing. <br> 3. State is saved. <br> 4. User returns. |
+| Post-conditions: | The game is ready to be played where the user left off. |
 
 | Use case id: | R16 |
 | :--- | :--- |
 | Use case name: | Notify User When It Is Their Turn |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The opponent's turn ends and the user receives a notification that it is their turn. |
+| Primary actors: | User [Primary, Initiator] |
+| Pre-conditions: | The user is playing a game and the opponent makes a move on their turn. |
+| Flow: | **Main Flow**: 1. The user receives a notification that it is their turn. |
+| Post-conditions: | It is the user's turn. |
 
 | Use case id: | R17 |
 | :--- | :--- |
 | Use case name: | Enforce Rules |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Overview: | The user or opponent make a valid move and the state of the game changes. |
+| Primary actors: | User [Primary, Initiator] |
+| Pre-conditions: | The user is playing a game. |
+| Flow: | **Main Flow**: 1. User or opponent makes a move. <br> 2. The state is changed according to the game rules. |
+| Post-conditions: | It is the other players turn. |
