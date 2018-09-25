@@ -119,13 +119,12 @@
 
 | Use case id: | R14 |
 | :--- | :--- |
-| Use case name: | Store User Profiles |
-| Overview: | - |
-| Primary actors: | - |
-| Properties: | - |
-| Pre-conditions: | - |
-| Flow: | - |
-| Post-conditions: | - |
+| Use case name: | View User Profile |
+| Overview: | The user selects a profile to view and the selected user's data is displayed |
+| Actors: | Database [primary], User [initiator] |
+| Pre-conditions: | User is signed in |
+| Flow: | **Main Flow**: 1. The user selects a user's profile they want to view. <br> 2. Database retrieves the selected user's data. <br> 3. Retrieved data is displayed to the user. |
+| Post-conditions: | The selected user's match history is displayed |
 
 | Use case id: | R15 |
 | :--- | :--- |
