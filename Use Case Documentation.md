@@ -138,7 +138,7 @@
 | Flow: | - |
 | Post-conditions: | - |
 
-| Use case id: | R16 |
+| Use case id: | R15 |
 | :--- | :--- |
 | Use case name: | Save Game State |
 | Overview: | - |
@@ -148,7 +148,7 @@
 | Flow: | - |
 | Post-conditions: | - |
 
-| Use case id: | R17 |
+| Use case id: | R16 |
 | :--- | :--- |
 | Use case name: | Notify User When It Is Their Turn |
 | Overview: | - |
@@ -158,7 +158,7 @@
 | Flow: | - |
 | Post-conditions: | - |
 
-| Use case id: | R18 |
+| Use case id: | R17 |
 | :--- | :--- |
 | Use case name: | Enforce Rules |
 | Overview: | - |
