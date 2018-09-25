@@ -80,7 +80,7 @@
 | Overview: | Primary User makes a move |
 | Primary actors: | User [primary, initiator] |
 | Pre-conditions: | The game has been created and started |
-| Flow: | **Main Flow** <br> 1. Primary user attempts to move a piece <br> 2. The move is verified as valid <br> 3. The piece is moved <br> 4. The secondary user is notified that it is their turn <br> **Alternate Flows** 2a. The user is notified that the move is invalid <br> 4a. The primary user's move is verified as a winning move and both players are notified the primary user has won the game |
+| Flow: | **Main Flow** <br> 1. Primary user attempts to move a piece <br> 2. The move is verified as valid <br> 3. The piece is moved <br> 4. The secondary user is notified that it is their turn <br> **Alternate Flows** <br> 2a. The user is notified that the move is invalid <br> 4a. The primary user's move is verified as a winning move and both players are notified the primary user has won the game |
 | Post-conditions: | The primary user executed a valid move and the game state has been updated |
 
 | Use case id: | R10 |
