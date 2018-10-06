@@ -36,7 +36,7 @@
 | Overview: | The user invites a user to play their match |
 | Primary actors: | User [primary, initiator], Database |
 | Pre-conditions: | The invitation sender created a match |
-| Main Flow: | 1. User selects a user to send an invitation to and attempts to send the invitation. <br> 2. The receiver is notified of the invitation. <br> 3. Database records invitation to all user's accounts. <br> Extension Point: Send Invite. |
+| Main Flow: | 1. User selects a user to send an invitation to, and attempts to send the invitation. <br> 2. The receiver is notified of the invitation. <br> 3. Database records invitation to all user's accounts. <br> Extension Point: Send Invite. |
 | Post-conditions: | Every valid invitation notifies the receiver |
 | Alternate Flows: | **2a Invalid: self invitation** <br> 2a1. Database informs user that they cannot send an invitation to themself. Return to 1. <br> **3b Valid: duplicate invitation** <br> 3b1. Database does not re-record an additional invitation to any user's account. |
 
@@ -76,8 +76,8 @@
 | Overview: | The match starts |
 | Actors: | User [primary, initiator], Database |
 | Pre-conditions: | The minimum number of users to start the match have been added to the match |
-| Main Flow: | Include(Save Match State) <br> Include(Notify User When It Is Their Turn) |
-| Post-conditions: | User can make the first move |
+| Main Flow: | 1. Database updates the match to reflect that it has started. <br> Include(Save Match State) <br> Include(Notify User When It Is Their Turn) |
+| Post-conditions: | User whose turn it is is able to make the first move |
 | Alternate Flow: | - |
 
 | Use case id: | R09 |
@@ -101,7 +101,7 @@
 | Use case id: | R11 |
 | :--- | :--- |
 | Use case name: | Notify User When It Is Their Turn |
-| Overview: | The opponent's turn ends and the user receives a notification that it is their turn. |
+| Overview: | The user receives a notification that it is their turn. |
 | Primary actors: | User [Primary, Initiator] |
 | Pre-conditions: | The user is playing a game and the opponent makes a move on their turn. |
 | Flow: | **Main Flow**: 1. The user receives a notification that it is their turn. |
@@ -146,12 +146,12 @@
 | Use case id: | R16 |
 | :--- | :--- |
 | Use case name: | View User Account |
-| Overview: | The user selects a . user's account to view and the selected user's data is displayed |
+| Overview: | The user selects a user's account to view and the selected user's data is displayed |
 | Actors: | Database [primary], User [initiator] |
 | Pre-conditions: | User is signed in |
-| Main Flow: | 1. User searches for a user and attempts to view it. <br> 2. Database retreives the selected user's data. <br> 3. The selected user's data is displayed. |
+| Main Flow: | 1. User searches by username and attempts to view it. <br> 2. Database retreives the selected user's account. <br> 3. The selected user's account is displayed. |
 | Post-conditions: | The selected user's account is displayed |
-| Alternate Flows: | **2a User not in database** 2a1. Database informs the user that the selected user's account does not exist. |
+| Alternate Flows: | **2a User not in database** 2a1. Database informs the user that the username is not associated to an account. |
 
 | Use case id: | R17 |
 | :--- | :--- |
