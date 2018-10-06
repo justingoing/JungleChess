@@ -15,7 +15,7 @@
 | Overview: | The user signs into their prexisting account with username and password |
 | Actors: | User [primary, initiator], Database |
 | Pre-conditions: | User is prompted to either sign in or register. The user chooses sign in. |
-| Flow: | **Main Flow** <br> 1. User enters a username and a password. <br> 2. User attempts to sign in. <br> 3. User is informed of the successful sign in attempt and the session is saved in the database. <br> 4. The user is redirected to the lobby. <br> **Alternate Flows** <br> 3a. User is informed of the invalid sign in attempt. <br> 4a. User is allowed another attempt. <br> 3b. User is informed that the given username is not associated to an account. <br> 4b. User is allowed another attempt. |
+| Flow: | **Main Flow**: <br> 1. User enters a username and a password. <br> 2. User attempts to sign in. <br> 3. Database informs the user that the username and password combination is valid and the session is saved in the database. <br> 4. The user is redirected to the lobby. <br> **Alternate Flows**: <br> 3a. Invalid sign in <br> 3a1. Database informs the user that the username and password combination is invalid. <br><br> 3a2. User is allowed another attempt. Return to 1. <br> 3b. Inexistent username <br> 3b1. Database informs user that the username provided is not associated to an account. <br> 3b2. User is allowed another attempt. Return to 1. |
 | Post-conditions: | User signs into their preexisting account |
 
 | Use case id: | R3 |
@@ -113,8 +113,8 @@
 | Use case name: | Record Match History |
 | Overview: | The results of the match are stored in the database |
 | Actors: | Database [primary], User [initiator] |
-| Pre-conditions: | The match has ended. |
-| Flow: | **Main Flow**: 1. The start and end times and dates are recorded to the database. <br> 2. The winner and loser are recorded to the database. <br> **Alternate Flows**: 2a. The user that quit the match is recorded to the database as the loser and the other user is recorded as the winner. <br> 3a. The user that quit is recorded to have withdrawn from the match. |
+| Pre-conditions: | The match has ended |
+| Flow: | **Main Flow**: <br> 1. The start and end times and dates are recorded to the database. <br> 2. The winner and loser are recorded to the database. <br> **Alternate Flows**: <br> 2a A user quits <br> 2a1. The user that quit the match is recorded to the database as the loser and the other user is recorded as the winner. <br> 2a2. The user that quit is recorded to have withdrawn from the match. |
 | Post-conditions: | The times, dates and results are stored in the database |
 
 | Use case id: | R14 |
