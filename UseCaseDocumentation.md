@@ -1,16 +1,16 @@
 # Use Case Documentation
 
-| Use case id: | R1 |
+| Use case id: | R01 |
 | :--- | :--- |
 | Use case name: | Register |
 | Overview: | The user registers an account with their email, username, and password |
 | Actors: | User [primary, initiator], Database |
 | Pre-conditions: | User is prompted to either sign in or register. The user chooses register. |
-| Main Flow: | 1. User enters their email, a username, and a password. <br> 2. User attempts to register. <br> 3. Database informs the user that the email, username and password provided are all valid. <br> 4. Database records the new account. <br> 5. User is automatically signed into the new account. |
+| Main Flow: | 1. User enters an email, a username, and a password. <br> 2. User attempts to register. <br> 3. Database informs the user that the email, username and password provided are all valid. <br> 4. Database records the new account. <br> 5. User is automatically signed into the new account. |
 | Post-conditions: | User is signed into the new account |
 | Alternate Flows: | **3a Invalid register attempt** <br> 3a1. Database informs the user that the email, username or password provided are invalid. <br> 3a2. User is allowed another attempt. Return to 1. |
 
-| Use case id: | R2 |
+| Use case id: | R02 |
 | :--- | :--- |
 | Use case name: | Sign In |
 | Overview: | The user signs into their prexisting account with username and password |
@@ -20,34 +20,35 @@
 | Post-conditions: | User signs into their preexisting account |
 | Alternate Flows: | **3a Invalid sign in attempt** <br> 3a1. Database informs the user that the username and password combination is invalid. <br> 3a2. User is allowed another attempt. Return to 1. <br> **3b Inexistent username** <br> 3b1. Database informs the user that the username provided is not associated to an account. <br> 3b2. User is allowed another attempt. Return to 1. |
 
-| Use case id: | R3 |
+| Use case id: | R03 |
 | :--- | :--- |
 | Use case name: | Create Match |
-| Overview: | The user adds a new game info into the database |
-| Actors: | User [primary, initiator]<br> Database [secondary]|
-| Pre-conditions: | The user is signed in |
-| Flow: | **Main Flow:** 1. The user chooses to start a new match<br> 2. A new game is added to the Database<br> 3. The user is added to the new game lobby|
-| Post-conditions: | A new game is added to the Database and the user is added to it |
+| Overview: | The database creates a new match instance |
+| Actors: | User [primary, initiator], Database |
+| Pre-conditions: | User is signed in |
+| Main Flow: | 1. User chooses to start a new match. <br> 2. Database creates a new instance of match. <br> 3. Database adds the user to the match. |
+| Post-conditions: | Database creates a new match and the user is added to it |
+| Alternate Flows: | - |
 
-| Use case id: | R4 |
+| Use case id: | R04 |
 | :--- | :--- |
 | Use case name: | Join Match |
-| Overview: | User joins the match |
+| Overview: | Invited user joins the match |
 | Primary actors: | User [primary, initiator] |
-| Pre-conditions: | A user is invited to join a match |
-| Flow: |**Main Flow** <br> 1. User accepts invitation to join a match <br> 2. User is loaded into match |
+| Pre-conditions: | User receives an invitation to play a match |
+| Flow: |**Main Flow** <br> 1. User accepts invitation to join a match. <br> 2. User is loaded into the match |
 | Post-conditions: | User is now in a match |
 
-| Use case id: | R5 |
+| Use case id: | R05 |
 | :--- | :--- |
-| Use case name: | Invite Player |
-| Overview: | Initiating User invites Primary User to match |
+| Use case name: | Send Invite |
+| Overview: | User invites another user an invitation to play a match |
 | Primary actors: | User [primary, initiator] |
-| Pre-conditions: | Initiating User created a game |
+| Pre-conditions: | Initiating user created a match |
 | Flow: | **Main Flow** <br> 1. Initiating User invites Primary User to match <br> 2. Primary User joins Match <br> **Alternate Flows** <br> 2a. Primary User does not join match 2a. Initiating user can invite a friend |
 | Post-conditions: | Primary User and Initiating User are in a match |
 
-| Use case id: | R6 |
+| Use case id: | R06 |
 | :--- | :--- |
 | Use case name: | Accept Invite |
 | Overview: | Primary User receives Invitation for a match |
@@ -56,7 +57,7 @@
 | Flow: | **Main Flow** <br> 1. Primary user receives invite from Initiating User <br> 2. Primary user accepts invite <br> **Alternate Flows** <br> 2a. Primary User rejects invitation |
 | Post-conditions: | Primary User is now in game with Initiating User |
 
-| Use case id: | R7 |
+| Use case id: | R07 |
 | :--- | :--- |
 | Use case name: | Reject Invite |
 | Overview: | The user rejects an invitation to play a game with another user |
@@ -65,7 +66,7 @@
 | Flow: | Main flow: 1. The user chooses to reject the invitation and does not join the game. |
 | Post-conditions: | The user is not added to the game. |
 
-| Use case id: | R8 |
+| Use case id: | R08 |
 | :--- | :--- |
 | Use case name: | Start Match |
 | Overview: | All users are added to a new game and game is marked in progress |
@@ -74,7 +75,7 @@
 | Flow: | **Main Flow:** 1. The users choose to start the game<br> 2. A new game instance is made<br> 3. All users in lobby are added to the game<br> **Alternate Flow:** 1a. The users quit the lobby<br> 2a. The game lobby is removed from the Database<br> 3a. The start game use case is cancelled|
 | Post-conditions: | A new game instance is started and all users are added to the game |
 
-| Use case id: | R9 |
+| Use case id: | R09 |
 | :--- | :--- |
 | Use case name: | Play Match |
 | Overview: | Primary User makes a move |
