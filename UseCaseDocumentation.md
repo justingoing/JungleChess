@@ -5,79 +5,82 @@
 | Use case name: | Register |
 | Overview: | The user registers an account with their email, username, and password |
 | Actors: | User [primary, initiator], Database |
-| Pre-conditions: | User is prompted to either sign in or register. The user chooses register. |
+| Pre-conditions: | User was prompted to either sign in or register. The user chose register. |
 | Main Flow: | 1. User enters an email, a username, and a password. <br> 2. User attempts to register. <br> 3. Database informs the user that the email, username and password provided are all valid. <br> 4. Database records the new account. <br> 5. User is automatically signed into the new account. |
 | Post-conditions: | User is signed into the new account |
-| Alternate Flows: | **3a Invalid register attempt** <br> 3a1. Database informs the user that the email, username or password provided are invalid. <br> 3a2. User is allowed another attempt. Return to 1. |
+| Alternate Flows: | **3a Invalid data** <br> 3a1. Database informs the user that the email, username or password provided are invalid. <br> 3a2. User is allowed another attempt. Return to 1. |
 
 | Use case id: | R02 |
 | :--- | :--- |
 | Use case name: | Sign In |
-| Overview: | The user signs into their prexisting account with username and password |
+| Overview: | The user signs into their preexisting account with username and password |
 | Actors: | User [primary, initiator], Database |
-| Pre-conditions: | User is prompted to either sign in or register. The user chooses sign in. |
+| Pre-conditions: | User has registered an account. <br> User was prompted to either sign in or register. The user chose sign in. |
 | Main Flow: | 1. User enters a username and a password. <br> 2. User attempts to sign in. <br> 3. Database informs the user that the username and password combination is valid. <br> 4. Database saves the session. |
-| Post-conditions: | User signs into their preexisting account |
-| Alternate Flows: | **3a Invalid sign in attempt** <br> 3a1. Database informs the user that the username and password combination is invalid. <br> 3a2. User is allowed another attempt. Return to 1. <br> **3b Inexistent username** <br> 3b1. Database informs the user that the username provided is not associated to an account. <br> 3b2. User is allowed another attempt. Return to 1. |
+| Post-conditions: | User signs into their account |
+| Alternate Flows: | **3a Invalid data** <br> 3a1. Database informs the user that the username and password combination is invalid. <br> 3a2. User is allowed another attempt. Return to 1. <br> **3b Inexistent username** <br> 3b1. Database informs the user that the username provided is not associated to an account. <br> 3b2. User is allowed another attempt. Return to 1. |
 
 | Use case id: | R03 |
 | :--- | :--- |
 | Use case name: | Create Match |
-| Overview: | The database creates a new match instance |
+| Overview: | The user creates a new match instance |
 | Actors: | User [primary, initiator], Database |
 | Pre-conditions: | User is signed in |
-| Main Flow: | 1. User chooses to start a new match. <br> 2. Database creates a new instance of match. <br> 3. Database adds the user to the match. |
-| Post-conditions: | Database creates a new match and the user is added to it |
-| Alternate Flows: | - |
+| Main Flow: | 1. User chooses to start a new match. <br> 2. Database creates a new instance of match. <br> 3. Database adds the user to the match. <br> 4. Include(Send Invite). <br> 5. User can send many invites. Return to 4. |
+| Post-conditions: | Database creates a new match with one player |
+| Alternate Flows: | **4a No invites** <br> 4a1. User does not send any invites and chooses to play the computer. <br> 4a2. Include(Start Match). |
 
 | Use case id: | R04 |
+| :--- | :--- |
+| Use case name: | Send Invite |
+| Overview: | The user invites another user to play a match |
+| Primary actors: | User [primary, initiator] |
+| Pre-conditions: | The invitation sender created a match |
+| Main Flow | 1. Inviter sends invitee an invitation to join their match. <br> 2. Database records the pending invite sent from the inviter. <br> 3. Invitee is notified of the pending invitation. |
+| Post-conditions: | User is notified of the invitation |
+| Alternate Flows: | - |
+
+| Use case id: | R05 |
+| :--- | :--- |
+| Use case name: | Accept Invite |
+| Overview: | A user accepts an invitation to play a match |
+| Primary actors: | User [primary, initiator] |
+| Pre-conditions: | User has invited the invitee |
+| Flow: | **Main Flow** <br> 1. Primary user receives invite from Initiating User <br> 2. Primary user accepts invite <br> **Alternate Flows** <br> 2a. Primary User rejects invitation |
+| Post-conditions: | Primary User is now in game with Initiating User |
+
+| Use case id: | R06 |
+| :--- | :--- |
+| Use case name: | Reject Invite |
+| Overview: | The user rejects an invitation to play a game with another user |
+| Primary actors: | User [primary, initiator] |
+| Pre-conditions: | The user is sent an invitation to play a game by another user. |
+| Flow: | Main flow: 1. The user chooses to reject the invitation and does not join the game. |
+| Post-conditions: | The user is not added to the game. |
+
+
+| Use case id: | R07 |
 | :--- | :--- |
 | Use case name: | Join Match |
 | Overview: | Invited user joins the match |
 | Primary actors: | User [primary, initiator] |
 | Pre-conditions: | User receives an invitation to play a match |
-| Flow: |**Main Flow** <br> 1. User accepts invitation to join a match. <br> 2. User is loaded into the match |
+| Main Flow: | <br> 1. User accepts invitation to join a match. <br> 2. User is loaded into the match |
 | Post-conditions: | User is now in a match |
-
-| Use case id: | R05 |
-| :--- | :--- |
-| Use case name: | Send Invite |
-| Overview: | User invites another user an invitation to play a match |
-| Primary actors: | User [primary, initiator] |
-| Pre-conditions: | Initiating user created a match |
-| Flow: | **Main Flow** <br> 1. Initiating User invites Primary User to match <br> 2. Primary User joins Match <br> **Alternate Flows** <br> 2a. Primary User does not join match 2a. Initiating user can invite a friend |
-| Post-conditions: | Primary User and Initiating User are in a match |
-
-| Use case id: | R06 |
-| :--- | :--- |
-| Use case name: | Accept Invite |
-| Overview: | Primary User receives Invitation for a match |
-| Primary actors: | User [primary, initiator] |
-| Pre-conditions: | Initiating user has created a game |
-| Flow: | **Main Flow** <br> 1. Primary user receives invite from Initiating User <br> 2. Primary user accepts invite <br> **Alternate Flows** <br> 2a. Primary User rejects invitation |
-| Post-conditions: | Primary User is now in game with Initiating User |
-
-| Use case id: | R07 |
-| :--- | :--- |
-| Use case name: | Reject Invite |
-| Overview: | The user rejects an invitation to play a game with another user |
-| Primary actors: | User[primary] |
-| Pre-conditions: | The user is sent an invitation to play a game by another user. |
-| Flow: | Main flow: 1. The user chooses to reject the invitation and does not join the game. |
-| Post-conditions: | The user is not added to the game. |
+| Alternate Flows: | - |
 
 | Use case id: | R08 |
 | :--- | :--- |
 | Use case name: | Start Match |
 | Overview: | All users are added to a new game and game is marked in progress |
-| Actors: | User [primary, initiator] <br> Database [secondary]|
+| Actors: | User [primary, initiator], Database |
 | Pre-conditions: | The minimum number of users to start the game are in game lobby |
 | Flow: | **Main Flow:** 1. The users choose to start the game<br> 2. A new game instance is made<br> 3. All users in lobby are added to the game<br> **Alternate Flow:** 1a. The users quit the lobby<br> 2a. The game lobby is removed from the Database<br> 3a. The start game use case is cancelled|
 | Post-conditions: | A new game instance is started and all users are added to the game |
 
 | Use case id: | R09 |
 | :--- | :--- |
-| Use case name: | Play Match |
+| Use case name: | Make Move |
 | Overview: | Primary User makes a move |
 | Primary actors: | User [primary, initiator] |
 | Pre-conditions: | The game has been created and started |
