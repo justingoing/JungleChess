@@ -151,7 +151,7 @@
 | Pre-conditions: | User is signed in |
 | Main Flow: | 1. User searches by username and attempts to view it. <br> 2. Database retreives the selected user's account. <br> 3. The selected user's account is displayed. |
 | Post-conditions: | The selected user's account is displayed |
-| Alternate Flows: | **2a User not in database** 2a1. Database informs the user that the username is not associated to an account. |
+| Alternate Flows: | **2a User not in database** <br>2a1. Database informs the user that the username is not associated to an account. |
 
 | Use case id: | R17 |
 | :--- | :--- |
@@ -161,7 +161,7 @@
 | Pre-conditions: | User is signed in <br> User is viewing their own account |
 | Main Flow: | 1. User chooses to delete their account. <br> 2. Database asks user to confirm account deletion. <br> 3. The user confirms account deletion. <br> Extension Point: Cancel All Outstanding Invites <br> Extension Point: Remove Match History <br> 4. Database removes sign in data associated with the account. <br> 5. The user is signed out. |
 | Post-conditions: | The user's account is deleted and the user is signed out |
-| Alternate Flows: | **3a User cancels confirmation** 3a1. The user cancels the account deletion. |
+| Alternate Flows: | **3a User cancels confirmation** <br> 3a1. The user cancels the account deletion. |
 
 | Use case id: | R18 |
 | :--- | :--- |
