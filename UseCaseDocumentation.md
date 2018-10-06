@@ -4,10 +4,11 @@
 | :--- | :--- |
 | Use case name: | Register |
 | Overview: | The user registers an account with their email, username, and password |
-| Actors: | User [primary, initiator] |
+| Actors: | User [primary, initiator], Database |
 | Pre-conditions: | User is prompted to either sign in or register. The user chooses register. |
-| Flow: | **Main Flow** <br> 1. User enters their email, username, and password. <br> 2. User is informed that the email and username are valid. <br> 3. User is automatically signed in in to the newly created account. <br> **Alternate Flows** <br> 2a. User is informed that their email address or username is invalid. <br> 3a. User is allowed another attempt. |
-| Post-conditions: | User is automatically signed in in to the newly created account |
+| Main Flow: | 1. User enters their email, a username, and a password. <br> 2. User attempts to register. <br> 3. Database informs the user that the email, username and password provided are all valid. <br> 4. Database records the new account. <br> 5. User is automatically signed into the new account. |
+| Post-conditions: | User is signed into the new account |
+| Alternate Flows: | **3a Invalid register attempt** <br> 3a1. Database informs the user that the email, username or password provided are invalid. <br> 3a2. User is allowed another attempt. Return to 1. |
 
 | Use case id: | R2 |
 | :--- | :--- |
@@ -15,8 +16,9 @@
 | Overview: | The user signs into their prexisting account with username and password |
 | Actors: | User [primary, initiator], Database |
 | Pre-conditions: | User is prompted to either sign in or register. The user chooses sign in. |
-| Flow: | **Main Flow**: <br> 1. User enters a username and a password. <br> 2. User attempts to sign in. <br> 3. Database informs the user that the username and password combination is valid and the session is saved in the database. <br> 4. The user is redirected to the lobby. <br> **Alternate Flows**: <br> 3a. Invalid sign in <br> 3a1. Database informs the user that the username and password combination is invalid. <br><br> 3a2. User is allowed another attempt. Return to 1. <br> 3b. Inexistent username <br> 3b1. Database informs user that the username provided is not associated to an account. <br> 3b2. User is allowed another attempt. Return to 1. |
+| Main Flow: | 1. User enters a username and a password. <br> 2. User attempts to sign in. <br> 3. Database informs the user that the username and password combination is valid. <br> 4. Database saves the session. |
 | Post-conditions: | User signs into their preexisting account |
+| Alternate Flows: | **3a Invalid sign in attempt** <br> 3a1. Database informs the user that the username and password combination is invalid. <br> 3a2. User is allowed another attempt. Return to 1. <br> **3b Inexistent username** <br> 3b1. Database informs the user that the username provided is not associated to an account. <br> 3b2. User is allowed another attempt. Return to 1. |
 
 | Use case id: | R3 |
 | :--- | :--- |
