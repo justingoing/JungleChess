@@ -32,45 +32,16 @@
 
 | Use case id: | R04 |
 | :--- | :--- |
-| Use case name: | Send Invite |
+| Use case name: | Match Invite |
+| Extends: R03|
 | Overview: | The user invites a user to play their match |
-| Primary actors: | User [primary, initiator], Database |
-| Pre-conditions: | The invitation sender created a match |
-| Main Flow: | 1. User selects a user to send an invitation to, and attempts to send the invitation. <br> 2. The receiver is notified of the invitation. <br> 3. Database records invitation to all user's accounts. <br> Extension Point: Send Invite. |
-| Post-conditions: | Every valid invitation notifies the receiver |
-| Alternate Flows: | **2a Invalid: self invitation** <br> 2a1. Database informs user that they cannot send an invitation to themself. Return to 1. <br> **3b Valid: duplicate invitation** <br> 3b1. Database does not re-record an additional invitation to any user's account. |
+| Primary actors: | User [primary, initiator] |
+| Pre-conditions: | The User has created a match |
+| Main Flow: | 1. User selects a different User to send an invitation to, and attempts to send the invitation. <br> 2. The System informs the other User of the invitation. <br> 3. The other User accepts the invite. <br> 4. The other User is added to the match. <br> The System cancels any other sent invitations. |
+| Post-conditions: | Another user is added to the match |
+| Alternate Flows: | **3a User cancels invite** <br> 3a1. The User cancels the invite. <br> 3a2. The System informs the other User the invite is cancelled. Return to 1. <br> **3b Other User rejects invite** 3b1. The other User rejects the invite. 3b2. The System informs the User of the invite rejection. Return to 1. <br> **3c User sends another invite** 3c1. Return to 1.|
 
 | Use case id: | R05 |
-| :--- | :--- |
-| Use case name: | Accept Invite |
-| Overview: | A user accepts an invite to play a match |
-| Primary actors: | User [primary, initiator], Database |
-| Pre-conditions: | The receiving user was notified of the invitation |
-| Main Flow: | 1. The receiver is prompted to either accept or reject the invitation, and chooses to accept. <br> 2. Database informs the sender that an invitation has been accepted. <br> 3. Database adds the accepted receiver to the match. <br> Extension Point: Cancel All Outstanding Invitations <br> Include(Start Game) |
-| Post-conditions: | The first user that accepted the invitation is in the match |
-| Alternate Flows: | - |
-
-| Use case id: | R06 |
-| :--- | :--- |
-| Use case name: | Reject Invite |
-| Overview: | A user rejects an invite to play a match |
-| Primary actors: | User [primary, initiator], Database |
-| Pre-conditions: | The receiving user was notified of the invitation |
-| Main Flow: | 1. The receiver is prompted to either accept or reject the invitation, and chooses to reject. <br> 2. Database informs the sender that the invitation has been rejected. <br> 3. Database deletes the invitation from both user's accounts. |
-| Post-conditions: | Receiving user does not have any invitations from the sending user |
-| Alternate Flows: | - |
-
-| Use case id: | R07 |
-| :--- | :--- |
-| Use case name: | Cancel All Outstanding Invitations |
-| Overview: | All of the sending user's pending invites are cancelled |
-| Primary actors: | Database [primary, initiator] |
-| Pre-conditions: | An invitation has been accepted by a receiver |
-| Main Flow: | 1. Database selects a sent invite from the sending user's account. <br> 2. Database informs the receiving user that the invitation has been cancelled. <br> 3. Database removes the pending invite from both user's accounts. <br> Extension Point: Cancel All Outstanding Invitations |
-| Post-conditions: | The invitation sender's account does not contain pending sent invitations |
-| Alternate Flows: | - |
-
-| Use case id: | R08 |
 | :--- | :--- |
 | Use case name: | Start Match |
 | Overview: | The match starts |
@@ -80,7 +51,7 @@
 | Post-conditions: | User whose turn it is is able to make the first move |
 | Alternate Flow: | - |
 
-| Use case id: | R09 |
+| Use case id: | R06 |
 | :--- | :--- |
 | Use case name: | Make Move |
 | Overview: | Primary User makes a move |
@@ -89,7 +60,7 @@
 | Flow: | **Main Flow** <br> 1. Primary user attempts to move a piece <br> 2. The move is verified as valid <br> 3. The piece is moved <br> 4. The secondary user is notified that it is their turn <br> **Alternate Flows** <br> 2a. The user is notified that the move is invalid <br> 4b. The primary user's move is verified as a winning move and both players are notified the primary user has won the game. 1a. A user quits. <br> Include(Quit Match)  |
 | Post-conditions: | The primary user executed a valid move and the game state has been updated |
 
-| Use case id: | R10 |
+| Use case id: | R07 |
 | :--- | :--- |
 | Use case name: | Enforce Rules |
 | Overview: | The user or opponent make a valid move and the state of the game changes. |
@@ -98,7 +69,7 @@
 | Flow: | **Main Flow**: 1. User or opponent makes a move. <br> 2. The state is changed according to the game rules. |
 | Post-conditions: | It is the other players turn. |
 
-| Use case id: | R11 |
+| Use case id: | R08 |
 | :--- | :--- |
 | Use case name: | Notify User When It Is Their Turn |
 | Overview: | The user receives a notification that it is their turn. |
@@ -107,7 +78,7 @@
 | Flow: | **Main Flow**: 1. The user receives a notification that it is their turn. |
 | Post-conditions: | It is the user's turn. |
 
-| Use case id: | R12 |
+| Use case id: | R09 |
 | :--- | :--- |
 | Use case name: | Save Match State |
 | Overview: | The database saves the game state indefinitely. |
@@ -116,7 +87,7 @@
 | Flow: | **Main Flow**: 1. User or opponent makes move. <br> 2. User signs off or stops playing. <br> 3. State is saved. <br> 4. User returns. |
 | Post-conditions: | The game is ready to be played where the user left off. |
 
-| Use case id: | R13 |
+| Use case id: | R10 |
 | :--- | :--- |
 | Use case name: | Finish Match |
 | Overview: | The game data is saved in the database|
@@ -125,7 +96,7 @@
 | Flow: | **Main Flow** <br> 1. The database is updated with the result of the game <br> 2. The user's accounts are updated with the results of the game |
 | Post-conditions: | The database and user accounts have been updated with the correct results of the match |
 
-| Use case id: | R14 |
+| Use case id: | R11|
 | :--- | :--- |
 | Use case name: | Quit Match |
 | Overview: | The user quits the match |
@@ -134,7 +105,7 @@
 | Flow: | **Main Flow** <br> 1. The user elects to quit that game <br> 2. The secondary user is notified that the primary user has quit |
 | Post-conditions: | The game is ended |
 
-| Use case id: | R15 |
+| Use case id: | R12 |
 | :--- | :--- |
 | Use case name: | Record Match Results |
 | Overview: | The results of the match are stored in the database |
@@ -143,7 +114,7 @@
 | Flow: | **Main Flow**: <br> 1. The start and end times and dates are recorded to the database. <br> 2. The winner and loser are recorded to the database. <br> **Alternate Flows**: <br> 2a A user quits <br> 2a1. The user that quit the match is recorded to the database as the loser and the other user is recorded as the winner. <br> 2a2. The user that quit is recorded to have withdrawn from the match. |
 | Post-conditions: | The times, dates and results are stored in the database |
 
-| Use case id: | R16 |
+| Use case id: | R13 |
 | :--- | :--- |
 | Use case name: | View User Account |
 | Overview: | The user selects a user's account to view and the selected user's data is displayed |
@@ -153,7 +124,7 @@
 | Post-conditions: | The selected user's account is displayed |
 | Alternate Flows: | **2a User not in database** <br>2a1. Database informs the user that the username is not associated to an account. |
 
-| Use case id: | R17 |
+| Use case id: | R14 |
 | :--- | :--- |
 | Use case name: | Unregister |
 | Overview: | The user deletes their existing account from the database |
@@ -163,12 +134,3 @@
 | Post-conditions: | The user's account is deleted and the user is signed out |
 | Alternate Flows: | **3a User cancels confirmation** <br> 3a1. The user cancels the account deletion. |
 
-| Use case id: | R18 |
-| :--- | :--- |
-| Use case name: | Remove Match History |
-| Overview: | The match history will be associated with a generic user |
-| Actors: |  User [primary, initiator], Database |
-| Pre-conditions: | User confirmed the account deletetion <br> Database has a single instance of generic user that no user has access to |
-| Main Flow: | 1. Database selects the first entry in the user's match history. <br> 2. Database updates the results from the user to the generic user. <br> 3. Database deletes the match from the user's account. <br> 4. If there are any recorded matches associated with the user, return to 1. |
-| Post-conditions: | The database does not contain any matches associated with the user |
-| Alternate Flows: | - |
