@@ -15,10 +15,10 @@
 | Use case name: | Sign In |
 | Overview: | The user signs into their preexisting account |
 | Actors: | User [primary, initiator], Database |
-| Pre-conditions: | User has registered an account <br> User was prompted to either sign in or register, and chose to sign in |
-| Main Flow: | 1. User enters a username and a password. <br> 2. User attempts to sign in. <br> 3. Database informs the user that the username and password combination is valid. <br> 4. Database saves the session. |
-| Post-conditions: | User is immediately able to create a match |
-| Alternate Flows: | **3a Invalid data** <br> 3a1. Database informs the user that the username and password combination is invalid. <br> 3a2. User is allowed another attempt. Return to 1. <br> **3b Inexistent username** <br> 3b1. Database informs the user that the username provided is not associated to an account. <br> 3b2. User is allowed another attempt. Return to 1. |
+| Pre-conditions: | User has registered an account. <br> User was prompted to either sign in or register, and chose to sign in |
+| Main Flow: | 1. User enters a username and a password. <br> 2. User attempts to sign in. <br> 3. System consults database using the provided sign in information. <br> 4. The database informs system that the sign in is successful. <br> 5. System informs the user that the username and password combination is valid. <br> 6. User is signed in|
+| Post-conditions: | User is signed into the system. |
+| Alternate Flows: | **4a Invalid data** <br> 4a1. Database informs system of invalid username/password combination. <br> 4a2. System informs the user that the username and password combination is invalid. <br> 4a2. User is allowed another attempt. Return to 1. <br> **4b Nonexistent username** <br> 4b1. Database informs system of nonexistent username. <br> 4b2. System informs the user that the username provided is not associated to an account. <br> 4b3. User is allowed another attempt. Return to 1. |
 
 | Use case id: | R03 |
 | :--- | :--- |
