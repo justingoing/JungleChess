@@ -37,9 +37,9 @@
 | Overview: | The user invites a user to play their match |
 | Primary actors: | User [primary, initiator] |
 | Pre-conditions: | The User has created a match |
-| Main Flow: | 1. User selects a different User to send an invitation to, and attempts to send the invitation. <br> 2. The System informs the other User of the invitation. <br> 3. The other User accepts the invite. <br> 4. The other User is added to the match. <br> The System cancels any other sent invitations. |
+| Main Flow: | 1. User selects a different User. <br> 2. User sends the invitation to the different User. <br> 3. The System informs the other User of the invitation. <br> 4. The other User accepts the invite. <br> 5. The other User is added to the match. <br> 6. The System cancels any other sent invitations. |
 | Post-conditions: | Another user is added to the match |
-| Alternate Flows: | **3a User cancels invite** <br> 3a1. The User cancels the invite. <br> 3a2. The System informs the other User the invite is cancelled. Return to 1. <br> **3b Other User rejects invite** 3b1. The other User rejects the invite. 3b2. The System informs the User of the invite rejection. Return to 1. <br> **3c User sends another invite** 3c1. Return to 1.|
+| Alternate Flows: | **4a User cancels invite** <br> 4a1. The User cancels the invite. <br> 4a2. The System informs the other User the invite is cancelled. Return to 1. <br> **4b Other User rejects invite**  <br> 4b1. The other User rejects the invite.  <br> 4b2. The System informs the User of the invite rejection. Return to 1. <br> **4c User sends another invite** <br>  4c1. Return to 1.|
 
 | Use case id: | R05 |
 | :--- | :--- |
