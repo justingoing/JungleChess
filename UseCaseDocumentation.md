@@ -6,9 +6,9 @@
 | Overview: | The user registers an account by providing valid data  |
 | Actors: | User [primary, initiator], Database |
 | Pre-conditions: | User was prompted to either sign in or register, and chose to register |
-| Main Flow: | 1. User enters an email, a username, and a password. <br> 2. User attempts to register. <br> 3. Database informs the user that the email, username, and password provided are all valid. <br> 4. Database records the new account. <br> 5. User is signed into the new account. |
+| Main Flow: | 1. User enters an email, a username, and a password. <br> 2. User attempts to register. <br> 3. System passes user info to database. <br> 4. Database creates a new user. <br> 5. Database informs system of successful user creation. <br> 6. System informs the user that the email, username, and password provided are all valid. <br> 7. User is signed into the new account. |
 | Post-conditions: | User can sign in using the data provided in future attempts |
-| Alternate Flows: | **3a Invalid data** <br> 3a1. Database informs the user that the email, username, or password provided are invalid. <br> 3a2. User is allowed another attempt. Return to 1. |
+| Alternate Flows: | **4a Invalid data** <br> 4a1. Database informs the user that the email, username, or password provided are invalid. <br> 4a2. User is allowed another attempt. Return to 1. |
 
 | Use case id: | R02 |
 | :--- | :--- |
