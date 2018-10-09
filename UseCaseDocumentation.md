@@ -85,8 +85,8 @@
 | Use case name: | Unregister |
 | Overview: | The user deletes their existing account from the database |
 | Actors: |  User [primary, initiator], Database |
-| Pre-conditions: | User is signed in <br> User is viewing their own account |
-| Main Flow: | 1. User chooses to delete their account. <br> 2. Database asks user to confirm account deletion. <br> 3. The user confirms account deletion. <br> Extension Point: Cancel All Outstanding Invites <br> Extension Point: Remove Match History <br> 4. Database removes sign in data associated with the account. <br> 5. The user is signed out. |
+| Pre-conditions: | User is signed in. |
+| Main Flow: | 1. User chooses to delete their account. <br> 2. Database asks user to confirm account deletion. <br> 3. The user confirms account deletion. <br>  4. Database removes sign in data associated with the account. <br> 5. The user is signed out. |
 | Post-conditions: | The user's account is deleted and the user is signed out |
 | Alternate Flows: | **3a User cancels confirmation** <br> 3a1. The user cancels the account deletion. |
 
