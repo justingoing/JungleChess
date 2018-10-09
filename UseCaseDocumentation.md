@@ -57,7 +57,7 @@
 | Overview: | The database saves the game state indefinitely. |
 | Primary actors: | User [Primary, Initiator] |
 | Pre-conditions: | User is currently playing a game. |
-| Flow: | **Main Flow**: 1. User or opponent makes move. <br> 2. User signs off or stops playing. <br> 3. State is saved. <br> 4. User returns. |
+| Flow: | **Main Flow**: 1. User or opponent makes move. <br> 2. User signs off or stops playing. <br> 3. System saves the state of the game. <br> 4. User returns. 5. System resumes game.|
 | Post-conditions: | The game is ready to be played where the user left off. |
 
 | Use case id: | R07 |
