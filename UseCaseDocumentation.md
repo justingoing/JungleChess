@@ -67,9 +67,8 @@
 | Overview: | The results of the match are stored in the database |
 | Actors: | Database [primary], User [initiator] |
 | Pre-conditions: | The match has ended |
-| Main Flow: | 1. The start and end times and dates are recorded to the database. <br> 2. The winner and loser are recorded to the database. |
-| Post-conditions: | The times, dates and results are stored in the database |
-| Alternate Flow: | **2a A user quits** <br> 2a1. The user that quit the match is recorded to the database as the loser and the other user is recorded as the winner. <br> 2a2. The user that quit is recorded to have withdrawn from the match. |
+| Main Flow: | 1. Database records relevant information about the match upon completion. |
+| Post-conditions: | The relevant information about the match is recorded in the database. |
 
 | Use case id: | R08 |
 | :--- | :--- |
