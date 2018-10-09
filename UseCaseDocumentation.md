@@ -72,12 +72,12 @@
 
 | Use case id: | R08 |
 | :--- | :--- |
-| Use case name: | View User Account |
+| Use case name: | View User Profile |
 | Overview: | The user selects a user's account to view and the selected user's data is displayed |
 | Actors: | Database [primary], User [initiator] |
 | Pre-conditions: | User is signed in |
-| Main Flow: | 1. User searches by username and attempts to view it. <br> 2. Database retreives the selected user's account. <br> 3. The selected user's account is displayed. |
-| Post-conditions: | The selected user's account is displayed |
+| Main Flow: | 1. User attempts to view another User's profile. <br> 2. Database retreives the selected user's profile. <br> 3. The system displays the selected user's profile.. |
+| Post-conditions: | The selected user's profile is displayed |
 | Alternate Flows: | **2a User not in database** <br>2a1. Database informs the user that the username is not associated to an account. |
 
 | Use case id: | R09 |
