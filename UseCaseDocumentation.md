@@ -43,12 +43,11 @@
 | Use case id: | R05 |
 | :--- | :--- |
 | Use case name: | Match Options |
-| Extends: | R03 |
 | Overview: | The users of the match play the game |
-| Actors: | User [primary, initiator], Database |
+| Actors: | User [primary, initiator] |
 | Pre-conditions: | The minimum number of users to start the match have been added to the match |
-| Main Flow: | 1. Database updates the match to reflect that it has started. <br> 2. The game is setup in its initial or saved state. <br> 3. The users make moves until one user has won the game. <br> 4. Extension point(R07) <br> The users are removed from the game.|
-| Post-conditions: | User whose turn it is is able to make the first move |
+| Main Flow: |  1. The System updates the match to reflect that it has started. <br> 2. The game is setup in its initial or saved state. <br> 3. The users make moves until one user has won the game. <br> 4. Extension point(R07) <br> The users are removed from the game.|
+| Post-conditions: | The users have finished playing a game |
 | Alternate Flow: | **3a An illegal move is attempted** 3a1. A user attempts to make an illegal move. <br> 3a2. The System informs the active user that move is not allowed. Return to 3. <br> **3b Active user has failed to move** 3b1. No move has been made for awhile. <br> 3b2. The System informs the active user its their turn. Return to 3. <br> **3c User chooses to save game state** 3c1. Extension point(R06). Return to 2. <br> **3d User quits** 3d1. A user chooses to quit the match. <br> 3d2. The other user informed the user quit and is declared the winner. Return to 4.|
 
 | Use case id: | R06 |
