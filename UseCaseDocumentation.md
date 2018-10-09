@@ -57,7 +57,7 @@
 | Overview: | The system saves the game state indefinitely. |
 | Primary actors: | User [Primary, Initiator] |
 | Pre-conditions: | User is currently playing a game. |
-| Flow: | **Main Flow**: 1. User or opponent makes move. <br> 2. User signs off or stops playing. <br> 3. System saves the state of the game. <br> 4. User returns. 5. System resumes game.|
+| Main Flow: | 1. User or opponent makes move. <br> 2. User signs off or stops playing. <br> 3. System saves the state of the game. <br> 4. User returns. 5. System resumes game.|
 | Post-conditions: | The game is ready to be played where the user left off. |
 
 | Use case id: | R07 |
@@ -67,8 +67,9 @@
 | Overview: | The results of the match are stored in the database |
 | Actors: | Database [primary], User [initiator] |
 | Pre-conditions: | The match has ended |
-| Flow: | **Main Flow**: <br> 1. The start and end times and dates are recorded to the database. <br> 2. The winner and loser are recorded to the database. <br> **Alternate Flows**: <br> 2a A user quits <br> 2a1. The user that quit the match is recorded to the database as the loser and the other user is recorded as the winner. <br> 2a2. The user that quit is recorded to have withdrawn from the match. |
+| Main Flow: | 1. The start and end times and dates are recorded to the database. <br> 2. The winner and loser are recorded to the database. |
 | Post-conditions: | The times, dates and results are stored in the database |
+| Alternate Flow: | **2a A user quits** <br> 2a1. The user that quit the match is recorded to the database as the loser and the other user is recorded as the winner. <br> 2a2. The user that quit is recorded to have withdrawn from the match. |
 
 | Use case id: | R08 |
 | :--- | :--- |
