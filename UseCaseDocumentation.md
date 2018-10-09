@@ -33,13 +33,12 @@
 | Use case id: | R04 |
 | :--- | :--- |
 | Use case name: | Match Invite |
-| Extends: | R03 |
 | Overview: | The user invites a user to play their match |
 | Primary actors: | User [primary, initiator] |
 | Pre-conditions: | User has created a match |
-| Main Flow: | 1. User selects a different user to send an invitation to, and attempts to send the invitation. <br> 2. The System informs the other User of the invitation. <br> 3. The other user accepts the invite. <br> 4. The other user is added to the match. <br> The System cancels any other sent invitations. |
+| Main Flow: | 1. Include(Create Match) 2. User selects a different user to send an invitation to, and attempts to send the invitation. <br> 3. The System informs the other User of the invitation. <br> 4. The other user accepts the invite. <br> 5. The other user is added to the match. <br> The System cancels any other sent invitations. |
 | Post-conditions: | Another user is added to the match |
-| Alternate Flows: | **3a User cancels invite** <br> 3a1. The user cancels the invite. <br> 3a2. The System informs the other user the invite is cancelled. Return to 1. <br> **3b Other user rejects invite** 3b1. The other user rejects the invite. 3b2. The System informs the user of the invite rejection. Return to 1. <br> **3c User sends another invite** 3c1. Return to 1.|
+| Alternate Flows: | **4a User cancels invite** <br> 4a1. The user cancels the invite. <br> 4a2. The System informs the other user the invite is cancelled. Return to 1. <br> **4b Other user rejects invite** 4b1. The other user rejects the invite. 4b2. The System informs the user of the invite rejection. Return to 1. <br> **4c User sends another invite** 4c1. Return to 1.|
 
 | Use case id: | R05 |
 | :--- | :--- |
