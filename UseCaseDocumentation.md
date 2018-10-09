@@ -24,10 +24,10 @@
 | :--- | :--- |
 | Use case name: | Create Match |
 | Overview: | A new match is made |
-| Actors: | User [primary, initiator], Database |
+| Actors: | User [primary, initiator] |
 | Pre-conditions: | User is signed in |
-| Main Flow: | 1. User chooses to start a new match. <br> 2. Database creates a new instance of match. <br> 3. Database adds the user to the match. <br> Extension Point: Send Invite |
-| Post-conditions: | Database creates a new match with one player |
+| Main Flow: | 1. User chooses to start a new match. <br> 2. System creates match for user. <br> 3. System adds user to the match. |
+| Post-conditions: | User is in a new match. |
 | Alternate Flows: | - |
 
 | Use case id: | R04 |
