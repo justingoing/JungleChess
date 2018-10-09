@@ -54,7 +54,7 @@
 | :--- | :--- |
 | Extends: | R05 |
 | Use case name: | Save Match State |
-| Overview: | The database saves the game state indefinitely. |
+| Overview: | The system saves the game state indefinitely. |
 | Primary actors: | User [Primary, Initiator] |
 | Pre-conditions: | User is currently playing a game. |
 | Flow: | **Main Flow**: 1. User or opponent makes move. <br> 2. User signs off or stops playing. <br> 3. System saves the state of the game. <br> 4. User returns. 5. System resumes game.|
