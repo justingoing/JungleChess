@@ -1,83 +1,120 @@
 package edu.colostate.cs.cs414.method_men.jungle;
 
 class Board {
-    private final int height = 9;
-    private final int width = 7;
-    Tile[][] board;
+    private final int HEIGHT = 9;
+    private final int WIDTH = 7;
+    private Tile[][] board;
 
-    public Board() {
-        board = new Tile[height][width];
+    Board() {
+        board = new Tile[HEIGHT][WIDTH];
         makeBoard();
     }
 
-    public boolean isDen(int i, int j) {
-        if (j == 3) {
-            if (i == 0 || i == 8) {
-                return true;
-            }
+    /**
+     * If the Tile at (row, col) is suppose to be a River Tile
+     * @param row horizontal location on board
+     * @param col vertical location on board
+     * @return true if it's suppose to be a River Tile. false if not
+     */
+    public boolean isDen(int row, int col) {
+        return ((row == 0 || row == 8) && col == 3);
+    }
+
+    /**
+     * If the Tile at (row, col) is suppose to be a Trap Tile
+     * @param row horizontal location on board
+     * @param col vertical location on board
+     * @return true if it's suppose to be a Trap Tile. false if not
+     */
+    public boolean isTrap(int row, int col) {
+        // if there is a Den below, above, to right or to left
+        if (isDen(row + 1, col) || isDen(row - 1, col)
+                || isDen(row, col + 1) || isDen(row, col - 1)) {
+            return true;
         }
+//        if ((row == 0 || row == 8) && (col == 2 || col == 4)) {
+//            return true;
+//        } else if ((row == 1 || row == 7) && col == 3) {
+//            return true;
+//        }
         return false;
     }
 
-    public boolean isTrap(int i, int j) {
-        if ((j == 2 || j == 4) && (i == 0 || i == 8)) {
-            return true;
-        } else if ((j == 3) && (i == 1 || i == 7)) {
-            return true;
-        }
-        return false;
+    /**
+     * If the Tile at (row, col) is suppose to be a River Tile
+     * @param row horizontal location on board
+     * @param col vertical location on board
+     * @return true if it's suppose to be a River Tile. false if not
+     */
+    public boolean isRiver(int row, int col) {
+        return ((row >= 3 && row <= 5) && (col == 1 || col == 2 || col == 4 || col == 5));
     }
 
-    public boolean isRiver(int i, int j) {
-        if (i >= 3 && i <= 5) {
-            if (j == 1 || j == 2 || j == 4 || j == 5) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isJump(int i, int j) {
-        //if there is a River Tile above, below, to left, or to right
-        if (isRiver(i+1, j) || isRiver(i-1, j) || isRiver(i, j+1) || isRiver(i, j-1)) {
+    /**
+     * If the Tile at (row, col) is suppose to be a Jump Tile
+     * @param row horizontal location on board
+     * @param col vertical location on board
+     * @return true if it's suppose to be a Jump Tile. false if not
+     */
+    public boolean isJump(int row, int col) {
+        //if there is a River Tile above, below, to right, or to left
+        if (isRiver(row + 1, col) || isRiver(row - 1, col)
+                || isRiver(row, col + 1) || isRiver(row, col - 1)) {
             return true;
         }
-        //if (i == 2 || i == 6) {
-        //	if (j >= 1 && j <= 2) {
+        //if (row == 2 || row == 6) {
+        //	if (col >= 1 && col <= 2) {
         //		return true;
-        //    } else if (j >= 4 && j <= 5) {
+        //    } else if (col >= 4 && col <= 5) {
         //		return true;
         //    }
-        //} else if (i >= 3 && i <= 5) {
-        //	if (j == 0 || j == 3 || j == 6) {
+        //} else if (row >= 3 && row <= 5) {
+        //	if (col == 0 || col == 3 || col == 6) {
         //		return true;
         //	}
         //}
         return false;
     }
 
-    public Tile makeInstance(int i, int j) {
-        if (isDen(i, j)) {
+    /**Make instance of Tile inside the 2d array of Tiles
+     * based off the (row, col) location inside the board.
+     * @param row location within the board
+     * @param col location within the board
+     * @return a new instance of it's corresponding Tiles
+     */
+    public Tile makeInstance(int row, int col) {
+        if (isDen(row, col)) {
             return new Den();
-        } else if (isTrap(i, j)) {
+        } else if (isTrap(row, col)) {
             return new Trap();
-        } else if (isRiver(i, j)) {
+        } else if (isRiver(row, col)) {
             return new River();
-        } else if (isJump(i, j)) {
+        } else if (isJump(row, col)) {
             return new Jump();
         } else {
             return new Open();
         }
     }
 
+    /**
+     * Iterates through each row, then each column, and
+     * instantiates each Tile (subtype) based off the location
+     */
     public void makeBoard() {
-        for (int i = 0; i < height; ++i) {
-            for (int j = 0; j < width; ++j) {
-                board[i][j] = makeInstance(i, j);
+        for (int row = 0; row < HEIGHT; ++row) {
+            for (int col = 0; col < WIDTH; ++col) {
+                board[row][col] = makeInstance(row, col);
             }
         }
     }
 
+    /**
+     * Iterates through each player, then each piece, and
+     * places pieces on the empty temp board
+     *
+     * @param draw the temp board only used to display the current board
+     * @param players both Players in an array
+     */
     public void placePieces(char[][] draw, Player[] players) {
         for (Player player : players) {
             for (Piece piece : player.getValidPieces()) {
@@ -86,25 +123,32 @@ class Board {
         }
     }
 
-    //For crude implementation ONLY
+    /**     For crude implementation ONLY
+     * Creates a new 2d array of char to render as the output
+     * calls placePieces which places the Pieces on an otherwise empty board
+     * then iterates through each char and if there isn't a piece there, retrieve the real board's Tile.
+     * After completing construction, it prints the temp board
+     * @param players the array of two Players that have Pieces on the real board
+     */
+
     public void printBoard(Player[] players) {
-        char[][] draw = new char[height][width];
+        char[][] draw = new char[HEIGHT][WIDTH];
         placePieces(draw, players);
 
-        for (int i = 0; i < height; ++i) {
-            for (int j = 0; j < width; ++j) {
-                if (draw[i][j] == '\0') {
-                    draw[i][j] = board[i][j].getAttribute();
+        for (int row = 0; row < HEIGHT; ++row) {
+            for (int col = 0; col < WIDTH; ++col) {
+                if (draw[row][col] == '\0') {
+                    draw[row][col] = board[row][col].getAttribute();
                 }
             }
         }
 
-        for (int i = 0; i < height; ++i) {
-            for (int j = 0; j < width; ++j) {
-                if (j != width - 1) {
-                    System.out.print(draw[i][j] + " ");
+        for (int row = 0; row < HEIGHT; ++row) {
+            for (int col = 0; col < WIDTH; ++col) {
+                if (col != WIDTH - 1) {
+                    System.out.print(draw[row][col] + " ");
                 } else {
-                    System.out.println(draw[i][j]);
+                    System.out.println(draw[row][col]);
                 }
             }
         }

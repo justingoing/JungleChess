@@ -7,15 +7,12 @@ public class Main {
         game.printBoard();
 
         while ((winner = game.winnerCheck()) == -1) {
-            System.out.println("'white' @ top && 'black' @ bottom");
             game.makeMove();
             game.incrementTurn();
             game.printBoard();
-
         }
-
-        Player w = game.getPlayer(winner);
-        System.out.println("'white' @ top && 'black' @ bottom");
-        System.out.println("Player " + w.getColor() + " is the winner!");
+        
+        // Prints the Winner statement
+        game.whoseTurnIsIt(winner, " is the winner!");
     }
 }
