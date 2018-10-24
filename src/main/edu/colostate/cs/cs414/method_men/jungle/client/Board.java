@@ -1,11 +1,11 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
-class Board {
+public class Board {
     private final int HEIGHT = 9;
     private final int WIDTH = 7;
     private Tile[][] board;
 
-    Board() {
+    public Board() {
         board = new Tile[HEIGHT][WIDTH];
         makeBoard();
     }

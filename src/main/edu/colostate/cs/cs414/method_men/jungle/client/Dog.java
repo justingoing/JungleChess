@@ -1,7 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
 
-class Dog extends Piece {
+public class Dog extends Piece {
     public Dog(String color) {
         super("Dog", 4, color);
         if (color.equals("white")) {

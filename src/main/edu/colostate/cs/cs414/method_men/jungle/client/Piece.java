@@ -1,6 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
-class Piece {
+public class Piece {
     private String name;
     private int rank;
     private String color;
