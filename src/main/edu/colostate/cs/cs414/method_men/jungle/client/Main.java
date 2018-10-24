@@ -1,7 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
 public class Main {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Game game = new Game();
         int winner;
         game.printBoard();
