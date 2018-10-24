@@ -1,6 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
-class Player {
+public class Player {
     String color;
     Piece[] pieces;
 

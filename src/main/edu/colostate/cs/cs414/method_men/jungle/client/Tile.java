@@ -1,6 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
-class Tile {
+public class Tile {
     private char attribute;
 
     public Tile(char attribute) {

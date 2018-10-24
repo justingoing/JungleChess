@@ -3,7 +3,7 @@ package edu.colostate.cs.cs414.method_men.jungle.client;
 
 import java.util.Scanner;
 
-class Game {
+public class Game {
     private Player[] players;
     private int turn;
     private Board board;

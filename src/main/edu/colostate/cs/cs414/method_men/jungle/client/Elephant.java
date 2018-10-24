@@ -1,6 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
-class Elephant extends Piece {
+public class Elephant extends Piece {
     public Elephant(String color) {
         super("Elephant", 8, color);
         if (color.equals("white")) {

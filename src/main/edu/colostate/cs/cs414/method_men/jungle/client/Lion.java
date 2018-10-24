@@ -1,6 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
-class Lion extends Piece {
+public class Lion extends Piece {
     public Lion(String color) {
         super("Lion", 7, color);
         if (color.equals("white")) {
