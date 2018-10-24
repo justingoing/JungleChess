@@ -1,4 +1,4 @@
-package main.edu.colostate.cs.cs414.method_men.jungle.client;
+package edu.colostate.cs.cs414.method_men.jungle.client;
 
 public class Board {
     private final int HEIGHT = 9;
