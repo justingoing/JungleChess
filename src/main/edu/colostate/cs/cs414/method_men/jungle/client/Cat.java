@@ -1,4 +1,4 @@
-package edu.colostate.cs.cs414.method_men.jungle.client;
+package main.edu.colostate.cs.cs414.method_men.jungle.client;
 
 public class Cat extends Piece {
     public Cat(String color) {
