@@ -7,10 +7,9 @@ public class UI {
     private static void createAndShowGUI() {
         JFrame f = new JFrame();
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        f.setLocation(360, 160);
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Background b = new Background();
+        Background b = new Background("src/Images/jungle.jpg");
         f.add(b);
     }
 

@@ -6,8 +6,8 @@ public class Background extends Canvas{
 
     Image img;
 
-    public Background(){
-        img = Toolkit.getDefaultToolkit().getImage("/home/connor/IdeaProjects/cs414-f18-001-Method-Men/src/Images/jungle.jpg");
+    public Background(String path){
+        img = Toolkit.getDefaultToolkit().getImage(path);
     }
 
     public void paint(Graphics g){
