@@ -32,7 +32,7 @@
 
 | Use case id: | R04 |
 | :--- | :--- |
-| Use case name: | Match Invite |
+| Use case name: | Invite to Match |
 | Overview: | The user invites a user to play their match |
 | Primary actors: | User [primary, initiator] |
 | Pre-conditions: | User is signed in |
