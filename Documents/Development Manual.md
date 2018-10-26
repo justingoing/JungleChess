@@ -15,7 +15,7 @@ First clone or download the repository into an IntelliJ project.
 Make sure the Java SDK is set as the SDK for the project (File -> Project Settings -> Project SDK).
 
 Mark src/main as the Source Root directory (\<right click\> -> Mark Directory As -> Sources Root).
-Mark sec/test as the Test Sources Root directory (\<right click\> -> Mark Directory As -> Test Sources Root).
+Mark src/test as the Test Sources Root directory (\<right click\> -> Mark Directory As -> Test Sources Root).
 
 #### Running tests and code
 To run the tests: right click on the src/test directory and select "Run 'All Tests'"
