@@ -37,21 +37,7 @@ public class Game {
         } else if (direction == 'l') {
             --rc[1];
         }
-//        switch (direction) {
-//        //  it did NOT like the switch(char):
-//        //  'd' would execute d then u (2 steps down, one step up)
-//        //  'r' would execute r then l (2 steps left, one step right)
-//            case 'd':
-//                ++rc[0];
-//                ++rc[0];
-//            case 'u':
-//                --rc[0];
-//            case 'r':
-//                ++rc[1];
-//                ++rc[1];
-//            case 'l':
-//                --rc[1];
-//        }
+
         System.out.println("to (" + rc[0] + "," + rc[1] + ")");
         return rc;
     }
@@ -66,38 +52,57 @@ public class Game {
     }
 
     // the do-while loop is for CLI implementation ONLY
-    public void makeMove() {
+    public void makeMove(String interfaceType) {
         Scanner sc = new Scanner(System.in);
-        int[] nextLocation;
+        int[] nextLocation = new int[2];
 
         Piece piece;
         int pieceRank;
         String pieceName;
 
-        // no need to validate the inputs, as we'll be upgrading this with front-end mouse clicks
-        do {
-            whoseTurnIsIt(turn, "'s turn.");
+        if (interfaceType.equals("cli")) {
+            // no need to validate the inputs, as we'll be upgrading this with front-end mouse clicks
+            do {
+                whoseTurnIsIt(turn, "'s turn.");
 
-            System.out.println("What Piece number do you choose? ");
-            System.out.println("  A piece can be selected by it's rank. '1' for Rat, '2' for Cat, etc");
-            pieceRank = sc.nextInt();
-            piece = players[turn].getPiece(pieceRank - 1);
-            pieceName = piece.getName();
+                System.out.println("What Piece number do you choose? ");
+                System.out.println("  A piece can be selected by it's rank. '1' for Rat, '2' for Cat, etc");
+                pieceRank = sc.nextInt();
+                piece = players[turn].getPiece(pieceRank - 1);
+                pieceName = piece.getName();
+                if (piece instanceof Rat && board.isRiver(piece.getRow(), piece.getCol())) {
+                    //a Rat currently in River Tile
+                    System.out.println("How many rows do you want to move horizontally?");
+                    System.out.println("  Can be -1, 0, or 1 to move left, none or right");
+                    int deltaRow = sc.nextInt();
+                    System.out.println("How many rows do you want to move vertically?");
+                    System.out.println("  Can be +/-2, +/-1, or 0 to move up, none or down");
+                    int deltaCol = sc.nextInt();
+                    nextLocation[0] = piece.getRow() + deltaRow;
+                    nextLocation[1] = piece.getCol() + deltaCol;
+                } else {
+                    System.out.println("Which direction do you want to move " + pieceName + "? ");
+                    System.out.println("  Directions can be 'u', 'd', 'l', or 'r'");
+                    char direction = Character.toLowerCase(sc.next().charAt(0));
+                    nextLocation = getDirection(piece, direction);
+                }
+            } while (!isValidMove(piece, nextLocation[0], nextLocation[1]));
+        } else {
+            // TODO retrieve from the UI:
+            // currentRow
+            // currentCol
+            // nextRow (or deltaRow (i.e.: -1 == move up one Tile))
+            // nextCol (or deltaCol (i.e.: 1 == move right one Tile))
+            piece = new Rat("white");
+            pieceRank = 1;
+            pieceName = "Rat";
+            nextLocation = new int[2];
+            nextLocation[0] = 1;
+            nextLocation[1] = 1;
+        }
 
-            System.out.println("Which direction do you want to move " + pieceName + "? ");
-            System.out.println("  Directions can be 'u', 'd', 'l', or 'r'");
-            char direction = Character.toLowerCase(sc.next().charAt(0));
-            nextLocation = getDirection(piece, direction);
-        } while (!isValidMove(piece, nextLocation[0], nextLocation[1]));
-
-        // TODO:
-        // if (a Rat currently in River Tile) {
-            //it can move to any location in it's side of the River
-        //}
-        // else {
-            // valid move, therefore move friendly Piece
-            players[turn].getPiece(pieceRank - 1).setLocation(nextLocation[0], nextLocation[1]);
-        //}
+        // Move the Piece
+        players[turn].getPiece(pieceRank - 1).setLocation(nextLocation[0], nextLocation[1]);
 
         int enemyPieceRank;
         if ((enemyPieceRank = containsPiece(otherPlayer(), piece.getRow(), piece.getCol())) != -1) {
@@ -155,6 +160,92 @@ public class Game {
         return -1;
     }
 
+    public boolean ratCapturesElephant(Piece p, int row, int col) {
+        if (p instanceof Rat) {
+            Piece[] enemyPieces = players[otherPlayer()].getValidPieces();
+
+            if (enemyPieces[7] != null) {
+                int[] elephantsLocation = enemyPieces[7].getLocation();
+
+                return (elephantsLocation[0] == row && elephantsLocation[1] == col);
+            }
+        }
+        return false;
+    }
+
+    public boolean elephantTryingToCaptureRat(Piece p, int row, int col) {
+        if (p instanceof Elephant) {
+            Piece[] enemyPieces = players[otherPlayer()].getValidPieces();
+
+            if (enemyPieces[0] != null) {
+                int[] ratsLocation = enemyPieces[0].getLocation();
+                return (ratsLocation[0] == row && ratsLocation[1] == col);
+            }
+        }
+        System.out.println("Your Piece is not an Elephant.");
+        return false;
+    }
+
+    public boolean isLandingValid(Piece p, int row, int col) {
+        for (Player currPlayer : players) {
+            for (Piece piece : currPlayer.getValidPieces()) {
+                int[] location = piece.getLocation();
+                if (row == location[0] && col == location[1]) {
+                    if (currPlayer.equals(players[otherPlayer()])) {
+                        System.out.println("There is an enemy in your landing spot.");
+                        return (p.getRank() >= piece.getRank()); // returns true if I am of an equal or higher rank than you
+                    } else if (currPlayer.equals(players[turn])) {
+                        System.out.println("Cannot jump across and capture a friendly Piece.");
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true; // Landing Tile is not occupied
+    }
+
+    public boolean isAbleToJump(Piece p, int row, int col, String typeOfMove) {
+        if (p instanceof Tiger || p instanceof Lion) {
+            int[] currLocation = p.getLocation();
+            int currRow = currLocation[0];
+            int currCol = currLocation[1];
+
+            if (currRow == 2 && row == 3) {
+                row = 6;
+            } else if (currRow == 6 && row == 5) {
+                row = 2;
+            } else if (currCol == 0 && col == 1) {
+                col = 3;
+            } else if (currCol == 3) {
+                if (col == 2) {
+                    col = 0;
+                } else if (col == 4) {
+                    col = 6;
+                }
+            } else if (currCol == 6 && col == 5) {
+                col = 3;
+            } else {
+                System.out.println("Your Lion or Tiger is not trying to jump across the river.");
+                return false;
+            }
+
+            System.out.println("Your Lion or Tiger is trying to jump across the River.");
+            if (typeOfMove.equals("testing trying to jump")) {
+                return true;
+            } else if (typeOfMove.equals("trying to jump for real")) {
+                return isLandingValid(p, row, col);
+            }
+        }
+
+        System.out.println("Your Piece is not a Lion or Tiger");
+        return false;
+    }
+
+    public boolean isTryingToJump(Piece p, int row, int col) {
+        return isAbleToJump(p, row, col, "testing trying to jump");
+    }
+
     /**
      * Called from makeMove method and is used to validate if the next move desired is valid by checking:
      * 1. Is the next Tile out of bounds?
@@ -177,11 +268,27 @@ public class Game {
         if (row < 0 || row > 8 || col < 0 || col > 6) {
             System.out.println("Out of bounds!");
             return false;
+
         } else if (board.isRiver(row, col)) {
-            // Return true if the next Tile is a River, and the piece is a Rat
             System.out.println("Next Tile is a River. Only Rats can enter this Tile");
             System.out.println("Is Piece a Rat? " + p.isRat());
-            return p.isRat();
+            return p.isRat(); // Return true if the next Tile is a River, and the piece is a Rat
+
+        } else if (ratCapturesElephant(p, row, col)) {
+            System.out.println("Rat will sneak up and eat the Elephant's brain!");
+            return true;
+
+        } else if (elephantTryingToCaptureRat(p, row, col)) {
+            System.out.println("Elephant cannot capture the Rat because he's too afraid of the Rat...");
+            return false;
+
+        } else if (isTryingToJump(p, row, col)) {
+            System.out.println("Lion or Tiger is trying to jump across the River");
+            boolean able = isAbleToJump(p, row, col, "trying to jump for real");
+            System.out.println("Are they able to jump? " + able);
+            return able;
+            // return isAbleToJump(p, row, col); // use when not debugging
+
         } else if ((enemyPieceRank = containsPiece(otherPlayer(), row, col)) != -1) {
             // There is an enemy located in this next Tile
             System.out.println("Next Tile contains an enemy Piece.");
@@ -191,29 +298,18 @@ public class Game {
                 System.out.println("Next Tile is also a Trap!");
                 System.out.println("You will capture the enemy Piece.");
                 return true;
-                    //check Tile for enemy piece (isTrap==F && (p.rank < ePiece.rank))
             }
-            // Returns true if my Piece's ranks beats the enemy Piece's rank
             System.out.println("Only an equal or higher rank can capture an enemy Piece.");
             System.out.println("Your Piece's rank: " + p.getRank());
-            return (p.getRank() >= enemyPieceRank);
-        }
+            return (p.getRank() >= enemyPieceRank); // Returns true if my Piece's ranks beats the enemy Piece's rank
 
-        // TODO: implement special rules:
-        //          Lion & Tiger jumping across
-        //              Check if there is a Piece @ the other spot
-        //              if (friendly Piece) return false
-        //              else return (p.getRank() > enemyPieceRank)
-        //          Rat captures Elephant
-
-        else if (containsPiece(turn, row, col) != -1) {
+        } else if (containsPiece(turn, row, col) != -1) {
             System.out.println("There is a friendly Piece located here.");
             System.out.println("You can't capture your own Piece.");
             return false;
         }
 
-        // this is a valid move
-        return true;
+        return true; // this is a valid move
     }
 
     /**

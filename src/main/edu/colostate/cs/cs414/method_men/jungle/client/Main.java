@@ -5,9 +5,10 @@ public class Main {
         Game game = new Game();
         int winner;
         game.printBoard();
+        String interfaceType = "cli";
 
         while ((winner = game.winnerCheck()) == -1) {
-            game.makeMove();
+            game.makeMove(interfaceType);
             game.incrementTurn();
             game.printBoard();
         }
