@@ -2,20 +2,38 @@
 
 ## Development Environment
 
-The Development Environment requires no dependencies other than Java SDK.  
+The development environment requires no dependencies other than a Java SDK version 1.8 or newer and JUnit 5 or newer.  
 The program can be compiled and ran using the IDE of choice.
 
-## Running Tests
+### IntelliJ instructions
+#### Dependencies
+Make sure that Java 1.8 or newer and JUnit 5 or newer are installed.
 
-This section will be added soon.
+#### Setup
+First clone or download the repository into an IntelliJ project.
+
+Make sure the Java SDK is set as the SDK for the project (File -> Project Settings -> Project SDK).
+
+Mark src/main as the Source Root directory (\<right click\> -> Mark Directory As -> Sources Root).
+Mark sec/test as the Test Sources Root directory (\<right click\> -> Mark Directory As -> Test Sources Root).
+
+#### Running tests and code
+To run the tests: right click on the src/test directory and select "Run 'All Tests'"
+
+To run the code: Run -> Run... -> Main
+
+## Running Tests
+See the above section for information on running tests in an IDE.
+
+Information on running tests from the command line will be added later.
 
 ## Contributor Conduct
 
 ### Coding Conventions
-These conventions are very similar to the [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) with the exception of indentations.
+For any conventions not mentioned in this document, refer to [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html).
 
 #### Indentations:
-All indentations should be tabs, not spaces.
+All indentations should be 4 spaces, not tab characters.
 
 #### Curly Braces:
 There should never be a line break before the open brace.  
