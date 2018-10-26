@@ -28,6 +28,10 @@ public class UI {
         buttons[6][0].setIcon(new ImageIcon(new ImageIcon("src/Images/elephant.jpg").getImage().getScaledInstance(75,75, Image.SCALE_SMOOTH)));
         buttons[6][4].setIcon(new ImageIcon(new ImageIcon("src/Images/leopard.JPG").getImage().getScaledInstance(75,75, Image.SCALE_SMOOTH)));
         buttons[8][6].setIcon(new ImageIcon(new ImageIcon("src/Images/lion.jpg").getImage().getScaledInstance(75,75, Image.SCALE_SMOOTH)));
+        buttons[8][3].setIcon(new ImageIcon(new ImageIcon("src/Images/den.jpeg").getImage().getScaledInstance(75,75, Image.SCALE_SMOOTH)));
+        buttons[7][3].setIcon(new ImageIcon(new ImageIcon("src/Images/trap.jpg").getImage().getScaledInstance(75,75, Image.SCALE_SMOOTH)));
+        buttons[6][3].setIcon(new ImageIcon(new ImageIcon("src/Images/grass.jpeg").getImage().getScaledInstance(75,75, Image.SCALE_SMOOTH)));
+        buttons[5][4].setIcon(new ImageIcon(new ImageIcon("src/Images/water.jpeg").getImage().getScaledInstance(75,75, Image.SCALE_SMOOTH)));
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 7; j++) {
                 buttonPanel.add(buttons[i][j]);
