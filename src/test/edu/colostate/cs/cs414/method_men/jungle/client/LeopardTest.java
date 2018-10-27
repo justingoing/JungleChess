@@ -7,30 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class LeopardTest {
 
     @Test
-    void setLocation() {
-    }
-
-    @Test
-    void getLocation() {
-    }
-
-    @Test
-    void getRow() {
-    }
-
-    @Test
-    void getCol() {
-    }
-
-    @Test
-    void getName() {
-    }
-
-    @Test
-    void getRank() {
-    }
-
-    @Test
-    void isRat() {
+    void constructor() {
+        Leopard test1 = new Leopard("white");
+        Leopard test2 = new Leopard("black");
+        int[] loc1 = test1.getLocation();
+        assertTrue(loc1[0] == 2 && loc1[1] == 2);
+        int[] loc2 = test2.getLocation();
+        assertTrue(loc2[0] == 6 && loc2[1] == 4);
     }
 }
