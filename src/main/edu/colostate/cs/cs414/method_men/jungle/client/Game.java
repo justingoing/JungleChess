@@ -54,19 +54,24 @@ public class Game {
     // the do-while loop is for CLI implementation ONLY
     public void makeMove(String interfaceType) {
         Scanner sc = new Scanner(System.in);
-        int[] nextLocation = new int[2];
+        int[] nextLocation;
 
         Piece piece;
         String pieceInput;
         int pieceRank = -1;
-        boolean validPiece = false;
-        boolean validPieceInner = false;
+        boolean validPiece;
+        boolean validPieceInner;
         String pieceName;
-        char direction = '-';
-        boolean validDirection = false;
+        char direction = '#';
+        boolean validDirection;
 
         if (interfaceType.equals("cli")) {
             do {
+                //printBoard();
+                validPiece = false;
+                validPieceInner = false;
+                validDirection = false;
+
                 whoseTurnIsIt(turn, "'s turn.");
 
                 while (!validPiece) {
@@ -81,7 +86,7 @@ public class Game {
                             System.out.println("\tERROR: " + pieceInput + " is not a valid rank");
                         }
                     }
-                    if (players[turn].getPiece(pieceRank) != null) {
+                    if (players[turn].getPiece(pieceRank - 1) != null) {
                         validPiece = true;
                     } else {
                         System.out.println("\tERROR: " + pieceRank + " not longer exists");
@@ -93,7 +98,7 @@ public class Game {
                 while (!validDirection) {
                     System.out.println("Which direction do you want to move " + pieceName + "? ");
                     System.out.println("  Directions can be 'u', 'd', 'l', or 'r'");
-                    direction = Character.toLowerCase(sc.next().charAt(0));
+                    direction = Character.toLowerCase(sc.nextLine().charAt(0));
 
                     if (direction == 'u' || direction == 'd' || direction == 'l' || direction == 'r') {
                         validDirection = true;
@@ -215,6 +220,7 @@ public class Game {
                 }
             }
         }
+
         // Check the landing spot to see if the Lion||Tiger can land there
         for (Player currPlayer : players) {
             for (Piece piece : currPlayer.getValidPieces()) {
