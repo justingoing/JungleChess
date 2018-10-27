@@ -41,6 +41,8 @@ public class Piece {
         return this.rank;
     }
 
+    String getColor(){return this.color;}
+
     boolean isRat() {
         if (name.equals("Rat")) {
             return true;
