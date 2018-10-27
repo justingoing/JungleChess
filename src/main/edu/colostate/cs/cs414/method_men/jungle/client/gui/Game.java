@@ -1,16 +1,14 @@
-package edu.colostate.cs.cs414.method_men.jungle.client;
+package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class UI {
+public class Game extends Page {
+    public Game(JFrame frame) {
+        super(frame);
 
-    private static void createAndShowGUI() {
-        JFrame f = new JFrame();
-        f.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Background b = new Background("src/Images/jungle.jpg");
-        Container contentPane = f.getContentPane();
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(9, 7));
         buttonPanel.setPreferredSize(new Dimension(7*75, 9*75));
@@ -37,15 +35,9 @@ public class UI {
                 buttonPanel.add(buttons[i][j]);
             }
         }
-        contentPane.add(buttonPanel, BorderLayout.CENTER);
-        f.pack();
-        f.add(b);
-        f.setVisible(true);
+        add(buttonPanel, BorderLayout.CENTER);
+        frame.add(b);
+
     }
 
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(() -> createAndShowGUI());
-    }
 }
