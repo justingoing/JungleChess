@@ -57,35 +57,52 @@ public class Game {
         int[] nextLocation = new int[2];
 
         Piece piece;
-        int pieceRank;
+        String pieceInput;
+        int pieceRank = -1;
+        boolean validPiece = false;
+        boolean validPieceInner = false;
         String pieceName;
+        char direction = '-';
+        boolean validDirection = false;
 
         if (interfaceType.equals("cli")) {
-            // no need to validate the inputs, as we'll be upgrading this with front-end mouse clicks
             do {
                 whoseTurnIsIt(turn, "'s turn.");
 
-                System.out.println("What Piece number do you choose? ");
-                System.out.println("  A piece can be selected by it's rank. '1' for Rat, '2' for Cat, etc");
-                pieceRank = sc.nextInt();
+                while (!validPiece) {
+                    while (!validPieceInner) {
+                        System.out.println("What Piece number do you choose? ");
+                        System.out.println("  A piece can be selected by it's rank. '1' for Rat, '2' for Cat, etc");
+                        pieceInput = sc.nextLine();
+                        try {
+                            pieceRank = Integer.parseInt(pieceInput.trim());
+                            validPieceInner = true;
+                        } catch (NumberFormatException e) {
+                            System.out.println("\tERROR: " + pieceInput + " is not a valid rank");
+                        }
+                    }
+                    if (players[turn].getPiece(pieceRank) != null) {
+                        validPiece = true;
+                    } else {
+                        System.out.println("\tERROR: " + pieceRank + " not longer exists");
+                    }
+                }
                 piece = players[turn].getPiece(pieceRank - 1);
                 pieceName = piece.getName();
-                if (piece instanceof Rat && board.isRiver(piece.getRow(), piece.getCol())) {
-                    //a Rat currently in River Tile
-                    System.out.println("How many rows do you want to move horizontally?");
-                    System.out.println("  Can be -1, 0, or 1 to move left, none or right");
-                    int deltaRow = sc.nextInt();
-                    System.out.println("How many rows do you want to move vertically?");
-                    System.out.println("  Can be +/-2, +/-1, or 0 to move up, none or down");
-                    int deltaCol = sc.nextInt();
-                    nextLocation[0] = piece.getRow() + deltaRow;
-                    nextLocation[1] = piece.getCol() + deltaCol;
-                } else {
+
+                while (!validDirection) {
                     System.out.println("Which direction do you want to move " + pieceName + "? ");
                     System.out.println("  Directions can be 'u', 'd', 'l', or 'r'");
-                    char direction = Character.toLowerCase(sc.next().charAt(0));
-                    nextLocation = getDirection(piece, direction);
+                    direction = Character.toLowerCase(sc.next().charAt(0));
+
+                    if (direction == 'u' || direction == 'd' || direction == 'l' || direction == 'r') {
+                        validDirection = true;
+                    } else {
+                        System.out.println("\tERROR: " + direction + " is not a valid direction");
+                    }
                 }
+
+                nextLocation = getDirection(piece, direction);
             } while (!isValidMove(piece, nextLocation[0], nextLocation[1]));
         } else {
             // TODO retrieve from the UI:
@@ -187,6 +204,18 @@ public class Game {
     }
 
     public boolean isLandingValid(Piece p, int row, int col) {
+        // Check if a Rat is in the River (is in the path of the jump)
+        for (Player currPlayer : players) {
+            Piece[] pieces = currPlayer.getValidPieces();
+            if (pieces[0] != null) {
+                Piece rat = pieces[0];
+
+                if (rat.getRow() == row || rat.getCol() == col) {
+                    //TODO
+                }
+            }
+        }
+        // Check the landing spot to see if the Lion||Tiger can land there
         for (Player currPlayer : players) {
             for (Piece piece : currPlayer.getValidPieces()) {
                 int[] location = piece.getLocation();
