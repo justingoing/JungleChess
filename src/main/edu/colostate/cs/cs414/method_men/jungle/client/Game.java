@@ -1,6 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
-
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
@@ -16,7 +16,10 @@ public class Game {
         players = new Player[2];
         players[0] = new Player("white");
         players[1] = new Player("black");
-        turn = 0; // white makes first move
+//        Random r = new Random(System.currentTimeMillis());
+//        turn = r.nextInt(999999) % 2;
+        turn = 0; // top Player makes first move
+        System.out.println(turn);
         board = new Board();
     }
 
@@ -27,10 +30,8 @@ public class Game {
 
     //For CLI implementation ONLY
     public int[] getDirection(Piece p, char direction) {
-        int[] rc = new int[2];
-        rc[0] = p.getRow();
-        rc[1] = p.getCol();
-        System.out.println("from (" + rc[0] + "," + rc[1] + ")");
+        int[] rc = populateLocation(p.getRow(), p.getCol());
+        System.out.println("\tfrom (" + rc[0] + ", " + rc[1] + ")");
 
         if (direction =='d') {
             rc[0]++;
@@ -42,7 +43,7 @@ public class Game {
             --rc[1];
         }
 
-        System.out.println("to (" + rc[0] + "," + rc[1] + ")");
+        System.out.println("\tto   (" + rc[0] + ", " + rc[1] + ")");
         return rc;
     }
 
@@ -87,6 +88,19 @@ public class Game {
     }
 
     /**
+     * There were many instance of the following 4 lines, so I made a method for it
+     * @param row the next move's horizontal location on the board
+     * @param col the next move's vertical location on the board
+     * @return the int array with [row, col]
+     */
+    public int[] populateLocation(int row, int col) {
+        int[] nextLocation = new int[2];
+        nextLocation[0] = row;
+        nextLocation[1] = col;
+        return nextLocation;
+    }
+
+    /**
      * Called from isValidMove method and is used for when validating a move from user.
      * If there is a Piece, it will return the rank, else -1.
      * @param playerNumber used for checking either enemy Pieces or friendly Pieces
@@ -105,10 +119,10 @@ public class Game {
 
     public boolean ratCapturesElephant(Piece p, int row, int col) {
         if (p instanceof Rat) {
-            Piece[] enemyPieces = players[otherPlayer()].getValidPieces();
+            Piece enemyElephant = players[otherPlayer()].getPiece(7);
 
-            if (enemyPieces[7] != null) {
-                int[] elephantsLocation = enemyPieces[7].getLocation();
+            if (enemyElephant != null) {
+                int[] elephantsLocation = enemyElephant.getLocation();
 
                 return (elephantsLocation[0] == row && elephantsLocation[1] == col);
             }
@@ -195,7 +209,8 @@ public class Game {
     public int[] isAbleToJump(Piece p, int nextRow, int nextCol, String typeOfMove) {
         int startingRow = nextRow;
         int startingCol = nextCol;
-        int[] returnDestination = new int[2];
+        int[] returnDestination = populateLocation(FAILURE, FAILURE);
+
 
         if (p instanceof Tiger || p instanceof Lion) {
             int[] currLocation = p.getLocation();
@@ -236,8 +251,8 @@ public class Game {
                 System.out.println("This is a valid jump: " + isThisAValidJump);
                 System.out.println("The jump is shooting for " + nextRow + " " + nextCol);
                 if (isThisAValidJump) {
-                    returnDestination[0] = nextRow;
-                    returnDestination[1] = nextCol;
+                    returnDestination = populateLocation(nextRow, nextCol);
+                    System.out.println("The jump is successfully going to land on (" + returnDestination[0] + ", " + returnDestination[1] + ").");
                     return returnDestination;
                 } else {
                     return FAILURE_DESTINATION;
@@ -255,96 +270,151 @@ public class Game {
     }
 
     /**
-     * Called from makeMove method and is used to validate if the next move desired is valid by checking:
-     * 1. Is the next Tile out of bounds?
-     * 2. Is the next Tile a River? Is p a Rat?
-     * 3. Does the next Tile have an enemy Piece? Does p outrank it? Exception: Trap Tile overrides rank.
-     * 4. Is p a Lion or Tiger? After it lands the jump, is there an enemy Piece? Does p outrank it?
-     * 5. Is p a Rat?
-     *        Is Rat's current location River?
-     *            Is there any Piece that blocks the non-River Tile desired?
-     *        (Rat is on land) Is enemy an Elephant?
-     * 6. Does the next Tile contain a friendly Piece?
-     * 7. Then it's a valid move.
+     * Tests if:
+     * 1. Piece in question is a Rat
+     * 2. Rat is currently located in the River and
+     * 3. Rat wants to emerge from the River.
+     * @param p the piece in question
+     * @param row the next move's horizontal location on the board
+     * @param col the next move's vertical location on the board
+     * @return true only if all 3 conditions are true
+     */
+    public boolean isRatTryingToEmerge(Piece p, int row, int col) {
+        return (p.isRat() && board.isRiver(p.getRow(), p.getCol()) && board.isJump(row, col));
+    }
+
+    /**
+     * Once the piece is deemed a Rat, in the River and is attempting to emerge:
+     * we will now iterate through both Players' Pieces to see if the movement is blocked
+     * @param row the next move's horizontal location on the board
+     * @param col the next move's vertical location on the board
+     * @return true if there aren't any Pieces at the next move's location
+     */
+    public boolean isAbleToEmerge(int row, int col) {
+        for (Player currPlayer : players) {
+            for (Piece currPiece : currPlayer.getValidPieces()) {
+                if (currPiece.getRow() == row && currPiece.getCol() == col) {
+                    if (currPlayer == players[turn]) {
+                        System.out.println("Cannot capture a friendly piece.");
+                    } else {
+                        System.out.println("Cannot attack from the water.");
+                    }
+                    return false;
+                }
+            }
+        }
+        // No Pieces are blocking the move to exit the water
+        return true;
+    }
+
+    /**
+     * Called from makeMove method and is used to validate if the next move desired is valid.
+     * If the move enters on of the 8 xceptions listed, then it will return within the same conditional, regardless of outcome.
+     * // TODO Should we not return FAILURE_DESTINATION so many times (read one line above), and instead return the failure after exception #8?
+     *
+     * The order of checking for exceptions is as follows:
+     *
+     * 1. Is the next move's location out of bounds horizontally or vertically? [fail]
+     * 2. Is the p a Lion or Tiger and attempting to jump across the River?
+     *      Is the path blocked by a Rat in the River? [fail]
+     *      Is there a friendly piece in the landing location? [fail]
+     *      Is there an enemy in the landing location?
+     *          Does p outrank the enemy? [succ]
+     * 3. Is p a Rat, currently in the River, and wants to emerge from the River?
+     *      Is there a Piece located in the next move's location that will block this move? [fail]
+     * 4. Is the next move's location a River Tile?
+     *      Is p a Rat? [succ]
+     * 5. Is p a Rat and want to capture the enemy Elephant? [succ]
+     * 6. Is p an Elephant and is trying to capture the enemy Rat? [fail]
+     * 7. Does the next move's location contain an enemy Piece?
+     *      Is the next move's location on a Trap Tile? [succ]
+     *      Does p outrank the enemy? [succ]
+     * 8. Does the next move's location contain a friendly Piece? [fail]
+     * 9. If no aforementioned conditions are true, then it's a valid move.
      * @param p the desired Piece that the Player wants to move.
      * @param row the desired Tile's next horizontal location on the board
      * @param col the desired Tile's next vertical location on the board
-     * @return true if valid, else false
+     * @return [-1, -1] called "FAILURE_DESTINATION" to represent an invalid move.
+     *         [nextMovesRow, nextMovesCol] to represent a valid move in an int array
      */
     public int[] isValidMove(Piece p, int row, int col) {
         int enemyPieceRank;
-        int[] nextDestination = new int[2];
 
         if (row < 0 || row > 8 || col < 0 || col > 6) {
+            // 1. The next move's location out of bounds
             System.out.println("Out of bounds!");
             return FAILURE_DESTINATION;
 
         } else if (isTryingToJump(p, row, col)) {
-            System.out.println("Lion or Tiger is trying to jump across the River");
-            nextDestination = isAbleToJump(p, row, col, "trying to jump for real");
-            if (nextDestination[0] == FAILURE && nextDestination[1] == FAILURE) {
+            // 2. p is a Lion or Tiger and is attempting to jump across the River
+            int[] nextDestination = isAbleToJump(p, row, col, "trying to jump for real");
+            if (nextDestination[0] != FAILURE && nextDestination[1] != FAILURE) {
                 return nextDestination;
             } else {
-                System.out.println("Dude, you just can't jump it...");
+                System.out.println("Your " + p.getName() + " cannot jump across at this time.");
+                return FAILURE_DESTINATION;
+            }
+
+        } else if (isRatTryingToEmerge(p, row, col)) {
+            // 3. p is a Rat, is currently in the River, and wants to emerge from the River
+            System.out.println("Rat is trying to emerge from the River onto a Land-like Tile.");
+            if (isAbleToEmerge(row, col)) {
+                System.out.println("Rat will successfully emerge from the River.");
+                return populateLocation(row, col);
+            } else {
                 return FAILURE_DESTINATION;
             }
 
         } else if (board.isRiver(row, col)) {
-            System.out.println("Next Tile is a River. Only Rats can enter this Tile");
+            // 4. The next move's location a River Tile
+            System.out.println("Next Tile is a River. Only Rats can enter this Tile.");
             if (p.isRat()) {
-                System.out.println("Rat will move to (" + row + ", " + col + ")");
-                nextDestination[0] = row; // Valid Move
-                nextDestination[1] = col;
-                return nextDestination;
+                System.out.println("Rat will successfully move to (" + row + ", " + col + ")");
+                return populateLocation(row, col);
             } else {
                 System.out.println("Cannot move " + p.getName() + " into the River.");
                 return FAILURE_DESTINATION;
             }
 
         } else if (ratCapturesElephant(p, row, col)) {
+            // 5. p is a Rat and wants to capture the enemy Elephant
             System.out.println("Rat will sneak up and eat the Elephant's brain!");
-            nextDestination[0] = row;
-            nextDestination[1] = col;
-            return nextDestination;
+            return populateLocation(row, col);
 
         } else if (elephantTryingToCaptureRat(p, row, col)) {
+            // 6. p is an Elephant and is trying to capture the enemy Rat
             System.out.println("Elephant cannot capture the Rat because he's too afraid of the Rat...");
             return FAILURE_DESTINATION;
 
         } else if ((enemyPieceRank = containsPiece(otherPlayer(), row, col)) != -1) {
-            // There is an enemy located in this next Tile
-            System.out.println("Next Tile contains an enemy Piece.");
+            // 7. The next move's location contains an enemy Piece
 
             if (board.isTrap(row, col)) {
                 // next Tile is a Trap
                 System.out.println("Next Tile is also a Trap!");
                 System.out.println("You will capture the enemy Piece.");
-                nextDestination[0] = row;
-                nextDestination[1] = col;
-            }
-            System.out.println("Only an equal or higher rank can capture an enemy Piece.");
-            System.out.println("Your Piece's rank: " + p.getRank());
-            if (p.getRank() >= enemyPieceRank) {
-                // Returns if my Piece's ranks beats the enemy Piece's rank
-                nextDestination[0] = row;
-                nextDestination[1] = col;
-                return nextDestination;
+                return populateLocation(row, col);
             } else {
-                return FAILURE_DESTINATION;
+                System.out.println("Only an equal or higher rank can capture an enemy Piece.");
+                System.out.println("Your Piece's rank: " + p.getRank());
+                if (p.getRank() >= enemyPieceRank) {
+                    // Returns if my Piece's ranks beats the enemy Piece's rank
+                    return populateLocation(row, col);
+                } else {
+                    return FAILURE_DESTINATION;
+                }
             }
-
 
         } else if (containsPiece(turn, row, col) != -1) {
+            // 8. The next move's location contains a friendly Piece
             System.out.println("There is a friendly Piece located here.");
             System.out.println("You can't capture your own Piece.");
             return FAILURE_DESTINATION;
+        } else {
+            // 9. It is a valid move
+            System.out.println("\tJust a regular move without any exceptions, thus is a valid move");
+            return populateLocation(row, col);
         }
-
-        // this is a valid move
-        System.out.println("This is a valid move.");
-        nextDestination[0] = row;
-        nextDestination[1] = col;
-        return nextDestination;
     }
 
 
@@ -428,9 +498,7 @@ public class Game {
             piece = new Rat("white");
             pieceRank = 1;
             pieceName = "Rat";
-            nextLocation = new int[2];
-            nextLocation[0] = 1;
-            nextLocation[1] = 1;
+            nextLocation = populateLocation(-0, -0);
         }
 
         // Move the Piece

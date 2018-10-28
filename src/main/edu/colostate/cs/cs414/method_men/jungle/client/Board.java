@@ -32,11 +32,6 @@ public class Board {
                 || isDen(row, col + 1) || isDen(row, col - 1)) {
             return true;
         }
-//        if ((row == 0 || row == 8) && (col == 2 || col == 4)) {
-//            return true;
-//        } else if ((row == 1 || row == 7) && col == 3) {
-//            return true;
-//        }
         return false;
     }
 
@@ -62,24 +57,13 @@ public class Board {
                 || isRiver(row, col + 1) || isRiver(row, col - 1)) {
             return true;
         }
-        //if (row == 2 || row == 6) {
-        //	if (col >= 1 && col <= 2) {
-        //		return true;
-        //    } else if (col >= 4 && col <= 5) {
-        //		return true;
-        //    }
-        //} else if (row >= 3 && row <= 5) {
-        //	if (col == 0 || col == 3 || col == 6) {
-        //		return true;
-        //	}
-        //}
         return false;
     }
 
     /**Make instance of Tile inside the 2d array of Tiles
      * based off the (row, col) location inside the board.
-     * @param row location within the board
-     * @param col location within the board
+     * @param row horizontal location on board
+     * @param col vertical location on board
      * @return a new instance of it's corresponding Tiles
      */
     public Tile makeInstance(int row, int col) {
