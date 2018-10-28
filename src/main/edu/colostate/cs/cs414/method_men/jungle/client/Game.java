@@ -9,8 +9,8 @@ public class Game {
     private Board board;
     private final int FAILURE = -1;
     private final int SUCCESS = 100;
-    private int[] failureDestination;
-    private int[] successDestination;
+    private final int[] FAILURE_DESTINATION = {FAILURE, FAILURE};
+    private final int[] SUCCESS_DESTINATION = {SUCCESS, SUCCESS};
 
     public Game () {
         players = new Player[2];
@@ -18,14 +18,6 @@ public class Game {
         players[1] = new Player("black");
         turn = 0; // white makes first move
         board = new Board();
-
-        failureDestination = new int[2];
-        failureDestination[0] = FAILURE;
-        failureDestination[1] = FAILURE;
-
-        successDestination = new int[2];
-        successDestination[0] = SUCCESS;
-        successDestination[1] = SUCCESS;
     }
 
     //For CLI implementation ONLY
@@ -143,19 +135,32 @@ public class Game {
         for (Player currPlayer : players) {
             Piece rat = currPlayer.getValidPieces()[0];
             if (rat != null) {
+                int min;
+                int max;
 
                 //determine if the Lion|Tiger is moving horizontally|vertically
                 if ((currLocation[0] - row) != 0) {
-                    //moving vertically
-                    for (int checkThisRow = currLocation[0]; checkThisRow <= row; ++checkThisRow) {
+                    // Moving vertically across the River
+                    // We're going to check up to down regardless of direction of travel
+                    min = (currLocation[0] < row) ? currLocation[0] : row;
+                    max = (currLocation[0] > row) ? currLocation[0] : row;
+
+                    System.out.println("Checking for Rat from ([" + (min+1) + " to " + (max-1) + "], " + col + ").");
+
+                    for (int checkThisRow = min + 1; checkThisRow < max; ++checkThisRow) {
                         if (rat.getRow() == checkThisRow && rat.getCol() == col) {
                             System.out.println("The vertical jump is blocked by a Rat in the River.");
                             return false;
                         }
                     }
                 } else if ((currLocation[1] - col) != 0) {
-                    //moving horizontally
-                    for (int checkThisCol = currLocation[1]; checkThisCol <= col; ++checkThisCol) {
+                    // Moving horizontally across the River
+                    // We're going to check left to right regardless of direction of travel
+                    min = (currLocation[1] < col) ? currLocation[1] : col;
+                    max = (currLocation[1] > col) ? currLocation[1] : col;
+                    System.out.println("Checking for Rat from (" + row + ", [" + (min+1) + " to " + (max-1) + "]).");
+
+                    for (int checkThisCol = min + 1; checkThisCol < max; ++checkThisCol) {
                         if (rat.getRow() == row && rat.getCol() == checkThisCol){
                             System.out.println("The horizontal jump is blocked by a Rat in the River.");
                             return false;
@@ -182,13 +187,15 @@ public class Game {
             }
         } // There aren't any more Pieces to check
 
+        System.out.println("Good news, everyone!");
+        System.out.println("\tThere is nothing blocking your " + p.getName() + "'s jump to (" + row + ", " + col + ").");
         return true; // Landing Tile is not occupied
     }
 
     public int[] isAbleToJump(Piece p, int nextRow, int nextCol, String typeOfMove) {
         int startingRow = nextRow;
         int startingCol = nextCol;
-        int[] returnDestination = failureDestination; // [-1, -1]
+        int[] returnDestination = new int[2];
 
         if (p instanceof Tiger || p instanceof Lion) {
             int[] currLocation = p.getLocation();
@@ -219,25 +226,32 @@ public class Game {
                 System.out.println("Row transformation: " + startingRow + " => " + nextRow);
                 System.out.println("Col transformation: " + startingCol + " => " + nextCol);
                 if (!(startingRow == nextRow && startingCol == nextCol)) {
-                    return successDestination;//return "Yes, Lion|Tiger is trying to Jump"
+                    return SUCCESS_DESTINATION;//return "Yes, Lion|Tiger is trying to Jump"
+                } else {
+                    return FAILURE_DESTINATION;
                 }
             } else {
                 System.out.println("Your Lion or Tiger is trying to jump across the River to (" + nextRow + ", " + nextCol + ").");
-                if (isLandingValid(p, nextRow, nextCol)) {
+                boolean isThisAValidJump = isLandingValid(p, nextRow, nextCol);
+                System.out.println("This is a valid jump: " + isThisAValidJump);
+                System.out.println("The jump is shooting for " + nextRow + " " + nextCol);
+                if (isThisAValidJump) {
                     returnDestination[0] = nextRow;
                     returnDestination[1] = nextCol;
                     return returnDestination;
+                } else {
+                    return FAILURE_DESTINATION;
                 }
             }
         }
 
-        System.out.println("Your Piece is not a Lion or Tiger");
-        return failureDestination;
+        System.out.println("Your " + p.getName() + " is apparently not a Lion or Tiger");
+        return FAILURE_DESTINATION;
     }
 
     public boolean isTryingToJump(Piece p, int row, int col) {
         int[] nextDestination = isAbleToJump(p, row, col, "testing trying to jump");
-        return (nextDestination == successDestination);
+        return (nextDestination[0] == SUCCESS && nextDestination[1] == SUCCESS);
     }
 
     /**
@@ -263,16 +277,16 @@ public class Game {
 
         if (row < 0 || row > 8 || col < 0 || col > 6) {
             System.out.println("Out of bounds!");
-            return failureDestination;
+            return FAILURE_DESTINATION;
 
         } else if (isTryingToJump(p, row, col)) {
             System.out.println("Lion or Tiger is trying to jump across the River");
             nextDestination = isAbleToJump(p, row, col, "trying to jump for real");
-            if (nextDestination[0] == -1) {
-
+            if (nextDestination[0] == FAILURE && nextDestination[1] == FAILURE) {
                 return nextDestination;
             } else {
-                return failureDestination;
+                System.out.println("Dude, you just can't jump it...");
+                return FAILURE_DESTINATION;
             }
 
         } else if (board.isRiver(row, col)) {
@@ -284,7 +298,7 @@ public class Game {
                 return nextDestination;
             } else {
                 System.out.println("Cannot move " + p.getName() + " into the River.");
-                return failureDestination;
+                return FAILURE_DESTINATION;
             }
 
         } else if (ratCapturesElephant(p, row, col)) {
@@ -295,7 +309,7 @@ public class Game {
 
         } else if (elephantTryingToCaptureRat(p, row, col)) {
             System.out.println("Elephant cannot capture the Rat because he's too afraid of the Rat...");
-            return failureDestination;
+            return FAILURE_DESTINATION;
 
         } else if ((enemyPieceRank = containsPiece(otherPlayer(), row, col)) != -1) {
             // There is an enemy located in this next Tile
@@ -314,16 +328,20 @@ public class Game {
                 // Returns if my Piece's ranks beats the enemy Piece's rank
                 nextDestination[0] = row;
                 nextDestination[1] = col;
+                return nextDestination;
+            } else {
+                return FAILURE_DESTINATION;
             }
-            return nextDestination;
+
 
         } else if (containsPiece(turn, row, col) != -1) {
             System.out.println("There is a friendly Piece located here.");
             System.out.println("You can't capture your own Piece.");
-            return failureDestination;
+            return FAILURE_DESTINATION;
         }
 
         // this is a valid move
+        System.out.println("This is a valid move.");
         nextDestination[0] = row;
         nextDestination[1] = col;
         return nextDestination;
@@ -389,12 +407,16 @@ public class Game {
                 }
 
                 nextLocation = getDirection(piece, direction);
-                System.out.println("Hey Mike: " + nextLocation[0] + nextLocation[1]);
+                System.out.println("Sanity Check: " + nextLocation[0] + nextLocation[1]);
 
                 nextLocation = isValidMove(piece, nextLocation[0], nextLocation[1]);
-                System.out.println("Hey Mike: " + nextLocation[0] + nextLocation[1]);
+                System.out.println("Sanity Check: " + nextLocation[0] + nextLocation[1]);
                 if (nextLocation[0] != FAILURE && nextLocation[1] != FAILURE) {
+                    System.out.println("\t\tValid move.");
                     continueAsking = false;
+                } else {
+                    System.out.println("\t\tInvalid move. Select another.");
+                    printBoard();
                 }
             }
         } else {
