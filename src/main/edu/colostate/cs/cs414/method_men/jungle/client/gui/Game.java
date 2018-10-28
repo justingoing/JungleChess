@@ -1,13 +1,14 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Game extends Page {
-    public Game(JFrame frame) {
+public class Game extends Page implements ActionListener {
+    public Game(GUI frame) {
         super(frame);
-
-        Background b = new Background("src/Images/jungle.jpg");
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(9, 7));
@@ -15,7 +16,11 @@ public class Game extends Page {
         JButton [][] buttons = new JButton[9][7];
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 7; j++) {
-                buttons[i][j] = new JButton();
+                JButton button = new JButton();
+                button.setBorder(new LineBorder(Color.LIGHT_GRAY));
+                button.addActionListener(this);
+                buttons[i][j] = button;
+
             }
         }
         buttons[6][2].setIcon(new ImageIcon(new ImageIcon("src/Images/wolf.jpg").getImage().getScaledInstance(75,75, Image.SCALE_SMOOTH)));
@@ -36,8 +41,18 @@ public class Game extends Page {
             }
         }
         add(buttonPanel, BorderLayout.CENTER);
-        frame.add(b);
 
     }
 
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        JButton button = (JButton) actionEvent.getSource();
+
+        if (((LineBorder)button.getBorder()).getLineColor().equals(Color.LIGHT_GRAY)) {
+            button.setBorder(new LineBorder(Color.BLACK));
+        } else if (((LineBorder)button.getBorder()).getLineColor().equals(Color.BLACK)) {
+            button.setBorder(new LineBorder(Color.LIGHT_GRAY));
+        }
+
+    }
 }
