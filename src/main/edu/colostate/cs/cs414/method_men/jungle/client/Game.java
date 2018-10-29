@@ -19,8 +19,20 @@ public class Game {
 //        Random r = new Random(System.currentTimeMillis());
 //        turn = r.nextInt(999999) % 2;
         turn = 0; // top Player makes first move
-        System.out.println(turn);
+        debugPrint(turn);
         board = new Board();
+    }
+
+    /**
+     * Feel free to change the debug to true or false depending on if we're demo-ing or not
+     * @param message Could be an int, String, Object, doesn't matter it will print what you want
+     */
+    public void debugPrint(Object message) {
+        boolean debug = false;
+
+        if (debug) {
+            System.out.println("" + message);
+        }
     }
 
     //For CLI implementation ONLY
@@ -29,22 +41,22 @@ public class Game {
     }
 
     //For CLI implementation ONLY
-    public int[] getDirection(Piece p, char direction) {
-        int[] rc = populateLocation(p.getRow(), p.getCol());
-        System.out.println("\tfrom (" + rc[0] + ", " + rc[1] + ")");
+    public NextMove getDirection(Piece p, char direction) {
+        NextMove nextMove = new NextMove(p, populateLocation(p.getRow(), p.getCol()));
+        debugPrint("\tfrom (" + nextMove.getRow() + ", " + nextMove.getCol() + ")");
 
         if (direction =='d') {
-            rc[0]++;
+            nextMove.incRow();
         } else if (direction == 'u') {
-            --rc[0];
+            nextMove.decRow();
         } else if (direction == 'r') {
-            ++rc[1];
+            nextMove.incCol();
         } else if (direction == 'l') {
-            --rc[1];
+            nextMove.decCol();
         }
 
-        System.out.println("\tto   (" + rc[0] + ", " + rc[1] + ")");
-        return rc;
+        debugPrint("\tto   (" + nextMove.getRow() + ", " + nextMove.getCol() + ")");
+        return nextMove;
     }
 
     // for CLI implementation ONLY
@@ -139,7 +151,7 @@ public class Game {
                 return (ratsLocation[0] == row && ratsLocation[1] == col);
             }
         }
-        System.out.println("Your Piece is not an Elephant.");
+        debugPrint("Your Piece is not an Elephant.");
         return false;
     }
 
@@ -159,7 +171,7 @@ public class Game {
                     min = (currLocation[0] < row) ? currLocation[0] : row;
                     max = (currLocation[0] > row) ? currLocation[0] : row;
 
-                    System.out.println("Checking for Rat from ([" + (min+1) + " to " + (max-1) + "], " + col + ").");
+                    debugPrint("Checking for Rat from ([" + (min+1) + " to " + (max-1) + "], " + col + ").");
 
                     for (int checkThisRow = min + 1; checkThisRow < max; ++checkThisRow) {
                         if (rat.getRow() == checkThisRow && rat.getCol() == col) {
@@ -172,7 +184,7 @@ public class Game {
                     // We're going to check left to right regardless of direction of travel
                     min = (currLocation[1] < col) ? currLocation[1] : col;
                     max = (currLocation[1] > col) ? currLocation[1] : col;
-                    System.out.println("Checking for Rat from (" + row + ", [" + (min+1) + " to " + (max-1) + "]).");
+                    debugPrint("Checking for Rat from (" + row + ", [" + (min+1) + " to " + (max-1) + "]).");
 
                     for (int checkThisCol = min + 1; checkThisCol < max; ++checkThisCol) {
                         if (rat.getRow() == row && rat.getCol() == checkThisCol){
@@ -183,7 +195,7 @@ public class Game {
                 }
             }
         } // There aren't any Rat's in the jump path
-        System.out.println("There aren't any Rats in the jump path over the River.");
+        debugPrint("There aren't any Rats in the jump path over the River.");
 
         // Check the landing spot to see if the Lion||Tiger can land there
         for (Player currPlayer : players) {
@@ -191,7 +203,7 @@ public class Game {
                 int[] location = piece.getLocation();
                 if (row == location[0] && col == location[1]) {
                     if (currPlayer.equals(players[otherPlayer()])) {
-                        System.out.println("There is an enemy in your landing spot.");
+                        debugPrint("There is an enemy in your landing spot.");
                         return (p.getRank() >= piece.getRank()); // returns true if I am of an equal or higher rank than you
                     } else if (currPlayer.equals(players[turn])) {
                         System.out.println("Cannot jump across and capture a friendly Piece.");
@@ -201,8 +213,8 @@ public class Game {
             }
         } // There aren't any more Pieces to check
 
-        System.out.println("Good news, everyone!");
-        System.out.println("\tThere is nothing blocking your " + p.getName() + "'s jump to (" + row + ", " + col + ").");
+        debugPrint("Good news, everyone!");
+        debugPrint("\tThere is nothing blocking your " + p.getName() + "'s jump to (" + row + ", " + col + ").");
         return true; // Landing Tile is not occupied
     }
 
@@ -216,7 +228,7 @@ public class Game {
             int[] currLocation = p.getLocation();
             int currRow = currLocation[0];
             int currCol = currLocation[1];
-            System.out.println("Current location: (" + currRow + ", " + currCol + ")");
+            debugPrint("Current location: (" + currRow + ", " + currCol + ")");
 
             if (currRow == 2 && nextRow == 3 && (currCol == 1 || currCol == 2 || currCol == 4 || currCol == 5)) {
                 nextRow = 6;
@@ -233,26 +245,26 @@ public class Game {
             } else if (currCol == 6 && nextCol == 5 && (currRow >= 3 && currRow <= 5)) {
                 nextCol = 3;
             } else {
-                System.out.println("Your Lion or Tiger is NOT trying to jump across the River.");
+                debugPrint("Your Lion or Tiger is NOT trying to jump across the River.");
                 return returnDestination;
             }
 
             if (typeOfMove.equals("testing trying to jump")) {
-                System.out.println("Row transformation: " + startingRow + " => " + nextRow);
-                System.out.println("Col transformation: " + startingCol + " => " + nextCol);
+                debugPrint("Row transformation: " + startingRow + " => " + nextRow);
+                debugPrint("Col transformation: " + startingCol + " => " + nextCol);
                 if (!(startingRow == nextRow && startingCol == nextCol)) {
                     return SUCCESS_DESTINATION;//return "Yes, Lion|Tiger is trying to Jump"
                 } else {
                     return FAILURE_DESTINATION;
                 }
             } else {
-                System.out.println("Your Lion or Tiger is trying to jump across the River to (" + nextRow + ", " + nextCol + ").");
+                debugPrint("Your Lion or Tiger is trying to jump across the River to (" + nextRow + ", " + nextCol + ").");
                 boolean isThisAValidJump = isLandingValid(p, nextRow, nextCol);
-                System.out.println("This is a valid jump: " + isThisAValidJump);
-                System.out.println("The jump is shooting for " + nextRow + " " + nextCol);
+                debugPrint("This is a valid jump: " + isThisAValidJump);
+                debugPrint("The jump is shooting for " + nextRow + " " + nextCol);
                 if (isThisAValidJump) {
                     returnDestination = populateLocation(nextRow, nextCol);
-                    System.out.println("The jump is successfully going to land on (" + returnDestination[0] + ", " + returnDestination[1] + ").");
+                    debugPrint("The jump is successfully going to land on (" + returnDestination[0] + ", " + returnDestination[1] + ").");
                     return returnDestination;
                 } else {
                     return FAILURE_DESTINATION;
@@ -260,7 +272,7 @@ public class Game {
             }
         }
 
-        System.out.println("Your " + p.getName() + " is apparently not a Lion or Tiger");
+        debugPrint("Your " + p.getName() + " is apparently not a Lion or Tiger");
         return FAILURE_DESTINATION;
     }
 
@@ -273,14 +285,18 @@ public class Game {
      * Tests if:
      * 1. Piece in question is a Rat
      * 2. Rat is currently located in the River and
-     * 3. Rat wants to emerge from the River.
+     * 3. Rat wants to emerge from the River (onto a Jump Tile).
      * @param p the piece in question
      * @param row the next move's horizontal location on the board
      * @param col the next move's vertical location on the board
      * @return true only if all 3 conditions are true
      */
     public boolean isRatTryingToEmerge(Piece p, int row, int col) {
-        return (p.isRat() && board.isRiver(p.getRow(), p.getCol()) && board.isJump(row, col));
+        debugPrint("Is p a Rat: " + p.isRat());
+        debugPrint("Is (" + p.getRow() + ", " + p.getCol()  + ") in River: " + board.isRiver(p.getRow(), p.getCol()));
+        debugPrint("Is (" + row + ", " + col  + ") Land: " + board.isLand(row, col));
+
+        return (p.isRat() && board.isRiver(p.getRow(), p.getCol()) && board.isLand(row, col));
     }
 
     /**
@@ -331,14 +347,15 @@ public class Game {
      *      Does p outrank the enemy? [succ]
      * 8. Does the next move's location contain a friendly Piece? [fail]
      * 9. If no aforementioned conditions are true, then it's a valid move.
-     * @param p the desired Piece that the Player wants to move.
-     * @param row the desired Tile's next horizontal location on the board
-     * @param col the desired Tile's next vertical location on the board
+     * @param nextMove
      * @return [-1, -1] called "FAILURE_DESTINATION" to represent an invalid move.
      *         [nextMovesRow, nextMovesCol] to represent a valid move in an int array
      */
-    public int[] isValidMove(Piece p, int row, int col) {
+    public int[] isValidMove(NextMove nextMove) {
         int enemyPieceRank;
+        Piece p = nextMove.getPiece();
+        int row = nextMove.getRow();
+        int col = nextMove.getCol();
 
         if (row < 0 || row > 8 || col < 0 || col > 6) {
             // 1. The next move's location out of bounds
@@ -357,9 +374,9 @@ public class Game {
 
         } else if (isRatTryingToEmerge(p, row, col)) {
             // 3. p is a Rat, is currently in the River, and wants to emerge from the River
-            System.out.println("Rat is trying to emerge from the River onto a Land-like Tile.");
+            debugPrint("Rat is trying to emerge from the River onto a Land-like Tile.");
             if (isAbleToEmerge(row, col)) {
-                System.out.println("Rat will successfully emerge from the River.");
+                debugPrint("Rat will successfully emerge from the River.");
                 return populateLocation(row, col);
             } else {
                 return FAILURE_DESTINATION;
@@ -367,9 +384,9 @@ public class Game {
 
         } else if (board.isRiver(row, col)) {
             // 4. The next move's location a River Tile
-            System.out.println("Next Tile is a River. Only Rats can enter this Tile.");
+            debugPrint("Next Tile is a River. Only Rats can enter this Tile.");
             if (p.isRat()) {
-                System.out.println("Rat will successfully move to (" + row + ", " + col + ")");
+                debugPrint("Rat will successfully move to (" + row + ", " + col + ")");
                 return populateLocation(row, col);
             } else {
                 System.out.println("Cannot move " + p.getName() + " into the River.");
@@ -391,125 +408,168 @@ public class Game {
 
             if (board.isTrap(row, col)) {
                 // next Tile is a Trap
-                System.out.println("Next Tile is also a Trap!");
-                System.out.println("You will capture the enemy Piece.");
+                System.out.println("You will capture the enemy Piece in the Trap\n\tbut you get stuck in the process...");
                 return populateLocation(row, col);
             } else {
-                System.out.println("Only an equal or higher rank can capture an enemy Piece.");
-                System.out.println("Your Piece's rank: " + p.getRank());
+                debugPrint("Only an equal or higher rank can capture an enemy Piece.");
+                debugPrint("Your Piece's rank: " + p.getRank());
                 if (p.getRank() >= enemyPieceRank) {
                     // Returns if my Piece's ranks beats the enemy Piece's rank
                     return populateLocation(row, col);
                 } else {
+                    System.out.println("You cannot capture an enemy with a higher rank.");
                     return FAILURE_DESTINATION;
                 }
             }
 
         } else if (containsPiece(turn, row, col) != -1) {
             // 8. The next move's location contains a friendly Piece
-            System.out.println("There is a friendly Piece located here.");
+            debugPrint("There is a friendly Piece located here.");
             System.out.println("You can't capture your own Piece.");
             return FAILURE_DESTINATION;
         } else {
             // 9. It is a valid move
-            System.out.println("\tJust a regular move without any exceptions, thus is a valid move");
+            debugPrint("\tJust a regular move without any exceptions, thus is a valid move");
             return populateLocation(row, col);
         }
+    }
+
+    public int retrieveCliPieceRank(Scanner sc) {
+        String pieceInput;
+        int pieceRank;
+
+        while (true) {
+            System.out.println("What Piece number do you choose? ");
+            System.out.println("  A piece can be selected by it's rank. '1' for Rat, '2' for Cat, etc");
+            pieceInput = sc.nextLine();
+            if (!pieceInput.isEmpty()) {
+                try {
+                    pieceRank = Integer.parseInt(pieceInput.trim());
+                    if (pieceRank >= 1 && pieceRank <= 8) {
+                        return pieceRank;
+                    } else {
+                        System.out.println("\tERROR: " + pieceRank + " must be between 1 and 8");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("\tERROR: " + pieceInput + " is not a valid rank");
+                }
+            } else {
+                System.out.println("\tERROR: must specify a rank");
+            }
+        }
+    }
+
+    public char retrieveCliDirection(Scanner sc) {
+        String directionInput = sc.nextLine();
+
+        if (!directionInput.isEmpty()) {
+            char direction = Character.toLowerCase(directionInput.trim().charAt(0));
+            if (direction == 'u' || direction == 'd' || direction == 'l' || direction == 'r') {
+                return direction;
+            } else {
+                System.out.println("\tERROR: " + direction + " is not a valid direction");
+            }
+        } else {
+            System.out.println("\tERROR: must specify a direction");
+        }
+        return '#';
+    }
+
+    public NextMove retrieveCliInput() {
+        Scanner sc = new Scanner(System.in);
+        NextMove nextMove = null;
+
+        boolean continueAsking = true;
+        boolean validPiece = false;
+        boolean validDirection = false;
+
+        Piece piece = null;
+        int pieceRank = FAILURE;
+        char direction = '#';
+
+        while (continueAsking) {
+            //printBoard();
+            validDirection = false;
+            whoseTurnIsIt(turn, "'s turn.");
+
+            while (!validPiece) {
+                if ((pieceRank = retrieveCliPieceRank(sc)) != FAILURE) {
+                    if (players[turn].getPiece(pieceRank - 1) != null) {
+                        validPiece = true;
+                    } else {
+                        System.out.println("\tERROR: " + pieceRank + " no longer exists");
+                    }
+                } else {
+                    System.out.println("Not a valid Piece");
+                }
+            } // We now have a valid Piece.rank: {1, 2, 3, 4, 5, 6, 7, 8}
+
+            piece = players[turn].getPiece(pieceRank - 1);
+
+            while (!validDirection) {
+                System.out.println("Which direction do you want to move " + piece.getName() + "? ");
+                System.out.println("  Directions can be 'u', 'd', 'l', or 'r'");
+                if ((direction = retrieveCliDirection(sc)) != '#') {
+                    validDirection = true;
+                }
+            } // We now have a valid direction: {u, d, l, r}
+
+            nextMove = getDirection(piece, direction);
+            nextMove.setLocation(isValidMove(nextMove));
+            debugPrint("Sanity Check: " + nextMove.getRow() + ", " + nextMove.getCol());
+
+            if (nextMove.getRow() != FAILURE && nextMove.getCol() != FAILURE) {
+                System.out.println("\t\t\t Valid move");
+                continueAsking = false;
+            } else {
+                System.out.println("\t\t\t Invalid move");
+                printBoard();
+            }
+        }
+
+        return nextMove;
+    }
+
+    // TODO
+    public NextMove retrieveUiInput() {
+        int currRow = -1;
+        int currCol = -1;
+        int nextRow = -1;
+        int nextCol = -1;
+
+        return new NextMove(players[turn], currRow, currCol, nextRow, nextCol);
     }
 
 
     // the do-while loop is for CLI implementation ONLY
     public void makeMove(String interfaceType) {
-        Scanner sc = new Scanner(System.in);
-        int[] nextLocation = new int[2];
-
-        boolean continueAsking = true;
-
-        Piece piece = null;
-        String pieceInput;
-        int pieceRank = -1;
-        boolean validPiece;
-        boolean validPieceInner;
-        String pieceName = null;
-        char direction = '#';
-        boolean validDirection;
+        NextMove nextMove;
 
         if (interfaceType.equals("cli")) {
-            while (continueAsking) {
-                //printBoard();
-                validPiece = false;
-                validPieceInner = false;
-                validDirection = false;
-
-                whoseTurnIsIt(turn, "'s turn.");
-
-                while (!validPiece) {
-                    while (!validPieceInner) {
-                        System.out.println("What Piece number do you choose? ");
-                        System.out.println("  A piece can be selected by it's rank. '1' for Rat, '2' for Cat, etc");
-                        pieceInput = sc.nextLine();
-                        try {
-                            pieceRank = Integer.parseInt(pieceInput.trim());
-                            validPieceInner = true;
-                        } catch (NumberFormatException e) {
-                            System.out.println("\tERROR: " + pieceInput + " is not a valid rank");
-                        }
-                    }
-                    if (players[turn].getPiece(pieceRank - 1) != null) {
-                        validPiece = true;
-                    } else {
-                        System.out.println("\tERROR: " + pieceRank + " not longer exists");
-                    }
-                }
-                piece = players[turn].getPiece(pieceRank - 1);
-                pieceName = piece.getName();
-
-                while (!validDirection) {
-                    System.out.println("Which direction do you want to move " + pieceName + "? ");
-                    System.out.println("  Directions can be 'u', 'd', 'l', or 'r'");
-                    direction = Character.toLowerCase(sc.nextLine().charAt(0));
-
-                    if (direction == 'u' || direction == 'd' || direction == 'l' || direction == 'r') {
-                        validDirection = true;
-                    } else {
-                        System.out.println("\tERROR: " + direction + " is not a valid direction");
-                    }
-                }
-
-                nextLocation = getDirection(piece, direction);
-                System.out.println("Sanity Check: " + nextLocation[0] + nextLocation[1]);
-
-                nextLocation = isValidMove(piece, nextLocation[0], nextLocation[1]);
-                System.out.println("Sanity Check: " + nextLocation[0] + nextLocation[1]);
-                if (nextLocation[0] != FAILURE && nextLocation[1] != FAILURE) {
-                    System.out.println("\t\tValid move.");
-                    continueAsking = false;
-                } else {
-                    System.out.println("\t\tInvalid move. Select another.");
-                    printBoard();
-                }
-            }
+            nextMove = retrieveCliInput();
         } else {
             // TODO retrieve from the UI:
             // currentRow
             // currentCol
             // nextRow (or deltaRow (i.e.: -1 == move up one Tile))
             // nextCol (or deltaCol (i.e.: 1 == move right one Tile))
-            piece = new Rat("white");
-            pieceRank = 1;
-            pieceName = "Rat";
-            nextLocation = populateLocation(-0, -0);
+            nextMove = retrieveUiInput();
         }
 
+        Piece piece = nextMove.getPiece();
+        int nextRow = nextMove.getRow();
+        int nextCol = nextMove.getCol();
+        int pieceRank = piece.getRank();
+
         // Move the Piece
-        players[turn].getPiece(pieceRank - 1).setLocation(nextLocation[0], nextLocation[1]);
+        players[turn].getPiece(pieceRank - 1).setLocation(nextRow, nextCol);
 
         int enemyPieceRank;
         if ((enemyPieceRank = containsPiece(otherPlayer(), piece.getRow(), piece.getCol())) != -1) {
-            System.out.println("Capturing enemy Piece with your " + pieceName);
+            System.out.println("Capturing enemy Piece with your " + piece.getName());
             players[otherPlayer()].isCaptured(enemyPieceRank); // sets captured Piece to null
         }
-        System.out.println("Moved piece " + pieceName + " to (" + piece.getRow() + "," + piece.getCol() + ")\n");
+        debugPrint("Moved piece " + piece.getName()+ " to (" + piece.getRow() + "," + piece.getCol() + ")\n");
     }
 
     /**

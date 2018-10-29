@@ -60,6 +60,17 @@ public class Board {
         return false;
     }
 
+    /**
+     * Used for when Rat is trying to emerge from the River onto a Land Tile.
+     * We only need to check if it is a Jump Tile, and skip checking if it is an Open Tile
+     * @param row horizontal location on board
+     * @param col vertical location on board
+     * @return true if it is a Jump Tile (Land)
+     */
+    public boolean isLand(int row, int col) {
+        return (board[row][col] instanceof Jump);
+    }
+
     /**Make instance of Tile inside the 2d array of Tiles
      * based off the (row, col) location inside the board.
      * @param row horizontal location on board

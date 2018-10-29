@@ -46,6 +46,15 @@ public class Player {
         return validPieces;
     }
 
+    public Piece retrievePieceByLocation(int currRow, int currCol) {
+        for (Piece piece : getValidPieces()) {
+            if (piece.getRow() == currRow && piece.getCol() == currCol) {
+                return piece;
+            }
+        }
+        return null;
+    }
+
     public Piece getPiece(int pieceRank) {
         return this.pieces[pieceRank];
     }
