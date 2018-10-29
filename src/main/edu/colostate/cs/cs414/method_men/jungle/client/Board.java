@@ -6,7 +6,7 @@ public class Board {
     private Tile[][] board;
 
     public Board() {
-        board = new Tile[HEIGHT][WIDTH];
+        this.board = new Tile[HEIGHT][WIDTH];
         makeBoard();
     }
 
@@ -68,7 +68,7 @@ public class Board {
      * @return true if it is a Jump Tile (Land)
      */
     public boolean isLand(int row, int col) {
-        return (board[row][col] instanceof Jump);
+        return (this.board[row][col] instanceof Jump);
     }
 
     /**Make instance of Tile inside the 2d array of Tiles
@@ -98,7 +98,7 @@ public class Board {
     public void makeBoard() {
         for (int row = 0; row < HEIGHT; ++row) {
             for (int col = 0; col < WIDTH; ++col) {
-                board[row][col] = makeInstance(row, col);
+                this.board[row][col] = makeInstance(row, col);
             }
         }
     }
@@ -133,7 +133,7 @@ public class Board {
         for (int row = 0; row < HEIGHT; ++row) {
             for (int col = 0; col < WIDTH; ++col) {
                 if (draw[row][col] == '\0') {
-                    draw[row][col] = board[row][col].getAttribute();
+                    draw[row][col] = this.board[row][col].getAttribute();
                 }
             }
         }
