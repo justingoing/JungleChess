@@ -466,6 +466,9 @@ public class Game {
             char direction = Character.toLowerCase(directionInput.trim().charAt(0));
             if (direction == 'u' || direction == 'd' || direction == 'l' || direction == 'r') {
                 return direction;
+            } else if (direction == 'q') {
+                debugPrint("You chose to quit moving this Piece.");
+                return direction;
             } else {
                 System.out.println("\tERROR: " + direction + " is not a valid direction");
             }
@@ -480,8 +483,8 @@ public class Game {
         NextMove nextMove = null;
 
         boolean continueAsking = true;
-        boolean validPiece = false;
-        boolean validDirection = false;
+        boolean validPiece;
+        boolean validDirection;
 
         Piece piece = null;
         int pieceRank = FAILURE;
@@ -490,6 +493,7 @@ public class Game {
         while (continueAsking) {
             //printBoard();
             validDirection = false;
+            validPiece = false;
             whoseTurnIsIt(turn, "'s turn.");
 
             while (!validPiece) {
@@ -508,22 +512,24 @@ public class Game {
 
             while (!validDirection) {
                 System.out.println("Which direction do you want to move " + piece.getName() + "? ");
-                System.out.println("  Directions can be 'u', 'd', 'l', or 'r'");
+                System.out.println("  Directions can be 'u', 'd', 'l', or 'r'. \n  Or 'q' to Quit moving " + piece.getName());
                 if ((direction = retrieveCliDirection(sc)) != '#') {
                     validDirection = true;
                 }
-            } // We now have a valid direction: {u, d, l, r}
+            } // We now have a valid direction: {u, d, l, r || q}
 
-            nextMove = getDirection(piece, direction);
-            nextMove.setLocation(isValidMove(nextMove));
-            debugPrint("Sanity Check: " + nextMove.getRow() + ", " + nextMove.getCol());
+            if (direction != 'q'){
+                nextMove = getDirection(piece, direction);
+                nextMove.setLocation(isValidMove(nextMove));
+                debugPrint("Sanity Check: " + nextMove.getRow() + ", " + nextMove.getCol());
 
-            if (nextMove.getRow() != FAILURE && nextMove.getCol() != FAILURE) {
-                System.out.println("\t\t\t Valid move");
-                continueAsking = false;
-            } else {
-                System.out.println("\t\t\t Invalid move");
-                printBoard();
+                if (nextMove.getRow() != FAILURE && nextMove.getCol() != FAILURE) {
+                    System.out.println("\t\t\t Valid move");
+                    continueAsking = false;
+                } else {
+                    System.out.println("\t\t\t Invalid move");
+                    printBoard();
+                }
             }
         }
 
