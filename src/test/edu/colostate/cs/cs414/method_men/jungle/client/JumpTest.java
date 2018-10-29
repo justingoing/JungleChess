@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class JumpTest {
 
     @Test
-    void getAttribute() {
+    void constructor() {
+        Jump test = new Jump();
+        assertTrue(test.getAttribute() == '.');
     }
 }

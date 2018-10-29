@@ -43,4 +43,8 @@ public class Piece {
     public boolean isRat() {
         return (this.getName().equals("Rat"));
     }
+  
+    String getColor() {
+        return this.color;
+    }
 }

@@ -11,6 +11,16 @@ public class Board {
     }
 
     /**
+     * Returns a tile on the board
+     * @param row horizontal location on board
+     * @param col vertical location on board
+     * @return requested tile
+     */
+    public Tile getTile(int row, int col){
+        return board[row][col];
+    }
+
+    /**
      * If the Tile at (row, col) is suppose to be a River Tile
      * @param row horizontal location on board
      * @param col vertical location on board
