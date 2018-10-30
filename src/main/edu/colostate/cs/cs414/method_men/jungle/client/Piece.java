@@ -3,13 +3,13 @@ package edu.colostate.cs.cs414.method_men.jungle.client;
 public class Piece {
     private String name;
     private int rank;
-//    private String color;
+    private String color;
     private Location location;
 
     public Piece(String name, int rank, String color) {
         this.name = name;
         this.rank = rank;
-//        this.color = color;
+        this.color = color;
     }
 
     public void setLocation(int row, int col) {
@@ -44,7 +44,7 @@ public class Piece {
         return (this.getName().equals("Rat"));
     }
   
-    // String getColor() {
-    //     return this.color;
-    // }
+     String getColor() {
+         return this.color;
+     }
 }

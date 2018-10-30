@@ -59,9 +59,9 @@ public class Player {
         return this.pieces[pieceRank];
     }
 
-//    public String getColor() {
-//        return this.color;
-//    }
+    public String getColor() {
+        return this.color;
+    }
 
     public void isCaptured(int rank) {
         this.pieces[rank-1] = null;

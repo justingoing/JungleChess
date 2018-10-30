@@ -6,12 +6,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ElephantTest {
     @Test
-    void constructor() {
+    void constructor1() {
         Elephant test1 = new Elephant("white");
-        Elephant test2 = new Elephant("black");
-        int[] loc1 = test1.getLocation();
-        assertTrue(loc1[0] == 2 && loc1[1] == 6);
-        int[] loc2 = test2.getLocation();
-        assertTrue(loc2[0] == 6 && loc2[1] == 0);
+        Location loc1 = test1.getLocation();
+        assertTrue(loc1.getRow() == 2 && loc1.getCol() == 6);
     }
+
+    @Test
+    void constructor2() {
+        Elephant test2 = new Elephant("black");
+        Location loc2 = test2.getLocation();
+        assertTrue(loc2.getRow() == 6 && loc2.getCol() == 0);
+    }
+
 }

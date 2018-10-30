@@ -24,9 +24,9 @@ class PieceTest {
 
     @Test
     void getLocation() {
-        int[] loc = test.getLocation();
-        assertEquals(loc[0], 0);
-        assertEquals(loc[1], 0);
+        Location loc = test.getLocation();
+        assertEquals(loc.getRow(), 0);
+        assertEquals(loc.getCol(), 0);
     }
 
     @Test

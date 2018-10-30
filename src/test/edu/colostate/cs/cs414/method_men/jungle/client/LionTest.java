@@ -7,12 +7,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class LionTest {
 
     @Test
-    void constructor() {
+    void constructor1() {
         Lion test1 = new Lion("white");
+        Location loc1 = test1.getLocation();
+        assertTrue(loc1.getRow() == 0 && loc1.getCol() == 0);
+
+    }
+
+    @Test
+    void constructor2() {
         Lion test2 = new Lion("black");
-        int[] loc1 = test1.getLocation();
-        assertTrue(loc1[0] == 0 && loc1[1] == 0);
-        int[] loc2 = test2.getLocation();
-        assertTrue(loc2[0] == 8 && loc2[1] == 6);
+        Location loc2 = test2.getLocation();
+        assertTrue(loc2.getRow() == 8 && loc2.getCol() == 6);
     }
 }
