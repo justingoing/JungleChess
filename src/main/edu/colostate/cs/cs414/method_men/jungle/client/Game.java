@@ -28,7 +28,7 @@ public class Game {
      * @param message Could be an int, String, Object, doesn't matter it will print what you want
      */
     public void debugPrint(Object message) {
-        boolean debug = false;
+        boolean debug = true;
 
         if (debug) {
             System.out.println("[ Debug ] : " + message);
@@ -143,7 +143,7 @@ public class Game {
 
     public boolean ratCapturesElephant(Piece p, int row, int col) {
         if (p instanceof Rat) {
-            Piece enemyElephant = players[otherPlayer()].getPiece(7);
+            Piece enemyElephant = players[otherPlayer()].getPiece(8);
 
             if (enemyElephant != null) {
                 return (doesPieceLocationMatch(enemyElephant.getLocation(), row, col));
@@ -154,7 +154,7 @@ public class Game {
 
     public boolean elephantTryingToCaptureRat(Piece p, int row, int col) {
         if (p instanceof Elephant) {
-            Piece rat = players[otherPlayer()].getPiece(0);
+            Piece rat = players[otherPlayer()].getPiece(1);
 
             if (rat != null) {
                 return (doesPieceLocationMatch(rat.getLocation(), row, col));
@@ -213,11 +213,12 @@ public class Game {
             for (Piece piece : currPlayer.getValidPieces()) {
                 Location location = piece.getLocation();
                 if (row == location.getRow() && col == location.getCol()) {
-                    if (currPlayer.equals(players[otherPlayer()])) {
+                    System.out.println("" + piece.getColor() + currPlayer.getColor());
+                    if (!piece.getColor().equals(p.getColor())) {
                         debugPrint("There is an enemy in your landing spot.");
                         debugPrint("You outrank them: " + (p.getRank() >= piece.getRank()));
                         return (p.getRank() >= piece.getRank()); // returns true if I am of an equal or higher rank than you
-                    } else if (currPlayer.equals(players[turn])) {
+                    } else {
                         System.out.println("Cannot jump across and capture a friendly Piece.");
                         return false;
                     }
@@ -341,7 +342,7 @@ public class Game {
 
     /**
      * Called from makeMove method and is used to validate if the next move desired is valid.
-     * If the move enters on of the 8 xceptions listed, then it will return within the same conditional, regardless of outcome.
+     * If the move enters on of the 8 exceptions listed, then it will return within the same conditional, regardless of outcome.
      * // TODO Should we not return FAILURE_DESTINATION so many times (read one line above), and instead return the failure after exception #8?
      *
      * The order of checking for exceptions is as follows:
@@ -430,7 +431,7 @@ public class Game {
                 debugPrint("Only an equal or higher rank can capture an enemy Piece.");
                 debugPrint("Your Piece's rank: " + p.getRank());
                 if (p.getRank() >= enemyPieceRank) {
-                    // Returns if my Piece's ranks beats the enemy Piece's rank
+                    // Piece's ranks beats the enemy Piece's rank
                     return new Location(row, col);
                 } else {
                     System.out.println("You cannot capture an enemy with a higher rank.");
@@ -480,6 +481,7 @@ public class Game {
 
         if (!directionInput.isEmpty()) {
             char direction = Character.toLowerCase(directionInput.trim().charAt(0));
+
             if (direction == 'u' || direction == 'd' || direction == 'l' || direction == 'r') {
                 return direction;
             } else if (direction == 'q') {
@@ -514,7 +516,7 @@ public class Game {
 
             while (!validPiece) {
                 if ((pieceRank = retrieveCliPieceRank(sc)) != FAILURE) {
-                    if (players[turn].getPiece(pieceRank - 1) != null) {
+                    if (players[turn].getPiece(pieceRank) != null) {
                         validPiece = true;
                     } else {
                         System.out.println("\tERROR: " + pieceRank + " no longer exists");
@@ -524,7 +526,7 @@ public class Game {
                 }
             } // We now have a valid Piece.rank: {1, 2, 3, 4, 5, 6, 7, 8}
 
-            piece = players[turn].getPiece(pieceRank - 1);
+            piece = players[turn].getPiece(pieceRank);
 
             while (!validDirection) {
                 System.out.println("Which direction do you want to move " + piece.getName() + "? ");
@@ -610,7 +612,7 @@ public class Game {
         int pieceRank = piece.getRank();
 
         // Move the Piece
-        players[turn].getPiece(pieceRank - 1).setLocation(nextRow, nextCol);
+        players[turn].getPiece(pieceRank).setLocation(nextRow, nextCol);
 
         int enemyPieceRank;
         if ((enemyPieceRank = containsPiece(otherPlayer(), piece.getRow(), piece.getCol())) != -1) {
@@ -628,10 +630,10 @@ public class Game {
      */
     public boolean isDen(int whichPlayer, Location location) {
         if (location.getCol() == 3) {
-            if (whichPlayer == 0) {
-                return (location.getRow() == 0);
-            } else {
-                return (location.getRow() == 8);
+            if (whichPlayer == 0) { // top Player
+                return (location.getRow() == 8); // reached bot's Den
+            } else { // bot Player
+                return (location.getRow() == 0); // reached top's Den
             }
         }
         return false;
