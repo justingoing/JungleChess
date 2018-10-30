@@ -213,7 +213,6 @@ public class Game {
             for (Piece piece : currPlayer.getValidPieces()) {
                 Location location = piece.getLocation();
                 if (row == location.getRow() && col == location.getCol()) {
-                    System.out.println("" + piece.getColor() + currPlayer.getColor());
                     if (!piece.getColor().equals(p.getColor())) {
                         debugPrint("There is an enemy in your landing spot.");
                         debugPrint("You outrank them: " + (p.getRank() >= piece.getRank()));
