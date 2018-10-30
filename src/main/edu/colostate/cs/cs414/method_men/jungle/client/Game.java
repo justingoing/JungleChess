@@ -28,7 +28,7 @@ public class Game {
      * @param message Could be an int, String, Object, doesn't matter it will print what you want
      */
     public void debugPrint(Object message) {
-        boolean debug = false;
+        boolean debug = true;
 
         if (debug) {
             System.out.println("" + message);
@@ -370,7 +370,7 @@ public class Game {
         } else if (isTryingToJump(p, row, col)) {
             // 2. p is a Lion or Tiger and is attempting to jump across the River
             Location nextDestination = isAbleToJump(p, row, col, "trying to jump for real");
-            if (doesPieceLocationMatch(nextDestination, FAILURE, FAILURE)) {
+            if (!doesPieceLocationMatch(nextDestination, FAILURE, FAILURE)) {
                 return nextDestination;
             } else {
                 System.out.println("Your " + p.getName() + " cannot jump across at this time.");
@@ -571,7 +571,6 @@ public class Game {
             System.out.println("\tException: Only a Tiger or Lion can jump across the River.");
             return;
         }
-
 
         if (nextMove.getPiece() != null ) {
             Location loc = isValidMove(nextMove);
