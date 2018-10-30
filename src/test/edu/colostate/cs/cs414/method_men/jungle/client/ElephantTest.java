@@ -5,17 +5,19 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ElephantTest {
+    Elephant testElephant;
+
     @Test
     void constructor1() {
-        Elephant test1 = new Elephant("white");
-        Location loc1 = test1.getLocation();
+        testElephant = new Elephant("white");
+        Location loc1 = testElephant.getLocation();
         assertTrue(loc1.getRow() == 2 && loc1.getCol() == 6);
     }
 
     @Test
     void constructor2() {
-        Elephant test2 = new Elephant("black");
-        Location loc2 = test2.getLocation();
+        testElephant = new Elephant("black");
+        Location loc2 = testElephant.getLocation();
         assertTrue(loc2.getRow() == 6 && loc2.getCol() == 0);
     }
 
