@@ -30,17 +30,20 @@ public class PieceTest {
 
     @Test
     void testGetLocation() {
+        testRat.setLocation(0,0);
         Location loc = testRat.getLocation();
         assertTrue(loc.getRow() == 0 && loc.getCol() == 0);
     }
 
     @Test
     void testGetRow() {
+        testRat.setLocation(0,0);
         assertEquals(0, testRat.getRow());
     }
 
     @Test
     void testGetCol() {
+        testRat.setLocation(0,0);
         assertEquals(0, testRat.getCol());
     }
 
