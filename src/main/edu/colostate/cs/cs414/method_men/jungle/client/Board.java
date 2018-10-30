@@ -6,7 +6,7 @@ public class Board {
     private Tile[][] board;
 
     public Board() {
-        board = new Tile[HEIGHT][WIDTH];
+        this.board = new Tile[HEIGHT][WIDTH];
         makeBoard();
     }
 
@@ -42,11 +42,6 @@ public class Board {
                 || isDen(row, col + 1) || isDen(row, col - 1)) {
             return true;
         }
-//        if ((row == 0 || row == 8) && (col == 2 || col == 4)) {
-//            return true;
-//        } else if ((row == 1 || row == 7) && col == 3) {
-//            return true;
-//        }
         return false;
     }
 
@@ -72,24 +67,24 @@ public class Board {
                 || isRiver(row, col + 1) || isRiver(row, col - 1)) {
             return true;
         }
-        //if (row == 2 || row == 6) {
-        //	if (col >= 1 && col <= 2) {
-        //		return true;
-        //    } else if (col >= 4 && col <= 5) {
-        //		return true;
-        //    }
-        //} else if (row >= 3 && row <= 5) {
-        //	if (col == 0 || col == 3 || col == 6) {
-        //		return true;
-        //	}
-        //}
         return false;
+    }
+
+    /**
+     * Used for when Rat is trying to emerge from the River onto a Land Tile.
+     * We only need to check if it is a Jump Tile, and skip checking if it is an Open Tile
+     * @param row horizontal location on board
+     * @param col vertical location on board
+     * @return true if it is a Jump Tile (Land)
+     */
+    public boolean isLand(int row, int col) {
+        return (this.board[row][col] instanceof Jump);
     }
 
     /**Make instance of Tile inside the 2d array of Tiles
      * based off the (row, col) location inside the board.
-     * @param row location within the board
-     * @param col location within the board
+     * @param row horizontal location on board
+     * @param col vertical location on board
      * @return a new instance of it's corresponding Tiles
      */
     public Tile makeInstance(int row, int col) {
@@ -113,7 +108,7 @@ public class Board {
     public void makeBoard() {
         for (int row = 0; row < HEIGHT; ++row) {
             for (int col = 0; col < WIDTH; ++col) {
-                board[row][col] = makeInstance(row, col);
+                this.board[row][col] = makeInstance(row, col);
             }
         }
     }
@@ -148,7 +143,7 @@ public class Board {
         for (int row = 0; row < HEIGHT; ++row) {
             for (int col = 0; col < WIDTH; ++col) {
                 if (draw[row][col] == '\0') {
-                    draw[row][col] = board[row][col].getAttribute();
+                    draw[row][col] = this.board[row][col].getAttribute();
                 }
             }
         }

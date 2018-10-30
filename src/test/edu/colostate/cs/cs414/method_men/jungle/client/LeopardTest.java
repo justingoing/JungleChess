@@ -5,14 +5,19 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LeopardTest {
+    Leopard testLeopard;
 
     @Test
-    void constructor() {
-        Leopard test1 = new Leopard("white");
-        Leopard test2 = new Leopard("black");
-        int[] loc1 = test1.getLocation();
-        assertTrue(loc1[0] == 2 && loc1[1] == 2);
-        int[] loc2 = test2.getLocation();
-        assertTrue(loc2[0] == 6 && loc2[1] == 4);
+    void constructor1() {
+        testLeopard = new Leopard("white");
+        Location loc1 = testLeopard.getLocation();
+        assertTrue(loc1.getRow() == 2 && loc1.getCol() == 2);
+    }
+
+    @Test
+    void constructor2() {
+        testLeopard = new Leopard("black");
+        Location loc2 = testLeopard.getLocation();
+        assertTrue(loc2.getRow() == 6 && loc2.getCol() == 4);
     }
 }

@@ -1,62 +1,69 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class PieceTest {
+public class PieceTest {
+    private Piece testRat;
+    private Piece testTiger;
 
-    Piece test = new Piece("Rat", 1, "white");
-    Piece test1 = new Piece("tiger", 6, "white");
-
-    @Test
-    void constructor(){
-        assertEquals("Rat", test.getName());
-        assertEquals(1, test.getRank());
-        assertEquals("white", test.getColor());
+    @BeforeEach
+    void init() {
+        testRat = new Piece("Rat", 1, "white");
+        testTiger = new Piece("tiger", 6, "white");
     }
 
     @Test
-    void setLocation() {
-        test.setLocation(0,0);
-        assertEquals(test.getRow(), 0);
-        assertEquals(test.getCol(), 0);
+    void testConstructor() {
+        assertEquals("Rat", testRat.getName());
+        assertEquals(1, testRat.getRank());
+        assertEquals("white", testRat.getColor());
     }
 
     @Test
-    void getLocation() {
-        int[] loc = test.getLocation();
-        assertEquals(loc[0], 0);
-        assertEquals(loc[1], 0);
+    void testSetLocation() {
+        testRat.setLocation(0,0);
+        assertEquals(testRat.getRow(), 0);
+        assertEquals(testRat.getCol(), 0);
     }
 
     @Test
-    void getRow() {
-        assertEquals(0, test.getRow());
+    void testGetLocation() {
+        testRat.setLocation(0,0);
+        Location loc = testRat.getLocation();
+        assertTrue(loc.getRow() == 0 && loc.getCol() == 0);
     }
 
     @Test
-    void getCol() {
-        assertEquals(0, test.getCol());
+    void testGetRow() {
+        testRat.setLocation(0,0);
+        assertEquals(0, testRat.getRow());
     }
 
     @Test
-    void getName() {
-        assertEquals("Rat", test.getName());
+    void testGetCol() {
+        testRat.setLocation(0,0);
+        assertEquals(0, testRat.getCol());
     }
 
     @Test
-    void getRank() {
-        assertEquals(1, test.getRank());
+    void testGetName() {
+        assertEquals("Rat", testRat.getName());
     }
 
     @Test
-    void getColor(){
-        assertEquals("white", test.getColor());
+    void testGetRank() {
+        assertEquals(1, testRat.getRank());
     }
 
     @Test
-    void isRat() {
-        assertTrue(test.isRat());
-        assertFalse(test1.isRat());
+    void testGetColor(){
+        assertEquals("white", testRat.getColor());
+    }
+
+    @Test
+    void testIsRat() {
+        assertTrue(testRat.isRat()  && !testTiger.isRat());
     }
 }

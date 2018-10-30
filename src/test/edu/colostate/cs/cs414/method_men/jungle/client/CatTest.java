@@ -4,14 +4,20 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CatTest {
+    Cat testCat;
 
     @Test
     void constructor() {
-        Cat test1 = new Cat("white");
-        Cat test2 = new Cat("black");
-        int[] loc1 = test1.getLocation();
-        assertTrue(loc1[0] == 1 && loc1[1] == 5);
-        int[] loc2 = test2.getLocation();
-        assertTrue(loc2[0] == 7 && loc2[1] == 1);
+        testCat = new Cat("white");
+        Location loc1 = testCat.getLocation();
+        assertTrue(loc1.getRow() == 1 && loc1.getCol() == 5);
+
+    }
+
+    @Test
+    void constructor2() {
+        testCat = new Cat("black");
+        Location loc2 = testCat.getLocation();
+        assertTrue(loc2.getRow() == 7 && loc2.getCol() == 1);
     }
 }
