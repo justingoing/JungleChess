@@ -110,6 +110,9 @@ public class Game {
     public boolean doesPieceLocationMatch(Piece p, int row, int col) {
         return (p.getRow() == row && p.getCol() == col);
     }
+    public boolean doesPieceLocationMatch(NextMove nextMove, int row, int col) {
+        return (nextMove.getRow() == row && nextMove.getCol() == col);
+    }
 
 
     /**
@@ -277,6 +280,10 @@ public class Game {
     public boolean isTryingToJump(Piece p, int row, int col) {
         Location nextDestination = isAbleToJump(p, row, col, "testing trying to jump");
         return (doesPieceLocationMatch(nextDestination, SUCCESS, SUCCESS));
+    }
+
+    public boolean isTryingToJump(NextMove nextMove) {
+        return (isTryingToJump(nextMove.getPiece(), nextMove.getRow(), nextMove.getCol()));
     }
 
     /**
@@ -550,10 +557,36 @@ public class Game {
 
         NextMove nextMove = new NextMove(players[turn], currRow, currCol, nextRow, nextCol);
 
-        moveThePiece(nextMove);
+        // Calculate the difference in row  and difference in col
+        int deltaRow = Math.abs(nextRow - currRow);
+        int deltaCol = Math.abs(nextCol - currCol);
+        if (deltaRow == 1) {
+            debugPrint("You are trying to move vertically.");
+        } else if (deltaCol == 1) {
+            debugPrint("You are trying to move horizontally.");
+        } else if (isTryingToJump(nextMove)) {
+            debugPrint("Tiger is trying to jump across the River");
+        } else {
+            System.out.println("\tError: Not a valid move. A Piece can only move one Tile.");
+            System.out.println("\tException: Only a Tiger or Lion can jump across the River.");
+            return;
+        }
+
+
+        if (nextMove.getPiece() != null ) {
+            Location loc = isValidMove(nextMove);
+
+            if (!doesPieceLocationMatch(loc, FAILURE, FAILURE)) {
+                moveThePiece(nextMove);
+            } else {
+                System.out.println("\tERROR: Not a valid move.");
+            }
+
+        } else {
+            System.out.println("\tERROR: Not a valid Piece.");
+        }
     }
 
-    // the do-while loop is for CLI implementation ONLY
     public void makeMoveCli() {
         NextMove nextMove = retrieveCliInput();
 
