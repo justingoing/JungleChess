@@ -18,8 +18,8 @@ public class Game {
         players[1] = new Player("black");
 //        Random r = new Random(System.currentTimeMillis());
 //        turn = r.nextInt(999999) % 2;
-        turn = 0; // 0 = top Player makes first move
-        debugPrint(turn);
+        turn = 0; // 0 == top Player makes first move
+        //debugPrint(turn);
         board = new Board();
     }
 
@@ -154,10 +154,12 @@ public class Game {
 
     public boolean elephantTryingToCaptureRat(Piece p, int row, int col) {
         if (p instanceof Elephant) {
-            Piece[] enemyPieces = players[otherPlayer()].getValidPieces();
+            Piece rat = players[otherPlayer()].getPiece(0);
 
-            if (enemyPieces[0] != null) {
-                return (doesPieceLocationMatch(enemyPieces[0].getLocation(), row, col));
+            if (rat != null) {
+                return (doesPieceLocationMatch(rat.getLocation(), row, col));
+            } else {
+                System.out.println("Rat is already captured");
             }
         }
         debugPrint("Your Piece is not an Elephant.");
@@ -213,6 +215,7 @@ public class Game {
                 if (row == location.getRow() && col == location.getCol()) {
                     if (currPlayer.equals(players[otherPlayer()])) {
                         debugPrint("There is an enemy in your landing spot.");
+                        debugPrint("You outrank them: " + (p.getRank() >= piece.getRank()));
                         return (p.getRank() >= piece.getRank()); // returns true if I am of an equal or higher rank than you
                     } else if (currPlayer.equals(players[turn])) {
                         System.out.println("Cannot jump across and capture a friendly Piece.");
