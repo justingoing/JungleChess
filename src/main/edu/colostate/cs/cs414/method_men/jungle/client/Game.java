@@ -18,7 +18,7 @@ public class Game {
         players[1] = new Player("black");
 //        Random r = new Random(System.currentTimeMillis());
 //        turn = r.nextInt(999999) % 2;
-        turn = 0; // top Player makes first move
+        turn = 0; // 0 = top Player makes first move
         debugPrint(turn);
         board = new Board();
     }
@@ -31,7 +31,7 @@ public class Game {
         boolean debug = false;
 
         if (debug) {
-            System.out.println("" + message);
+            System.out.println("[ Debug ] : " + message);
         }
     }
 
@@ -86,6 +86,14 @@ public class Game {
      */
     public void incrementTurn() {
         this.turn = otherPlayer();
+    }
+
+    /**
+     * Used to acces the private variable. Will be useful for testing & Ui interface
+     * @return turn {0, 1}
+     */
+    public int getTurn() {
+        return this.turn;
     }
 
     /**
