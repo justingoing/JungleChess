@@ -1,4 +1,4 @@
 language: java
 
-script: 
+script:
   javac src/main/edu/colostate/cs/cs414/method_men/jungle/client/*.java

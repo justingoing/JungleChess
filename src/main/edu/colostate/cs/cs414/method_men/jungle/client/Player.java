@@ -11,14 +11,14 @@ public class Player {
     }
 
     public void makePieceInstances() {
-        this.pieces[0] = new Rat(color);
-        this.pieces[1] = new Cat(color);
-        this.pieces[2] = new Wolf(color);
-        this.pieces[3] = new Dog(color);
-        this.pieces[4] = new Leopard(color);
-        this.pieces[5] = new Tiger(color);
-        this.pieces[6] = new Lion(color);
-        this.pieces[7] = new Elephant(color);
+        this.pieces[0] = new Rat(this.color);
+        this.pieces[1] = new Cat(this.color);
+        this.pieces[2] = new Wolf(this.color);
+        this.pieces[3] = new Dog(this.color);
+        this.pieces[4] = new Leopard(this.color);
+        this.pieces[5] = new Tiger(this.color);
+        this.pieces[6] = new Lion(this.color);
+        this.pieces[7] = new Elephant(this.color);
     }
 
     public int getValidPiecesCount() {
@@ -56,7 +56,7 @@ public class Player {
     }
 
     public Piece getPiece(int pieceRank) {
-        return this.pieces[pieceRank];
+        return this.pieces[pieceRank - 1];
     }
 
     public String getColor() {
