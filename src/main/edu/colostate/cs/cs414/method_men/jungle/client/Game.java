@@ -28,7 +28,7 @@ public class Game {
      * @param message Could be an int, String, Object, doesn't matter it will print what you want
      */
     public void debugPrint(Object message) {
-        boolean debug = true;
+        boolean debug = false;
 
         if (debug) {
             System.out.println("[ Debug ] : " + message);
