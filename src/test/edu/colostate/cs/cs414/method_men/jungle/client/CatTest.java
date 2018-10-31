@@ -4,32 +4,20 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CatTest {
+    Cat testCat;
 
     @Test
-    void setLocation() {
+    void constructor() {
+        testCat = new Cat("white");
+        Location loc1 = testCat.getLocation();
+        assertTrue(loc1.getRow() == 1 && loc1.getCol() == 5);
+
     }
 
     @Test
-    void getLocation() {
-    }
-
-    @Test
-    void getRow() {
-    }
-
-    @Test
-    void getCol() {
-    }
-
-    @Test
-    void getName() {
-    }
-
-    @Test
-    void getRank() {
-    }
-
-    @Test
-    void isRat() {
+    void constructor2() {
+        testCat = new Cat("black");
+        Location loc2 = testCat.getLocation();
+        assertTrue(loc2.getRow() == 7 && loc2.getCol() == 1);
     }
 }

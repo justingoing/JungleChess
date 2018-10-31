@@ -5,32 +5,20 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DogTest {
+    Dog dogTest;
 
     @Test
-    void setLocation() {
+    void constructor1() {
+        dogTest = new Dog("white");
+        Location loc1 = dogTest.getLocation();
+        assertTrue(loc1.getRow() == 1 && loc1.getCol() == 1);
+
     }
 
     @Test
-    void getLocation() {
-    }
-
-    @Test
-    void getRow() {
-    }
-
-    @Test
-    void getCol() {
-    }
-
-    @Test
-    void getName() {
-    }
-
-    @Test
-    void getRank() {
-    }
-
-    @Test
-    void isRat() {
+    void constructor2() {
+        dogTest = new Dog("black");
+        Location loc2 = dogTest.getLocation();
+        assertTrue(loc2.getRow() == 7 && loc2.getCol() == 5);
     }
 }

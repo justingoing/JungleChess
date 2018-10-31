@@ -5,32 +5,20 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ElephantTest {
+    Elephant testElephant;
 
     @Test
-    void setLocation() {
+    void constructor1() {
+        testElephant = new Elephant("white");
+        Location loc1 = testElephant.getLocation();
+        assertTrue(loc1.getRow() == 2 && loc1.getCol() == 6);
     }
 
     @Test
-    void getLocation() {
+    void constructor2() {
+        testElephant = new Elephant("black");
+        Location loc2 = testElephant.getLocation();
+        assertTrue(loc2.getRow() == 6 && loc2.getCol() == 0);
     }
 
-    @Test
-    void getRow() {
-    }
-
-    @Test
-    void getCol() {
-    }
-
-    @Test
-    void getName() {
-    }
-
-    @Test
-    void getRank() {
-    }
-
-    @Test
-    void isRat() {
-    }
 }

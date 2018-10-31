@@ -4,47 +4,47 @@ public class Piece {
     private String name;
     private int rank;
     private String color;
-    private int row;
-    private int col;
+    private Location location;
 
-    Piece(String name, int rank, String color) {
+    public Piece(String name, int rank, String color) {
         this.name = name;
         this.rank = rank;
         this.color = color;
     }
 
-    void setLocation(int row, int col) {
-        this.row = row;
-        this.col = col;
+    public void setLocation(int row, int col) {
+        this.location = new Location(row, col);
     }
 
-    int[] getLocation() {
-        int[] loc = new int[2];
-        loc[0] = this.row;
-        loc[1] = this.col;
-        return loc;
+    public void setLocation(Location loc) {
+        this.location = new Location(loc);
     }
 
-    int getRow() {
-        return this.row;
+    public Location getLocation() {
+        return this.location;
     }
 
-    int getCol() {
-        return this.col;
+    public int getRow() {
+        return this.location.getRow();
     }
 
-    String getName() {
+    public int getCol() {
+        return this.location.getCol();
+    }
+
+    public String getName() {
         return this.name;
     }
 
-    int getRank() {
+    public int getRank() {
         return this.rank;
     }
 
-    boolean isRat() {
-        if (name.equals("Rat")) {
-            return true;
-        }
-        return false;
+    public boolean isRat() {
+        return (this.getName().equals("Rat"));
     }
+  
+     String getColor() {
+         return this.color;
+     }
 }

@@ -6,8 +6,9 @@ public class Main {
         int winner;
         game.printBoard();
 
+        //Only implements the CLI interface for now.
         while ((winner = game.winnerCheck()) == -1) {
-            game.makeMove();
+            game.makeMoveCli();
             game.incrementTurn();
             game.printBoard();
         }
