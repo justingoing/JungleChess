@@ -563,7 +563,7 @@ public class Game {
      * @param nextRow the second click's horizontal location on the board
      * @param nextCol the second click's vertical location on the board
      */
-    public void makeMoveUi(int currRow, int currCol, int nextRow, int nextCol) {
+    public boolean makeMoveUi(int currRow, int currCol, int nextRow, int nextCol) {
         // nextRow (or deltaRow (i.e.: -1 == move up one Tile))
         // nextCol (or deltaCol (i.e.: 1 == move right one Tile))
 
@@ -581,7 +581,7 @@ public class Game {
         } else {
             System.out.println("\tError: Not a valid move. A Piece can only move one Tile.");
             System.out.println("\tException: Only a Tiger or Lion can jump across the River.");
-            return;
+            return false;
         }
 
         if (nextMove.getPiece() != null ) {
@@ -591,11 +591,15 @@ public class Game {
                 moveThePiece(nextMove);
             } else {
                 System.out.println("\tERROR: Not a valid move.");
+                return false;
             }
 
         } else {
             System.out.println("\tERROR: Not a valid Piece.");
+            return false;
         }
+
+        return true;
     }
 
     public void makeMoveCli() {

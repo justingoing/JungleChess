@@ -1,7 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GUI extends JFrame {
 
@@ -18,7 +17,7 @@ public class GUI extends JFrame {
         Background b = new Background("src/Images/jungle.jpg");
         add(b);
 
-        currentPanel = new MainMenu(this);
+        currentPanel = new MainMenuPage(this);
         add(currentPanel);
 
         pack();
@@ -29,7 +28,7 @@ public class GUI extends JFrame {
         switch (panelName) {
             case "StartGame":
                 remove(currentPanel);
-                currentPanel = new Game(this);
+                currentPanel = new GamePage(this);
                 add(currentPanel);
                 break;
 
