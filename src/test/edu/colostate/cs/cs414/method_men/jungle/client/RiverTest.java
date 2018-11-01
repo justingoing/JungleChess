@@ -8,5 +8,7 @@ class RiverTest {
 
     @Test
     void getAttribute() {
+        River river = new River();
+        assertTrue(river.getAttribute()=='~');
     }
 }
