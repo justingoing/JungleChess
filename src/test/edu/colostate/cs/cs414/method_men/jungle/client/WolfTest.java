@@ -52,7 +52,7 @@ class WolfTest {
     }
 
     @Test
-    void iswolf() {
+    void isRat() {
         wolf = new Wolf("black");
         assertFalse(wolf.isRat());
     }

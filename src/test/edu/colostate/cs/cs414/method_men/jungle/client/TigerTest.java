@@ -52,7 +52,7 @@ class TigerTest {
     }
 
     @Test
-    void istiger() {
+    void isRat() {
         tiger = new Tiger("black");
         assertFalse(tiger.isRat());
     }
