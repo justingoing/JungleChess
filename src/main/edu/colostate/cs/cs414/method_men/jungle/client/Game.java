@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -731,6 +732,39 @@ public class Game {
         }
     }
 
+    public ArrayList<Location> retrieveValidLocations(int row, int col) {
+        ArrayList<Location> validDirections = new ArrayList<>();
+        Piece p = players[turn].retrievePieceByLocation(row, col);
+
+        if (p != null) {
+            Location up = new Location(row - 1, col);
+            Location down = new Location(row + 1, col);
+            Location left = new Location(row, col - 1);
+            Location right = new Location(row, col + 1);
+
+            up = isValidMove(new NextMove(p, up));
+            down = isValidMove(new NextMove(p, down));
+            left = isValidMove(new NextMove(p, left));
+            right = isValidMove(new NextMove(p, right));
+
+            if (!doesPieceLocationMatch(up, -1, -1)) {
+                validDirections.add(up);
+            }
+            if (!doesPieceLocationMatch(down, -1, -1)) {
+                validDirections.add(down);
+            }
+            if (!doesPieceLocationMatch(left, -1, -1)) {
+                validDirections.add(left);
+            }
+            if (!doesPieceLocationMatch(right, -1, -1)) {
+                validDirections.add(right);
+            }
+        } else {
+            System.out.println("Piece is null");
+        }
+        return validDirections;
+    }
+
     public void makeMoveCli() {
         NextMove nextMove = retrieveCliInput();
 
@@ -803,5 +837,10 @@ public class Game {
         }
 
         return -1; // no winner
+    }
+
+    public void endGame() {
+        // Prints the Winner statement
+        whoseTurnIsIt(winnerCheck(), " is the winner!");
     }
 }
