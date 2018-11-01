@@ -9,7 +9,6 @@ public class Cli {
         //Only implements the CLI interface for now.
         while ((winner = game.winnerCheck()) == -1) {
             game.makeMoveCli();
-            game.incrementTurn();
             game.printBoard();
         }
 
