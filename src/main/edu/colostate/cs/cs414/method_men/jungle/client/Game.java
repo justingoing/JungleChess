@@ -702,10 +702,11 @@ public class Game {
         int deltaCol = Math.abs(nextCol - currCol);
 
         if (isTryingToJump(nextMove)) {
+            // Will fix in the future version of this branch
             debugPrint("You are trying to jump with your " + p.getName());
-        } else if (deltaRow == 1) {
+        } else if (deltaRow == 1 && deltaCol == 0) {
             debugPrint("You are trying to move vertically.");
-        } else if (deltaCol == 1) {
+        } else if (deltaCol == 1 && deltaRow == 0) {
             debugPrint("You are trying to move horizontally.");
         } else {
             System.out.println("\tError: Not a valid move. A Piece can only move one Tile.");
