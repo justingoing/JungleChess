@@ -10,7 +10,7 @@ public class Player {
         makePieceInstances();
     }
 
-    public void makePieceInstances() {
+    private void makePieceInstances() {
         this.pieces[0] = new Rat(this.color);
         this.pieces[1] = new Cat(this.color);
         this.pieces[2] = new Wolf(this.color);
@@ -46,7 +46,7 @@ public class Player {
         return validPieces;
     }
 
-    public Piece retrievePieceByLocation(int currRow, int currCol) {
+    public Piece retrievePieceByLocation(int currRow, int currCol) throws NullPointerException {
         for (Piece piece : getValidPieces()) {
             if (piece.getRow() == currRow && piece.getCol() == currCol) {
                 return piece;
