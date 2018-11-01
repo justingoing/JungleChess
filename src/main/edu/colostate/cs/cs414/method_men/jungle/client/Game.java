@@ -27,7 +27,7 @@ public class Game {
      * @param message Could be an int, String, Object, doesn't matter it will print what you want
      */
     public void debugPrint(Object message) {
-        boolean debug = true;
+        boolean debug = false;
 
         if (debug) {
             System.out.println("[ Debug ] : " + message);
@@ -595,7 +595,6 @@ public class Game {
                 System.out.println("\tERROR: must specify a rank");
             }
         }
-
     }
 
     public char retrieveCliDirection(Scanner sc) {
@@ -689,7 +688,7 @@ public class Game {
     public boolean makeMoveUi(int currRow, int currCol, int nextRow, int nextCol) {
         // nextRow (or deltaRow (i.e.: -1 == move up one Tile))
         // nextCol (or deltaCol (i.e.: 1 == move right one Tile))
-        // Location nextDestination = null;
+
         NextMove nextMove = new NextMove(players[turn], currRow, currCol, nextRow, nextCol);
         Piece p = nextMove.getPiece();
 
@@ -723,8 +722,6 @@ public class Game {
             System.out.println("\tERROR: Not a valid move.");
             return false;
         }
-
-        return true;
     }
 
     public void makeMoveCli() {
