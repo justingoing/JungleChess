@@ -804,18 +804,19 @@ class GameTest {
         assertFalse(g.makeMoveUi(0, 0, 2, 0));
     }
 
-    @Test
-    void testMakeMoveUi_TopPass_TigerJumping() {
-        p1 = top.getPiece(6); // top Tiger
-        row = 2;
-        col = 1;
-        p1.setLocation(row, col); // Above River
-
-        boolean move = g.makeMoveUi(row, col, row + 1, col);
-        boolean correct = g.doesPieceLocationMatch(p1, row + 4, col);
-
-        assertTrue(move && correct);
-    }
+//    @Test
+//    void testMakeMoveUi_TopPass_TigerJumping() {
+//        p1 = top.getPiece(6); // top Tiger
+//        row = 2;
+//        col = 1;
+//        p1.setLocation(row, col); // Above River
+//
+//        Location loc = g.tryAndMoveUi(row, col, row + 1, col, true);
+//
+//        System.out.println(loc.getRow() + "" + loc.getCol());
+//        boolean correct = g.doesPieceLocationMatch(p1, row + 4, col);
+//        assertTrue(correct);
+//    }
 
     @Test
     void testMoveThePiece_Top_NoEnemies() {
