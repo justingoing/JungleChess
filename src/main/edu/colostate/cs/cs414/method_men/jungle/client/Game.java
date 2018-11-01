@@ -678,6 +678,10 @@ public class Game {
         return nextMove;
     }
 
+    public boolean notYourPieceToMove(int row, int col) {
+        return !(players[otherPlayer()].retrievePieceByLocation(row, col) == null);
+    }
+
 
     /**
      * UI controller calls this method to move the Piece
@@ -687,9 +691,11 @@ public class Game {
      * @param nextCol the second click's vertical location on the board
      */
     public boolean makeMoveUi(int currRow, int currCol, int nextRow, int nextCol) {
-        // nextRow (or deltaRow (i.e.: -1 == move up one Tile))
-        // nextCol (or deltaCol (i.e.: 1 == move right one Tile))
-        // Location nextDestination = null;
+        if (notYourPieceToMove(currRow, currCol)) {
+            System.out.println("\tERROR: Cannot move an enemy Piece.");
+            return false;
+        }
+
         NextMove nextMove = new NextMove(players[turn], currRow, currCol, nextRow, nextCol);
         Piece p = nextMove.getPiece();
 
