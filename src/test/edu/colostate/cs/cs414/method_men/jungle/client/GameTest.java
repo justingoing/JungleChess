@@ -25,6 +25,8 @@ class GameTest {
         if (g.getTurn() == 1) {
             g.incrementTurn();
         }
+        System.out.println("[init] It is " + g.getTurn() + "'s turn.");
+
     }
 
     @Test void testDebugPrint() {
@@ -434,6 +436,38 @@ class GameTest {
     }
 
     @Test
+    void testIsNextMoveATrap_TopInTopTrap_TopMakesMove_FailFriendlyTrap() {
+
+        p1 = top.getPiece(3);
+        row = 1;
+        col = 3;
+        p1.setLocation(row, col);
+
+        p2 = top.getPiece(4);
+        p2.setLocation(row + 1, col);
+        n = new NextMove(p2, row, col);
+
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n), -1, -1));
+    }
+
+    @Test
+    void testIsNextMoveATrap_BotInBotTrap_BotMakesMove_FailFriendlyTrap() {
+        g.incrementTurn(); // bot's turn
+        System.out.println("It is " + g.getTurn() + "'s turn.");
+
+        p1 = bot.getPiece(3);
+        row = 1;
+        col = 3;
+        p1.setLocation(row, col);
+
+        p2 = bot.getPiece(4);
+        p2.setLocation(row + 1, col);
+        n = new NextMove(p2, row, col);
+
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n), -1, -1));
+    }
+
+    @Test
     void testIsValidMove_RatCapturesElephantTopPass() {
         p1 = top.getPiece(1); // top Rat
         row = 5;
@@ -593,15 +627,19 @@ class GameTest {
     }
 
     @Test
-    void testIsValidMove_ContainsPieceBot_EnemyPass_EnemyInTrap() {
+    void testIsValidMove_ContainsPiece_TopPass_BotInTopTrap() {
+        //g.incrementTurn();
+        System.out.println("It is " + g.getTurn() + "'s turn.");
+
         p2 = bot.getPiece(8); // bot Elephant
         row = 1;
         col = 3;
-        p2.setLocation(row, col); // bot Rat is in top's Trap
+        p2.setLocation(row, col); // bot Elephant is in top's Trap
+        // (Elephant's rank is temporarily 0)
 
-        p1 = top.getPiece(2); // top Cat (rank = 2)
-        p1.setLocation(row + 1, 3); // Rat is one Tile down from Elephant
-        n = new NextMove(p1, row, col); // Move up to capture Elephant
+        p1 = top.getPiece(2); // top Cat (rank == 2)
+        p1.setLocation(row + 1, 3); // Cat is one Tile down from Elephant
+        n = new NextMove(p1, row, col); // Cat moves up to capture Elephant
 
         assertTrue(g.doesPieceLocationMatch(g.isValidMove(n), row, col));
     }
@@ -679,7 +717,7 @@ class GameTest {
     }
 
     @Test
-    void testWinnerCheck_None() {
+    void testWinnerCheck_Fail() {
         assertEquals(-1, g.winnerCheck());
     }
 
