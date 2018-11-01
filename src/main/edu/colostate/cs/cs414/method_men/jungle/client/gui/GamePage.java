@@ -26,7 +26,7 @@ public class GamePage extends Page implements ActionListener {
     private Game game;
     private JButton[][] buttons;
     private int[] selectedButton = null;
-    ArrayList<Location> currentlyHighlighted;
+    private ArrayList<Location> currentlyHighlighted;
 
     public GamePage(GUI frame) {
         super(frame);
@@ -118,23 +118,17 @@ public class GamePage extends Page implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         GameButton button = (GameButton) actionEvent.getSource();
-        // TODO: double click a valid Piece
 
         if (((LineBorder)button.getBorder()).getLineColor().equals(Color.BLACK)) {
             button.setBorder(new LineBorder(Color.LIGHT_GRAY));
+            unhighlight();
             selectedButton = null;
         } else if (selectedButton != null) {
             game.makeMoveUi(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
             updateBoard();
             buttons[selectedButton[0]][selectedButton[1]].setBorder(new LineBorder(Color.LIGHT_GRAY));
             selectedButton = null;
-
-            for (Location curr : currentlyHighlighted) {
-                int row = curr.getRow();
-                int col = curr.getCol();
-                buttons[row][col].setBorder(new LineBorder(Color.LIGHT_GRAY)); // take back your voodoo magic of color;
-            }
-            currentlyHighlighted = new ArrayList<>();
+            unhighlight();
 
             if (game.winnerCheck() != -1) {
                 game.endGame();
@@ -155,6 +149,18 @@ public class GamePage extends Page implements ActionListener {
                 currentlyHighlighted.add(curr);
             }
         }
+    }
 
+    /**
+     * Takes all highlighted squares are reverts them back to LIGHT_GRAY
+     */
+    public void unhighlight() {
+        for (Location curr : currentlyHighlighted) {
+            int row = curr.getRow();
+            int col = curr.getCol();
+            buttons[row][col].setBorder(new LineBorder(Color.LIGHT_GRAY)); // take back your voodoo magic of color;
+        }
+
+        currentlyHighlighted = new ArrayList<>();
     }
 }
