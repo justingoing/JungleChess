@@ -723,6 +723,8 @@ public class Game {
             System.out.println("\tERROR: Not a valid move.");
             return false;
         }
+
+        return true;
     }
 
     public void makeMoveCli() {
