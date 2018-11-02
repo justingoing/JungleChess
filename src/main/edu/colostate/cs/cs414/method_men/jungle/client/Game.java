@@ -911,7 +911,8 @@ public class Game {
         if (!jumping) { // Not a Lion or Tiger
             return isValidMove(nextMove, print);
         } else { // Lion or Tiger
-            return new Location(nextMove.getRow(), nextMove.getCol());
+            //return new Location(nextMove.getRow(), nextMove.getCol());
+            return normalizeJump(currRow, currCol, nextRow, nextCol);
         }
     }
 
