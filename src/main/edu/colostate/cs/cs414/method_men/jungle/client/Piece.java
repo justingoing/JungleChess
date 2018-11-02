@@ -44,7 +44,7 @@ public class Piece {
         return (this.getName().equals("Rat"));
     }
   
-     String getColor() {
+    public String getColor() {
          return this.color;
-     }
+    }
 }
