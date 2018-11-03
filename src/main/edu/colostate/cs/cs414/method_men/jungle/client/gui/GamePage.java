@@ -51,19 +51,51 @@ public class GamePage extends Page implements ActionListener {
 
         add(buttonPanel, BorderLayout.CENTER);
 
+        resetBoard();
         updateBoard();
     }
 
-    public void emptyBoard() {
+    public void resetBoard() {
+        // Fill the entire board with grass (some tiles will change in the next few lines)
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 7; col++) {
-                buttons[row][col].setIcon(null);
+                buttons[row][col].setIcon(GRASS_ICON);
             }
         }
+
+        // Draw left river
+        buttons[3][1].setIcon(WATER_ICON);
+        buttons[3][2].setIcon(WATER_ICON);
+        buttons[4][1].setIcon(WATER_ICON);
+        buttons[4][2].setIcon(WATER_ICON);
+        buttons[5][1].setIcon(WATER_ICON);
+        buttons[5][2].setIcon(WATER_ICON);
+
+        // Draw right river
+        buttons[3][4].setIcon(WATER_ICON);
+        buttons[3][5].setIcon(WATER_ICON);
+        buttons[4][4].setIcon(WATER_ICON);
+        buttons[4][5].setIcon(WATER_ICON);
+        buttons[5][4].setIcon(WATER_ICON);
+        buttons[5][5].setIcon(WATER_ICON);
+
+        // Draw Dens
+        buttons[0][3].setIcon(DEN_ICON);
+        buttons[8][3].setIcon(DEN_ICON);
+
+        // Draw Top Traps
+        buttons[1][3].setIcon(TRAP_ICON);
+        buttons[0][2].setIcon(TRAP_ICON);
+        buttons[0][4].setIcon(TRAP_ICON);
+
+        // Draw Bottom Traps
+        buttons[7][3].setIcon(TRAP_ICON);
+        buttons[8][2].setIcon(TRAP_ICON);
+        buttons[8][4].setIcon(TRAP_ICON);
     }
 
     public void updateBoard() {
-        emptyBoard();
+        resetBoard();
 
         for (int i = 0; i < 2; i++) {
             Player currPlayer = game.getPlayer(i);
