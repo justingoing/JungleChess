@@ -16,11 +16,11 @@ class GameTest {
     private NextMove n;
     private int row;
     private int col;
-    private boolean shh;
+    private boolean doNotPrintErrors;
 
     @BeforeEach
     void init() {
-        shh = true;
+        doNotPrintErrors = true;
         g = new Game();
         top = g.getPlayer(0);
         bot = g.getPlayer(1);
@@ -190,7 +190,7 @@ class GameTest {
         p1.setLocation(row, 0);
         n = new NextMove(p1, row + 1, 0); // Move down
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -200,10 +200,10 @@ class GameTest {
         col = 0;
 
         n = new NextMove(p1, row - 1, col);
-        boolean u = g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1);
+        boolean u = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1);
 
         n = new NextMove(p1, row, col - 1);
-        boolean l = g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1);
+        boolean l = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1);
 
         assertTrue(u && l);
     }
@@ -217,10 +217,10 @@ class GameTest {
 
         p2.setLocation(row, col);
         n = new NextMove(p2, row, col + 1); // move right
-        boolean r = g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1);
+        boolean r = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1);
 
         n = new NextMove(p2, row + 1, col); // move down
-        boolean d = g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1);
+        boolean d = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1);
 
         assertTrue(r && d);
     }
@@ -237,7 +237,7 @@ class GameTest {
             p2.setLocation(row + 4, col); // bot-left corner
             n = new NextMove(p1, row + 1, col);
 
-            assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row + 4, col));
+            assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row + 4, col));
         }
     }
 
@@ -253,7 +253,7 @@ class GameTest {
         p2.setLocation(row + 4, col); // move to bot-left corner
         n = new NextMove(p1, row + 1, 1);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -267,7 +267,7 @@ class GameTest {
         p2.setLocation(row + 4, col); // move to bot-left corner
         n = new NextMove(p1, row + 4, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -291,16 +291,16 @@ class GameTest {
                 p1.setLocation(2, col); // Set the Lion up for his jump down
                 n = new NextMove(p1,3, col);
 
-                a = g.doesPieceLocationMatch(g.isValidMove(n, shh),6, col);
+                a = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors),6, col);
 
                 p2.setLocation(3, col);  // Move Rat into the jump path
-                f1 = g.doesPieceLocationMatch(g.isValidMove(n, shh),-1, -1);
+                f1 = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors),-1, -1);
 
                 p2.setLocation(4, col);  // Move Rat into the jump path
-                f2 = g.doesPieceLocationMatch(g.isValidMove(n, shh),-1, -1);
+                f2 = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors),-1, -1);
 
                 p2.setLocation(5, col);  // Move Rat into the jump path
-                f3 = g.doesPieceLocationMatch(g.isValidMove(n, shh),-1, -1);
+                f3 = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors),-1, -1);
 
                 p2.setLocation(1,0); // Move the Rat out of the jump path
 
@@ -309,7 +309,7 @@ class GameTest {
                 p1.setLocation(6, col); // Set the Lion up for his jump up
                 n = new NextMove(p1,5, col);
 
-                b = g.doesPieceLocationMatch(g.isValidMove(n, shh),2, col);
+                b = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors),2, col);
 
                 if (col == 2) {
                     ++col; // Skip the middle_column bc it doesn't have River Tiles to jump
@@ -341,13 +341,13 @@ class GameTest {
                 p1.setLocation(row, 0); // Set the Lion up for his jump right
                 n = new NextMove(p1, row,1); // The direction of where the Lion wants to move
 
-                a = g.doesPieceLocationMatch(g.isValidMove(n, shh), row, 3);
+                a = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, 3);
 
                 p2.setLocation(row, 1); // Move Rat into the jump path
-                f1 = g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1);
+                f1 = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1);
 
                 p2.setLocation(row, 2); // Move Rat into the jump path
-                f2 = g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1);
+                f2 = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1);
 
                 p2.setLocation(1, 0); // Move the Rat out of the jump path
 
@@ -356,13 +356,13 @@ class GameTest {
                 p1.setLocation(row, 3); // Set the Lion up for his jump right
                 n = new NextMove(p1, row, 4); // The direction of where the Lion wants to move
 
-                b = g.doesPieceLocationMatch(g.isValidMove(n, shh), row, 6);
+                b = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, 6);
 
                 p2.setLocation(row, 4); // Move Rat into the jump path
-                f3 = g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1);
+                f3 = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1);
 
                 p2.setLocation(row, 5); // Move Rat into the jump path
-                f4 = g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1);
+                f4 = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1);
 
                 p2.setLocation(1, 0); // Move the Rat out of the jump path
 
@@ -370,13 +370,13 @@ class GameTest {
 
                 p1.setLocation(row, 6); // Set the Lion up for his jump left
                 n = new NextMove(p1, row, 5); // The direction of where the Lion wants to move
-                c = g.doesPieceLocationMatch(g.isValidMove(n, shh), row, 3);
+                c = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, 3);
 
                 ////////////////////////////////////////////////////////////////////
 
                 p1.setLocation(row, 3); // Set the Lion up for his jump left
                 n = new NextMove(p1, row, 2); // The direction of where the Lion wants to move
-                d = g.doesPieceLocationMatch(g.isValidMove(n, shh), row, 0);
+                d = g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, 0);
 
                 if (rank == 6) {
                     p1.setLocation(8, 0);
@@ -395,7 +395,7 @@ class GameTest {
         p1.setLocation(row, col + 1);
         n = new NextMove(p1, row, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, col));
     }
 
     @Test
@@ -406,7 +406,7 @@ class GameTest {
         p1.setLocation(row + 1, col); // Below friendly 5
         n = new NextMove(p1, row, col); // Move up
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -418,7 +418,7 @@ class GameTest {
         p2.setLocation(row + 1, col); // Below top 3
         n = new NextMove(p2, row, col); // Move up
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -429,7 +429,7 @@ class GameTest {
         p1.setLocation(row, col + 1);
         n = new NextMove(p1, row, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, col));
     }
 
     @Test
@@ -440,7 +440,7 @@ class GameTest {
         p1.setLocation(row, col + 1);
         n = new NextMove(p1, row, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -455,7 +455,7 @@ class GameTest {
         p2.setLocation(row + 1, col);
         n = new NextMove(p2, row, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -472,7 +472,7 @@ class GameTest {
         p2.setLocation(row + 1, col);
         n = new NextMove(p2, row, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -489,7 +489,7 @@ class GameTest {
         p2.setLocation(row - 1, col);
         n = new NextMove(p2, row, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, col));
     }
 
     @Test
@@ -506,7 +506,7 @@ class GameTest {
         p1.setLocation(row + 1, col);
         n = new NextMove(p1, row, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, col));
     }
 
     @Test
@@ -523,7 +523,7 @@ class GameTest {
         p2.setLocation(row - 1, col);
         n = new NextMove(p2, row, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, col));
     }
 
     @Test
@@ -537,7 +537,7 @@ class GameTest {
         p2.setLocation(row - 1, col);
         n = new NextMove(p2, row, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, col));
     }
 
     @Test
@@ -551,7 +551,7 @@ class GameTest {
         p1.setLocation(row + 1, col);
         n = new NextMove(p1, row, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, col));
     }
 
     @Test
@@ -565,7 +565,7 @@ class GameTest {
         p2.setLocation(row + 1, col); // bot Elephant stays in the same location
         n = new NextMove(p1, row + 1, col); // Rat wants to capture Elephant
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row + 1, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row + 1, col));
     }
 
     @Test
@@ -580,7 +580,7 @@ class GameTest {
         p2.setLocation(row - 1, col); // top Elephant stays in the same location
         n = new NextMove(p1, row - 1, col); // Rat wants to capture Elephant
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row - 1, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row - 1, col));
     }
 
     @Test
@@ -594,7 +594,7 @@ class GameTest {
         p1.setLocation(row + 1, col);
         n = new NextMove(p1, row, col); // Rat wants to capture Elephant
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -608,7 +608,7 @@ class GameTest {
         p2.setLocation(row + 1, col); // Elephant stays in place
         n = new NextMove(p1, row + 1, col); // Lion wants to capture the Elephant
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -622,7 +622,7 @@ class GameTest {
         p2.setLocation(row + 1, col);
         n = new NextMove(p1, row + 1, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -637,7 +637,7 @@ class GameTest {
         p1.setLocation(row - 1, 0);
         n = new NextMove(p2, row - 1, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -651,7 +651,7 @@ class GameTest {
         p2.setLocation(row - 1, col);
         n = new NextMove(p1, row - 1, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -675,7 +675,7 @@ class GameTest {
         bot.isCaptured(1); // Rat = null
         n = new NextMove(p1, row + 1, col);
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row + 1, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row + 1, col));
     }
 
     @Test
@@ -698,7 +698,7 @@ class GameTest {
         p2.setLocation(row, col);
         n = new NextMove(p2, row - 1, 0); // Move up
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row - 1, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row - 1, col));
     }
 
     @Test
@@ -710,7 +710,7 @@ class GameTest {
         p2.setLocation(row, col);
         n = new NextMove(p2, row - 1, 0); // Move up to top Lion
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), -1, -1));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), -1, -1));
     }
 
     @Test
@@ -728,7 +728,7 @@ class GameTest {
         p1.setLocation(row + 1, 3); // Cat is one Tile down from Elephant
         n = new NextMove(p1, row, col); // Cat moves up to capture Elephant
 
-        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, shh), row, col));
+        assertTrue(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, col));
     }
 
     @Test
