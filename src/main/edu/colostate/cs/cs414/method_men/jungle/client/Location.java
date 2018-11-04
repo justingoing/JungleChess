@@ -1,7 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
 public class Location {
-    int[] location;
+    private int[] location;
 
     public Location(int[] location) {
         this.location = new int[2];
@@ -35,6 +35,15 @@ public class Location {
 
     public void setCol(int col) {
         this.location[1] = col;
+    }
+
+    public int[] getLocation() {return this.location;}
+
+    public boolean equals(Location location){
+        if (this.getRow() == location.getRow() && this.getCol() == location.getCol()){
+            return true;
+        }
+        return false;
     }
 
 }

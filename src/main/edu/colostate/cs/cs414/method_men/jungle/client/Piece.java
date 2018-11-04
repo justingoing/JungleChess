@@ -47,4 +47,13 @@ public class Piece {
     public String getColor() {
          return this.color;
     }
+
+    public boolean equals(Piece piece){
+        if (piece.getName().equals(this.getName()) && piece.getRank() == this.getRank() &&
+                piece.getColor().equals(this.getColor())){
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -7,6 +7,10 @@ public class Lion extends Piece {
             setLocation(0, 0);
         } else if (color.equals("black")) {
             setLocation(8, 6);
+        } else if (color.equals("red")) {
+            setLocation(0, 0);
+        } else if (color.equals("blue")) {
+            setLocation(8, 6);
         }
     }
 }
