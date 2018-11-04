@@ -2,10 +2,6 @@ package edu.colostate.cs.cs414.method_men.jungle.client;
 
 public class PieceFactory {
 
-    public Lion makeLion(String color){
-        return new Lion(color);
-    }
-
     public Piece makePiece(Location location){
         //Lion
         if (location.equals(new Location(0, 0))){
