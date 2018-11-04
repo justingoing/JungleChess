@@ -1,6 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
-import java.util.Random;
+import java.util.ArrayList;
+//import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
@@ -34,12 +35,26 @@ public class Game {
         }
     }
 
-    //For CLI implementation ONLY
+    public void print(String message, boolean printIt) {
+        if (printIt) {
+            System.out.println(message);
+        }
+    }
+
+    /**
+     * Is only called from the CLI interface.
+     * Prints the board to the console output.
+     */
     public void printBoard() {
         this.board.printBoard(players);
     }
 
-    //For CLI implementation ONLY
+    /**
+     * Is only called from the CLI interface. Retrieves a valid direction
+     * @param p the Piece in question
+     * @param direction the direction the user wants to move said Piece.
+     * @return
+     */
     public NextMove getDirection(Piece p, char direction) {
         NextMove nextMove = new NextMove(p, p.getRow(), p.getCol());
         debugPrint("\tfrom (" + nextMove.getRow() + ", " + nextMove.getCol() + ")");
@@ -112,7 +127,8 @@ public class Game {
         return (this.turn + 1) % 2;
     }
 
-    /** TODO: Does not check bounds! But do we need to if only our code calls this?
+    /**
+     * Returns the index of the opponent
      * @param thisPlayer the index of whatever Player you want
      * @return the index of the other Player
      */
@@ -120,13 +136,36 @@ public class Game {
         return (thisPlayer + 1) % 2;
     }
 
+    /**
+     * Compares the Location's row and col against the row and col provided.
+     * Usually used in a "is this an invalid move?" == -1 sense.
+     * @param loc [currRow, currCol]
+     * @param row the next move's horizontal location on the board
+     * @param col the next move's vertical location on the board
+     * @return true if they match, false if they do not
+     */
     public boolean doesPieceLocationMatch(Location loc, int row, int col) {
         return (loc.getRow() == row && loc.getCol() == col);
     }
 
+    /**
+     * Compare's the Piece's row and col against the row and col provided.
+     * @param p the piece we're using to extract the currRow and currCol from
+     * @param row the value we're testing the Piece's row against
+     * @param col the value we're testing the Piece's col against
+     * @return true if they match, false if they don't
+     */
     public boolean doesPieceLocationMatch(Piece p, int row, int col) {
         return (p.getRow() == row && p.getCol() == col);
     }
+
+    /**
+     * Same as above
+     * @param nextMove contains the NextMove's row and col
+     * @param row the value we're testing the Piece's row against
+     * @param col the value we're testing the Piece's col against
+     * @return true if they match, false if they don't match
+     */
     public boolean doesPieceLocationMatch(NextMove nextMove, int row, int col) {
         return (nextMove.getRow() == row && nextMove.getCol() == col);
     }
@@ -164,7 +203,7 @@ public class Game {
      * @param playerNumber used for checking either enemy Pieces or friendly Pieces
      * @param row the next move's horizontal location on the board
      * @param col the next move's vertical location on the board
-     * @return the rank (1-8) of a Piece, else -1 for no Pieces present
+     * @return the rank (1-8) of a Piece, else -1 for no Pieces present.
      */
     public int containsPiece(int playerNumber, int row, int col) {
         for (Piece currPiece : players[playerNumber].getValidPieces()) {
@@ -175,7 +214,13 @@ public class Game {
         return -1;
     }
 
-
+    /**
+     * Checks if the Rat is trying to capture the enemy Elephant
+     * @param p the (possible) Rat
+     * @param row the next move's horizontal location on the board
+     * @param col the next move's vertical location on the bard
+     * @return true if Rat captures the enemy Elephant, false if not.
+     */
     public boolean ratCapturesElephant(Piece p, int row, int col) {
         if (p instanceof Rat) {
             Piece enemyElephant = players[otherPlayer()].getPiece(8);
@@ -187,6 +232,13 @@ public class Game {
         return false;
     }
 
+    /**
+     * Checks if the Elephant is attempting to capture the enemy Rat.
+     * @param p the (possible) Elephant
+     * @param row the next move's horizontal location on the board
+     * @param col the next move's vertical location on the board.
+     * @return true if the Elephant is attempting to capture the enemy Rat, false if not.
+     */
     public boolean elephantTryingToCaptureRat(Piece p, int row, int col) {
         if (p instanceof Elephant) {
             Piece rat = players[otherPlayer()].getPiece(1);
@@ -201,7 +253,23 @@ public class Game {
         return false;
     }
 
-    public boolean isLandingValid(Piece p, int row, int col) {
+    /**
+     * Used when the Lion or Tiger is, in fact, trying to jump. Checks if there are not Rats, and if the landing is clear.
+     *     First, we have to determine if it's a horizontal jump or a vertical jump and set the min and max
+     *     Next, check if there are any Rats in the River.
+     * If the landing contains a Piece:
+     *     Check if it's a friendly Piece [fail]
+     *     Check if the enemy has a lower rank [pass] else [fail]
+     * @param p
+     * @param nextLoc
+     * @param print
+     * @return
+     */
+    public boolean isLandingValid(Piece p, Location nextLoc, boolean print) {
+        return isLandingValid(p, nextLoc.getRow(), nextLoc.getCol(), print);
+    }
+
+    public boolean isLandingValid(Piece p, int row, int col, boolean print) {
         // Check if a Rat is in the River (specifically if it is in the path of the jump)
         Location currLocation = p.getLocation();
         for (Player currPlayer : players) {
@@ -221,7 +289,7 @@ public class Game {
 
                     for (int checkThisRow = min + 1; checkThisRow < max; ++checkThisRow) {
                         if (rat.getRow() == checkThisRow && rat.getCol() == col) {
-                            System.out.println("The vertical jump is blocked by a Rat in the River.");
+                            print("The vertical jump is blocked by a Rat in the River.", print);
                             return false;
                         }
                     }
@@ -234,7 +302,7 @@ public class Game {
 
                     for (int checkThisCol = min + 1; checkThisCol < max; ++checkThisCol) {
                         if (rat.getRow() == row && rat.getCol() == checkThisCol){
-                            System.out.println("The horizontal jump is blocked by a Rat in the River.");
+                            print("The horizontal jump is blocked by a Rat in the River.", print);
                             return false;
                         }
                     }
@@ -253,7 +321,7 @@ public class Game {
                         debugPrint("You outrank them: " + (p.getRank() >= piece.getRank()));
                         return (p.getRank() >= piece.getRank()); // returns true if I am of an equal or higher rank than you
                     } else {
-                        System.out.println("Cannot jump across and capture a friendly Piece.");
+                        print("Cannot jump across and capture a friendly Piece.", print);
                         return false;
                     }
                 }
@@ -265,6 +333,17 @@ public class Game {
         return true; // Landing Tile is not occupied
     }
 
+    /**
+     * Used to check if p is a Tiger or Lion. If it is, is it able to jump?
+     * Two uses: checks if it wants to jump (isTryingToJump), then checks if it can jump for real.
+     * The nextRow & nextCol parameters are lies! They are only one Tile off from the starting Tile.
+     * Therefore, we need to calculate where p will land, hence why this returns a Location.
+     * @param p the Piece in question
+     * @param nextRow Which horizontal direction does p want to go?
+     * @param nextCol Which vertical direction does p want to go?
+     * @param typeOfMove {"testing jump", "jump for real"}
+     * @return the Location of where it will land or [-1, -1] for "not a valid jump"
+     */
     public Location isAbleToJump(Piece p, int nextRow, int nextCol, String typeOfMove) {
         int startingRow = nextRow;
         int startingCol = nextCol;
@@ -306,7 +385,7 @@ public class Game {
                 }
             } else {
                 debugPrint("Your Lion or Tiger is trying to jump across the River to (" + nextRow + ", " + nextCol + ").");
-                boolean isThisAValidJump = isLandingValid(p, nextRow, nextCol);
+                boolean isThisAValidJump = isLandingValid(p, nextRow, nextCol, true);
                 debugPrint("This is a valid jump: " + isThisAValidJump);
                 debugPrint("The jump is shooting for " + nextRow + " " + nextCol);
                 if (isThisAValidJump) {
@@ -337,15 +416,6 @@ public class Game {
     public boolean isTryingToJump(Piece p, int row, int col) {
         Location nextDestination = isAbleToJump(p, row, col, "testing trying to jump");
         return (doesPieceLocationMatch(nextDestination, SUCCESS, SUCCESS));
-    }
-
-    /**
-     * UI calls this version to test if the Piece is trying to jump.
-     * @param nextMove the (Piece, row, col) of the destination
-     * @return true if the Tiger|Lion is trying to jump across the River. False if not.
-     */
-    public boolean isTryingToJump(NextMove nextMove) {
-        return (isTryingToJump(nextMove.getPiece(), nextMove.getRow(), nextMove.getCol()));
     }
 
     /**
@@ -456,10 +526,11 @@ public class Game {
          * 9. Does the next move's location contain a friendly Piece? [fail]
          * 10.If no aforementioned conditions are met, then it is a valid move.
          * @param nextMove the (Piece, row, col) all packed into one element.
+         * @param print "Shall I print the failures for you?" false == "shh"
          * @return [-1, -1] called "FAILURE_DESTINATION" to represent an invalid move.
          *         [nextMovesRow, nextMovesCol] to represent a valid move in an int array
          */
-    public Location isValidMove(NextMove nextMove) {
+    public Location isValidMove(NextMove nextMove, boolean print) {
         int enemyPieceRank;
         Piece p = nextMove.getPiece();
         int row = nextMove.getRow();
@@ -468,7 +539,7 @@ public class Game {
 
         if (isOutOfBounds(row, col)) {
             // 1. The next move's location out of bounds
-            System.out.println("Out of bounds!");
+            print("Out of bounds!", print);
             return FAILURE_DESTINATION;
 
         } else if (isTryingToJump(p, row, col)) {
@@ -477,7 +548,7 @@ public class Game {
             if (!doesPieceLocationMatch(nextDestination, FAILURE, FAILURE)) {
                 return nextDestination;
             } else {
-                System.out.println("Your " + p.getName() + " cannot jump across at this time.");
+                print("Your " + p.getName() + " cannot jump across at this time.", print);
                 return FAILURE_DESTINATION;
             }
 
@@ -498,7 +569,7 @@ public class Game {
                 debugPrint("Rat will successfully move to (" + row + ", " + col + ")");
                 return new Location(row, col);
             } else {
-                System.out.println("Cannot move " + p.getName() + " into the River.");
+                print("Cannot move " + p.getName() + " into the River.", print);
                 return FAILURE_DESTINATION;
             }
 
@@ -513,7 +584,7 @@ public class Game {
                     debugPrint("Enemy Piece in the Trap.");
 
                     if (isEnemysRankReducedToZero(pieceInLocation)) {
-                        System.out.println("Enemy " + pieceInLocation.getName() + "'s rank is reduced to 0.");
+                        print("Enemy " + pieceInLocation.getName() + "'s rank is reduced to 0.", print);
                         return new Location(row, col);
                     } else {
                         debugPrint("Enemy is in their own Trap.");
@@ -540,12 +611,12 @@ public class Game {
 
         } else if (ratCapturesElephant(p, row, col)) {
             // 6. p is a Rat and wants to capture the enemy Elephant
-            System.out.println("Rat will sneak up and eat the Elephant's brain!");
+            print("Rat will sneak up and eat the Elephant's brain!", print);
             return new Location(row, col);
 
         } else if (elephantTryingToCaptureRat(p, row, col)) {
             // 7. p is an Elephant and is trying to capture the enemy Rat
-            System.out.println("Elephant cannot capture the Rat because he's too afraid of the Rat...");
+            print("Elephant cannot capture the Rat because he's too afraid of the Rat...", print);
             return FAILURE_DESTINATION;
 
         } else if ((enemyPieceRank = containsPiece(otherPlayer(), row, col)) != -1) {
@@ -556,14 +627,14 @@ public class Game {
                 // your Piece's ranks beats the enemy Piece's rank
                 return new Location(row, col);
             } else {
-                System.out.println("You cannot capture an enemy with a higher rank.");
+                print("You cannot capture an enemy with a higher rank.", print);
                 return FAILURE_DESTINATION;
             }
 
         } else if (containsPiece(turn, row, col) != -1) {
             // 9. The next move's location contains a friendly Piece
             debugPrint("There is a friendly Piece located here.");
-            System.out.println("You can't capture your own Piece.");
+            print("You can't capture your own Piece.", print);
             return FAILURE_DESTINATION;
         } else {
             // 10. It is a valid move
@@ -572,6 +643,13 @@ public class Game {
         }
     }
 
+    /**
+     * Used in the CLI interface only.
+     * Reads input from user and only if the user inputs an integer between [1, 8] inclusive.
+     * Does not stop until you give it a valid integer.
+     * @param sc No need to create multiple Scanners across all of the CLI_Input methods
+     * @return the Piece's rank
+     */
     public int retrieveCliPieceRank(Scanner sc) {
         String pieceInput;
         int pieceRank;
@@ -597,6 +675,13 @@ public class Game {
         }
     }
 
+    /**
+     * Used only in the CLI interface. Retrieve the direction.
+     * Only cares about the first char in the input string: "down" => 'd', "u1e78F9dw" => 'u', etc.
+     * You can input a 'q' if you no longer want to move the Piece you input from the method above.
+     * @param sc No need to create multiple Scanners across all of the CLI_Input methods
+     * @return the direction IN {'u', 'd', 'l', 'r'}
+     */
     public char retrieveCliDirection(Scanner sc) {
         String directionInput = sc.nextLine();
 
@@ -617,6 +702,12 @@ public class Game {
         return '#';
     }
 
+    /**
+     * Used in CLI interface only.
+     * This macro method is used to retrieve the user input from the console.
+     * Will only break out of the nested while loops if you give it a vaid Piece and a valid direction.
+     * @return
+     */
     public NextMove retrieveCliInput() {
         Scanner sc = new Scanner(System.in);
         NextMove nextMove = null;
@@ -659,7 +750,7 @@ public class Game {
 
             if (direction != 'q'){
                 nextMove = getDirection(piece, direction);
-                nextMove = new NextMove(piece, isValidMove(nextMove));
+                nextMove = new NextMove(piece, isValidMove(nextMove, true));
                 debugPrint("Sanity Check: " + nextMove.getRow() + ", " + nextMove.getCol());
 
                 if (nextMove.getRow() != FAILURE && nextMove.getCol() != FAILURE) {
@@ -677,6 +768,153 @@ public class Game {
         return nextMove;
     }
 
+    /**
+     * Who owns this Piece? If it's the enemy's Piece, then you cannot use it [returns true == "You cannot use it"]
+     * @param row horizontal location used to retrieve the Piece in question
+     * @param col vertical location used to retrieve the Piece in question
+     * @return true if the enemy owns it, false if you own it.
+     */
+    public boolean notYourPieceToMove(int row, int col) {
+        return !(players[otherPlayer()].retrievePieceByLocation(row, col) == null);
+    }
+
+    /**
+     * The UI is a little different than the console. A Lion or Tiger can be selected to jump "into" the River.
+     * Therefore, we need to check if the landing is valid, so we have to manually generate where it will go.
+     * This has a helper method to "normalize" the jump, because the Lion or Tiger cannot actually land in the River.
+     * @param n the Lion or Tiger (previously checked for instanceof check).
+     * @return true if both are true: 1. Path is free of Rats  2. if Piece @ landing, is it valid to land on them?
+     */
+    public boolean jumpInTheUi(NextMove n) {
+        boolean validGeometry = false;
+        Piece p = n.getPiece();
+        int currRow = p.getRow();
+        int currCol = p.getCol();
+        int nextRow = n.getRow();
+        int nextCol = n.getCol();
+
+        if (currRow == 2 && (currCol == nextCol) && (nextRow >= 3 && nextRow <= 6) && (currCol == 1 || currCol == 2 || currCol == 4 || currCol == 5)) {
+            // vertical
+            validGeometry = true;
+        } else if (currRow == 6 && (currCol == nextCol) && (nextRow >= 2 && nextRow <= 5) && (currCol == 1 || currCol == 2 || currCol == 4 || currCol == 5)) {
+            // vertical
+            validGeometry = true;
+        } else if (currCol == 0 && (currRow == nextRow) && (nextCol >= 1 && nextRow <= 3) && (currRow >= 3 && currRow <= 5)) {
+            // horizontal
+            validGeometry = true;
+        } else if (currCol == 3 && (currRow == nextRow) && (currRow >= 3 && currRow <= 5) && currRow == nextRow) {
+            // horizontal
+            if (nextCol >= 0 && nextCol <= 2) {
+                validGeometry =  true;
+            } else if (nextCol >= 4 && nextCol <= 6) {
+                validGeometry = true;
+            }
+        } else if (currCol == 6 && (currRow == nextRow) && (nextCol >= 3 && nextCol <= 5) && (currRow > 3 && currRow < 5)) {
+            // horizontal
+            validGeometry = true;
+        }
+
+        if (validGeometry) {
+            Location nextLoc = normalizeJump(currRow, currCol, nextRow, nextCol);
+            return (isLandingValid(p, nextLoc, false));
+        }
+        return false;
+    }
+
+    /**
+     * Lions and Tigers cannot land IN the River, so this returns the actual landing spot as normal.
+     * @param currRow
+     * @param currCol
+     * @param nextRow Which direction is the Lion or Tiger headed?
+     * @param nextCol Which direction is the Lion or Tiger headed?
+     * @return the Location of the actual landing spot.
+     */
+    public Location normalizeJump(int currRow, int currCol, int nextRow, int nextCol) {
+        int row = nextRow;
+        int col = nextCol;
+
+        if (currRow == 2) {
+            row = 6;
+        } else if (currRow == 6) {
+            row = 2;
+        } else if (currCol == 0 || currCol == 6) {
+            col = 3;
+        } else if (currCol == 3) {
+            if (nextCol < 3) {
+                col = 0;
+            } else if (nextCol > 3) {
+                col = 6;
+            }
+        }
+        return new Location(row, col);
+    }
+
+
+    /**
+     * UI calls this version to test if the Piece is trying to jump.
+     * @param nextMove the (Piece, row, col) of the destination
+     * @return true if the Tiger|Lion is trying to jump across the River. False if not.
+     */
+    public boolean isTryingToJumpUi(NextMove nextMove) {
+        Piece lt = nextMove.getPiece();
+        if (lt instanceof Tiger || lt instanceof Lion) {
+            debugPrint(lt.getName() + ": " + nextMove.getRow() + " " + nextMove.getCol());
+            return (jumpInTheUi(nextMove));
+        }
+        return false;
+    }
+
+    /**
+     * Key word is "Try" and move via the UI interface. This is called for every first-click of the the mouse and
+     * makes the borders highlighted.
+     * If it is a valid move, return the Location on the next move (or landing spot). Else return [-1, -1] for "not valid"
+     * @param currRow
+     * @param currCol
+     * @param nextRow
+     * @param nextCol
+     * @param print "Do we want to print to the console?" Dear God, no! We don't want it littered with garbage.
+     * @return
+     */
+    public Location tryAndMoveUi(int currRow, int currCol, int nextRow, int nextCol, boolean print) {
+        if (notYourPieceToMove(currRow, currCol)) {
+            System.out.println("\tERROR: Cannot move an enemy Piece.");
+            return FAILURE_DESTINATION;
+        }
+
+        NextMove nextMove = new NextMove(players[turn], currRow, currCol, nextRow, nextCol);
+        Piece p = nextMove.getPiece();
+
+        if (nextMove.getPiece() == null ) {
+            System.out.println("\tERROR: Not a valid Piece.");
+            return FAILURE_DESTINATION;
+        }
+
+        // Calculate the difference in row  and difference in col
+        int deltaRow = Math.abs(nextRow - currRow);
+        int deltaCol = Math.abs(nextCol - currCol);
+        boolean jumping = false;
+
+        if (isTryingToJumpUi(nextMove)) {
+            System.out.println("You are trying to jump with your " + p.getName());
+            jumping = jumpInTheUi(nextMove);
+        } else if (deltaRow == 1 && deltaCol == 0) {
+            debugPrint("You are trying to move vertically.");
+        } else if (deltaRow == 0 && deltaCol == 1) {
+            debugPrint("You are trying to move horizontally.");
+        } else {
+            System.out.println("\tERROR: Not a valid move. A Piece can only move one Tile.");
+            return FAILURE_DESTINATION;
+        }
+
+        Location loc;
+
+        if (!jumping) { // Not a Lion or Tiger
+            return isValidMove(nextMove, print);
+        } else { // Lion or Tiger
+            //return new Location(nextMove.getRow(), nextMove.getCol());
+            return normalizeJump(currRow, currCol, nextRow, nextCol);
+        }
+    }
 
     /**
      * UI controller calls this method to move the Piece
@@ -686,43 +924,47 @@ public class Game {
      * @param nextCol the second click's vertical location on the board
      */
     public boolean makeMoveUi(int currRow, int currCol, int nextRow, int nextCol) {
-        // nextRow (or deltaRow (i.e.: -1 == move up one Tile))
-        // nextCol (or deltaCol (i.e.: 1 == move right one Tile))
-
         NextMove nextMove = new NextMove(players[turn], currRow, currCol, nextRow, nextCol);
         Piece p = nextMove.getPiece();
 
-        if (nextMove.getPiece() == null ) {
-            System.out.println("\tERROR: Not a valid Piece.");
-            return false;
-        }
-
-        // Calculate the difference in row  and difference in col
-        int deltaRow = Math.abs(nextRow - currRow);
-        int deltaCol = Math.abs(nextCol - currCol);
-
-        if (isTryingToJump(nextMove)) {
-            // Will fix in the future version of this branch
-            debugPrint("You are trying to jump with your " + p.getName());
-        } else if (deltaRow == 1 && deltaCol == 0) {
-            debugPrint("You are trying to move vertically.");
-        } else if (deltaCol == 1 && deltaRow == 0) {
-            debugPrint("You are trying to move horizontally.");
-        } else {
-            System.out.println("\tError: Not a valid move. A Piece can only move one Tile.");
-            return false;
-        }
-
-        Location loc = isValidMove(nextMove);
+        Location loc = tryAndMoveUi(currRow, currCol, nextRow, nextCol, true);
 
         if (!doesPieceLocationMatch(loc, FAILURE, FAILURE)) {
             nextMove = new NextMove(p, loc);
             moveThePiece(nextMove);
             return true;
         } else {
-            System.out.println("\tERROR: Not a valid move.");
             return false;
         }
+    }
+
+    public ArrayList<Location> retrieveValidLocations(int row, int col) {
+        ArrayList<Location> validDirections = new ArrayList<>();
+        Piece p = players[turn].retrievePieceByLocation(row, col);
+
+        if (p != null) {
+            Location up = tryAndMoveUi(row, col, row - 1, col, false);
+            Location down = tryAndMoveUi(row, col, row + 1, col, false);
+            Location left = tryAndMoveUi(row, col, row, col - 1, false);
+            Location right = tryAndMoveUi(row, col, row, col + 1, false);
+
+            if (!doesPieceLocationMatch(up, -1, -1)) {
+                validDirections.add(up);
+            }
+            if (!doesPieceLocationMatch(down, -1, -1)) {
+                validDirections.add(down);
+            }
+            if (!doesPieceLocationMatch(left, -1, -1)) {
+                validDirections.add(left);
+            }
+            if (!doesPieceLocationMatch(right, -1, -1)) {
+                validDirections.add(right);
+            }
+        }
+//        else {
+//            System.out.println("That Tile does not contains a Piece.");
+//        }
+        return validDirections;
     }
 
     public void makeMoveCli() {
@@ -797,5 +1039,13 @@ public class Game {
         }
 
         return -1; // no winner
+    }
+
+    /**
+     * Match has concluded. Prints who won this match.
+     */
+    public void endGame() {
+        // Prints the Winner statement
+        whoseTurnIsIt(winnerCheck(), " is the winner!");
     }
 }

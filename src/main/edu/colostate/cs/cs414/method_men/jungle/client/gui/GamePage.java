@@ -7,6 +7,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class GamePage extends Page implements ActionListener {
     private final Icon CAT_ICON = new ImageIcon(new ImageIcon("src/Images/cat.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
@@ -25,11 +26,13 @@ public class GamePage extends Page implements ActionListener {
     private Game game;
     private JButton[][] buttons;
     private int[] selectedButton = null;
+    private ArrayList<Location> currentlyHighlighted;
 
     public GamePage(GUI frame) {
         super(frame);
 
         game = new Game();
+        currentlyHighlighted = new ArrayList<>();
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(9, 7));
@@ -118,16 +121,46 @@ public class GamePage extends Page implements ActionListener {
 
         if (((LineBorder)button.getBorder()).getLineColor().equals(Color.BLACK)) {
             button.setBorder(new LineBorder(Color.LIGHT_GRAY));
+            unhighlight();
             selectedButton = null;
         } else if (selectedButton != null) {
             game.makeMoveUi(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
             updateBoard();
             buttons[selectedButton[0]][selectedButton[1]].setBorder(new LineBorder(Color.LIGHT_GRAY));
             selectedButton = null;
+            unhighlight();
+
+            if (game.winnerCheck() != -1) {
+                game.endGame();
+                // Can you switch panels from here? (to go back to main menu)
+            }
         } else if (((LineBorder)button.getBorder()).getLineColor().equals(Color.LIGHT_GRAY)) {
             button.setBorder(new LineBorder(Color.BLACK));
             selectedButton = new int[]{button.getRow(), button.getCol()};
+
+            ArrayList<Location> validDirectionButtons = game.retrieveValidLocations(button.getRow(), button.getCol());
+            int stop = validDirectionButtons.size();
+            for (int i = 0; i < stop; ++i) {
+                Location curr = validDirectionButtons.remove(0);
+                int row = curr.getRow();
+                int col = curr.getCol();
+                buttons[row][col].setBorder(new LineBorder(Color.BLUE));
+
+                currentlyHighlighted.add(curr);
+            }
+        }
+    }
+
+    /**
+     * Takes all highlighted squares are reverts them back to LIGHT_GRAY
+     */
+    public void unhighlight() {
+        for (Location curr : currentlyHighlighted) {
+            int row = curr.getRow();
+            int col = curr.getCol();
+            buttons[row][col].setBorder(new LineBorder(Color.LIGHT_GRAY)); // take back your voodoo magic of color;
         }
 
+        currentlyHighlighted = new ArrayList<>();
     }
 }
