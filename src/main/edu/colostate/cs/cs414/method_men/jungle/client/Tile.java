@@ -20,10 +20,10 @@ public class Tile {
             type = "Trap";
         }
         else if (isRiver(location)){
-            attribute = 'R';
+            attribute = '~';
             type = "River";
         } else {
-            attribute = 'O';
+            attribute = '.';
             type = "Open";
         }
     }

@@ -28,7 +28,12 @@ public class Board {
                 //TODO: New version
                 Location location = new Location(row, col);
                 Piece piece = pf.makePiece(location);
-                board_.put(location, new Tile(location, piece));
+                Tile tile = new Tile(location, piece);
+                System.out.println("setting board, tile: " + tile.getAttribute());
+                board_.put(location, tile);
+                System.out.println("put on board, tile: " + getTile_(new Location(row, col)).getAttribute());
+                System.out.println("put on board, tile: " + getTile_(row, col).getAttribute());
+                System.out.println();
             }
         }
     }
