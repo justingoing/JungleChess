@@ -19,17 +19,15 @@ public class Board {
      * instantiates each Tile (subtype) based off the location
      */
     public void setBoard() {
-        PieceFactory pf = new PieceFactory();
-        TileFactory tf = new TileFactory();
         for (int row = 0; row < HEIGHT; ++row) {
             for (int col = 0; col < WIDTH; ++col) {
                 //TODO: Old version
-                this.board[row][col] = makeInstance(row, col);
+                this.board[row][col] = makeTile(row, col);
 
                 //TODO: New version
                 Location location = new Location(row, col);
-                Piece piece = pf.makePiece(location);
-                Tile tile = tf.makeTile(location);
+                Piece piece = makePiece(location);
+                Tile tile = makeTile(location);
                 tile.setPiece(piece); //If there is a piece (i.e., (0,0) gets a Lion), set it on the Tile
                 board_.put(location, tile);
             }
@@ -121,7 +119,7 @@ public class Board {
      * @param col vertical location on board
      * @return a new instance of it's corresponding Tiles
      */
-    public Tile makeInstance(int row, int col) {
+    public Tile makeTile(int row, int col) {
         if (isDen(row, col)) {
             return new Den();
         } else if (isTrap(row, col)) {
@@ -133,6 +131,92 @@ public class Board {
         } else {
             return new Open();
         }
+    }
+
+    public Tile makeTile(Location location){
+        //Den
+        if (isRedDen(location)){
+            return new Den("Red");
+        } else if (isBlueDen(location)){
+            return new Den("Blue");
+        }
+
+        //Trap
+        else if (isRedTrap(location)){
+            return new Trap("Red");
+        }
+        else if (isBlueTrap(location)){
+            return new Trap("Blue");
+        }
+
+        //River
+        else if (isRiver(location)){
+            return new River();
+        }
+
+        //Open
+        else {
+            return new Open();
+        }
+    }
+
+    public Piece makePiece(Location location){
+        //Lion
+        if (location.equals(new Location(0, 0))){
+            return new Lion("red");
+        } else if (location.equals(new Location(8, 6))){
+            return new Lion("blue");
+        }
+
+        //Rat
+        else if (location.equals(new Location(2, 0))){
+            return new Rat("red");
+        } else if (location.equals(new Location(6, 6))){
+            return new Rat("blue");
+        }
+
+        //Dog
+        else if (location.equals(new Location(1, 1))){
+            return new Dog("red");
+        } else if (location.equals(new Location(8, 5))){
+            return new Dog("blue");
+        }
+
+        //Leopard
+        else if (location.equals(new Location(2, 2))){
+            return new Leopard("red");
+        } else if (location.equals(new Location(6, 4))){
+            return new Leopard("blue");
+        }
+
+        //Wolf
+        else if (location.equals(new Location(2, 4))){
+            return new Wolf("red");
+        } else if (location.equals(new Location(6, 2))){
+            return new Wolf("blue");
+        }
+
+        //Cat
+        else if (location.equals(new Location(1, 5))){
+            return new Cat("red");
+        } else if (location.equals(new Location(7, 1))){
+            return new Cat("blue");
+        }
+
+        //Tiger
+        else if (location.equals(new Location(0, 6))){
+            return new Tiger("red");
+        } else if (location.equals(new Location(8, 0))){
+            return new Tiger("blue");
+        }
+
+        //Elephant
+        else if (location.equals(new Location(2, 7))){
+            return new Elephant("red");
+        } else if (location.equals(new Location(6, 0))){
+            return new Elephant("blue");
+        }
+        return null;
     }
 
 
@@ -180,4 +264,53 @@ public class Board {
             }
         }
     }
+
+
+    /**
+     *  makeTile(Location) helpers
+     */
+    private boolean isRedDen(Location location){
+        if (location.equals(new Location(0, 3))){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isBlueDen(Location location){
+        if (location.equals(new Location(8, 3))){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isRedTrap(Location location){
+        if (location.equals(new Location(0, 2)) ||
+                location.equals(new Location(0, 4))||
+                location.equals(new Location(1, 3))){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isBlueTrap(Location location){
+        if (location.equals(new Location(8, 2)) ||
+                location.equals(new Location(8, 4)) ||
+                location.equals(new Location(7, 3))){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isRiver(Location location){
+        if (location.equals(new Location(3, 1)) || location.equals(new Location(3, 4)) ||
+                location.equals(new Location(4, 1)) || location.equals(new Location(4, 4)) ||
+                location.equals(new Location(5, 1)) || location.equals(new Location(5, 4)) ||
+                location.equals(new Location(3, 2)) || location.equals(new Location(3, 5)) ||
+                location.equals(new Location(4, 2)) || location.equals(new Location(4, 5)) ||
+                location.equals(new Location(5, 2)) || location.equals(new Location(5, 5))){
+            return true;
+        }
+        return false;
+    }
+
 }
