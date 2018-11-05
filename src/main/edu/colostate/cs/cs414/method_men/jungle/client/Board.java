@@ -42,12 +42,17 @@ public class Board {
      * @param col vertical location on board
      * @return requested tile
      */
-    public Tile getTile(int row, int col){return board[row][col]; }
+    public Tile getTile(int row, int col) {
+        return board[row][col];
+    }
 
-    public Tile getTile_(int row, int col){
-        return getTile_(new Location(row, col));}
+    public Tile getTile_(int row, int col) {
+        return getTile_(new Location(row, col));
+    }
 
-    public Tile getTile_(Location loc){ return board_.get(loc);}
+    public Tile getTile_(Location loc) {
+        return board_.get(loc);
+    }
 
     /**
      * If the Tile at (row, col) is suppose to be a River Tile
