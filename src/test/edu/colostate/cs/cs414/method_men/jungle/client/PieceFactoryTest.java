@@ -25,4 +25,6 @@ public class PieceFactoryTest {
         assertTrue(blueLion.equals(testBlueLion));
         assertTrue(redLion.equals(testRedLion));
     }
+
+    //TODO: Test making each of the other types
 }

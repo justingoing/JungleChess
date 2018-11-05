@@ -58,7 +58,7 @@ public class PieceFactory {
         } else if (location.equals(new Location(6, 0))){
             return new Elephant("blue");
         }
-        return null; //TODO: Throw error instead? Whats the best way to handle this?
+        return null;
     }
 
 

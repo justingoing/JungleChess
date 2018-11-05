@@ -20,6 +20,7 @@ public class Board {
      */
     public void setBoard() {
         PieceFactory pf = new PieceFactory();
+        TileFactory tf = new TileFactory();
         for (int row = 0; row < HEIGHT; ++row) {
             for (int col = 0; col < WIDTH; ++col) {
                 //TODO: Old version
@@ -28,12 +29,9 @@ public class Board {
                 //TODO: New version
                 Location location = new Location(row, col);
                 Piece piece = pf.makePiece(location);
-                Tile tile = new Tile(location, piece);
-                System.out.println("setting board, tile: " + tile.getAttribute());
+                Tile tile = tf.makeTile(location);
+                tile.setPiece(piece); //If there is a piece (i.e., (0,0) gets a Lion), set it on the Tile
                 board_.put(location, tile);
-                System.out.println("put on board, tile: " + getTile_(new Location(row, col)).getAttribute());
-                System.out.println("put on board, tile: " + getTile_(row, col).getAttribute());
-                System.out.println();
             }
         }
     }

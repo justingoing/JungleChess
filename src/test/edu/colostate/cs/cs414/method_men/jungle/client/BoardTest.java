@@ -115,9 +115,9 @@ class BoardTest {
 
     @Test
     void testSetBoard_() {
-        Tile tile = testBoard.getTile_(0,0);
-        System.out.println(tile);
         assertEquals('.', testBoard.getTile_(0,0).getAttribute());
+        assertEquals(new Lion("red"), testBoard.getTile_(0,0).getPiece());
+        assertNotEquals(new Lion("blue"), testBoard.getTile_(0,0).getPiece());
         assertEquals('.', testBoard.getTile_(0,1).getAttribute());
         assertEquals('.', testBoard.getTile_(0,5).getAttribute());
         assertEquals('.', testBoard.getTile_(0,6).getAttribute());
