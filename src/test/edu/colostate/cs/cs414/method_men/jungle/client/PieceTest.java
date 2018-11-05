@@ -48,6 +48,19 @@ public class PieceTest {
     }
 
     @Test
+    void testEquals(){
+        Piece p = new Piece("Elephant", 8, "Red");
+        Piece q = new Piece("Elephant", 8, "Red");
+        assertEquals(p, q);
+        q = new Piece("Elephant", 8, "Blue");
+        assertNotEquals(p, q);
+        q = new Piece("Rat", 8, "Blue");
+        assertNotEquals(p, q);
+        q = new Piece("Elephant", 32, "Blue");
+        assertNotEquals(p, q);
+    }
+
+    @Test
     void testGetName() {
         assertEquals("Rat", testRat.getName());
     }

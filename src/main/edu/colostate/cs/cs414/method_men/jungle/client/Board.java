@@ -1,13 +1,39 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
+import java.util.HashMap;
+
 public class Board {
     private final int HEIGHT = 9;
     private final int WIDTH = 7;
     private Tile[][] board;
+    private HashMap<Location, Tile> board_;
 
     public Board() {
         this.board = new Tile[HEIGHT][WIDTH];
-        makeBoard();
+        this.board_ = new HashMap<>();
+        setBoard();
+    }
+
+    /**
+     * Iterates through each row, then each column, and
+     * instantiates each Tile (subtype) based off the location
+     */
+    public void setBoard() {
+        PieceFactory pf = new PieceFactory();
+        TileFactory tf = new TileFactory();
+        for (int row = 0; row < HEIGHT; ++row) {
+            for (int col = 0; col < WIDTH; ++col) {
+                //TODO: Old version
+                this.board[row][col] = makeInstance(row, col);
+
+                //TODO: New version
+                Location location = new Location(row, col);
+                Piece piece = pf.makePiece(location);
+                Tile tile = tf.makeTile(location);
+                tile.setPiece(piece); //If there is a piece (i.e., (0,0) gets a Lion), set it on the Tile
+                board_.put(location, tile);
+            }
+        }
     }
 
     /**
@@ -16,8 +42,16 @@ public class Board {
      * @param col vertical location on board
      * @return requested tile
      */
-    public Tile getTile(int row, int col){
+    public Tile getTile(int row, int col) {
         return board[row][col];
+    }
+
+    public Tile getTile_(int row, int col) {
+        return getTile_(new Location(row, col));
+    }
+
+    public Tile getTile_(Location loc) {
+        return board_.get(loc);
     }
 
     /**
@@ -101,17 +135,6 @@ public class Board {
         }
     }
 
-    /**
-     * Iterates through each row, then each column, and
-     * instantiates each Tile (subtype) based off the location
-     */
-    public void makeBoard() {
-        for (int row = 0; row < HEIGHT; ++row) {
-            for (int col = 0; col < WIDTH; ++col) {
-                this.board[row][col] = makeInstance(row, col);
-            }
-        }
-    }
 
     /**
      * Iterates through each player, then each piece, and
@@ -135,7 +158,6 @@ public class Board {
      * After completing construction, it prints the temp board
      * @param players the array of two Players that have Pieces on the real board
      */
-
     public void printBoard(Player[] players) {
         char[][] draw = new char[HEIGHT][WIDTH];
         placePieces(draw, players);

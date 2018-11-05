@@ -47,4 +47,24 @@ public class Piece {
     public String getColor() {
          return this.color;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Piece piece = (Piece) o;
+
+        if (rank != piece.rank) return false;
+        if (name != null ? !name.equals(piece.name) : piece.name != null) return false;
+        return color != null ? color.equals(piece.color) : piece.color == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + rank;
+        result = 31 * result + (color != null ? color.hashCode() : 0);
+        return result;
+    }
 }

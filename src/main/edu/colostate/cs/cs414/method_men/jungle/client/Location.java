@@ -1,7 +1,9 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
+import java.util.Arrays;
+
 public class Location {
-    int[] location;
+    private int[] location;
 
     public Location(int[] location) {
         this.location = new int[2];
@@ -37,4 +39,20 @@ public class Location {
         this.location[1] = col;
     }
 
+    public int[] getLocation() {return this.location;}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Location location1 = (Location) o;
+
+        return Arrays.equals(location, location1.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(location);
+    }
 }

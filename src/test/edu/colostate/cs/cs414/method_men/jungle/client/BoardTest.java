@@ -83,7 +83,7 @@ class BoardTest {
     }
 
     @Test
-    void testMakeBoard() {
+    void testSetBoard() {
         assertEquals('.', testBoard.getTile(0,0).getAttribute());
         assertEquals('.', testBoard.getTile(0,1).getAttribute());
         assertEquals('.', testBoard.getTile(0,5).getAttribute());
@@ -111,6 +111,39 @@ class BoardTest {
         assertEquals('.', testBoard.getTile(6,0).getAttribute());
         assertEquals('.', testBoard.getTile(6,3).getAttribute());
         assertEquals('.', testBoard.getTile(6,6).getAttribute());
+    }
+
+    @Test
+    void testSetBoard_() {
+        assertEquals('.', testBoard.getTile_(0,0).getAttribute());
+        assertEquals(new Lion("red"), testBoard.getTile_(0,0).getPiece());
+        assertNotEquals(new Lion("blue"), testBoard.getTile_(0,0).getPiece());
+        assertEquals('.', testBoard.getTile_(0,1).getAttribute());
+        assertEquals('.', testBoard.getTile_(0,5).getAttribute());
+        assertEquals('.', testBoard.getTile_(0,6).getAttribute());
+        assertEquals('.', testBoard.getTile_(1,0).getAttribute());
+        assertEquals('.', testBoard.getTile_(1,1).getAttribute());
+        assertEquals('.', testBoard.getTile_(1,2).getAttribute());
+        assertEquals('.', testBoard.getTile_(1,4).getAttribute());
+        assertEquals('.', testBoard.getTile_(1,5).getAttribute());
+        assertEquals('.', testBoard.getTile_(1,6).getAttribute());
+        assertEquals('.', testBoard.getTile_(2,0).getAttribute());
+        assertEquals('.', testBoard.getTile_(2,3).getAttribute());
+        assertEquals('.', testBoard.getTile_(2,6).getAttribute());
+
+        assertEquals('.', testBoard.getTile_(8,0).getAttribute());
+        assertEquals('.', testBoard.getTile_(8,1).getAttribute());
+        assertEquals('.', testBoard.getTile_(8,5).getAttribute());
+        assertEquals('.', testBoard.getTile_(8,6).getAttribute());
+        assertEquals('.', testBoard.getTile_(7,0).getAttribute());
+        assertEquals('.', testBoard.getTile_(7,1).getAttribute());
+        assertEquals('.', testBoard.getTile_(7,2).getAttribute());
+        assertEquals('.', testBoard.getTile_(7,4).getAttribute());
+        assertEquals('.', testBoard.getTile_(7,5).getAttribute());
+        assertEquals('.', testBoard.getTile_(7,6).getAttribute());
+        assertEquals('.', testBoard.getTile_(6,0).getAttribute());
+        assertEquals('.', testBoard.getTile_(6,3).getAttribute());
+        assertEquals('.', testBoard.getTile_(6,6).getAttribute());
     }
 
     @Test
