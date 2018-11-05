@@ -24,31 +24,31 @@ class RatTest {
     @Test
     void getLocation2() {
         rat = new Rat("purple");
-        assertTrue(rat.getLocation()==null);
+        assertEquals(rat.getLocation(),null);
     }
 
     @Test
     void getRow() {
         rat = new Rat("black");
-        assertTrue(rat.getRow()==6);
+        assertEquals(rat.getRow(),6);
     }
 
     @Test
     void getCol() {
         rat = new Rat("black");
-        assertTrue(rat.getCol()==6);
+        assertEquals(rat.getCol(),6);
     }
 
     @Test
     void getName() {
         rat = new Rat("black");
-        assertTrue(rat.getName()=="Rat");
+        assertEquals(rat.getName(),"Rat");
     }
 
     @Test
     void getRank() {
         rat = new Rat("black");
-        assertTrue(rat.getRank()==1);
+        assertEquals(rat.getRank(),1);
     }
 
     @Test

@@ -24,31 +24,31 @@ class WolfTest {
     @Test
     void getLocation2() {
         wolf = new Wolf("purple");
-        assertTrue(wolf.getLocation()==null);
+        assertEquals(wolf.getLocation(),null);
     }
 
     @Test
     void getRow() {
         wolf = new Wolf("black");
-        assertTrue(wolf.getRow()==6);
+        assertEquals(wolf.getRow(),6);
     }
 
     @Test
     void getCol() {
         wolf = new Wolf("black");
-        assertTrue(wolf.getCol()==2);
+        assertEquals(wolf.getCol(),2);
     }
 
     @Test
     void getName() {
         wolf = new Wolf("black");
-        assertTrue(wolf.getName()=="Wolf");
+        assertEquals(wolf.getName(),"Wolf");
     }
 
     @Test
     void getRank() {
         wolf = new Wolf("black");
-        assertTrue(wolf.getRank()==3);
+        assertEquals(wolf.getRank(),3);
     }
 
     @Test

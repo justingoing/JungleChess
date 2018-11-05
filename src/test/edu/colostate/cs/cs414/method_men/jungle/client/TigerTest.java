@@ -24,31 +24,31 @@ class TigerTest {
     @Test
     void getLocation2() {
         tiger = new Tiger("purple");
-        assertTrue(tiger.getLocation()==null);
+        assertEquals(tiger.getLocation(),null);
     }
 
     @Test
     void getRow() {
         tiger = new Tiger("black");
-        assertTrue(tiger.getRow()==8);
+        assertEquals(tiger.getRow(),8);
     }
 
     @Test
     void getCol() {
         tiger = new Tiger("black");
-        assertTrue(tiger.getCol()==0);
+        assertEquals(tiger.getCol(),0);
     }
 
     @Test
     void getName() {
         tiger = new Tiger("black");
-        assertTrue(tiger.getName()=="Tiger");
+        assertEquals(tiger.getName(),"Tiger");
     }
 
     @Test
     void getRank() {
         tiger = new Tiger("black");
-        assertTrue(tiger.getRank()==6);
+        assertEquals(tiger.getRank(),6);
     }
 
     @Test

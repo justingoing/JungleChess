@@ -10,7 +10,7 @@ class PlayerTest {
     @Test
     void playerConstructor() {
         player = new Player("Red");
-        assertTrue(player.color=="Red");
+        assertEquals(player.color,"Red");
     }
 
     @Test
@@ -23,13 +23,13 @@ class PlayerTest {
     @Test
     void getValidPiecesCount() {
         player = new Player("Red");
-        assertTrue(player.getValidPiecesCount()==8);
+        assertEquals(player.getValidPiecesCount(),8);
     }
 
     @Test
     void getValidPieces() {
         player = new Player("Red");
-        assertTrue(player.getValidPieces().length==8);
+        assertEquals(player.getValidPieces().length,8);
     }
 
     @Test
@@ -43,7 +43,7 @@ class PlayerTest {
     @Test
     void retrievePieceByLocation2() {
        Game game = new Game();
-       assertTrue(game.getPlayer(1).retrievePieceByLocation(0,0)==null);
+       assertEquals(game.getPlayer(1).retrievePieceByLocation(0,0),null);
     }
 
     @Test
@@ -61,13 +61,13 @@ class PlayerTest {
     @Test
     void getColor() {
         player = new Player("Red");
-        assertTrue(player.getColor()=="Red");
+        assertEquals(player.getColor(),"Red");
     }
 
     @Test
     void isCaptured() {
         player = new Player("Red");
         player.isCaptured(1);
-        assertTrue(player.getValidPieces().length==7);
+        assertEquals(player.getValidPieces().length,7);
     }
 }

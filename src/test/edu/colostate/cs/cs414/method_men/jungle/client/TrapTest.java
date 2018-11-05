@@ -9,6 +9,6 @@ class TrapTest {
     @Test
     void getAttribute() {
         Trap trap = new Trap();
-        assertTrue(trap.getAttribute()=='T');
+        assertEquals(trap.getAttribute(),'T');
     }
 }
