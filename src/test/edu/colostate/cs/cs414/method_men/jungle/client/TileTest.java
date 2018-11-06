@@ -8,5 +8,7 @@ class TileTest {
 
     @Test
     void getAttribute() {
+        Tile tile = new Tile('p');
+        assertEquals(tile.getAttribute(),'p');
     }
 }

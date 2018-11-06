@@ -8,5 +8,7 @@ class TrapTest {
 
     @Test
     void getAttribute() {
+        Trap trap = new Trap();
+        assertEquals(trap.getAttribute(),'T');
     }
 }
