@@ -69,18 +69,81 @@ class BoardTest {
     }
 
     @Test
-    void testMakeInstance() {
+    void testMakeTile() {
         Den den = new Den();
         Trap trap = new Trap();
         River river = new River();
         Jump jump = new Jump();
         Open open = new Open();
-        assertEquals(den.getAttribute(), testBoard.makeInstance(0,3).getAttribute());
-        assertEquals(trap.getAttribute(), testBoard.makeInstance(0,2).getAttribute());
-        assertEquals(river.getAttribute(), testBoard.makeInstance(3,1).getAttribute());
-        assertEquals(jump.getAttribute(), testBoard.makeInstance(3,0).getAttribute());
-        assertEquals(open.getAttribute(), testBoard.makeInstance(2,3).getAttribute());
+        assertEquals(den.getAttribute(), testBoard.makeTile(0,3).getAttribute());
+        assertEquals(trap.getAttribute(), testBoard.makeTile(0,2).getAttribute());
+        assertEquals(river.getAttribute(), testBoard.makeTile(3,1).getAttribute());
+        assertEquals(jump.getAttribute(), testBoard.makeTile(3,0).getAttribute());
+        assertEquals(open.getAttribute(), testBoard.makeTile(2,3).getAttribute());
     }
+
+    @Test
+    void testMakeDen() {
+        Tile redDen = testBoard.makeTile(new Location(0, 3));
+        Tile blueDen = testBoard.makeTile(new Location(8, 3));
+        Den testRedDen = new Den("Red");
+        Den testBlueDen = new Den("Blue");
+
+        assertTrue(redDen instanceof Den);
+        assertTrue(blueDen instanceof Den);
+        assertTrue(blueDen.equals(testBlueDen));
+        assertTrue(redDen.equals(testRedDen));
+        assertNotEquals(redDen, blueDen);
+    }
+
+    @Test
+    void testMakeTrap() {
+        Tile redTrap1 = testBoard.makeTile(new Location(0, 2));
+        Tile redTrap2 = testBoard.makeTile(new Location(0, 4));
+        Tile redTrap3 = testBoard.makeTile(new Location(1, 3));
+
+        Tile blueTrap1 = testBoard.makeTile(new Location(8, 2));
+        Tile blueTrap2 = testBoard.makeTile(new Location(8, 4));
+        Tile blueTrap3 = testBoard.makeTile(new Location(7, 3));
+
+
+        Trap testRedTrap = new Trap("Red");
+        Trap testBlueTrap = new Trap("Blue");
+
+        assertTrue(redTrap1 instanceof Trap);
+        assertTrue(blueTrap2 instanceof Trap);
+        assertTrue(blueTrap3.equals(testBlueTrap));
+        assertTrue(redTrap2.equals(testRedTrap));
+        assertNotEquals(redTrap3, blueTrap1);
+    }
+
+
+    @Test
+    void testMakeRiver() {
+        Tile river1 = testBoard.makeTile(new Location(3, 1));
+        Tile river2 = testBoard.makeTile(new Location(5, 5));
+
+        River testRiver = new River();
+
+        assertTrue(river1 instanceof River);
+        assertTrue(river2 instanceof River);
+        assertTrue(river1.equals(testRiver));
+        assertTrue(river2.equals(testRiver));
+    }
+
+    @Test
+    void testMakeOpen() {
+        Tile open1 = testBoard.makeTile(new Location(0, 0));
+        Tile open2 = testBoard.makeTile(new Location(6, 6));
+
+        Open testOpen = new Open();
+
+        assertTrue(open1 instanceof Open);
+        assertTrue(open2 instanceof Open);
+        assertTrue(open1.equals(testOpen));
+        assertTrue(open2.equals(testOpen));
+    }
+
 
     @Test
     void testSetBoard() {
@@ -172,4 +235,22 @@ class BoardTest {
         assertEquals('3', draw[2][4]);
         assertEquals('8', draw[2][6]);
     }
+
+
+    @Test
+    void testMakeLion() {
+        Piece redLion = testBoard.makePiece(new Location(0, 0));
+        Piece blueLion = testBoard.makePiece(new Location(8, 6));
+        Lion testRedLion = new Lion("red");
+        Lion testBlueLion = new Lion("blue");
+
+        assertTrue(redLion instanceof Lion);
+        assertTrue(blueLion instanceof Lion);
+        assertTrue(blueLion.equals(testBlueLion));
+        assertTrue(redLion.equals(testRedLion));
+    }
+
+    //TODO: Test making each of the other types
+
+
 }
