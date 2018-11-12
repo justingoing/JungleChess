@@ -22,14 +22,17 @@ public class GameEndPage extends Page implements ActionListener {
 
         JButton againButton = new JButton("Play again");
         againButton.addActionListener(this);
+        againButton.setActionCommand("Again");
 
         JButton exitButton = new JButton("Exit game");
+        exitButton.addActionListener(this);
+        exitButton.setActionCommand("Exit");
 
-        box.add(box.createVerticalStrut(100));
+        box.add(Box.createVerticalStrut(100));
         box.add(winLabel);
         box.add(Box.createVerticalStrut(100));
         box.add(againButton);
-        box.add(box.createVerticalStrut(100));
+        box.add(Box.createVerticalStrut(100));
         box.add(exitButton);
 
         add(box);
@@ -38,6 +41,10 @@ public class GameEndPage extends Page implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        frame.changePageTo(new GamePage(frame));
+        if (actionEvent.getActionCommand().equals("Exit")) {
+            System.exit(0);
+        } else if (actionEvent.getActionCommand().equals("Again")) {
+            frame.changePageTo(new GamePage(frame));
+        }
     }
 }
