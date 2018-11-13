@@ -3,9 +3,6 @@ package edu.colostate.cs.cs414.method_men.jungle.client.server;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 
-
-
-
 public class TCPServer{
 
     private ServerSocket serverSocket;
@@ -24,6 +21,8 @@ public class TCPServer{
     public InetAddress getSocketAddress(){
         return this.serverSocket.getInetAddress();
     }
+
+
 
     public static void main(String[] args) throws Exception{
         TCPServer server = new TCPServer();

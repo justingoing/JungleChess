@@ -48,6 +48,10 @@ public class GUI extends JFrame {
         repaint();
         pack();
     }
+    public void startGUI(GUI g){
+        javax.swing.SwingUtilities.invokeLater(() -> g.createAndShowGUI());
+
+    }
 
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:

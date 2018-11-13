@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
+import edu.colostate.cs.cs414.method_men.jungle.client.gui.*;
 
 public class Client implements Runnable{
 
@@ -20,30 +21,36 @@ public class Client implements Runnable{
         this.scanner = new Scanner(System.in);
     }
 
+    /*
     private void start() throws IOException{
         String msg;
+        System.out.print("Enter a username: ");
+        msg = scanner.nextLine();
+        send = new PrintWriter(this.socket.getOutputStream(), true);
+        msg = "Username: " + msg;
+        send.println(msg);
+        send.flush();
         while(true){
             msg = scanner.nextLine();
-            send = new PrintWriter(this.socket.getOutputStream(), true);
             send.println(msg);
             send.flush();
             System.out.println("Message sent: " + msg);
         }
-
     }
+    */
 
     public void run(){
-        String msg = null;
-        System.out.println("Receive thread started");
-        while (true) {
-            try {
-                //Buffered Reader reads from socket
-                receive = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                while ((msg = receive.readLine()) != null) {
-                    System.out.println("Message received: " + msg);
-                }
-            } catch (Exception e) {
-            }
+        if(Thread.currentThread().getName().equals("Receive")){
+            try{
+                Receive receive = new Receive(this.socket);
+                receive.receive();
+            }catch(Exception e){}
+        }
+        if(Thread.currentThread().getName().equals("Send")){
+            try{
+                Send send = new Send(this.socket);
+                send.send();
+            }catch(Exception e){}
         }
     }
 
@@ -54,8 +61,11 @@ public class Client implements Runnable{
         System.out.println("Connected to server at " + address.toString() + " on port 2000");
         System.out.println("Type a message...");
         Thread t1 = new Thread(client, "Receive");
+        Thread t2 = new Thread(client, "Send");
         t1.start();
-        client.start();
+        t2.start();
+        GUI g = new GUI();
+        g.startGUI(g);
 
     }
 }
