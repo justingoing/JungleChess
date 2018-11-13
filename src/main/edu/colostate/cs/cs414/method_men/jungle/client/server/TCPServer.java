@@ -10,6 +10,8 @@ public class TCPServer{
 
     public void start(int port) throws Exception{
         serverSocket = new ServerSocket(port);
+        System.out.println("Server Started");
+        System.out.println("Waiting for connection");
         while(true){
             new TcpServerSocket(serverSocket.accept()).start();
             System.out.println("Connection accepted.");
@@ -27,7 +29,5 @@ public class TCPServer{
     public static void main(String[] args) throws Exception{
         TCPServer server = new TCPServer();
         server.start(2000);
-        System.out.println("Server Started");
-        System.out.println("Waiting for connection");
     }
 }
