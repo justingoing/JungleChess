@@ -9,7 +9,7 @@ class TigerTest {
 
     @Test
     void setLocation() {
-        tiger = new Tiger("black");
+        tiger = new Tiger("blue");
         Location location = tiger.getLocation();
         tiger.setLocation(0,0);
         assertTrue(tiger.getLocation()!=location);
@@ -17,7 +17,7 @@ class TigerTest {
 
     @Test
     void getLocation() {
-        tiger = new Tiger("black");
+        tiger = new Tiger("blue");
         assertTrue(tiger.getLocation()!=null);
     }
 
@@ -29,31 +29,31 @@ class TigerTest {
 
     @Test
     void getRow() {
-        tiger = new Tiger("black");
+        tiger = new Tiger("blue");
         assertEquals(tiger.getRow(),8);
     }
 
     @Test
     void getCol() {
-        tiger = new Tiger("black");
+        tiger = new Tiger("blue");
         assertEquals(tiger.getCol(),0);
     }
 
     @Test
     void getName() {
-        tiger = new Tiger("black");
+        tiger = new Tiger("blue");
         assertEquals(tiger.getName(),"Tiger");
     }
 
     @Test
     void getRank() {
-        tiger = new Tiger("black");
+        tiger = new Tiger("blue");
         assertEquals(tiger.getRank(),6);
     }
 
     @Test
     void isRat() {
-        tiger = new Tiger("black");
+        tiger = new Tiger("blue");
         assertFalse(tiger.isRat());
     }
 }

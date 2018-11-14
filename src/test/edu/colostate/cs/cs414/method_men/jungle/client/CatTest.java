@@ -8,7 +8,7 @@ class CatTest {
 
     @Test
     void constructor() {
-        testCat = new Cat("white");
+        testCat = new Cat("red");
         Location loc1 = testCat.getLocation();
         assertTrue(loc1.getRow() == 1 && loc1.getCol() == 5);
 
@@ -16,7 +16,7 @@ class CatTest {
 
     @Test
     void constructor2() {
-        testCat = new Cat("black");
+        testCat = new Cat("blue");
         Location loc2 = testCat.getLocation();
         assertTrue(loc2.getRow() == 7 && loc2.getCol() == 1);
     }

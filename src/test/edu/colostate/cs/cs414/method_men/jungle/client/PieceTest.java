@@ -10,15 +10,15 @@ public class PieceTest {
 
     @BeforeEach
     void init() {
-        testRat = new Piece("Rat", 1, "white");
-        testTiger = new Piece("tiger", 6, "white");
+        testRat = new Piece("Rat", 1, "red");
+        testTiger = new Piece("tiger", 6, "red");
     }
 
     @Test
     void testConstructor() {
         assertEquals("Rat", testRat.getName());
         assertEquals(1, testRat.getRank());
-        assertEquals("white", testRat.getColor());
+        assertEquals("red", testRat.getColor());
     }
 
     @Test
@@ -49,14 +49,14 @@ public class PieceTest {
 
     @Test
     void testEquals(){
-        Piece p = new Piece("Elephant", 8, "Red");
-        Piece q = new Piece("Elephant", 8, "Red");
+        Piece p = new Piece("Elephant", 8, "red");
+        Piece q = new Piece("Elephant", 8, "red");
         assertEquals(p, q);
-        q = new Piece("Elephant", 8, "Blue");
+        q = new Piece("Elephant", 8, "blue");
         assertNotEquals(p, q);
-        q = new Piece("Rat", 8, "Blue");
+        q = new Piece("Rat", 8, "blue");
         assertNotEquals(p, q);
-        q = new Piece("Elephant", 32, "Blue");
+        q = new Piece("Elephant", 32, "blue");
         assertNotEquals(p, q);
     }
 
@@ -72,7 +72,7 @@ public class PieceTest {
 
     @Test
     void testGetColor(){
-        assertEquals("white", testRat.getColor());
+        assertEquals("red", testRat.getColor());
     }
 
     @Test

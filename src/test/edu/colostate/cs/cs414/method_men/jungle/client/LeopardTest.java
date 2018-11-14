@@ -9,14 +9,14 @@ class LeopardTest {
 
     @Test
     void constructor1() {
-        testLeopard = new Leopard("white");
+        testLeopard = new Leopard("red");
         Location loc1 = testLeopard.getLocation();
         assertTrue(loc1.getRow() == 2 && loc1.getCol() == 2);
     }
 
     @Test
     void constructor2() {
-        testLeopard = new Leopard("black");
+        testLeopard = new Leopard("blue");
         Location loc2 = testLeopard.getLocation();
         assertTrue(loc2.getRow() == 6 && loc2.getCol() == 4);
     }
