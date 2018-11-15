@@ -9,7 +9,7 @@ class WolfTest {
 
     @Test
     void setLocation() {
-        wolf = new Wolf("black");
+        wolf = new Wolf("blue");
         Location location = wolf.getLocation();
         wolf.setLocation(0,0);
         assertTrue(wolf.getLocation()!=location);
@@ -17,7 +17,7 @@ class WolfTest {
 
     @Test
     void getLocation() {
-        wolf = new Wolf("black");
+        wolf = new Wolf("blue");
         assertTrue(wolf.getLocation()!=null);
     }
 
@@ -29,31 +29,31 @@ class WolfTest {
 
     @Test
     void getRow() {
-        wolf = new Wolf("black");
+        wolf = new Wolf("blue");
         assertEquals(wolf.getRow(),6);
     }
 
     @Test
     void getCol() {
-        wolf = new Wolf("black");
+        wolf = new Wolf("blue");
         assertEquals(wolf.getCol(),2);
     }
 
     @Test
     void getName() {
-        wolf = new Wolf("black");
+        wolf = new Wolf("blue");
         assertEquals(wolf.getName(),"Wolf");
     }
 
     @Test
     void getRank() {
-        wolf = new Wolf("black");
+        wolf = new Wolf("blue");
         assertEquals(wolf.getRank(),3);
     }
 
     @Test
     void isRat() {
-        wolf = new Wolf("black");
+        wolf = new Wolf("blue");
         assertFalse(wolf.isRat());
     }
 }

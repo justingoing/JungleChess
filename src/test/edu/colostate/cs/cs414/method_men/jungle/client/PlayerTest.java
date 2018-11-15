@@ -9,32 +9,32 @@ class PlayerTest {
 
     @Test
     void playerConstructor() {
-        player = new Player("Red");
-        assertEquals(player.color,"Red");
+        player = new Player("red");
+        assertEquals(player.color,"red");
     }
 
     @Test
     void playerConstructor2() {
-        player = new Player("Red");
+        player = new Player("red");
         assertTrue(player.pieces!=null);
     }
 
 
     @Test
     void getValidPiecesCount() {
-        player = new Player("Red");
+        player = new Player("red");
         assertEquals(player.getValidPiecesCount(),8);
     }
 
     @Test
     void getValidPieces() {
-        player = new Player("Red");
+        player = new Player("red");
         assertEquals(player.getValidPieces().length,8);
     }
 
     @Test
     void retrievePieceByLocation() {
-        player = new Player("Red");
+        player = new Player("purple");
         assertThrows(NullPointerException.class, () -> {
             player.retrievePieceByLocation(0,0);
         });
@@ -54,19 +54,19 @@ class PlayerTest {
 
     @Test
     void getPiece() {
-        player = new Player("Red");
+        player = new Player("red");
         assertTrue(player.getPiece(1)!=null);
     }
 
     @Test
     void getColor() {
-        player = new Player("Red");
-        assertEquals(player.getColor(),"Red");
+        player = new Player("red");
+        assertEquals(player.getColor(),"red");
     }
 
     @Test
     void isCaptured() {
-        player = new Player("Red");
+        player = new Player("red");
         player.isCaptured(1);
         assertEquals(player.getValidPieces().length,7);
     }

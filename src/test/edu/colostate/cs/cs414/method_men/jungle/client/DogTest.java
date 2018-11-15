@@ -9,7 +9,7 @@ class DogTest {
 
     @Test
     void constructor1() {
-        dogTest = new Dog("white");
+        dogTest = new Dog("red");
         Location loc1 = dogTest.getLocation();
         assertTrue(loc1.getRow() == 1 && loc1.getCol() == 1);
 
@@ -17,7 +17,7 @@ class DogTest {
 
     @Test
     void constructor2() {
-        dogTest = new Dog("black");
+        dogTest = new Dog("blue");
         Location loc2 = dogTest.getLocation();
         assertTrue(loc2.getRow() == 7 && loc2.getCol() == 5);
     }

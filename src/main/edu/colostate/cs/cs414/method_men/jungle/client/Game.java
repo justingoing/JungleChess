@@ -16,8 +16,8 @@ public class Game {
     //Constructor
     public Game () {
         players = new Player[2];
-        players[0] = new Player("white");
-        players[1] = new Player("black");
+        players[0] = new Player("red");
+        players[1] = new Player("blue");
 //        Random r = new Random(System.currentTimeMillis());
 //        turn = r.nextInt(999999) % 2;
         turn = 1; // 1 means that Bottom Player makes the first move
@@ -561,7 +561,7 @@ public class Game {
     public boolean isEnemysRankReducedToZero(Piece enemyPiece) {
         int row = enemyPiece.getRow();
 
-        if (enemyPiece.getColor().equals("white")) {
+        if (enemyPiece.getColor().equals("red")) {
             debugPrint("Is the top Piece in top trap? " + (row == 0 || row == 1));
             return !(row == 0 || row == 1);
         } else {
@@ -711,7 +711,7 @@ public class Game {
      * @return 0 if it belongs to the top Player, 1 if bot's Piece
      */
     public int whoOwnsThisPiece(Piece p) {
-        return ((p.getColor().equals("white")) ? 0 : 1);
+        return ((p.getColor().equals("red")) ? 0 : 1);
     }
 
     /**

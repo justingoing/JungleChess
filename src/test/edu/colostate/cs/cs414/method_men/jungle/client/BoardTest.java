@@ -213,8 +213,8 @@ class BoardTest {
     void placePieces() {
         char[][] draw = new char[9][7];
         Player[] players = new Player[2];
-        players[0] = new Player("white");
-        players[1] = new Player("black");
+        players[0] = new Player("red");
+        players[1] = new Player("blue");
         testBoard.placePieces(draw, players);
 
         assertEquals('6', draw[8][0]);

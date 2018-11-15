@@ -9,14 +9,14 @@ class ElephantTest {
 
     @Test
     void constructor1() {
-        testElephant = new Elephant("white");
+        testElephant = new Elephant("red");
         Location loc1 = testElephant.getLocation();
         assertTrue(loc1.getRow() == 2 && loc1.getCol() == 6);
     }
 
     @Test
     void constructor2() {
-        testElephant = new Elephant("black");
+        testElephant = new Elephant("blue");
         Location loc2 = testElephant.getLocation();
         assertTrue(loc2.getRow() == 6 && loc2.getCol() == 0);
     }
