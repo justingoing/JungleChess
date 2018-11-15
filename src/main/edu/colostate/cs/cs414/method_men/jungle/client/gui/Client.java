@@ -1,8 +1,8 @@
-package edu.colostate.cs.cs414.method_men.jungle.client;
+package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import java.net.InetAddress;
 import java.net.Socket;
-import edu.colostate.cs.cs414.method_men.jungle.client.gui.*;
+//import edu.colostate.cs.cs414.method_men.jungle.client.gui.GUI;
 
 
 public class Client implements Runnable{

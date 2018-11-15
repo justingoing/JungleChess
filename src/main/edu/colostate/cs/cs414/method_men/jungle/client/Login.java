@@ -1,5 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.gui.ClientSend;
+
 import java.net.Socket;
 
 public class Login {
