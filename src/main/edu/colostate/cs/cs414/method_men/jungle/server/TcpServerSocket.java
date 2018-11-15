@@ -1,4 +1,4 @@
-package edu.colostate.cs.cs414.method_men.jungle.client.server;
+package edu.colostate.cs.cs414.method_men.jungle.server;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

@@ -1,21 +1,21 @@
-package edu.colostate.cs.cs414.method_men.jungle.client.server;
+package edu.colostate.cs.cs414.method_men.jungle.client;
 
 import java.io.PrintWriter;
-import java.util.Scanner;
 import java.net.Socket;
+import java.util.Scanner;
 
-public class Send extends Thread{
+public class ClientSend extends Thread{
 
     private Scanner scanner;
     private PrintWriter out;
 
-    public Send(Socket socket) throws Exception{
+    public ClientSend(Socket socket) throws Exception{
         this.scanner = new Scanner(System.in);
         this.out = new PrintWriter(socket.getOutputStream(),true);
     }
 
     public void send(){
-        System.out.println("Send thread started");
+        System.out.println("ClientSend thread started");
         String msg = null;
         while(true){
             msg = scanner.nextLine();
@@ -23,6 +23,12 @@ public class Send extends Thread{
             out.flush();
             System.out.println("Message sent: " + msg);
         }
+    }
+
+    public void sendLogin(String data){
+        out.println("login " + data);
+        out.flush();
+        System.out.println("Data sent");
     }
 
     public void run(){
