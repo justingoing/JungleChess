@@ -45,7 +45,6 @@ public class GamePage extends Page implements ActionListener {
                 button.addActionListener(this);
                 buttons[i][j] = button;
                 buttonPanel.add(button);
-
             }
         }
 
@@ -162,10 +161,14 @@ public class GamePage extends Page implements ActionListener {
             selectedButton = null;
             unhighlight();
 
-            if (game.winnerCheck() != -1) {
+            if (game.winnerCheck() == 1) {
                 game.endGame();
-                // Can you switch panels from here? (to go back to main menu)
+                frame.changePageTo(new GameEndPage(frame, false));
+            } else if (game.winnerCheck() == 0) {
+                game.endGame();
+                frame.changePageTo(new GameEndPage(frame, true));
             }
+
         } else if (((LineBorder)button.getBorder()).getLineColor().equals(Color.LIGHT_GRAY)) {
             button.setBorder(new LineBorder(Color.BLACK));
             selectedButton = new int[]{button.getRow(), button.getCol()};
