@@ -10,18 +10,32 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class GamePage extends Page implements ActionListener {
-    private final Icon CAT_ICON = new ImageIcon(new ImageIcon("src/Images/cat.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    // Blue Pieces
+    private final Icon RED_CAT_ICON = new ImageIcon(new ImageIcon("src/Images/cat-red.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon RED_DOG_ICON = new ImageIcon(new ImageIcon("src/Images/dog-red.png").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon RED_ELEPHANT_ICON = new ImageIcon(new ImageIcon("src/Images/elephant-red.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon RED_LEOPARD_ICON = new ImageIcon(new ImageIcon("src/Images/leopard-red.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon RED_LION_ICON = new ImageIcon(new ImageIcon("src/Images/lion-red.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon RED_RAT_ICON = new ImageIcon(new ImageIcon("src/Images/rat-red.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon RED_TIGER_ICON = new ImageIcon(new ImageIcon("src/Images/tiger-red.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon RED_WOLF_ICON = new ImageIcon(new ImageIcon("src/Images/wolf-red.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+
+    // Red Pieces
+    private final Icon BLUE_CAT_ICON = new ImageIcon(new ImageIcon("src/Images/cat-blue.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon BLUE_DOG_ICON = new ImageIcon(new ImageIcon("src/Images/dog-blue.png").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon BLUE_ELEPHANT_ICON = new ImageIcon(new ImageIcon("src/Images/elephant-blue.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon BLUE_LEOPARD_ICON = new ImageIcon(new ImageIcon("src/Images/leopard-blue.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon BLUE_LION_ICON = new ImageIcon(new ImageIcon("src/Images/lion-blue.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon BLUE_RAT_ICON = new ImageIcon(new ImageIcon("src/Images/rat-blue.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon BLUE_TIGER_ICON = new ImageIcon(new ImageIcon("src/Images/tiger-blue.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    private final Icon BLUE_WOLF_ICON = new ImageIcon(new ImageIcon("src/Images/wolf-blue.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+
+
+    // Tiles
     private final Icon DEN_ICON = new ImageIcon(new ImageIcon("src/Images/den.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
-    private final Icon DOG_ICON = new ImageIcon(new ImageIcon("src/Images/dog.png").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
-    private final Icon ELEPHANT_ICON = new ImageIcon(new ImageIcon("src/Images/elephant.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
     private final Icon GRASS_ICON = new ImageIcon(new ImageIcon("src/Images/grass.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
-    private final Icon LEOPARD_ICON = new ImageIcon(new ImageIcon("src/Images/leopard.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
-    private final Icon LION_ICON = new ImageIcon(new ImageIcon("src/Images/lion.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
-    private final Icon RAT_ICON = new ImageIcon(new ImageIcon("src/Images/rat.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
-    private final Icon TIGER_ICON = new ImageIcon(new ImageIcon("src/Images/tiger.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
     private final Icon TRAP_ICON = new ImageIcon(new ImageIcon("src/Images/trap.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
     private final Icon WATER_ICON = new ImageIcon(new ImageIcon("src/Images/water.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
-    private final Icon WOLF_ICON = new ImageIcon(new ImageIcon("src/Images/wolf.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
 
     private Game game;
     private JButton[][] buttons;
@@ -101,43 +115,71 @@ public class GamePage extends Page implements ActionListener {
             Piece[] pieces = currPlayer.getValidPieces();
 
             for (int n = 0; n < pieces.length; n++) {
-                Icon icon;
+                Icon icon = null;
 
                 switch (pieces[n].getName()) {
                     case "Cat":
-                        icon = CAT_ICON;
+                        if (pieces[n].getColor().equals("red")) {
+                            icon = RED_CAT_ICON;
+                        } else if (pieces[n].getColor().equals("blue")) {
+                            icon = BLUE_CAT_ICON;
+                        }
                         break;
 
                     case "Dog":
-                        icon = DOG_ICON;
+                        if (pieces[n].getColor().equals("red")) {
+                            icon = RED_DOG_ICON;
+                        } else if (pieces[n].getColor().equals("blue")) {
+                            icon = BLUE_DOG_ICON;
+                        }
                         break;
 
                     case "Elephant":
-                        icon = ELEPHANT_ICON;
+                        if (pieces[n].getColor().equals("red")) {
+                            icon = RED_ELEPHANT_ICON;
+                        } else if (pieces[n].getColor().equals("blue")) {
+                            icon = BLUE_ELEPHANT_ICON;
+                        }
                         break;
 
                     case "Leopard":
-                        icon = LEOPARD_ICON;
+                        if (pieces[n].getColor().equals("red")) {
+                            icon = RED_LEOPARD_ICON;
+                        } else if (pieces[n].getColor().equals("blue")) {
+                            icon = BLUE_LEOPARD_ICON;
+                        }
                         break;
 
                     case "Lion":
-                        icon = LION_ICON;
+                        if (pieces[n].getColor().equals("red")) {
+                            icon = RED_LION_ICON;
+                        } else if (pieces[n].getColor().equals("blue")) {
+                            icon = BLUE_LION_ICON;
+                        }
                         break;
 
                     case "Rat":
-                        icon = RAT_ICON;
+                        if (pieces[n].getColor().equals("red")) {
+                            icon = RED_RAT_ICON;
+                        } else if (pieces[n].getColor().equals("blue")) {
+                            icon = BLUE_RAT_ICON;
+                        }
                         break;
 
                     case "Tiger":
-                        icon = TIGER_ICON;
+                        if (pieces[n].getColor().equals("red")) {
+                            icon = RED_TIGER_ICON;
+                        } else if (pieces[n].getColor().equals("blue")) {
+                            icon = BLUE_TIGER_ICON;
+                        }
                         break;
 
                     case "Wolf":
-                        icon = WOLF_ICON;
-                        break;
-
-                    default:
-                        icon = null;
+                        if (pieces[n].getColor().equals("red")) {
+                            icon = RED_WOLF_ICON;
+                        } else if (pieces[n].getColor().equals("blue")) {
+                            icon = BLUE_WOLF_ICON;
+                        }
                         break;
                 }
 
