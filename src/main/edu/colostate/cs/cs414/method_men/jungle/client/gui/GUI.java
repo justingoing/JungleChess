@@ -8,9 +8,16 @@ import java.net.Socket;
 public class GUI extends JFrame {
 
     JPanel currentPanel;
+    private Socket socket;
 
-    public GUI() {
+    public GUI(Socket socket) {
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.socket = socket;
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 
     private void createAndShowGUI() {
@@ -51,7 +58,7 @@ public class GUI extends JFrame {
         repaint();
         pack();
     }
-    public void startGUI(GUI g, Socket client){
+    public void startGUI(GUI g){
         //javax.swing.SwingUtilities.invokeLater(() -> g.createAndShowGUI());
         final JFrame frame = new JFrame("Jungle");
         final JButton btnLogin = new JButton("Login");
@@ -59,7 +66,7 @@ public class GUI extends JFrame {
         btnLogin.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e) {
-                        LoginDialog loginDlg = new LoginDialog(frame, client);
+                        LoginDialog loginDlg = new LoginDialog(frame, g.getSocket());
                         loginDlg.setVisible(true);
                         // if logon successfully
                         if(loginDlg.isSucceeded()){
