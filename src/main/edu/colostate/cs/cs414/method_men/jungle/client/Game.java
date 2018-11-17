@@ -2,7 +2,6 @@ package edu.colostate.cs.cs414.method_men.jungle.client;
 
 import java.util.ArrayList;
 //import java.util.Random;
-import java.util.Scanner;
 
 public class Game {
     private Player[] players;
@@ -82,140 +81,6 @@ public class Game {
         // Prints the Winner statement
         whoseTurnIsIt(winnerCheck(), " is the winner!");
     }
-
-
-    /***CLI CODE***/
-    public void makeMoveCli() {
-        NextMove nextMove = retrieveCliInput();
-
-        moveThePiece(nextMove);
-    }
-
-    /**
-     * Used in the CLI interface only.
-     * Reads input from user and only if the user inputs an integer between [1, 8] inclusive.
-     * Does not stop until you give it a valid integer.
-     * @param sc No need to create multiple Scanners across all of the CLI_Input methods
-     * @return the Piece's rank
-     */
-    public int retrieveCliPieceRank(Scanner sc) {
-        String pieceInput;
-        int pieceRank;
-
-        while (true) {
-            System.out.println("What Piece number do you choose? ");
-            System.out.println("  A piece can be selected by it's rank. '1' for Rat, '2' for Cat, etc");
-            pieceInput = sc.nextLine();
-            if (!pieceInput.isEmpty()) {
-                try {
-                    pieceRank = Integer.parseInt(pieceInput.trim());
-                    if (pieceRank >= 1 && pieceRank <= 8) {
-                        return pieceRank;
-                    } else {
-                        System.out.println("\tERROR: " + pieceRank + " must be between 1 and 8");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("\tERROR: " + pieceInput + " is not a valid rank");
-                }
-            } else {
-                System.out.println("\tERROR: must specify a rank");
-            }
-        }
-    }
-
-    /**
-     * Used only in the CLI interface. Retrieve the direction.
-     * Only cares about the first char in the input string: "down" => 'd', "u1e78F9dw" => 'u', etc.
-     * You can input a 'q' if you no longer want to move the Piece you input from the method above.
-     * @param sc No need to create multiple Scanners across all of the CLI_Input methods
-     * @return the direction IN {'u', 'd', 'l', 'r'}
-     */
-    public char retrieveCliDirection(Scanner sc) {
-        String directionInput = sc.nextLine();
-
-        if (!directionInput.isEmpty()) {
-            char direction = Character.toLowerCase(directionInput.trim().charAt(0));
-
-            if (direction == 'u' || direction == 'd' || direction == 'l' || direction == 'r') {
-                return direction;
-            } else if (direction == 'q') {
-                debugPrint("You chose to quit moving this Piece.");
-                return direction;
-            } else {
-                System.out.println("\tERROR: " + direction + " is not a valid direction");
-            }
-        } else {
-            System.out.println("\tERROR: must specify a direction");
-        }
-        return '#';
-    }
-
-    /**
-     * Used in CLI interface only.
-     * This macro method is used to retrieve the user input from the console.
-     * Will only break out of the nested while loops if you give it a vaid Piece and a valid direction.
-     * @return
-     */
-    public NextMove retrieveCliInput() {
-        Scanner sc = new Scanner(System.in);
-        NextMove nextMove = null;
-
-        boolean continueAsking = true;
-        boolean validPiece;
-        boolean validDirection;
-
-        Piece piece = null;
-        int pieceRank = FAILURE;
-        char direction = '#';
-
-        while (continueAsking) {
-            //printBoard();
-            validDirection = false;
-            validPiece = false;
-            whoseTurnIsIt(turn, "'s turn.");
-
-            while (!validPiece) {
-                if ((pieceRank = retrieveCliPieceRank(sc)) != FAILURE) {
-                    if (players[turn].getPiece(pieceRank) != null) {
-                        validPiece = true;
-                    } else {
-                        System.out.println("\tERROR: " + pieceRank + " no longer exists");
-                    }
-                } else {
-                    System.out.println("Not a valid Piece");
-                }
-            } // We now have a valid Piece.rank: {1, 2, 3, 4, 5, 6, 7, 8}
-
-            piece = players[turn].getPiece(pieceRank);
-
-            while (!validDirection) {
-                System.out.println("Which direction do you want to move " + piece.getName() + "? ");
-                System.out.println("  Directions can be 'u', 'd', 'l', or 'r' Or 'q' to Quit moving your " + piece.getName());
-                if ((direction = retrieveCliDirection(sc)) != '#') {
-                    validDirection = true;
-                }
-            } // We now have a valid direction: {u, d, l, r || q}
-
-            if (direction != 'q'){
-                nextMove = getDirection(piece, direction);
-                nextMove = new NextMove(piece, isValidMove(nextMove, true));
-                debugPrint("Sanity Check: " + nextMove.getRow() + ", " + nextMove.getCol());
-
-                if (nextMove.getRow() != FAILURE && nextMove.getCol() != FAILURE) {
-                    System.out.println("\t\t\t Valid move");
-                    continueAsking = false;
-                } else {
-                    System.out.println("\t\t\t Invalid move");
-                    printBoard();
-                }
-            } else {
-                System.out.println("You chose to quit moving your " + piece.getName() + ".");
-            }
-        }
-
-        return nextMove;
-    }
-
 
     /***GUI CODE***/
 
@@ -603,30 +468,6 @@ public class Game {
     }
 
     /**
-     * Is only called from the CLI interface. Retrieves a valid direction
-     * @param p the Piece in question
-     * @param direction the direction the user wants to move said Piece.
-     * @return
-     */
-    public NextMove getDirection(Piece p, char direction) {
-        NextMove nextMove = new NextMove(p, p.getRow(), p.getCol());
-        debugPrint("\tfrom (" + nextMove.getRow() + ", " + nextMove.getCol() + ")");
-
-        if (direction =='d') {
-            nextMove.incRow();
-        } else if (direction == 'u') {
-            nextMove.decRow();
-        } else if (direction == 'r') {
-            nextMove.incCol();
-        } else if (direction == 'l') {
-            nextMove.decCol();
-        }
-
-        debugPrint("\tto   (" + nextMove.getRow() + ", " + nextMove.getCol() + ")");
-        return nextMove;
-    }
-
-    /**
      * Self-explanatory, retrieves the *private* Player
      * @param whichPlayer the index in the private array of 2 Players
      * @return the Player desired
@@ -680,16 +521,7 @@ public class Game {
         }
     }
 
-
     /***OTHER CODE***/
-
-    /**
-     * Is only called from the CLI interface.
-     * Prints the board to the console output.
-     */
-    public void printBoard() {
-        this.board.printBoard(players);
-    }
 
     /**
      * Depending on the turn parameter, Prints out whose turn it is.
