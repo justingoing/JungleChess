@@ -178,7 +178,7 @@ public class Board {
         //Dog
         else if (location.equals(new Location(1, 1))){
             return new Dog("red");
-        } else if (location.equals(new Location(8, 5))){
+        } else if (location.equals(new Location(7, 5))){
             return new Dog("blue");
         }
 
@@ -211,7 +211,7 @@ public class Board {
         }
 
         //Elephant
-        else if (location.equals(new Location(2, 7))){
+        else if (location.equals(new Location(2, 6))){
             return new Elephant("red");
         } else if (location.equals(new Location(6, 0))){
             return new Elephant("blue");

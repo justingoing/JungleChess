@@ -256,12 +256,55 @@ class BoardTest {
     }
 
     @Test
-    void testSetBoardRedPieces_(){
-        
+    void testSetBoardLion_(){
+        assertEquals(new Lion("red"), testBoard.getTile_(0,0).getPiece());
+        assertEquals(new Lion("blue"), testBoard.getTile_(8,6).getPiece());
     }
 
     @Test
-    void placePieces() {
+    void testSetBoardTiger_(){
+        assertEquals(new Tiger("red"), testBoard.getTile_(0,6).getPiece());
+        assertEquals(new Tiger("blue"), testBoard.getTile_(8,0).getPiece());
+    }
+
+    @Test
+    void testSetBoardDog_(){
+        assertEquals(new Dog("red"), testBoard.getTile_(1,1).getPiece());
+        assertEquals(new Dog("blue"), testBoard.getTile_(7,5).getPiece());
+    }
+
+    @Test
+    void testSetBoardCat_(){
+        assertEquals(new Cat("red"), testBoard.getTile_(1,5).getPiece());
+        assertEquals(new Cat("blue"), testBoard.getTile_(7,1).getPiece());
+    }
+
+    @Test
+    void testSetBoardRat_(){
+        assertEquals(new Rat("red"), testBoard.getTile_(2,0).getPiece());
+        assertEquals(new Rat("blue"), testBoard.getTile_(6,6).getPiece());
+    }
+
+    @Test
+    void testSetBoardLeopard_(){
+        assertEquals(new Leopard("red"), testBoard.getTile_(2,2).getPiece());
+        assertEquals(new Leopard("blue"), testBoard.getTile_(6,4).getPiece());
+    }
+
+    @Test
+    void testSetBoardWolf_(){
+        assertEquals(new Wolf("red"), testBoard.getTile_(2,4).getPiece());
+        assertEquals(new Wolf("blue"), testBoard.getTile_(6,2).getPiece());
+    }
+
+    @Test
+    void testSetBoardElephant_(){
+        assertEquals(new Elephant("red"), testBoard.getTile_(2,6).getPiece());
+        assertEquals(new Elephant("blue"), testBoard.getTile_(6,0).getPiece());
+    }
+
+    @Test
+    void testPlacePieces() {
         char[][] draw = new char[9][7];
         Player[] players = new Player[2];
         players[0] = new Player("red");
@@ -287,21 +330,6 @@ class BoardTest {
         assertEquals('8', draw[2][6]);
     }
 
-
-    @Test
-    void testMakeLion() {
-        Piece redLion = testBoard.makePiece(new Location(0, 0));
-        Piece blueLion = testBoard.makePiece(new Location(8, 6));
-        Lion testRedLion = new Lion("red");
-        Lion testBlueLion = new Lion("blue");
-
-        assertTrue(redLion instanceof Lion);
-        assertTrue(blueLion instanceof Lion);
-        assertTrue(blueLion.equals(testBlueLion));
-        assertTrue(redLion.equals(testRedLion));
-    }
-
-    //TODO: Test making each of the other types
 
 
 }
