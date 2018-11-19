@@ -37,7 +37,7 @@ public class Client implements Runnable{
         Thread t2 = new Thread(client, "ClientSend");
         t1.start();
         t2.start();
-        GUI g = new GUI();
+        GUI g = new GUI(client.socket);
         g.startGUI(g, client.socket);
 
     }

@@ -9,7 +9,7 @@ class RatTest {
 
     @Test
     void setLocation() {
-        rat = new Rat("black");
+        rat = new Rat("blue");
         Location location = rat.getLocation();
         rat.setLocation(0,0);
         assertTrue(rat.getLocation()!=location);
@@ -17,7 +17,7 @@ class RatTest {
 
     @Test
     void getLocation() {
-        rat = new Rat("black");
+        rat = new Rat("blue");
         assertTrue(rat.getLocation()!=null);
     }
 
@@ -29,31 +29,31 @@ class RatTest {
 
     @Test
     void getRow() {
-        rat = new Rat("black");
+        rat = new Rat("blue");
         assertEquals(rat.getRow(),6);
     }
 
     @Test
     void getCol() {
-        rat = new Rat("black");
+        rat = new Rat("blue");
         assertEquals(rat.getCol(),6);
     }
 
     @Test
     void getName() {
-        rat = new Rat("black");
+        rat = new Rat("blue");
         assertEquals(rat.getName(),"Rat");
     }
 
     @Test
     void getRank() {
-        rat = new Rat("black");
+        rat = new Rat("blue");
         assertEquals(rat.getRank(),1);
     }
 
     @Test
     void isRat() {
-        rat = new Rat("black");
+        rat = new Rat("blue");
         assertTrue(rat.isRat());
     }
 }

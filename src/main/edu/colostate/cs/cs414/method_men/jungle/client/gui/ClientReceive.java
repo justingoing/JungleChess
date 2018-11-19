@@ -8,9 +8,11 @@ import java.net.Socket;
 public class ClientReceive extends Thread{
 
     private BufferedReader in;
+    private Socket socket;
 
     public ClientReceive(Socket socket) throws IOException{
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.socket = socket;
     }
 
     public void receive(){
@@ -39,8 +41,14 @@ public class ClientReceive extends Thread{
     public void respondToInput(String [] message){
         //if logging in, do some stuff to send to database to authenticate, etc.
         //TODO
-        if(message[0].equals("login")){
-            System.out.println("Logging in");
+        if(message[0].equals("loginResponse")) {
+            if(message[1].equals("true")){
+                System.out.println("Login accepted");
+            }
+            else if(message[1].equals("false")){
+                System.out.println("Login rejected");
+            }
+
         }
     }
 

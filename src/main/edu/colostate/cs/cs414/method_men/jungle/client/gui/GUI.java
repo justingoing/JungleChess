@@ -58,7 +58,7 @@ public class GUI extends JFrame {
         repaint();
         pack();
     }
-    public void startGUI(GUI g){
+    public void startGUI(GUI g, Socket socket){
         //javax.swing.SwingUtilities.invokeLater(() -> g.createAndShowGUI());
         final JFrame frame = new JFrame("Jungle");
         final JButton btnLogin = new JButton("Login");
@@ -88,8 +88,8 @@ public class GUI extends JFrame {
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's gui
-        GUI g = new GUI();
-        javax.swing.SwingUtilities.invokeLater(() -> g.createAndShowGUI());
+        //GUI g = new GUI();
+        //javax.swing.SwingUtilities.invokeLater(() -> g.createAndShowGUI());
 
     }
 }

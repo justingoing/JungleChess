@@ -12,6 +12,18 @@ public class Login {
         if (username.equals("zane") && password.equals("123456")) {
             return true;
         }
+        if (username.equals("steve") && password.equals("123456")) {
+            return true;
+        }
+        if (username.equals("dave") && password.equals("123456")) {
+            return true;
+        }
+        //Get response back from server
+        //true if username and pw match, false otherwise
+        //
+        //  stuff here about that
+        //
+        //
         return false;
     }
 }

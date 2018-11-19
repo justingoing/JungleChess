@@ -43,6 +43,20 @@ public class ClientSend extends Thread{
         oos.writeObject(gameState);
         oos.close();
     }
+
+    public void sendBoolean(boolean b){
+        if(b == true){
+            out.println("true");
+            out.flush();
+            System.out.println("Data sent");
+        }
+        else{
+            out.println("false");
+            out.flush();
+            System.out.println("Data sent");
+        }
+    }
+
     public void run(){
         send();
     }
