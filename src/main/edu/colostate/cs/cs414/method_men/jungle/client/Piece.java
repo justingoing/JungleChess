@@ -48,6 +48,18 @@ public class Piece {
          return this.color;
     }
 
+    //Checks if the piece can move to the location
+    public boolean isValidMove_(Location location){
+        //1. Check out of bounds
+
+        //2. Can the piece *ever* move onto that Tile? (i.e., cat can never move onto river)
+        //piece.getValidMoves() : returns Tile types it can move onto
+
+        //3. Check if piece on tile -> then if enemy && lower/equal rank
+
+        return true;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

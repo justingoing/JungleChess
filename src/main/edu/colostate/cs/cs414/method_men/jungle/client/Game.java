@@ -24,6 +24,21 @@ public class Game {
         board = new Board();
     }
 
+    /***NEW MOVE CODE***/
+
+    //Takes a piece and location as arguments. Returns true if piece is moved to location.
+    //If invalid move, returns false.
+    //It is important to note that if a jumper is given a river tile, it wont be valid.
+    //  However, if a jumper is given the location across a river, it could be valid.
+    public boolean makeMove(Piece piece, Location location){
+        if (piece.isValidMove_(location)){
+            board.move(piece, location);
+            return true;
+        }
+        return false;
+    }
+
+
     /***WINNER CODE***/
 
     /**
@@ -780,6 +795,16 @@ public class Game {
      */
     public boolean isOutOfBounds(int row, int col) {
         return (row < 0 || row > 8 || col < 0 || col > 6);
+    }
+
+    /**
+     * Checks if the next move's location is out of bounds
+     * @param row the next move's horizontal location on the board
+     * @param col the next move's vertical location on the board
+     * @return true if it is OOB, false if in bounds
+     */
+    public boolean isOutOfBounds(Location loc) {
+        return isOutOfBounds(loc.getRow(), loc.getCol());
     }
 
     /**

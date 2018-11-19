@@ -34,6 +34,12 @@ public class Board {
         }
     }
 
+    //Takes a piece and moves it to the new location
+    //This code is only ever called after move validation, once finalized!
+    public void move(Piece piece, Location location){
+        board_.get(location).setPiece(piece);
+    }
+
     /**
      * Returns a tile on the board
      * @param row horizontal location on board
