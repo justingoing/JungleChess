@@ -41,46 +41,6 @@ class GameTest {
         g.debugPrint("debugPrint only works when true");
     }
 
-    @Test void testPrintBoard() {
-        g.printBoard();
-    }
-
-    @Test
-    void testGetDirectionDown() {
-        p1 = top.getPiece(7);
-        char direction = 'd';
-        n = g.getDirection(p1, direction);
-
-        assertTrue(n.getRow() == 1 && n.getCol() == 0);
-    }
-
-    @Test
-    void testGetDirectionUp() {
-        p1 = top.getPiece(1);
-        char direction = 'u';
-        n = g.getDirection(p1, direction);
-
-        assertTrue(n.getRow() == 1 && n.getCol() == 0);
-    }
-
-    @Test
-    void testGetDirectionLeft() {
-        p1 = top.getPiece(8);
-        char direction = 'l';
-        n = g.getDirection(p1, direction);
-
-        assertTrue(n.getRow() == 2 && n.getCol() == 5);
-    }
-
-    @Test
-    void testGetDirectionRight() {
-        p1 = top.getPiece(3);
-        char direction = 'r';
-        n = g.getDirection(p1, direction);
-
-        assertTrue(n.getRow() == 2 && n.getCol() == 5);
-    }
-
     @Test
     void testWhoseTurnIsItTop() {
         g.whoseTurnIsIt(0, "'s turn.");
