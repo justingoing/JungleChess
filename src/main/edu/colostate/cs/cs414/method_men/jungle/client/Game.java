@@ -273,7 +273,6 @@ public class Game {
     /**
      * Called from makeMove method and is used to validate if the next move desired is valid.
      * If the move enters on of the 8 exceptions listed, then it will return within the same conditional, regardless of outcome.
-     * // TODO Should we not return FAILURE_DESTINATION so many times (read one line above), and instead return the failure after exception #8?
      *
      * The order of checking for exceptions is as follows:
      *
@@ -299,7 +298,8 @@ public class Game {
      *      Is the next move's location on a Trap Tile? [succ]
      *      Does p outrank the enemy? [succ]
      * 9. Does the next move's location contain a friendly Piece? [fail]
-     * 10.If no aforementioned conditions are met, then it is a valid move.
+     * 10.Is the Piece trying to move into its own Den? [fail]
+     * 11.If no aforementioned conditions are met, then it is a valid move. [succ]
      * @param nextMove the (Piece, row, col) all packed into one element.
      * @param print "Shall I print the failures for you?" false == "shh"
      * @return [-1, -1] called "FAILURE_DESTINATION" to represent an invalid move.
@@ -408,11 +408,14 @@ public class Game {
 
         } else if (containsPiece(turn, row, col) != -1) {
             // 9. The next move's location contains a friendly Piece
-            debugPrint("There is a friendly Piece located here.");
             print("You can't capture your own Piece.", print);
             return FAILURE_DESTINATION;
+        } else if (movingIntoOwnDen(turn, row, col)) {
+            // 10. The next move's location is its own Den Tile.
+            print("You can't move into your own Den.", print);
+            return FAILURE_DESTINATION;
         } else {
-            // 10. It is a valid move
+            // 11. It is a valid move
             debugPrint("\tJust a regular move without any exceptions, thus is a valid move");
             return new Location(row, col);
         }
@@ -612,6 +615,19 @@ public class Game {
      */
     public boolean isOutOfBounds(int row, int col) {
         return (row < 0 || row > 8 || col < 0 || col > 6);
+    }
+
+
+    /**
+     * This method returns true if the Piece is trying to move into its own Den.
+     * Both Dens's columns are = 3, top Player's Den is at row 0, bottom Player's Den is at row 8.
+     * @param turn 0 for top Player is moving, 1 for bottom
+     * @param nextRow The next row's horizontal location on the board
+     * @param nextCol The next move's vertical location on the board
+     * @return True if it's an invalid move. False implies "Not moving into own Den"
+     */
+    public boolean movingIntoOwnDen(int turn, int nextRow, int nextCol) {
+        return ((nextCol == 3) && (nextRow == ((turn == 0) ? 0 : 8)));
     }
 
     /**
@@ -903,17 +919,5 @@ public class Game {
         }
         return new Location(row, col);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -692,6 +692,30 @@ class GameTest {
     }
 
     @Test
+    void testIsValidMove_MoveIntoOwnDen_TopFail() {
+        p1 = top.getPiece(5); // top Leopard
+        row = 0;
+        col = 3;
+        p1.setLocation(row + 1, col);
+
+        n = new NextMove(p1, row, col);
+        assertFalse(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, col));
+    }
+
+    @Test
+    void testIsValidMove_MoveIntoOwnDen_BotFail() {
+        g.incrementTurn(); // bot's turn
+
+        p2 = top.getPiece(5); // bot Leopard
+        row = 8;
+        col = 3;
+        p2.setLocation(row - 1, col);
+
+        n = new NextMove(p2, row, col);
+        assertFalse(g.doesPieceLocationMatch(g.isValidMove(n, doNotPrintErrors), row, col));
+    }
+
+    @Test
     void testMakeMoveUi_TopPass_SimpleDown() {
         p1 = top.getPiece(7); // top Lion
         row = 1;
@@ -871,19 +895,4 @@ class GameTest {
         assertEquals(-1, g.winnerCheck());
     }
 
-    @Test
-    void testRetrieveCliPieceRank() {
-    }
-
-    @Test
-    void testRetrieveCliDirection() {
-    }
-
-    @Test
-    void testRetrieveCliInput() {
-    }
-
-    @Test
-    void testMakeMoveCli() {
-    }
 }
