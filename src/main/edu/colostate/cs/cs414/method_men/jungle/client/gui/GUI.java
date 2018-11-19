@@ -51,6 +51,7 @@ public class GUI extends JFrame {
         repaint();
         pack();
     }
+
     public void startGUI(GUI g, Socket client){
         //javax.swing.SwingUtilities.invokeLater(() -> g.createAndShowGUI());
         final JFrame frame = new JFrame("Jungle");

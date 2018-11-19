@@ -177,10 +177,8 @@ class BoardTest {
     }
 
     @Test
-    void testSetBoard_() {
+    void testSetBoardOpen_() {
         assertEquals('.', testBoard.getTile_(0,0).getAttribute());
-        assertEquals(new Lion("red"), testBoard.getTile_(0,0).getPiece());
-        assertNotEquals(new Lion("blue"), testBoard.getTile_(0,0).getPiece());
         assertEquals('.', testBoard.getTile_(0,1).getAttribute());
         assertEquals('.', testBoard.getTile_(0,5).getAttribute());
         assertEquals('.', testBoard.getTile_(0,6).getAttribute());
@@ -191,22 +189,75 @@ class BoardTest {
         assertEquals('.', testBoard.getTile_(1,5).getAttribute());
         assertEquals('.', testBoard.getTile_(1,6).getAttribute());
         assertEquals('.', testBoard.getTile_(2,0).getAttribute());
+        assertEquals('.', testBoard.getTile_(2,1).getAttribute());
+        assertEquals('.', testBoard.getTile_(2,2).getAttribute());
         assertEquals('.', testBoard.getTile_(2,3).getAttribute());
+        assertEquals('.', testBoard.getTile_(2,4).getAttribute());
+        assertEquals('.', testBoard.getTile_(2,5).getAttribute());
         assertEquals('.', testBoard.getTile_(2,6).getAttribute());
-
-        assertEquals('.', testBoard.getTile_(8,0).getAttribute());
-        assertEquals('.', testBoard.getTile_(8,1).getAttribute());
-        assertEquals('.', testBoard.getTile_(8,5).getAttribute());
-        assertEquals('.', testBoard.getTile_(8,6).getAttribute());
+        assertEquals('.', testBoard.getTile_(3,0).getAttribute());
+        assertEquals('.', testBoard.getTile_(3,3).getAttribute());
+        assertEquals('.', testBoard.getTile_(3,6).getAttribute());
+        assertEquals('.', testBoard.getTile_(4,0).getAttribute());
+        assertEquals('.', testBoard.getTile_(4,3).getAttribute());
+        assertEquals('.', testBoard.getTile_(4,6).getAttribute());
+        assertEquals('.', testBoard.getTile_(5,0).getAttribute());
+        assertEquals('.', testBoard.getTile_(5,3).getAttribute());
+        assertEquals('.', testBoard.getTile_(5,6).getAttribute());
+        assertEquals('.', testBoard.getTile_(6,0).getAttribute());
+        assertEquals('.', testBoard.getTile_(6,1).getAttribute());
+        assertEquals('.', testBoard.getTile_(6,2).getAttribute());
+        assertEquals('.', testBoard.getTile_(6,3).getAttribute());
+        assertEquals('.', testBoard.getTile_(6,4).getAttribute());
+        assertEquals('.', testBoard.getTile_(6,5).getAttribute());
+        assertEquals('.', testBoard.getTile_(6,6).getAttribute());
         assertEquals('.', testBoard.getTile_(7,0).getAttribute());
         assertEquals('.', testBoard.getTile_(7,1).getAttribute());
         assertEquals('.', testBoard.getTile_(7,2).getAttribute());
         assertEquals('.', testBoard.getTile_(7,4).getAttribute());
         assertEquals('.', testBoard.getTile_(7,5).getAttribute());
         assertEquals('.', testBoard.getTile_(7,6).getAttribute());
-        assertEquals('.', testBoard.getTile_(6,0).getAttribute());
-        assertEquals('.', testBoard.getTile_(6,3).getAttribute());
-        assertEquals('.', testBoard.getTile_(6,6).getAttribute());
+        assertEquals('.', testBoard.getTile_(8,0).getAttribute());
+        assertEquals('.', testBoard.getTile_(8,1).getAttribute());
+        assertEquals('.', testBoard.getTile_(8,5).getAttribute());
+        assertEquals('.', testBoard.getTile_(8,6).getAttribute());
+    }
+
+    @Test
+    void testSetBoardDen_(){
+        assertEquals('D', testBoard.getTile_(0,3).getAttribute());
+        assertEquals('D', testBoard.getTile_(8,3).getAttribute());
+    }
+
+    @Test
+    void testSetBoardTrap_(){
+        assertEquals('T', testBoard.getTile_(1,3).getAttribute());
+        assertEquals('T', testBoard.getTile_(0,2).getAttribute());
+        assertEquals('T', testBoard.getTile_(0,4).getAttribute());
+        assertEquals('T', testBoard.getTile_(7,3).getAttribute());
+        assertEquals('T', testBoard.getTile_(8,2).getAttribute());
+        assertEquals('T', testBoard.getTile_(8,4).getAttribute());
+    }
+
+    @Test
+    void testSetBoardRiver_(){
+        assertEquals('~', testBoard.getTile_(3,1).getAttribute());
+        assertEquals('~', testBoard.getTile_(3,2).getAttribute());
+        assertEquals('~', testBoard.getTile_(3,4).getAttribute());
+        assertEquals('~', testBoard.getTile_(3,5).getAttribute());
+        assertEquals('~', testBoard.getTile_(4,1).getAttribute());
+        assertEquals('~', testBoard.getTile_(4,2).getAttribute());
+        assertEquals('~', testBoard.getTile_(4,4).getAttribute());
+        assertEquals('~', testBoard.getTile_(4,5).getAttribute());
+        assertEquals('~', testBoard.getTile_(5,1).getAttribute());
+        assertEquals('~', testBoard.getTile_(5,2).getAttribute());
+        assertEquals('~', testBoard.getTile_(5,4).getAttribute());
+        assertEquals('~', testBoard.getTile_(5,5).getAttribute());
+    }
+
+    @Test
+    void testSetBoardRedPieces_(){
+        
     }
 
     @Test
