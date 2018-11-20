@@ -34,14 +34,14 @@ public class Send extends Thread{
     public void sendLoginResponse(boolean b){
         String s = "loginResponse ";
         if(b == true){
-            out.println(s + "true");
+            out.println(s += "true");
             out.flush();
-            System.out.println("Data sent");
+            System.out.println(s);
         }
         else{
-            out.println(s + "false");
+            out.println(s += "false");
             out.flush();
-            System.out.println("Data sent");
+            System.out.println(s);
         }
     }
 

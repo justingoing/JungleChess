@@ -1,29 +1,30 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class Login {
     public static boolean authenticate(String username, String password, Socket client) throws Exception{
         //sends username and pw to server. Need
         //Need to implement real authentication procedures server-side
+        System.out.println("authenticate called");
         ClientSend clientSend = new ClientSend(client);
         clientSend.sendLogin(username + " " + password);
-        // hardcoded username and password
-        if (username.equals("zane") && password.equals("123456")) {
-            return true;
+        //clientSend.close();
+        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        String msg = in.readLine();
+        //in.close();
+        System.out.println(msg);
+        boolean b = false;
+        if(msg.equals("loginResponse true")){
+            b = true;
         }
-        if (username.equals("steve") && password.equals("123456")) {
-            return true;
+        else if(msg.equals("loginResponse false")){
+            b = false;
         }
-        if (username.equals("dave") && password.equals("123456")) {
-            return true;
-        }
-        //Get response back from server
-        //true if username and pw match, false otherwise
-        //
-        //  stuff here about that
-        //
-        //
-        return false;
+        System.out.println("b = " + b);
+        return b;
     }
+
 }

@@ -47,18 +47,39 @@ public class Receive extends Thread{
         //if logging in, do some stuff to send to database to authenticate, etc.
         //TODO
         if(message[0].equals("login")){
-            System.out.println("Logging in");
             //will need to check/call authentication methods here
-            try{
-                Send send = new Send(this.socket);
-                send.sendLoginResponse(true);
-                User user = new User(message[1], this.socket);
-                server.addUser(user);
-            }catch(Exception e){}
+            if(authenticateUser(message[1], message[2])){
+                try{
+                    Send send = new Send(this.socket);
+                    send.sendLoginResponse(true);
+                    User user = new User(message[1], this.socket);
+                    server.addUser(user);
+                }catch(Exception e){}
+            }
+            else{
+                try {
+                    Send send = new Send(this.socket);
+                    send.sendLoginResponse(false);
+                }catch (Exception e) {}
+            }
         }
     }
 
-
+    public boolean authenticateUser(String username, String password){
+        //need to query database for authentication here, for now hardcoded
+        if (username.equals("zane") && password.equals("123456")) {
+            return true;
+        }
+        if (username.equals("steve") && password.equals("123456")) {
+            return true;
+        }
+        if (username.equals("dave") && password.equals("123456")) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
 
     public void run(){

@@ -34,7 +34,7 @@ public class ClientSend extends Thread{
     public void sendLogin(String data){
         out.println("login " + data);
         out.flush();
-        System.out.println("Data sent");
+        System.out.println("Data sent: " + data);
     }
 
     //Method to send game state to server
@@ -57,6 +57,9 @@ public class ClientSend extends Thread{
         }
     }
 
+    public void close(){
+        out.close();
+    }
     public void run(){
         send();
     }

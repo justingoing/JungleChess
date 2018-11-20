@@ -58,7 +58,7 @@ public class GUI extends JFrame {
         repaint();
         pack();
     }
-    public void startGUI(GUI g, Socket socket){
+    public void startGUI(){
         //javax.swing.SwingUtilities.invokeLater(() -> g.createAndShowGUI());
         final JFrame frame = new JFrame("Jungle");
         final JButton btnLogin = new JButton("Login");
@@ -66,12 +66,12 @@ public class GUI extends JFrame {
         btnLogin.addActionListener(
                 new ActionListener(){
                     public void actionPerformed(ActionEvent e) {
-                        LoginDialog loginDlg = new LoginDialog(frame, g.getSocket());
+                        LoginDialog loginDlg = new LoginDialog(frame, socket);
                         loginDlg.setVisible(true);
                         // if logon successfully
                         if(loginDlg.isSucceeded()){
                             //btnLogin.setText("Hi " + loginDlg.getUsername() + "!");
-                            javax.swing.SwingUtilities.invokeLater(() -> g.createAndShowGUI());
+                            javax.swing.SwingUtilities.invokeLater(() -> createAndShowGUI());
                         }
                     }
                 });
