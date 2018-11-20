@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

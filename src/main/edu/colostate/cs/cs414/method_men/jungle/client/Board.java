@@ -1,5 +1,8 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
+import edu.colostate.cs.cs414.method_men.jungle.client.tile.*;
+
 import java.util.HashMap;
 
 public class Board {
