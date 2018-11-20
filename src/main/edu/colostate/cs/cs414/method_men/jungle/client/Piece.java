@@ -49,14 +49,18 @@ public class Piece {
     }
 
     //Checks if the piece can move to the location
+    //A generic piece should never be used unless for certain kinds of testing.
+    //  For this purpose, a generic piece can move anywhere within bounds
     public boolean isValidMove_(Location location){
         //1. Check out of bounds
+        if (Location.isOutOfBounds(location)){
+            return false;
+        }
 
         //2. Can the piece *ever* move onto that Tile? (i.e., cat can never move onto river)
         //piece.getValidMoves() : returns Tile types it can move onto
 
         //3. Check if piece on tile -> then if enemy && lower/equal rank
-
         return true;
     }
 

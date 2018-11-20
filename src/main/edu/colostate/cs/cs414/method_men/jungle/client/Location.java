@@ -41,6 +41,27 @@ public class Location {
 
     public int[] getLocation() {return this.location;}
 
+    /**
+     * Checks if the next move's location is out of bounds
+     * @param row the next move's horizontal location on the board
+     * @param col the next move's vertical location on the board
+     * @return true if it is OOB, false if in bounds
+     */
+    public static boolean isOutOfBounds(int row, int col) {
+        return (row < 0 || row > 8 || col < 0 || col > 6);
+    }
+
+    /**
+     * Checks if the next move's location is out of bounds
+     * @param row the next move's horizontal location on the board
+     * @param col the next move's vertical location on the board
+     * @return true if it is OOB, false if in bounds
+     */
+    public static boolean isOutOfBounds(Location loc) {
+        return isOutOfBounds(loc.getRow(), loc.getCol());
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
