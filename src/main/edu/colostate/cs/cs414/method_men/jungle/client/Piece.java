@@ -51,43 +51,52 @@ public class Piece {
     //Checks if the piece can move to the location
     //It will be used for the generic pieces: dog, leopard, wolf, cat
     //It will be overwritten for fancy pieces: lion, rat, tiger, elephant
-    public boolean isValidMove_(Tile tile, Location location){
+    public boolean isValidMove_(Tile start, Tile end, Location location){
         //If it's obviously out of bounds or too far away
         if (Location.isOutOfBounds(location) || !isInRange(location)){
             return false;
         }
 
-        //Is it an invalid tile type?
-        //Invalid: river, friendly den
-        if (tile instanceof River){
-            return false;
-        }
         //Check friendly den
-        else if (tile instanceof Den){
+        if (end instanceof Den){
             //If the Den has a color which is not the color of this piece
-            if (((Den)tile).getColor().equals(this.getColor())) {
+            if (((Den)end).getColor().equals(this.getColor())) {
                 return false;
             }
         }
 
+        //Invalid: river, friendly den
+        if (end instanceof River){
+            return false;
+        }
+
         //Check the piece on the adjacent, valid tile
-        Piece q = tile.getPiece();
+        Piece q = end.getPiece();
         if (!(q == null)){
             //If friendly piece
             if (q.getColor().equals(this.getColor())){
                 return false;
             }
-            //Enemy piece: if higher rank
-            if (q.getRank() > this.getRank()){
-                return false;
+            //Enemy piece
+            //If you are moving onto a trap
+            if (end instanceof Trap) {
+                //... which is your enemies, and they outrank you
+                if (!((Trap) end).getColor().equals(this.getColor()) && q.getRank() > this.getRank()) {
+                    return false;
+                }
+                //Else, it is your trap and you always outrank
             }
-        }
 
+            //if higher rank, but is not on a trap
+            else if (q.getRank() > this.getRank()){
+                    return false;
+                }
+        }
         //It's a valid move!
         return true;
     }
 
-    private boolean isInRange(Location location){
+    public boolean isInRange(Location location){
         return this.location.isAdjacent(location);
     }
 
