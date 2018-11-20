@@ -11,6 +11,10 @@ public class Den extends Tile {
         super('D');
     }
 
+    public String getColor(){
+        return color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

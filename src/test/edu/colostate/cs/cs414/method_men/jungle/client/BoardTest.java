@@ -117,7 +117,6 @@ class BoardTest {
         assertNotEquals(redTrap3, blueTrap1);
     }
 
-
     @Test
     void testMakeRiver() {
         Tile river1 = testBoard.makeTile(new Location(3, 1));
@@ -143,7 +142,6 @@ class BoardTest {
         assertTrue(open1.equals(testOpen));
         assertTrue(open2.equals(testOpen));
     }
-
 
     @Test
     void testSetBoard() {
@@ -330,6 +328,44 @@ class BoardTest {
         assertEquals('8', draw[2][6]);
     }
 
+    @Test
+    void testMoveNoCapture(){
+        //Get piece, make sure it's a lion
+        Piece piece = testBoard.getTile_(0, 0).getPiece();
+        assertTrue(piece instanceof Lion);
+
+        //Make sure there is not already a lion where we are about to move
+        assertFalse(testBoard.getTile_(0, 1).getPiece() instanceof Lion);
+
+        //Move the lion
+        testBoard.move(piece, new Location(0,1));
+
+        //Make sure the lion did indeed move.
+        assertTrue(testBoard.getTile_(0, 1).getPiece() instanceof Lion);
+        assertEquals(testBoard.getTile_(0, 1).getPiece(), piece);
+    }
+
+    @Test
+    void testMoveCaptureEqualRank(){
+        //Get piece, make sure it's a lion, make sure it's red
+        Piece red = testBoard.getTile_(0, 0).getPiece();
+        assertTrue(red instanceof Lion);
+        assertEquals("red", red.getColor());
+
+        //Set a blue lion in the space we are about to move
+        Piece blue = new Lion("blue");
+        testBoard.getTile_(new Location(0,1)).setPiece(blue);
+        assertTrue(testBoard.getTile_(0, 1).getPiece() instanceof Lion);
+        assertEquals("blue", testBoard.getTile_(0, 1).getPiece().getColor());
+
+        //Move the red lion
+        testBoard.move(red, new Location(0,1));
+
+        //Make sure the lion did indeed move.
+        assertTrue(testBoard.getTile_(0, 1).getPiece() instanceof Lion);
+        assertEquals(testBoard.getTile_(0, 1).getPiece(), red);
+        assertEquals("red", testBoard.getTile_(0, 1).getPiece().getColor());
+    }
 
 
 }

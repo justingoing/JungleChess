@@ -61,6 +61,16 @@ public class Location {
         return isOutOfBounds(loc.getRow(), loc.getCol());
     }
 
+    //Checks if the move is 1 up/down/left/right move away. Doesn't care about bounds
+    public boolean isAdjacent(Location location){
+        if (this.getCol()+1 == location.getCol() && this.getRow()   == location.getRow() || //Moving right
+            this.getCol()-1 == location.getCol() && this.getRow()   == location.getRow() || //Moving left
+            this.getCol()   == location.getCol() && this.getRow()-1 == location.getRow() || //Moving up
+            this.getCol()   == location.getCol() && this.getRow()+1 == location.getRow()){  //Moving down
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,7 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
 public class Trap extends Tile {
-
     private String color;
 
     public Trap(String color) {
@@ -10,6 +9,10 @@ public class Trap extends Tile {
     }
     public Trap() {
         super('T');
+    }
+
+    public String getColor(){
+        return color;
     }
 
     @Override

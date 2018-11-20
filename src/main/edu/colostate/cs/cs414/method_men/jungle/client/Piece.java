@@ -49,19 +49,54 @@ public class Piece {
     }
 
     //Checks if the piece can move to the location
-    //A generic piece should never be used unless for certain kinds of testing.
-    //  For this purpose, a generic piece can move anywhere within bounds
-    public boolean isValidMove_(Location location){
+    //This isValidMove_ will be used for the generic pieces: dog, leopard, wolf, cat
+    //It will be overwritten for fancy pieces: lion, rat, tiger, elephant
+    public boolean isValidMove_(Tile tile, Location location){
         //1. Check out of bounds
         if (Location.isOutOfBounds(location)){
             return false;
         }
 
-        //2. Can the piece *ever* move onto that Tile? (i.e., cat can never move onto river)
-        //piece.getValidMoves() : returns Tile types it can move onto
+        //2. Is out of move range
+        if (!isInRange(location)){
+            return false;
+        }
 
-        //3. Check if piece on tile -> then if enemy && lower/equal rank
+        //3. Is it an invalid tile type?
+        //Invalid: river, friendly den
+        if (tile instanceof River){
+            return false;
+        }
+        //Invalid: friendly den
+        else if (tile instanceof Den){
+            //If the Den has a color which is not the color of this piece
+            if (!((Den)tile).getColor().equals(this.getColor())) {
+                return false;
+            }
+        }
+
+        //4. Check if piece on tile
+        Piece q = tile.getPiece();
+        if (!(q == null)){
+            //If friendly piece
+            if (q.getColor().equals(this.getColor())){
+                return false;
+            }
+            //Enemy piece: if higher rank
+            if (q.getRank() > this.getRank()){
+                return false;
+            }
+        }
+
+        //It's a valid move!
         return true;
+    }
+
+    public boolean isInRange(Location location){
+        if (this.location.isAdjacent(location)){
+            return true;
+        }
+        return false;
     }
 
     @Override
