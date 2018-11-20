@@ -40,12 +40,12 @@ public class Piece {
         return this.rank;
     }
 
+    public String getColor() {
+        return this.color;
+    }
+
     public boolean isRat() {
         return (this.getName().equals("Rat"));
-    }
-  
-    public String getColor() {
-         return this.color;
     }
 
     //Checks if the piece can move to the location
@@ -87,11 +87,8 @@ public class Piece {
         return true;
     }
 
-    public boolean isInRange(Location location){
-        if (this.location.isAdjacent(location)){
-            return true;
-        }
-        return false;
+    private boolean isInRange(Location location){
+        return this.location.isAdjacent(location);
     }
 
     @Override
