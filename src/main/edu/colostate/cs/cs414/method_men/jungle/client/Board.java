@@ -147,17 +147,17 @@ public class Board {
     public Tile makeTile(Location location){
         //Den
         if (isRedDen(location)){
-            return new Den("Red");
+            return new Den("red");
         } else if (isBlueDen(location)){
-            return new Den("Blue");
+            return new Den("blue");
         }
 
         //Trap
         else if (isRedTrap(location)){
-            return new Trap("Red");
+            return new Trap("red");
         }
         else if (isBlueTrap(location)){
-            return new Trap("Blue");
+            return new Trap("blue");
         }
 
         //River

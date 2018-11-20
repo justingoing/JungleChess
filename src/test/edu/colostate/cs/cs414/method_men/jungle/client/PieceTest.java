@@ -81,7 +81,7 @@ public class PieceTest {
     }
 
     @Test
-    void testValidMoveGeneric(){
+    void testValidMoveGenericAdjacentOpen(){
         Board board = new Board();
         Piece p = board.getTile_(1,1).getPiece();
 
@@ -91,22 +91,131 @@ public class PieceTest {
         assertTrue(p.isValidMove_(board.getTile_(0,1), new Location(0,1))); //Adjacent open
         assertTrue(p.isValidMove_(board.getTile_(1,0), new Location(1,0))); //Adjacent open
 
+
+    }
+
+    @Test
+    void testValidMoveGenericEnemyDen(){
+        Board board = new Board();
+        Piece p = board.getTile_(1,1).getPiece();
+
+        //Move dog next to enemy den
+        board.move(p, new Location(8, 2));
+        assertTrue(board.getTile_(8,2).getPiece() instanceof Dog);
+        assertTrue(board.getTile_(1,1).getPiece() == null);
+
+        assertTrue(p.isValidMove_(board.getTile_(8,3), new Location(8,3))); //Enemy den for the win
+    }
+
+    @Test
+    void testValidMoveGenericFriendlyDen(){
+        Board board = new Board();
+        Piece p = board.getTile_(1,1).getPiece();
+
+        //Move dog next to friendly den
+        board.move(p, new Location(0, 2));
+        assertTrue(board.getTile_(0,2).getPiece() instanceof Dog);
+        assertTrue(board.getTile_(1,1).getPiece() == null);
+
+
+
+        assertFalse(p.isValidMove_(board.getTile_(0,3), new Location(0,3))); //Friendly den
+    }
+
+    @Test
+    void testValidMoveGenericFriendlyTrap() {
+        Board board = new Board();
+        Piece p = board.getTile_(1, 1).getPiece();
+
         //Move dog to edge, next to lion and friendly trap
         board.move(p, new Location(0, 1));
-
-        //Assure I did move my piece, and did not make a new copy.
         assertTrue(board.getTile_(0,1).getPiece() instanceof Dog);
         assertTrue(board.getTile_(1,1).getPiece() == null);
 
         //Test less simple move cases
         assertTrue(p.isValidMove_(board.getTile_(0,2), new Location(0,2))); //Adjacent trap
-        assertTrue(p.isValidMove_(board.getTile_(1,1), new Location(1,1))); //Back to original spot
 
-        assertFalse(p.isValidMove_(board.getTile_(0,1), new Location(0,1))); //Same Tile ; no move
-        assertFalse(p.isValidMove_(board.getTile_(-1,1), new Location(-1,1))); //Out of bounds
-        assertFalse(p.isValidMove_(board.getTile_(0,0), new Location(0,0))); //Adjacent friend
-        assertFalse(p.isValidMove_(board.getTile_(2,1), new Location(2,1))); //Out of range ; 2 moves
     }
 
+    @Test
+    void testValidMoveGenericNoMove(){
+        Board board = new Board();
+        Piece p = board.getTile_(1, 1).getPiece();
+
+        assertFalse(p.isValidMove_(board.getTile_(1,1), new Location(1,1))); //No move
+    }
+
+    @Test
+    void testValidMoveGenericBackAndForth(){
+        Board board = new Board();
+        Piece p = board.getTile_(1, 1).getPiece();
+
+        //Move dog to edge, next to lion and friendly trap
+        board.move(p, new Location(0, 1));
+        assertTrue(board.getTile_(0,1).getPiece() instanceof Dog);
+        assertTrue(board.getTile_(1,1).getPiece() == null);
+
+        assertFalse(p.isValidMove_(board.getTile_(0,1), new Location(0,1))); //Same Tile ; no move
+    }
+
+    @Test
+    void testValidMoveGenericSimpleRejection(){
+
+        Board board = new Board();
+        Piece p = board.getTile_(1, 1).getPiece();
+
+        //Move dog to edge, next to lion and friendly trap
+        board.move(p, new Location(0, 1));
+        assertTrue(board.getTile_(0,1).getPiece() instanceof Dog);
+        assertTrue(board.getTile_(1,1).getPiece() == null);
+        assertFalse(p.isValidMove_(board.getTile_(-1,1), new Location(-1,1))); //Out of bounds
+        assertFalse(p.isValidMove_(board.getTile_(0,0), new Location(0,0))); //Adjacent friend
+        assertFalse(p.isValidMove_(board.getTile_(2,1), new Location(2,1))); //Out of range ; 2 move
+    }
+
+    @Test
+    void testValidMoveGenericEnemyTrap() {
+        Board board = new Board();
+        Piece p = board.getTile_(1, 1).getPiece();
+
+        //Move dog next to enemy trap
+        board.move(p, new Location(7, 4));
+        assertTrue(board.getTile_(7,4).getPiece() instanceof Dog);
+        assertTrue(board.getTile_(1,1).getPiece() == null);
+
+        assertTrue(p.isValidMove_(board.getTile_(7,3), new Location(7,3))); //Enemy trap
+        assertTrue(p.isValidMove_(board.getTile_(8,4), new Location(8,4))); //Enemy trap
+    }
+
+    @Test
+    void testValidMoveGenericRiver(){
+        Board board = new Board();
+        Piece p = board.getTile_(1, 1).getPiece();
+
+        //Move dog to next to river
+        board.move(p, new Location(5, 3));
+        assertTrue(board.getTile_(5,3).getPiece() instanceof Dog);
+        assertTrue(board.getTile_(1,1).getPiece() == null);
+
+        assertFalse(p.isValidMove_(board.getTile_(5,2), new Location(5,2))); //River
+        assertFalse(p.isValidMove_(board.getTile_(5,4), new Location(5,4))); //River
+    }
+
+    @Test
+    void testValidMoveGenericCapture(){
+        Board board = new Board();
+        Piece p = board.getTile_(1, 1).getPiece();
+
+        //Move dog next to capturable enemy, and uncapturable enemy
+        board.move(p, new Location(6, 5));
+        assertTrue(board.getTile_(6,5).getPiece() instanceof Dog);
+        assertTrue(board.getTile_(1,1).getPiece() == null);
+
+        //Test capture success and capture fail
+        assertTrue(p.isValidMove_(board.getTile_(6,6), new Location(6,6))); //Enemy is lower rank
+        assertTrue(p.isValidMove_(board.getTile_(7,5), new Location(7,5))); //Enemy same rank
+        assertFalse(p.isValidMove_(board.getTile_(6,4), new Location(6,4))); //Enemy is higher rank
+
+    }
 
 }

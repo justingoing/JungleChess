@@ -65,7 +65,7 @@ public class Piece {
         //Check friendly den
         else if (tile instanceof Den){
             //If the Den has a color which is not the color of this piece
-            if (!((Den)tile).getColor().equals(this.getColor())) {
+            if (((Den)tile).getColor().equals(this.getColor())) {
                 return false;
             }
         }

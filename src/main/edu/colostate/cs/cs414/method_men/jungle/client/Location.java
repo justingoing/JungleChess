@@ -31,14 +31,6 @@ public class Location {
         return this.location[1];
     }
 
-    public void setRow(int row) {
-        this.location[0] = row;
-    }
-
-    public void setCol(int col) {
-        this.location[1] = col;
-    }
-
     public int[] getLocation() {return this.location;}
 
     /**

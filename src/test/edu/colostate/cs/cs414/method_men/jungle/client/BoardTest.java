@@ -86,8 +86,8 @@ class BoardTest {
     void testMakeDen() {
         Tile redDen = testBoard.makeTile(new Location(0, 3));
         Tile blueDen = testBoard.makeTile(new Location(8, 3));
-        Den testRedDen = new Den("Red");
-        Den testBlueDen = new Den("Blue");
+        Den testRedDen = new Den("red");
+        Den testBlueDen = new Den("blue");
 
         assertTrue(redDen instanceof Den);
         assertTrue(blueDen instanceof Den);
@@ -107,8 +107,8 @@ class BoardTest {
         Tile blueTrap3 = testBoard.makeTile(new Location(7, 3));
 
 
-        Trap testRedTrap = new Trap("Red");
-        Trap testBlueTrap = new Trap("Blue");
+        Trap testRedTrap = new Trap("red");
+        Trap testBlueTrap = new Trap("blue");
 
         assertTrue(redTrap1 instanceof Trap);
         assertTrue(blueTrap2 instanceof Trap);
