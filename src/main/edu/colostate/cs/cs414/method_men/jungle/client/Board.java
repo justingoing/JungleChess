@@ -37,7 +37,12 @@ public class Board {
     //Takes a piece and moves it to the new location
     //This code is only ever called after move validation, once finalized!
     public void move(Piece piece, Location location){
+        //Pick up the piece
+        board_.get(piece.getLocation()).setPiece(null);
+
+        //Set it down
         board_.get(location).setPiece(piece);
+        piece.setLocation(location);
     }
 
     /**

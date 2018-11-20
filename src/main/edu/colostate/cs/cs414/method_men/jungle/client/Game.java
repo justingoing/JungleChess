@@ -26,16 +26,29 @@ public class Game {
 
     /***NEW MOVE CODE***/
 
-    //Takes a piece and location as arguments. Returns true if piece is moved to location.
-    //If invalid move, returns false.
-    //It is important to note that if a jumper is given a river tile, it wont be valid.
+    //Takes a starting location and end location as arguments. Returns true if piece at start is moved to end location.
+    //If invalid move, not your piece, or no piece on that tile at start, returns false. //TODO: Figure out turn check
+    //It is important to note that if a jumper is given a river tile, it wont be valid. //TODO: Fix this
     //  However, if a jumper is given the location across a river, it could be valid.
-    public boolean makeMove(Piece piece, Location location){
-        if (piece.isValidMove_(board.getTile_(location), location)){
-            board.move(piece, location);
+    public boolean makeMove(Location start, Location end){
+        Piece piece = board.getTile_(start).getPiece();
+
+        //Check if we are trying to move not a piece.
+        if (piece == null){
+            return false;
+        }
+        // TODO: else if not your turn -> false
+
+        else if (piece.isValidMove_(board.getTile_(end), end)){
+            board.move(piece, end);
             return true;
         }
         return false;
+    }
+
+    //Another way to call makeMove(Location, Location) without access to the Location class potentially
+    public boolean makeMove(int currentRow, int currentCol, int nextRow, int nextCol){
+        return makeMove(new Location(currentRow, currentCol), new Location(nextRow, nextCol));
     }
 
 

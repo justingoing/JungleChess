@@ -79,4 +79,34 @@ public class PieceTest {
     void testIsRat() {
         assertTrue(testRat.isRat()  && !testTiger.isRat());
     }
+
+    @Test
+    void testValidMoveGeneric(){
+        Board board = new Board();
+        Piece p = board.getTile_(1,1).getPiece();
+
+        //Easy moves: open Tile with no pieces, which are adjacent
+        assertTrue(p.isValidMove_(board.getTile_(1,2), new Location(1,2))); //Adjacent open
+        assertTrue(p.isValidMove_(board.getTile_(2,1), new Location(2,1))); //Adjacent open
+        assertTrue(p.isValidMove_(board.getTile_(0,1), new Location(0,1))); //Adjacent open
+        assertTrue(p.isValidMove_(board.getTile_(1,0), new Location(1,0))); //Adjacent open
+
+        //Move dog to edge, next to lion and friendly trap
+        board.move(p, new Location(0, 1));
+
+        //Assure I did move my piece, and did not make a new copy.
+        assertTrue(board.getTile_(0,1).getPiece() instanceof Dog);
+        assertTrue(board.getTile_(1,1).getPiece() == null);
+
+        //Test less simple move cases
+        assertTrue(p.isValidMove_(board.getTile_(0,2), new Location(0,2))); //Adjacent trap
+        assertTrue(p.isValidMove_(board.getTile_(1,1), new Location(1,1))); //Back to original spot
+
+        assertFalse(p.isValidMove_(board.getTile_(0,1), new Location(0,1))); //Same Tile ; no move
+        assertFalse(p.isValidMove_(board.getTile_(-1,1), new Location(-1,1))); //Out of bounds
+        assertFalse(p.isValidMove_(board.getTile_(0,0), new Location(0,0))); //Adjacent friend
+        assertFalse(p.isValidMove_(board.getTile_(2,1), new Location(2,1))); //Out of range ; 2 moves
+    }
+
+
 }
