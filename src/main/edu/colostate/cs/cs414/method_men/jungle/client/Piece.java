@@ -49,25 +49,20 @@ public class Piece {
     }
 
     //Checks if the piece can move to the location
-    //This isValidMove_ will be used for the generic pieces: dog, leopard, wolf, cat
+    //It will be used for the generic pieces: dog, leopard, wolf, cat
     //It will be overwritten for fancy pieces: lion, rat, tiger, elephant
     public boolean isValidMove_(Tile tile, Location location){
-        //1. Check out of bounds
-        if (Location.isOutOfBounds(location)){
+        //If it's obviously out of bounds or too far away
+        if (Location.isOutOfBounds(location) || !isInRange(location)){
             return false;
         }
 
-        //2. Is out of move range
-        if (!isInRange(location)){
-            return false;
-        }
-
-        //3. Is it an invalid tile type?
+        //Is it an invalid tile type?
         //Invalid: river, friendly den
         if (tile instanceof River){
             return false;
         }
-        //Invalid: friendly den
+        //Check friendly den
         else if (tile instanceof Den){
             //If the Den has a color which is not the color of this piece
             if (!((Den)tile).getColor().equals(this.getColor())) {
@@ -75,7 +70,7 @@ public class Piece {
             }
         }
 
-        //4. Check if piece on tile
+        //Check the piece on the adjacent, valid tile
         Piece q = tile.getPiece();
         if (!(q == null)){
             //If friendly piece
