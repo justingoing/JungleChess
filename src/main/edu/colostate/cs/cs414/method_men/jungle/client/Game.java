@@ -40,7 +40,7 @@ public class Game {
         }
         // TODO: else if not your turn -> false
 
-        else if (piece.isValidMove_(board.getTile_(start), board.getTile_(end), end)){
+        else if (piece.isValidMove_(end, board)){
             board.move(piece, end);
             return true;
         }

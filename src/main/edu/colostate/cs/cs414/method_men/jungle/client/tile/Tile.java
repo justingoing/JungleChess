@@ -14,7 +14,6 @@ public class Tile {
         return attribute;
     }
 
-
     public Piece getPiece() { return piece;}
 
     public void setPiece(Piece piece){
