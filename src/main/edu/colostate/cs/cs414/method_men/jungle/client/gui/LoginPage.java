@@ -25,27 +25,27 @@ public class LoginPage extends Page implements ActionListener{
         add(lbUsername);
 
         tfUsername = new JTextField(20);
-        tfUsername.setBounds(50,0,20,20);
+        tfUsername.setBounds(0,25,20,20);
         add(tfUsername);
 
         lbPassword = new JLabel("Password: ");
         add(lbPassword);
 
         pfPassword = new JPasswordField(20);
-        pfPassword.setBounds(75,0,20,20);
+        pfPassword.setBounds(0,50,20,20);
         add(pfPassword);
 
 
         JButton login = new JButton("Login");
         login.setActionCommand("Login");
         login.addActionListener(this);
-        login.setBounds(100,0,20,20);
+        login.setBounds(0,75,20,20);
         add(login);
 
         JButton cancel = new JButton("Cancel");
         cancel.setActionCommand("Cancel");
         cancel.addActionListener(this);
-        cancel.setBounds(100,0,20,20);
+        cancel.setBounds(0,100,20,20);
         add(cancel);
     }
 
