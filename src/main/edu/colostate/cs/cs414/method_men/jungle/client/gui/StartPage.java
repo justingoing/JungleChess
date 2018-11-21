@@ -27,6 +27,10 @@ public class StartPage extends Page implements ActionListener{
                 frame.changePageTo(new LoginPage(frame));
                 break;
 
+            case "Register":
+                frame.changePageTo(new RegisterPage(frame));
+                break;
+
             default:
                 break;
         }

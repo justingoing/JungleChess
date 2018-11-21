@@ -90,7 +90,7 @@ public class LoginPage extends Page implements ActionListener{
                             "Hi " + getUsername() + "! You have successfully logged in.",
                             "Login",
                             JOptionPane.INFORMATION_MESSAGE);
-                    frame.changePageTo(new GamePage(frame));
+                    frame.changePageTo(new MainMenuPage(frame));
                     break;
                 }
                 else{
