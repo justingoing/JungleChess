@@ -9,6 +9,7 @@ public class Board {
     private final int HEIGHT = 9;
     private final int WIDTH = 7;
     private Tile[][] board;
+
     private HashMap<Location, Tile> board_;
 
     public Board() {

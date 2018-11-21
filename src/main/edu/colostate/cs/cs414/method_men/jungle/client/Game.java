@@ -32,18 +32,29 @@ public class Game {
     //It is important to note that if a jumper is given a river tile, it wont be valid.
     //  However, if a jumper is given the location across a river, it could be valid.
     public boolean makeMove(Location start, Location end){
+        System.out.println("Game.makeMove()");
         Piece piece = board.getTile_(start).getPiece();
 
         //Check if we are trying to move not a piece.
         if (piece == null){
+            System.out.println(players[turn].getColor() + "'s trying to move a fricking empty spot");
             return false;
         }
-        // TODO: else if not your turn -> false
+
+        System.out.println(players[turn].getColor() + "'s trying to move " + piece.getColor() + " " + piece.getName());
+
+        if (!(piece.getColor().equals(players[turn].getColor()))){
+            System.out.println("Not your piece");
+            return false;
+        }
 
         else if (piece.isValidMove_(end, board)){
+            System.out.println(players[turn].getColor() + "'s move is valid ");
             board.move(piece, end);
+            turn = (turn + 1)%2;
             return true;
         }
+        System.out.println(players[turn].getColor() + "'s move is INvalid ");
         return false;
     }
 
