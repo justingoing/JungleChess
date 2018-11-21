@@ -6,15 +6,13 @@ import java.net.Socket;
 
 public class Login {
     public static boolean authenticate(String username, String password, Socket client) throws Exception{
-        //sends username and pw to server. Need
+        //sends username and pw to server.
         //Need to implement real authentication procedures server-side
         System.out.println("authenticate called");
         ClientSend clientSend = new ClientSend(client);
         clientSend.sendLogin(username + " " + password);
-        //clientSend.close();
         BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         String msg = in.readLine();
-        //in.close();
         System.out.println(msg);
         boolean b = false;
         if(msg.equals("loginResponse true")){

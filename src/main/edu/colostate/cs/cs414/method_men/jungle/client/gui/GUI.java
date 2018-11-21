@@ -27,7 +27,7 @@ public class GUI extends JFrame {
         Background b = new Background("src/Images/jungle.jpg");
         add(b);
 
-        currentPanel = new MainMenuPage(this);
+        currentPanel = new StartPage(this);
         add(currentPanel);
 
         pack();
@@ -40,33 +40,10 @@ public class GUI extends JFrame {
         currentPanel = comp;
         revalidate();
         repaint();
-        pack();
+        //pack();
     }
     public void startGUI(){
-        //javax.swing.SwingUtilities.invokeLater(() -> g.createAndShowGUI());
-        final JFrame frame = new JFrame("Jungle");
-        final JButton btnLogin = new JButton("Login");
-        final JButton btnRegister = new JButton("Register");
-        btnLogin.addActionListener(
-                new ActionListener(){
-                    public void actionPerformed(ActionEvent e) {
-                        LoginDialog loginDlg = new LoginDialog(frame, socket);
-                        loginDlg.setVisible(true);
-                        // if logon successfully
-                        if(loginDlg.isSucceeded()){
-                            //btnLogin.setText("Hi " + loginDlg.getUsername() + "!");
-                            javax.swing.SwingUtilities.invokeLater(() -> createAndShowGUI());
-                        }
-                    }
-                });
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 100);
-        frame.setLayout(new FlowLayout());
-        frame.getContentPane().add(btnLogin);
-        frame.getContentPane().add(btnRegister);
-        frame.setVisible(true);
-
+        javax.swing.SwingUtilities.invokeLater(() -> createAndShowGUI());
     }
 
 }
