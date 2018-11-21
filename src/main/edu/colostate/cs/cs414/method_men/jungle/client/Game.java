@@ -64,6 +64,10 @@ public class Game {
     }
 
 
+    public Board getBoard() {
+        return board;
+    }
+
     /***WINNER CODE***/
 
     /**

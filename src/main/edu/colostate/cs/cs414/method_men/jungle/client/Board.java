@@ -9,7 +9,6 @@ public class Board {
     private final int HEIGHT = 9;
     private final int WIDTH = 7;
     private Tile[][] board;
-
     private HashMap<Location, Tile> board_;
 
     public Board() {
@@ -38,6 +37,9 @@ public class Board {
         }
     }
 
+    public HashMap<Location, Tile>  getBoard_() {
+        return board_;
+    }
     /**Make instance of Tile inside the 2d array of Tiles
      * based off the (row, col) location inside the board.
      * @param row horizontal location on board
