@@ -33,12 +33,14 @@ public class Client implements Runnable{
         Client client = new Client(address, 2000);
         System.out.println("Connected to server at " + address.toString() + " on port 2000");
         System.out.println("Type a message...");
-        Thread t1 = new Thread(client, "Receive");
-        Thread t2 = new Thread(client, "ClientSend");
-        t1.start();
-        t2.start();
-        GUI g = new GUI();
-        g.startGUI(g, client.socket);
+
+        //Thread t1 = new Thread(client, "Receive");
+        //Thread t2 = new Thread(client, "ClientSend");
+        //t1.start();
+        //t2.start();
+
+        GUI g = new GUI(client.socket);
+        g.startGUI();
 
     }
 }

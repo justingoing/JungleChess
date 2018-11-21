@@ -249,37 +249,6 @@ public class Board {
         }
     }
 
-    /**     For crude implementation ONLY
-     * Creates a new 2d array of char to render as the output
-     * calls placePieces which places the Pieces on an otherwise empty board
-     * then iterates through each char and if there isn't a piece there, retrieve the real board's Tile.
-     * After completing construction, it prints the temp board
-     * @param players the array of two Players that have Pieces on the real board
-     */
-    public void printBoard(Player[] players) {
-        char[][] draw = new char[HEIGHT][WIDTH];
-        placePieces(draw, players);
-
-        for (int row = 0; row < HEIGHT; ++row) {
-            for (int col = 0; col < WIDTH; ++col) {
-                if (draw[row][col] == '\0') {
-                    draw[row][col] = this.board[row][col].getAttribute();
-                }
-            }
-        }
-
-        for (int row = 0; row < HEIGHT; ++row) {
-            for (int col = 0; col < WIDTH; ++col) {
-                if (col != WIDTH - 1) {
-                    System.out.print(draw[row][col] + " ");
-                } else {
-                    System.out.println(draw[row][col]);
-                }
-            }
-        }
-    }
-
-
     /**
      *  makeTile(Location) helpers
      */

@@ -56,9 +56,10 @@ public class LoginDialog extends JDialog{
         btnLogin.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e){
-                boolean login  = false;
+                boolean login = false;
                 try{
                     login = Login.authenticate(getUsername(), getPassword(), getClient());
+                    System.out.println("login = " + login);
                 }catch(Exception f){}
                 if (login == true) {
                     JOptionPane.showMessageDialog(LoginDialog.this,

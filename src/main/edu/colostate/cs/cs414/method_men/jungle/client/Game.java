@@ -4,7 +4,6 @@ import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
 
 import java.util.ArrayList;
 //import java.util.Random;
-import java.util.Scanner;
 
 public class Game {
     private Player[] players;
@@ -112,140 +111,6 @@ public class Game {
         // Prints the Winner statement
         whoseTurnIsIt(winnerCheck(), " is the winner!");
     }
-
-
-    /***CLI CODE***/
-    public void makeMoveCli() {
-        NextMove nextMove = retrieveCliInput();
-
-        moveThePiece(nextMove);
-    }
-
-    /**
-     * Used in the CLI interface only.
-     * Reads input from user and only if the user inputs an integer between [1, 8] inclusive.
-     * Does not stop until you give it a valid integer.
-     * @param sc No need to create multiple Scanners across all of the CLI_Input methods
-     * @return the Piece's rank
-     */
-    public int retrieveCliPieceRank(Scanner sc) {
-        String pieceInput;
-        int pieceRank;
-
-        while (true) {
-            System.out.println("What Piece number do you choose? ");
-            System.out.println("  A piece can be selected by it's rank. '1' for Rat, '2' for Cat, etc");
-            pieceInput = sc.nextLine();
-            if (!pieceInput.isEmpty()) {
-                try {
-                    pieceRank = Integer.parseInt(pieceInput.trim());
-                    if (pieceRank >= 1 && pieceRank <= 8) {
-                        return pieceRank;
-                    } else {
-                        System.out.println("\tERROR: " + pieceRank + " must be between 1 and 8");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("\tERROR: " + pieceInput + " is not a valid rank");
-                }
-            } else {
-                System.out.println("\tERROR: must specify a rank");
-            }
-        }
-    }
-
-    /**
-     * Used only in the CLI interface. Retrieve the direction.
-     * Only cares about the first char in the input string: "down" => 'd', "u1e78F9dw" => 'u', etc.
-     * You can input a 'q' if you no longer want to move the Piece you input from the method above.
-     * @param sc No need to create multiple Scanners across all of the CLI_Input methods
-     * @return the direction IN {'u', 'd', 'l', 'r'}
-     */
-    public char retrieveCliDirection(Scanner sc) {
-        String directionInput = sc.nextLine();
-
-        if (!directionInput.isEmpty()) {
-            char direction = Character.toLowerCase(directionInput.trim().charAt(0));
-
-            if (direction == 'u' || direction == 'd' || direction == 'l' || direction == 'r') {
-                return direction;
-            } else if (direction == 'q') {
-                debugPrint("You chose to quit moving this Piece.");
-                return direction;
-            } else {
-                System.out.println("\tERROR: " + direction + " is not a valid direction");
-            }
-        } else {
-            System.out.println("\tERROR: must specify a direction");
-        }
-        return '#';
-    }
-
-    /**
-     * Used in CLI interface only.
-     * This macro method is used to retrieve the user input from the console.
-     * Will only break out of the nested while loops if you give it a vaid Piece and a valid direction.
-     * @return
-     */
-    public NextMove retrieveCliInput() {
-        Scanner sc = new Scanner(System.in);
-        NextMove nextMove = null;
-
-        boolean continueAsking = true;
-        boolean validPiece;
-        boolean validDirection;
-
-        Piece piece = null;
-        int pieceRank = FAILURE;
-        char direction = '#';
-
-        while (continueAsking) {
-            //printBoard();
-            validDirection = false;
-            validPiece = false;
-            whoseTurnIsIt(turn, "'s turn.");
-
-            while (!validPiece) {
-                if ((pieceRank = retrieveCliPieceRank(sc)) != FAILURE) {
-                    if (players[turn].getPiece(pieceRank) != null) {
-                        validPiece = true;
-                    } else {
-                        System.out.println("\tERROR: " + pieceRank + " no longer exists");
-                    }
-                } else {
-                    System.out.println("Not a valid Piece");
-                }
-            } // We now have a valid Piece.rank: {1, 2, 3, 4, 5, 6, 7, 8}
-
-            piece = players[turn].getPiece(pieceRank);
-
-            while (!validDirection) {
-                System.out.println("Which direction do you want to move " + piece.getName() + "? ");
-                System.out.println("  Directions can be 'u', 'd', 'l', or 'r' Or 'q' to Quit moving your " + piece.getName());
-                if ((direction = retrieveCliDirection(sc)) != '#') {
-                    validDirection = true;
-                }
-            } // We now have a valid direction: {u, d, l, r || q}
-
-            if (direction != 'q'){
-                nextMove = getDirection(piece, direction);
-                nextMove = new NextMove(piece, isValidMove(nextMove, true));
-                debugPrint("Sanity Check: " + nextMove.getRow() + ", " + nextMove.getCol());
-
-                if (nextMove.getRow() != FAILURE && nextMove.getCol() != FAILURE) {
-                    System.out.println("\t\t\t Valid move");
-                    continueAsking = false;
-                } else {
-                    System.out.println("\t\t\t Invalid move");
-                    printBoard();
-                }
-            } else {
-                System.out.println("You chose to quit moving your " + piece.getName() + ".");
-            }
-        }
-
-        return nextMove;
-    }
-
 
     /***GUI CODE***/
 
@@ -438,7 +303,6 @@ public class Game {
     /**
      * Called from makeMove method and is used to validate if the next move desired is valid.
      * If the move enters on of the 8 exceptions listed, then it will return within the same conditional, regardless of outcome.
-     * // TODO Should we not return FAILURE_DESTINATION so many times (read one line above), and instead return the failure after exception #8?
      *
      * The order of checking for exceptions is as follows:
      *
@@ -464,7 +328,8 @@ public class Game {
      *      Is the next move's location on a Trap Tile? [succ]
      *      Does p outrank the enemy? [succ]
      * 9. Does the next move's location contain a friendly Piece? [fail]
-     * 10.If no aforementioned conditions are met, then it is a valid move.
+     * 10.Is the Piece trying to move into its own Den? [fail]
+     * 11.If no aforementioned conditions are met, then it is a valid move. [succ]
      * @param nextMove the (Piece, row, col) all packed into one element.
      * @param print "Shall I print the failures for you?" false == "shh"
      * @return [-1, -1] called "FAILURE_DESTINATION" to represent an invalid move.
@@ -573,11 +438,14 @@ public class Game {
 
         } else if (containsPiece(turn, row, col) != -1) {
             // 9. The next move's location contains a friendly Piece
-            debugPrint("There is a friendly Piece located here.");
             print("You can't capture your own Piece.", print);
             return FAILURE_DESTINATION;
+        } else if (movingIntoOwnDen(turn, row, col)) {
+            // 10. The next move's location is its own Den Tile.
+            print("You can't move into your own Den.", print);
+            return FAILURE_DESTINATION;
         } else {
-            // 10. It is a valid move
+            // 11. It is a valid move
             debugPrint("\tJust a regular move without any exceptions, thus is a valid move");
             return new Location(row, col);
         }
@@ -630,30 +498,6 @@ public class Game {
 //            System.out.println("That Tile does not contains a Piece.");
 //        }
         return validDirections;
-    }
-
-    /**
-     * Is only called from the CLI interface. Retrieves a valid direction
-     * @param p the Piece in question
-     * @param direction the direction the user wants to move said Piece.
-     * @return
-     */
-    public NextMove getDirection(Piece p, char direction) {
-        NextMove nextMove = new NextMove(p, p.getRow(), p.getCol());
-        debugPrint("\tfrom (" + nextMove.getRow() + ", " + nextMove.getCol() + ")");
-
-        if (direction =='d') {
-            nextMove.incRow();
-        } else if (direction == 'u') {
-            nextMove.decRow();
-        } else if (direction == 'r') {
-            nextMove.incCol();
-        } else if (direction == 'l') {
-            nextMove.decCol();
-        }
-
-        debugPrint("\tto   (" + nextMove.getRow() + ", " + nextMove.getCol() + ")");
-        return nextMove;
     }
 
     /**
@@ -710,16 +554,7 @@ public class Game {
         }
     }
 
-
     /***OTHER CODE***/
-
-    /**
-     * Is only called from the CLI interface.
-     * Prints the board to the console output.
-     */
-    public void printBoard() {
-        this.board.printBoard(players);
-    }
 
     /**
      * Depending on the turn parameter, Prints out whose turn it is.
@@ -810,6 +645,19 @@ public class Game {
      */
     public boolean isOutOfBounds(int row, int col) {
         return (row < 0 || row > 8 || col < 0 || col > 6);
+    }
+
+
+    /**
+     * This method returns true if the Piece is trying to move into its own Den.
+     * Both Dens's columns are = 3, top Player's Den is at row 0, bottom Player's Den is at row 8.
+     * @param turn 0 for top Player is moving, 1 for bottom
+     * @param nextRow The next row's horizontal location on the board
+     * @param nextCol The next move's vertical location on the board
+     * @return True if it's an invalid move. False implies "Not moving into own Den"
+     */
+    public boolean movingIntoOwnDen(int turn, int nextRow, int nextCol) {
+        return ((nextCol == 3) && (nextRow == ((turn == 0) ? 0 : 8)));
     }
 
     public boolean isOutOfBounds(Location loc) {
