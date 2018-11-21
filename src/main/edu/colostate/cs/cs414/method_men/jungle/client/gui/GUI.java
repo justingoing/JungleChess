@@ -34,22 +34,6 @@ public class GUI extends JFrame {
         setVisible(true);
     }
 
-    public void changePage(String panelName) {
-        switch (panelName) {
-            case "StartGame":
-                remove(currentPanel);
-                currentPanel = new GamePage(this);
-                add(currentPanel);
-                break;
-
-            default:
-                break;
-        }
-
-        revalidate();
-        repaint();
-    }
-
     public void changePageTo(JPanel comp) {
         remove(currentPanel);
         add(comp);
@@ -85,11 +69,4 @@ public class GUI extends JFrame {
 
     }
 
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's gui
-        //GUI g = new GUI();
-        //javax.swing.SwingUtilities.invokeLater(() -> g.createAndShowGUI());
-
-    }
 }
