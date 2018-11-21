@@ -45,7 +45,7 @@ public class GenericPieceTest {
         assertTrue(board.getTile_(0,1).getPiece() instanceof Dog);
         assertTrue(board.getTile_(1,1).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(0,1), board)); //Same Tile ; no move
+        assertTrue(p.isValidMove_(new Location(1,1), board)); //Same Tile ; no move
     }
 
     @Test

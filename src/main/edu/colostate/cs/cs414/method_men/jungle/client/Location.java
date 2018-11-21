@@ -64,6 +64,28 @@ public class Location {
         return false;
     }
 
+    //Gives amount of moves to reach location
+    public static int getDistance(Location start, Location end){
+        return Math.abs(start.getCol()-end.getCol()) + Math.abs(start.getRow() - end.getRow());
+    }
+
+    //Tells direction from start to end: up, down, left, right, same, bad
+    public static String getDirection(Location start, Location end){
+        if (start.getRow() > end.getRow() && start.getCol() == end.getCol()){
+            return "up";
+        } else if (start.getRow() < end.getRow() && start.getCol() == end.getCol()){
+            return "down";
+        } else if (start.getRow() == end.getRow() && start.getCol() > end.getCol()){
+            return "left";
+        } else if (start.getRow() == end.getRow() && start.getCol() < end.getCol()){
+            return "right";
+        }  else if (start.getRow() == end.getRow() && start.getCol() == end.getCol()){
+            return "same";
+        } else {
+            return "bad";
+        }
+    }
+
     @Override
     public String toString(){
         return "[" + this.getCol() + ", " + this.getRow() + "]";
