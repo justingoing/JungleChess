@@ -94,6 +94,8 @@ public class RegisterPage extends Page implements ActionListener{
                     pfPassword.setText("");
                     break;
                 }
+                //Do we need to check passwords and usernames for things like improper symbols, spaces, etc?
+                //Need a Register class that will send info to server
 
                 frame.changePageTo(new StartPage(frame));
                 break;

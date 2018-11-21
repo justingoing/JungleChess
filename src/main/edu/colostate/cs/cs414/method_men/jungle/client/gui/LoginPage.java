@@ -1,13 +1,9 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.Socket;
-
-import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 
 public class LoginPage extends Page implements ActionListener{
 
