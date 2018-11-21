@@ -45,6 +45,20 @@ public class Send extends Thread{
         }
     }
 
+    public void sendRegisterResponse(boolean b){
+        String s = "registerResponse ";
+        if(b == true){
+            out.println(s += "true");
+            out.flush();
+            System.out.println(s);
+        }
+        else{
+            out.println(s += "false");
+            out.flush();
+            System.out.println(s);
+        }
+    }
+
     public void run(){
         send();
     }

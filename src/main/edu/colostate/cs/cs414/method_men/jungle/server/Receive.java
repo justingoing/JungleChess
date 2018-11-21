@@ -61,6 +61,22 @@ public class Receive extends Thread{
                 }catch (Exception e) {}
             }
         }
+        if(message[0].equals("register")){
+            if(registerUser(message[1], message[2])){
+                try{
+                    Send send = new Send(this.socket);
+                    send.sendRegisterResponse(true);
+                    User user = new User(message[1], this.socket);
+                    server.addUser(user);
+                }catch(Exception e){}
+            }
+            else{
+                try {
+                    Send send = new Send(this.socket);
+                    send.sendRegisterResponse(false);
+                }catch (Exception e) {}
+            }
+        }
     }
 
     public boolean authenticateUser(String username, String password){
@@ -79,6 +95,12 @@ public class Receive extends Thread{
         }
     }
 
+    public boolean registerUser(String username, String password){
+        //need to check database for duplicate usernames here
+        //will need to add user to database here as well
+        //for now, just return true
+        return true;
+    }
 
     public void run(){
         receive();

@@ -4,21 +4,21 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class Login {
-    public static boolean authenticate(String username, String password, Socket client) throws Exception{
-        //sends username and pw to server.
-        //Need to implement real authentication procedures server-side
-        System.out.println("authenticate called");
+public class Register {
+
+    public static boolean register(String username, String password, Socket client) throws Exception{
+        //sends registration information to server.
+        System.out.println("register called");
         ClientSend clientSend = new ClientSend(client);
-        clientSend.sendLogin(username + " " + password);
+        clientSend.sendRegister(username + " " + password);
         BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         String msg = in.readLine();
         System.out.println(msg);
         boolean b = false;
-        if(msg.equals("loginResponse true")){
+        if(msg.equals("registerResponse true")){
             b = true;
         }
-        else if(msg.equals("loginResponse false")){
+        else if(msg.equals("registerResponse false")){
             b = false;
         }
         System.out.println("b = " + b);

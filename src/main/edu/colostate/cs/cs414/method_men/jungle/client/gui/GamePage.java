@@ -182,13 +182,7 @@ public class GamePage extends Page implements ActionListener {
                         }
                         break;
                 }
-                //send currPlayer.pieces to server
-                //need to pass in socket somehow
-                try{
-                    ClientSend send = new ClientSend(frame.getSocket());
-                    send.sendGameState(pieces);
-                    System.out.println("Pieces sent");
-                }catch(Exception e){}
+                //send game state here?
 
                 buttons[pieces[n].getRow()][pieces[n].getCol()].setIcon(icon);
             }

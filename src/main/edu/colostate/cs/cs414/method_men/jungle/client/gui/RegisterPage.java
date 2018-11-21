@@ -94,11 +94,44 @@ public class RegisterPage extends Page implements ActionListener{
                     pfPassword.setText("");
                     break;
                 }
+                //check for blank entries
+                if(getUsername().equals("") || getPassword().equals("") || getVerifyPassword().equals("")){
+                    JOptionPane.showMessageDialog(frame,
+                            "Username or password fields cannot be blank",
+                            "Register",
+                            JOptionPane.ERROR_MESSAGE);
+                    tfUsername.setText("");
+                    pfPassword.setText("");
+                    pfVerifyPassword.setText("");
+                    break;
+                }
                 //Do we need to check passwords and usernames for things like improper symbols, spaces, etc?
                 //Need a Register class that will send info to server
+                else{
+                    boolean registerSuccess = false;
+                    try{
+                        registerSuccess = Register.register(getUsername(), getPassword(), getClient());
+                    }catch(Exception e){}
+                    if(registerSuccess == true){
+                        JOptionPane.showMessageDialog(frame,
+                                "Hi " + getUsername() + "! You have successfully logged in.",
+                                "Register",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        frame.changePageTo(new MainMenuPage(frame));
+                        break;
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(frame,
+                                "Invalid username, please try again",
+                                "Register",
+                                JOptionPane.ERROR_MESSAGE);
+                        tfUsername.setText("");
+                        pfPassword.setText("");
+                        break;
+                    }
 
-                frame.changePageTo(new StartPage(frame));
-                break;
+                }
+
         }
 
     }
