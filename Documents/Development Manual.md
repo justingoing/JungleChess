@@ -5,11 +5,26 @@
 The development environment requires no dependencies other than a Java SDK version 1.8 or newer and JUnit 5 or newer.  
 The program can be compiled and ran using the IDE of choice.
 
+### Command Line Instructions
+
+These instructions were written for a Linux command line and are untested on any other platform.
+
+#### Running the Tests
+
+There are not currently any known ways to reliably run the tests from the command line.
+
+#### Running the Code
+
+Simply run the command `./run` from the command line.
+It will automatically compile the code, run the server, and run a client all in one command.
+
 ### IntelliJ instructions
 #### Dependencies
+
 Make sure that Java 1.8 or newer and JUnit 5 or newer are installed.
 
 #### Setup
+
 First clone or download the repository into an IntelliJ project.
 
 Make sure the Java SDK is set as the SDK for the project (File -> Project Settings -> Project SDK).
@@ -17,26 +32,33 @@ Make sure the Java SDK is set as the SDK for the project (File -> Project Settin
 Mark src/main as the Source Root directory (\<right click\> -> Mark Directory As -> Sources Root).
 Mark src/test as the Test Sources Root directory (\<right click\> -> Mark Directory As -> Test Sources Root).
 
-#### Running tests and code
+#### Running the Tests
+
 To run the tests: right click on the src/test directory and select "Run 'All Tests'"
 
-To run the code: Run -> Run... -> Main
+#### Running the Code
 
-## Running Tests
-See the above section for information on running tests in an IDE.
+There are two programs that must be run, the server and the client.
 
-Information on running tests from the command line will be added later.
+First run the server:
+* Right click on the TCPServer file located in the source code under the "server" directory, then choose "Run 'TCPServer.main()'
+
+Then run the client:
+* Right click on the TCPServer file located in the source code under "client/gui", then choose "Run 'Client.main()'"
 
 ## Contributor Conduct
 
 ### Coding Conventions
+
 For any conventions not mentioned in this document, refer to [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html).
 
 #### Indentations:
+
 All indentations should be 4 spaces, not tab characters.
 
 #### Curly Braces:
-There should never be a line break before the open brace.  
+
+There should never be a line break before the open brace.
 	For Example:
 ``` 
 if (true) {
@@ -46,7 +68,8 @@ if (true) {
 }
 ```
 
-### Branch naming
+### Branch Naming
+
 All branches must be named with the following convention:
 `<username>-<subject>`
 
@@ -55,5 +78,6 @@ All branches must be named with the following convention:
 	For example: a branch made by user "foo" to work on the database should be called "foo-database"
   
 ### Branch Deletion
-A branch should be deleted by its creator after the pull request associated with the branch is approved and merged.  
+
+A branch should be deleted by its creator after the pull request associated with the branch is approved and merged.
 Note: This is not the responsibility of the approver.
