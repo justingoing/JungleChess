@@ -1,61 +1,105 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.pieceTest;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.Board;
 import edu.colostate.cs.cs414.method_men.jungle.client.Location;
+import edu.colostate.cs.cs414.method_men.jungle.client.piece.Piece;
 import edu.colostate.cs.cs414.method_men.jungle.client.piece.Rat;
+import edu.colostate.cs.cs414.method_men.jungle.client.piece.Elephant;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RatTest {
-    Rat rat;
+    private Board board;
+    private Piece rat;
 
-    @Test
-    void setLocation() {
-        rat = new Rat("blue");
-        Location location = rat.getLocation();
-        rat.setLocation(0,0);
-        assertTrue(rat.getLocation()!=location);
+    @BeforeEach
+    void init() {
+        board = new Board();
+        rat = board.getTile_(new Location(2,0)).getPiece();
     }
 
     @Test
-    void getLocation() {
-        rat = new Rat("blue");
-        assertTrue(rat.getLocation()!=null);
+    void testValidMoveRatOpenTileOntoElephant(){
+        //Move rat next to enemy elephant
+        board.move(rat, new Location(5, 0));
+        assertTrue(board.getTile_(5,0).getPiece() instanceof Rat);
+        assertTrue(board.getTile_(2,0).getPiece() == null);
+
+        //Onto elephant is valid move
+        assertTrue(rat.isValidMove_(new Location(6,0), board));
     }
 
     @Test
-    void getLocation2() {
-        rat = new Rat("purple");
-        assertEquals(rat.getLocation(),null);
+    void testValidMoveRatRiverTileOntoElephant(){
+        Piece enemyElephant = board.getTile_(new Location(6,0)).getPiece();
+
+        //Move rat next into river
+        board.move(rat, new Location(5, 1));
+        assertTrue(board.getTile_(5,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile_(2,0).getPiece() == null);
+
+        //Move elephant next to rat in river
+        board.move(enemyElephant, new Location(5, 0));
+        assertTrue(board.getTile_(5,0).getPiece() instanceof Elephant);
+        assertTrue(board.getTile_(6,0).getPiece() == null);
+
+        //Onto elephant is invalid move
+        assertFalse(rat.isValidMove_(new Location(5,0), board));
     }
 
     @Test
-    void getRow() {
-        rat = new Rat("blue");
-        assertEquals(rat.getRow(),6);
+    void testValidMoveRatIntoRiver(){
+        board.move(rat, new Location(3, 0));
+        assertTrue(board.getTile_(3,0).getPiece() instanceof Rat);
+        assertTrue(board.getTile_(2,0).getPiece() == null);
+
+        //Onto elephant is valid move
+        assertTrue(rat.isValidMove_(new Location(3,1), board));
     }
 
     @Test
-    void getCol() {
-        rat = new Rat("blue");
-        assertEquals(rat.getCol(),6);
+    void testValidMoveRatOpenTileOntoOpenTileWithRat(){
+        //Move rat next to enemy rat
+        board.move(rat, new Location(6, 5));
+        assertTrue(board.getTile_(6,5).getPiece() instanceof Rat);
+        assertTrue(board.getTile_(2,0).getPiece() == null);
+
+
+        assertTrue(rat.isValidMove_(new Location(6,6), board));
     }
 
     @Test
-    void getName() {
-        rat = new Rat("blue");
-        assertEquals(rat.getName(),"Rat");
+    void testValidMoveRatRiverTileOntoRiverTileWithRat(){
+        Piece enemyRat = board.getTile_(new Location(6,6)).getPiece();
+
+        //Move rat into river
+        board.move(rat, new Location(3, 1));
+        assertTrue(board.getTile_(3,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile_(2,0).getPiece() == null);
+
+        //Move ENEMY rat into river, next to friendly rat
+        board.move(enemyRat, new Location(4, 1));
+        assertTrue(board.getTile_(4,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile_(6,6).getPiece() == null);
+
+        assertTrue(rat.isValidMove_(new Location(4,1), board));
     }
 
     @Test
-    void getRank() {
-        rat = new Rat("blue");
-        assertEquals(rat.getRank(),1);
+    void testValidMoveRatOpenTileOntoOpenTileWithHigherRankedEnemy(){
+        //Move rat next to enemy rat
+        board.move(rat, new Location(6, 1));
+        assertTrue(board.getTile_(6,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile_(2,0).getPiece() == null);
+
+
+        assertFalse(rat.isValidMove_(new Location(7,1), board));
+        assertFalse(rat.isValidMove_(new Location(6,2), board));
     }
 
-    @Test
-    void isRat() {
-        rat = new Rat("blue");
-        assertTrue(rat.isRat());
-    }
+
+
+
 }

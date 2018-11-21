@@ -18,29 +18,18 @@ public class Rat extends Piece {
 
     @Override
     public boolean isValidMove_(Location end, Board board){
-        //If it's obviously out of bounds or too far away
-        //super.isValidMove_(start, location, end); TODO: Make the super call handle generic rules, less code copies
-
-        if (Location.isOutOfBounds(end) || !isInRange(end)){
-            return false;
-        }
-
         Tile startTile = board.getTile_(getLocation());
         Tile endTile = board.getTile_(end);
 
-
-        //Is it an invalid tile type?
-        //Invalid: START ON river, moving onto piece
-        if (startTile instanceof River && !(endTile.getPiece() == null)){
+        //If it's obviously out of bounds or too far away
+        if (!super.isValidMove_(end, board)){
             return false;
         }
 
-        //Check friendly den
-        else if (endTile instanceof Den){
-            //If the Den has a color which is not the color of this piece
-            if (((Den)endTile).getColor().equals(this.getColor())) {
-                return false;
-            }
+        //Is it an invalid tile type?
+        //Invalid: START ON river, moving onto open tile, holding a piece
+        if (startTile instanceof River && !(endTile instanceof River) && !(endTile.getPiece() == null)){
+            return false;
         }
 
         //Check the piece on the adjacent, valid tile
@@ -61,7 +50,7 @@ public class Rat extends Piece {
             }
 
             //Not an elephant, and not a trap
-            else if (!(q instanceof Elephant)){
+            else if (!(q instanceof Elephant) && !(q instanceof Rat)){
                 return false;
             }
         }

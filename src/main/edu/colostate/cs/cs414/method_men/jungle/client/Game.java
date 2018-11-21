@@ -29,7 +29,7 @@ public class Game {
 
     //Takes a starting location and end location as arguments. Returns true if piece at start is moved to end location.
     //If invalid move, not your piece, or no piece on that tile at start, returns false. //TODO: Figure out turn check
-    //It is important to note that if a jumper is given a river tile, it wont be valid. //TODO: Fix this
+    //It is important to note that if a jumper is given a river tile, it wont be valid.
     //  However, if a jumper is given the location across a river, it could be valid.
     public boolean makeMove(Location start, Location end){
         Piece piece = board.getTile_(start).getPiece();
