@@ -1,19 +1,54 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
+/**
+ * Location class is a wrapper class which makes using row, col pairs easier.
+ * It also functions as a partial functor with static methods, to learn about relations between multiple locations.
+ * It is responsible for:
+ * 1. Wrapping row, col pairs for ease of use in /src/.../Client package.
+ */
 public class Location {
     private int row, col;
 
+    /**
+     * Make a new location.
+     * @param row coordinate.
+     * @param col coordinate.
+     */
     public Location(int row, int col) {
         this.row = row;
         this.col = col;
     }
 
+    //Another way to make a location.
     public Location(Location loc) {
         this(loc.getRow(), loc.getCol());
     }
+
+    /**
+     * Checks if the next move's location is out of bounds.
+     * @param location the location in question.
+     * @return true if it is OOB, false if in bounds.
+     */
+    public static boolean isOutOfBounds(Location location) {
+        return (location.getRow() < 0 || location.getRow() > 8 || location.getCol() < 0 || location.getCol() > 6);
+    }
+
+    /**
+     * Checks if this location and the given location are next to each other.
+     * @param location to check.
+     * @return whether the locations are adjacent or not.
+     */
+    public boolean isAdjacent(Location location){
+        return (this.getCol()+1 == location.getCol() && this.getRow()   == location.getRow() || //Moving right
+            this.getCol()-1 == location.getCol() && this.getRow()   == location.getRow() || //Moving left
+            this.getCol()   == location.getCol() && this.getRow()-1 == location.getRow() || //Moving up
+            this.getCol()   == location.getCol() && this.getRow()+1 == location.getRow());  //Moving down
+    }
+
+
+    /*** Getters ***/
 
     public int getRow() {
         return this.row;
@@ -24,63 +59,46 @@ public class Location {
     }
 
     /**
-     * Checks if the next move's location is out of bounds
-     * @param row the next move's horizontal location on the board
-     * @param col the next move's vertical location on the board
-     * @return true if it is OOB, false if in bounds
+     * Grab the adjacent locations.
+     * @return set of adjacent locations.
      */
-    public static boolean isOutOfBounds(int row, int col) {
-        return (row < 0 || row > 8 || col < 0 || col > 6);
-    }
-
-    /**
-     * Checks if the next move's location is out of bounds
-     * @param location the location in question
-     * @return true if it is OOB, false if in bounds
-     */
-    public static boolean isOutOfBounds(Location location) {
-        return isOutOfBounds(location.getRow(), location.getCol());
-    }
-
-    //Checks if the move is 1 up/down/left/right move away. Doesn't care about bounds
-    public boolean isAdjacent(Location location){
-        if (this.getCol()+1 == location.getCol() && this.getRow()   == location.getRow() || //Moving right
-            this.getCol()-1 == location.getCol() && this.getRow()   == location.getRow() || //Moving left
-            this.getCol()   == location.getCol() && this.getRow()-1 == location.getRow() || //Moving up
-            this.getCol()   == location.getCol() && this.getRow()+1 == location.getRow()){  //Moving down
-            return true;
-        }
-        return false;
-    }
-
-    //Takes a location and returns all locations next to it. Does not return out of bounds locations.
-    public static ArrayList<Location> getAdjacent(Location location){
+    public ArrayList<Location> getAdjacent(){
         ArrayList<Location> adjacent = new ArrayList<>();
         //Go through and look at up/down/left/right, returning the set of those which are in bounds.
-        if (!(isOutOfBounds(new Location(location.getRow() + 1, location.getCol())))){
-            adjacent.add(new Location(location.getRow() + 1, location.getCol()));
+        if (!(isOutOfBounds(new Location(getRow() + 1, getCol())))){
+            adjacent.add(new Location(getRow() + 1, getCol()));
         }
 
-        if (!(isOutOfBounds(new Location(location.getRow() - 1, location.getCol())))) {
-            adjacent.add(new Location(location.getRow() - 1, location.getCol()));
+        if (!(isOutOfBounds(new Location(getRow() - 1, getCol())))) {
+            adjacent.add(new Location(getRow() - 1, getCol()));
         }
 
-        if (!(isOutOfBounds(new Location(location.getRow(), location.getCol() + 1)))){
-            adjacent.add(new Location(location.getRow(), location.getCol() + 1));
+        if (!(isOutOfBounds(new Location(getRow(), getCol() + 1)))){
+            adjacent.add(new Location(getRow(), getCol() + 1));
         }
 
-        if (!(isOutOfBounds(new Location(location.getRow(), location.getCol() - 1)))){
-            adjacent.add(new Location(location.getRow(), location.getCol() - 1));
+        if (!(isOutOfBounds(new Location(getRow(), getCol() - 1)))){
+            adjacent.add(new Location(getRow(), getCol() - 1));
         }
         return adjacent;
     }
 
-    //Gives amount of moves to reach location
+    /**
+     * Gives amount of moves to reach location, disregarding bounds and cardinality.
+     * @param start location.
+     * @param end location.
+     * @return how many moves it takes to get from start to end.
+     */
     public static int getDistance(Location start, Location end){
         return Math.abs(start.getCol()-end.getCol()) + Math.abs(start.getRow() - end.getRow());
     }
 
-    //Tells direction from start to end: up, down, left, right, same, bad
+    /**
+     * Tells which direction from start to end.
+     * @param start location.
+     * @param end location.
+     * @return direction from start to end: up, down, left, right, same, bad.
+     */
     public static String getDirection(Location start, Location end){
         if (start.getRow() > end.getRow() && start.getCol() == end.getCol()){
             return "up";
@@ -109,8 +127,7 @@ public class Location {
 
         Location location = (Location) o;
 
-        if (row != location.row) return false;
-        return col == location.col;
+        return (row == location.row) && col == location.col;
     }
 
     @Override

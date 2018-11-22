@@ -36,7 +36,7 @@ public class Piece {
      * @return the valid moves for this piece.
      */
     public ArrayList<Location> getAllValidMoves(Board board){
-        ArrayList<Location> adjacent = Location.getAdjacent(getLocation());
+        ArrayList<Location> adjacent = getLocation().getAdjacent();
         ArrayList<Location> valid = new ArrayList<>();
 
         //Look at each adjacent move
