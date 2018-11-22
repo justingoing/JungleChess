@@ -7,6 +7,8 @@ import edu.colostate.cs.cs414.method_men.jungle.client.tile.River;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.Trap;
 
+import java.util.ArrayList;
+
 public class JumperPiece extends Piece{
     public JumperPiece (String name, int rank, String color) {
         super(name, rank, color);
@@ -123,5 +125,20 @@ public class JumperPiece extends Piece{
 
         //Easy, not a valid distance
         return false;
+    }
+
+    @Override
+    public ArrayList<Location> getAllValidMoves(Board board){
+        //TODO: Come up with a more clever way of doing this, if we care
+        ArrayList<Location> valid = new ArrayList<>();
+        //Look through every location on the board
+        for (Location location : board.getBoard_().keySet()){
+            //If the jumper can move there
+            if (isValidMove_(location,board)){
+                //..., add it to valid set.
+                valid.add(location);
+            }
+        }
+        return valid;
     }
 }

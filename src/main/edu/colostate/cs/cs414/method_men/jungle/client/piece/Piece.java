@@ -6,6 +6,8 @@ import edu.colostate.cs.cs414.method_men.jungle.client.tile.River;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.Trap;
 
+import java.util.ArrayList;
+
 public class Piece {
     private String name;
     private int rank;
@@ -52,6 +54,25 @@ public class Piece {
 
     public boolean isRat() {
         return (this.getName().equals("Rat"));
+    }
+
+    //Takes a board state, and returns the valid moves for this piece.
+    public ArrayList<Location> getAllValidMoves(Board board){
+        ArrayList<Location> adjacent = Location.getAdjacent(getLocation());
+        ArrayList<Location> valid = new ArrayList<>();
+
+
+        //Look at each adjacent move
+        for (int i = 0 ; i < adjacent.size() ; i++){
+            //..., if the move is valid
+            if (isValidMove_(adjacent.get(i), board)){
+                //... then add it to list of valid moves.
+                valid.add(adjacent.get(i));
+                System.out.println(adjacent.get(i));
+            }
+        }
+        //Return all the valid moves
+        return valid;
     }
 
     //Checks if the piece can move to the location

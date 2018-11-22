@@ -515,6 +515,24 @@ public class Game {
         return validDirections;
     }
 
+    public ArrayList<Location> retrieveValidLocations_(int row, int col) {
+        return retrieveValidLocations_(new Location(row, col));
+    }
+
+    public ArrayList<Location> retrieveValidLocations_(Location location) {
+        Piece piece = board.getBoard_().get(location).getPiece();
+
+        //There is a piece there
+        if (piece != null) {
+            //..., and the current player owns it.
+            if (piece.getColor().equals(players[turn].getColor())) {
+                //Get the valid moves for that piece
+                return piece.getAllValidMoves(board);
+            }
+        }
+        return new ArrayList<>();
+    }
+
     /**
      * Self-explanatory, retrieves the *private* Player
      * @param whichPlayer the index in the private array of 2 Players

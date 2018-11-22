@@ -233,10 +233,9 @@ public class GamePage extends Page implements ActionListener {
             button.setBorder(new LineBorder(Color.BLACK));
             selectedButton = new int[]{button.getRow(), button.getCol()};
 
-            ArrayList<Location> validDirectionButtons = game.retrieveValidLocations(button.getRow(), button.getCol());
-            int stop = validDirectionButtons.size();
-            for (int i = 0; i < stop; ++i) {
-                Location curr = validDirectionButtons.remove(0);
+            ArrayList<Location> validDirectionButtons = game.retrieveValidLocations_(button.getRow(), button.getCol());
+            for (int i = 0; i < validDirectionButtons.size(); ++i) {
+                Location curr = validDirectionButtons.get(i);
                 int row = curr.getRow();
                 int col = curr.getCol();
                 buttons[row][col].setBorder(new LineBorder(Color.BLUE));

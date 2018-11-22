@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Location {
@@ -64,6 +65,27 @@ public class Location {
         return false;
     }
 
+    //Takes a location and returns all locations next to it. Does not return out of bounds locations.
+    public static ArrayList<Location> getAdjacent(Location location){
+        ArrayList<Location> adjacent = new ArrayList<>();
+        //Go through and look at up/down/left/right, returning the set of those which are in bounds.
+        if (!(isOutOfBounds(new Location(location.getRow() + 1, location.getCol())))){
+            adjacent.add(new Location(location.getRow() + 1, location.getCol()));
+        }
+
+        if (!(isOutOfBounds(new Location(location.getRow() - 1, location.getCol())))) {
+            adjacent.add(new Location(location.getRow() - 1, location.getCol()));
+        }
+
+        if (!(isOutOfBounds(new Location(location.getRow(), location.getCol() + 1)))){
+            adjacent.add(new Location(location.getRow(), location.getCol() + 1));
+        }
+
+        if (!(isOutOfBounds(new Location(location.getRow(), location.getCol() - 1)))){
+            adjacent.add(new Location(location.getRow(), location.getCol() - 1));
+        }
+        return adjacent;
+    }
     //Gives amount of moves to reach location
     public static int getDistance(Location start, Location end){
         return Math.abs(start.getCol()-end.getCol()) + Math.abs(start.getRow() - end.getRow());
@@ -88,7 +110,7 @@ public class Location {
 
     @Override
     public String toString(){
-        return "[" + this.getCol() + ", " + this.getRow() + "]";
+        return "[" + this.getRow() + ", " + this.getCol() + "]";
     }
 
     @Override
