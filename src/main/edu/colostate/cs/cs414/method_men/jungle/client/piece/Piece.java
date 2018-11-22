@@ -50,10 +50,6 @@ public class Piece {
         return this.color;
     }
 
-    public boolean isRat() {
-        return (this.getName().equals("Rat"));
-    }
-
     //Takes a board state, and returns the valid moves for this piece.
     public ArrayList<Location> getAllValidMoves(Board board){
         ArrayList<Location> adjacent = Location.getAdjacent(getLocation());

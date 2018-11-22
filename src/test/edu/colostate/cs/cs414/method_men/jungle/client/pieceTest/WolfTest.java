@@ -53,9 +53,4 @@ class WolfTest {
         assertEquals(wolf.getRank(),3);
     }
 
-    @Test
-    void isRat() {
-        wolf = new Wolf("blue");
-        assertFalse(wolf.isRat());
-    }
 }

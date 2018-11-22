@@ -32,10 +32,6 @@ public class Board {
         }
     }
 
-    public HashMap<Location, Tile> getBoard() {
-        return board;
-    }
-
     //TODO: Tile Factory
     public Tile makeTile(Location location){
         //Den
@@ -135,35 +131,6 @@ public class Board {
     }
 
     /**
-     * Returns a tile on the board
-     * @param row horizontal location on board
-     * @param col vertical location on board
-     * @return requested tile
-     */
-    public Tile getTile(int row, int col) {
-        return getTile(new Location(row, col));
-    }
-
-    public Tile getTile(Location loc) {
-        return board.get(loc);
-    }
-
-    public ArrayList<Piece> getPieces(String color){
-        ArrayList<Piece> bluePieces = new ArrayList<>();
-        //Look through every tile on the board
-        for (Tile tile : board.values()){
-            //If the tile has a piece on it
-            if (tile.getPiece() != null){
-                //..., and that piece is the right color
-                if (tile.getPiece().getColor().equals(color)){
-                    bluePieces.add(tile.getPiece());
-                }
-            }
-        }
-        return bluePieces;
-    }
-
-    /**
      *  makeTile(Location) helpers
      */
     private boolean isRedDen(Location location){
@@ -208,6 +175,39 @@ public class Board {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Returns a tile on the board
+     * @param row horizontal location on board
+     * @param col vertical location on board
+     * @return requested tile
+     */
+    public Tile getTile(int row, int col) {
+        return getTile(new Location(row, col));
+    }
+
+    public Tile getTile(Location loc) {
+        return board.get(loc);
+    }
+
+    public HashMap<Location, Tile> getBoard() {
+        return board;
+    }
+
+    public ArrayList<Piece> getPieces(String color){
+        ArrayList<Piece> bluePieces = new ArrayList<>();
+        //Look through every tile on the board
+        for (Tile tile : board.values()){
+            //If the tile has a piece on it
+            if (tile.getPiece() != null){
+                //..., and that piece is the right color
+                if (tile.getPiece().getColor().equals(color)){
+                    bluePieces.add(tile.getPiece());
+                }
+            }
+        }
+        return bluePieces;
     }
 
 }

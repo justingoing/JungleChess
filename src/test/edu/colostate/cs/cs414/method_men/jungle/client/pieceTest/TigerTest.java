@@ -53,9 +53,4 @@ class TigerTest {
         assertEquals(tiger.getRank(),6);
     }
 
-    @Test
-    void isRat() {
-        tiger = new Tiger("blue");
-        assertFalse(tiger.isRat());
-    }
 }

@@ -90,11 +90,6 @@ public class PieceTest {
     }
 
     @Test
-    void testIsRat() {
-        assertTrue(testRat.isRat()  && !testTiger.isRat());
-    }
-
-    @Test
     void testValidMoveAdjacentOpen(){
         //Easy moves: open Tile with no pieces, which are adjacent
         assertTrue(p.isValidMove(new Location(1,2), board)); //Adjacent open

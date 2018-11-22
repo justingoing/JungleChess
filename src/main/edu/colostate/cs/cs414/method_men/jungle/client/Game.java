@@ -54,17 +54,13 @@ public class Game {
         return false;
     }
 
-    public Board getBoard() {
-        return board;
-    }
-
     /**
      * There are two ways to win in Jungle:
      * 1. You reach the enemy Den
      * 2. You have no more Pieces (the count variable is 0)
      * @return 0 for top Player, 1 for bottom Player, -1 for no Winners yet
      */
-   public int winnerCheck(){
+    public int winnerCheck(){
         Player redPlayer = players[0];
         Player bluePlayer = players[1];
 
@@ -107,11 +103,11 @@ public class Game {
         }
     }
 
-    public ArrayList<Location> retrieveValidLocations(int row, int col) {
-        return retrieveValidLocations(new Location(row, col));
+    public ArrayList<Location> getValidLocations(int row, int col) {
+        return getValidLocations(new Location(row, col));
     }
 
-    public ArrayList<Location> retrieveValidLocations(Location location) {
+    public ArrayList<Location> getValidLocations(Location location) {
         Piece piece = board.getBoard().get(location).getPiece();
 
         //There is a piece there
@@ -131,6 +127,10 @@ public class Game {
      */
     public int getTurn() {
         return this.turn;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     /**
