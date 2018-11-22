@@ -19,7 +19,7 @@ public class Piece {
     private Location location;
 
     /**
-     * Make a piece object to represent a player-controlled piece on the game board.
+     * Make a Piece object to represent a player-controlled piece on the game board.
      * @param name describes the piece, usually to a human. "rat", "lion", etc.
      * @param rank describes the piece's power. Higher ranked pieces typically beat lower rank pieces.
      * @param color describes which team the piece belongs to: red or blue.

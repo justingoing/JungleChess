@@ -10,7 +10,8 @@ import edu.colostate.cs.cs414.method_men.jungle.client.tile.Trap;
 import java.util.ArrayList;
 
 public class JumperPiece extends Piece{
-    public JumperPiece (String name, int rank, String color) {
+
+    JumperPiece (String name, int rank, String color) {
         super(name, rank, color);
     }
 
@@ -85,7 +86,12 @@ public class JumperPiece extends Piece{
         return valid;
     }
 
-    //Answers the question: Is the piece allowed to jump from it's location to end location?
+    /**
+     * Answers whether the piece is trying to jump.
+     * @param end location where the piece would land.
+     * @param board the current state of the game board.
+     * @return whether the piece allowed to jump from it's location to end location or not.
+     */
     private boolean isJumping(Location end, Board board) {
         //Can't jump 1 Tile away lol
         int distance = Location.getDistance(getLocation(), end);

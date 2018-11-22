@@ -7,7 +7,8 @@ import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.Trap;
 
 public class GenericPiece extends Piece{
-    public GenericPiece (String name, int rank, String color) {
+
+    GenericPiece (String name, int rank, String color) {
         super(name, rank, color);
     }
 
