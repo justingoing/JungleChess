@@ -113,14 +113,11 @@ public class GamePage extends Page implements ActionListener {
         resetBoard();
 
         for (int i = 0; i < 2; i++) {
-            Player currPlayer = game.getPlayer(i);
             //Piece[] pieces = currPlayer.getValidPieces();
             ArrayList<Piece> pieces = new ArrayList<Piece>();
-            for (Tile tile : game.getBoard().getBoard_().values()) {
+            for (Tile tile : game.getBoard().getBoard().values()) {
                 if (tile.getPiece() != null){
-                    if (tile.getPiece().getColor().equals(currPlayer.getColor())){
-                        pieces.add(tile.getPiece());
-                    }
+                    pieces.add(tile.getPiece());
                 }
             }
 
@@ -233,7 +230,7 @@ public class GamePage extends Page implements ActionListener {
             button.setBorder(new LineBorder(Color.BLACK));
             selectedButton = new int[]{button.getRow(), button.getCol()};
 
-            ArrayList<Location> validDirectionButtons = game.retrieveValidLocations_(button.getRow(), button.getCol());
+            ArrayList<Location> validDirectionButtons = game.retrieveValidLocations(button.getRow(), button.getCol());
             for (int i = 0; i < validDirectionButtons.size(); ++i) {
                 Location curr = validDirectionButtons.get(i);
                 int row = curr.getRow();

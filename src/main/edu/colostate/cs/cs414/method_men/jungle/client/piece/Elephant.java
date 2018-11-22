@@ -2,7 +2,6 @@ package edu.colostate.cs.cs414.method_men.jungle.client.piece;
 
 import edu.colostate.cs.cs414.method_men.jungle.client.Board;
 import edu.colostate.cs.cs414.method_men.jungle.client.Location;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.River;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.Trap;
 
@@ -17,11 +16,11 @@ public class Elephant extends GenericPiece {
     }
 
     @Override
-    public boolean isValidMove_(Location end, Board board) {
-        Tile endTile = board.getTile_(end);
+    public boolean isValidMove(Location end, Board board) {
+        Tile endTile = board.getTile(end);
 
         //If it's obviously out of bounds or too far away
-        if (!super.isValidMove_(end, board)) {
+        if (!super.isValidMove(end, board)) {
             return false;
         }
 

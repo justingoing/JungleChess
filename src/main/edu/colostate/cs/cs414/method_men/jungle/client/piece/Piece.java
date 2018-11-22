@@ -2,9 +2,7 @@ package edu.colostate.cs.cs414.method_men.jungle.client.piece;
 
 import edu.colostate.cs.cs414.method_men.jungle.client.*;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.Den;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.River;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.Trap;
 
 import java.util.ArrayList;
 
@@ -65,7 +63,7 @@ public class Piece {
         //Look at each adjacent move
         for (int i = 0 ; i < adjacent.size() ; i++){
             //..., if the move is valid
-            if (isValidMove_(adjacent.get(i), board)){
+            if (isValidMove(adjacent.get(i), board)){
                 //... then add it to list of valid moves.
                 valid.add(adjacent.get(i));
                 System.out.println(adjacent.get(i));
@@ -78,8 +76,8 @@ public class Piece {
     //Checks if the piece can move to the location
     //It will be used for the generic pieces: dog, leopard, wolf, cat
     //It will be overwritten for fancy pieces: lion, rat, tiger, elephant
-    public boolean isValidMove_(Location end, Board board){
-        Tile endTile = board.getTile_(end);
+    public boolean isValidMove(Location end, Board board){
+        Tile endTile = board.getTile(end);
 
         //If it's obviously out of bounds or too far away
         if (Location.isOutOfBounds(end)){

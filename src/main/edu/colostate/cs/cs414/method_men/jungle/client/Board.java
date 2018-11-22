@@ -3,17 +3,14 @@ package edu.colostate.cs.cs414.method_men.jungle.client;
 import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Board {
-    private final int HEIGHT = 9;
-    private final int WIDTH = 7;
-    private Tile[][] board;
-    private HashMap<Location, Tile> board_;
+    private HashMap<Location, Tile> board;
 
     public Board() {
-        this.board = new Tile[HEIGHT][WIDTH];
-        this.board_ = new HashMap<>();
+        this.board = new HashMap<>();
         setBoard();
     }
 
@@ -22,44 +19,24 @@ public class Board {
      * instantiates each Tile (subtype) based off the location
      */
     public void setBoard() {
+        int HEIGHT = 9;
+        int WIDTH = 7;
         for (int row = 0; row < HEIGHT; ++row) {
             for (int col = 0; col < WIDTH; ++col) {
-                //TODO: Old version
-                this.board[row][col] = makeTile(row, col);
-
-                //TODO: New version
                 Location location = new Location(row, col);
                 Piece piece = makePiece(location);
                 Tile tile = makeTile(location);
                 tile.setPiece(piece); //If there is a piece (i.e., (0,0) gets a Lion), set it on the Tile
-                board_.put(location, tile);
+                board.put(location, tile);
             }
         }
     }
 
-    public HashMap<Location, Tile>  getBoard_() {
-        return board_;
-    }
-    /**Make instance of Tile inside the 2d array of Tiles
-     * based off the (row, col) location inside the board.
-     * @param row horizontal location on board
-     * @param col vertical location on board
-     * @return a new instance of it's corresponding Tiles
-     */
-    public Tile makeTile(int row, int col) {
-        if (isDen(row, col)) {
-            return new Den();
-        } else if (isTrap(row, col)) {
-            return new Trap();
-        } else if (isRiver(row, col)) {
-            return new River();
-        } else if (isJump(row, col)) {
-            return new Jump();
-        } else {
-            return new Open();
-        }
+    public HashMap<Location, Tile> getBoard() {
+        return board;
     }
 
+    //TODO: Tile Factory
     public Tile makeTile(Location location){
         //Den
         if (isRedDen(location)){
@@ -87,6 +64,7 @@ public class Board {
         }
     }
 
+    //TODO: Piece factory
     public Piece makePiece(Location location){
         //Lion
         if (location.equals(new Location(0, 0))){
@@ -146,28 +124,13 @@ public class Board {
         return null;
     }
 
-    /**
-     * Iterates through each player, then each piece, and
-     * places pieces on the empty temp board
-     *
-     * @param draw the temp board only used to display the current board
-     * @param players both Players in an array
-     */
-    public void placePieces(char[][] draw, Player[] players) {
-        for (Player player : players) {
-            for (Piece piece : player.getValidPieces()) {
-                draw[piece.getRow()][piece.getCol()] = (char) (piece.getRank() + '0');
-            }
-        }
-    }
-
     //Takes a piece and moves it to the new location
     public void move(Piece piece, Location location){
         //Pick up the piece
-        board_.get(piece.getLocation()).setPiece(null);
+        board.get(piece.getLocation()).setPiece(null);
 
         //Set it down
-        board_.get(location).setPiece(piece);
+        board.get(location).setPiece(piece);
         piece.setLocation(location);
     }
 
@@ -178,76 +141,26 @@ public class Board {
      * @return requested tile
      */
     public Tile getTile(int row, int col) {
-        return board[row][col];
+        return getTile(new Location(row, col));
     }
 
-    public Tile getTile_(int row, int col) {
-        return getTile_(new Location(row, col));
+    public Tile getTile(Location loc) {
+        return board.get(loc);
     }
 
-    public Tile getTile_(Location loc) {
-        return board_.get(loc);
-    }
-
-    /**
-     * If the Tile at (row, col) is suppose to be a River Tile
-     * @param row horizontal location on board
-     * @param col vertical location on board
-     * @return true if it's suppose to be a River Tile. false if not
-     */
-    public boolean isDen(int row, int col) {
-        return ((row == 0 || row == 8) && col == 3);
-    }
-
-    /**
-     * If the Tile at (row, col) is suppose to be a Trap Tile
-     * @param row horizontal location on board
-     * @param col vertical location on board
-     * @return true if it's suppose to be a Trap Tile. false if not
-     */
-    public boolean isTrap(int row, int col) {
-        // if there is a Den below, above, to right or to left
-        if (isDen(row + 1, col) || isDen(row - 1, col)
-                || isDen(row, col + 1) || isDen(row, col - 1)) {
-            return true;
+    public ArrayList<Piece> getPieces(String color){
+        ArrayList<Piece> bluePieces = new ArrayList<>();
+        //Look through every tile on the board
+        for (Tile tile : board.values()){
+            //If the tile has a piece on it
+            if (tile.getPiece() != null){
+                //..., and that piece is the right color
+                if (tile.getPiece().getColor().equals(color)){
+                    bluePieces.add(tile.getPiece());
+                }
+            }
         }
-        return false;
-    }
-
-    /**
-     * If the Tile at (row, col) is suppose to be a River Tile
-     * @param row horizontal location on board
-     * @param col vertical location on board
-     * @return true if it's suppose to be a River Tile. false if not
-     */
-    public boolean isRiver(int row, int col) {
-        return ((row >= 3 && row <= 5) && (col == 1 || col == 2 || col == 4 || col == 5));
-    }
-
-    /**
-     * If the Tile at (row, col) is suppose to be a Jump Tile
-     * @param row horizontal location on board
-     * @param col vertical location on board
-     * @return true if it's suppose to be a Jump Tile. false if not
-     */
-    public boolean isJump(int row, int col) {
-        //if there is a River Tile above, below, to right, or to left
-        if (isRiver(row + 1, col) || isRiver(row - 1, col)
-                || isRiver(row, col + 1) || isRiver(row, col - 1)) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Used for when Rat is trying to emerge from the River onto a Land Tile.
-     * We only need to check if it is a Jump Tile, and skip checking if it is an Open Tile
-     * @param row horizontal location on board
-     * @param col vertical location on board
-     * @return true if it is a Jump Tile (Land)
-     */
-    public boolean isLand(int row, int col) {
-        return (this.board[row][col] instanceof Jump);
+        return bluePieces;
     }
 
     /**

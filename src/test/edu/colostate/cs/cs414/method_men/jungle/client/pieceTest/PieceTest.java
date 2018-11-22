@@ -3,10 +3,7 @@ package edu.colostate.cs.cs414.method_men.jungle.client.pieceTest;
 import edu.colostate.cs.cs414.method_men.jungle.client.Board;
 import edu.colostate.cs.cs414.method_men.jungle.client.Location;
 import edu.colostate.cs.cs414.method_men.jungle.client.piece.Dog;
-import edu.colostate.cs.cs414.method_men.jungle.client.piece.Elephant;
 import edu.colostate.cs.cs414.method_men.jungle.client.piece.Piece;
-import edu.colostate.cs.cs414.method_men.jungle.client.piece.Rat;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +19,7 @@ public class PieceTest {
         testRat = new Piece("Rat", 1, "red");
         testTiger = new Piece("Tiger", 6, "blue");
         board = new Board();
-        p = board.getTile_(new Location(1,1)).getPiece();
+        p = board.getTile(new Location(1,1)).getPiece();
     }
 
     @Test
@@ -100,10 +97,10 @@ public class PieceTest {
     @Test
     void testValidMoveAdjacentOpen(){
         //Easy moves: open Tile with no pieces, which are adjacent
-        assertTrue(p.isValidMove_(new Location(1,2), board)); //Adjacent open
-        assertTrue(p.isValidMove_(new Location(2,1), board)); //Adjacent open
-        assertTrue(p.isValidMove_(new Location(0,1), board)); //Adjacent open
-        assertTrue(p.isValidMove_(new Location(1,0), board)); //Adjacent open
+        assertTrue(p.isValidMove(new Location(1,2), board)); //Adjacent open
+        assertTrue(p.isValidMove(new Location(2,1), board)); //Adjacent open
+        assertTrue(p.isValidMove(new Location(0,1), board)); //Adjacent open
+        assertTrue(p.isValidMove(new Location(1,0), board)); //Adjacent open
 
     }
 
@@ -111,31 +108,31 @@ public class PieceTest {
     void testValidMoveFriendlyDen(){
         //Move dog next to friendly den
         board.move(p, new Location(0, 2));
-        assertTrue(board.getTile_(0,2).getPiece() instanceof Dog);
-        assertTrue(board.getTile_(1,1).getPiece() == null);
+        assertTrue(board.getTile(0,2).getPiece() instanceof Dog);
+        assertTrue(board.getTile(1,1).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(0,3), board)); //Friendly den
+        assertFalse(p.isValidMove(new Location(0,3), board)); //Friendly den
     }
 
     @Test
     void testValidMoveEnemyDen(){
         //Move dog next to enemy den
         board.move(p, new Location(8, 2));
-        assertTrue(board.getTile_(8,2).getPiece() instanceof Dog);
-        assertTrue(board.getTile_(1,1).getPiece() == null);
+        assertTrue(board.getTile(8,2).getPiece() instanceof Dog);
+        assertTrue(board.getTile(1,1).getPiece() == null);
 
-        assertTrue(p.isValidMove_(new Location(8,3), board)); //Adjacent open
+        assertTrue(p.isValidMove(new Location(8,3), board)); //Adjacent open
     }
 
     @Test
     void testValidMoveFriendlyTrap() {
         //Move dog to edge, next to lion and friendly trap
         board.move(p, new Location(0, 1));
-        assertTrue(board.getTile_(0,1).getPiece() instanceof Dog);
-        assertTrue(board.getTile_(1,1).getPiece() == null);
+        assertTrue(board.getTile(0,1).getPiece() instanceof Dog);
+        assertTrue(board.getTile(1,1).getPiece() == null);
 
         //Test less simple move cases
-        assertTrue(p.isValidMove_(new Location(0,2), board)); //Adjacent trap
+        assertTrue(p.isValidMove(new Location(0,2), board)); //Adjacent trap
 
     }
 
@@ -143,11 +140,11 @@ public class PieceTest {
     void testValidMoveEnemyTrap() {
         //Move dog next to enemy trap
         board.move(p, new Location(7, 4));
-        assertTrue(board.getTile_(7,4).getPiece() instanceof Dog);
-        assertTrue(board.getTile_(1,1).getPiece() == null);
+        assertTrue(board.getTile(7,4).getPiece() instanceof Dog);
+        assertTrue(board.getTile(1,1).getPiece() == null);
 
-        assertTrue(p.isValidMove_(new Location(7,3), board)); //Enemy trap
-        assertTrue(p.isValidMove_(new Location(8,4), board)); //Enemy trap
+        assertTrue(p.isValidMove(new Location(7,3), board)); //Enemy trap
+        assertTrue(p.isValidMove(new Location(8,4), board)); //Enemy trap
     }
 
 }

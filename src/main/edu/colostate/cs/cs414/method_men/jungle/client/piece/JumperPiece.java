@@ -15,11 +15,11 @@ public class JumperPiece extends Piece{
     }
 
     @Override
-    public boolean isValidMove_(Location end, Board board){
-        Tile endTile = board.getTile_(end);
+    public boolean isValidMove(Location end, Board board){
+        Tile endTile = board.getTile(end);
 
         //Super check
-        if (!super.isValidMove_(end, board)){
+        if (!super.isValidMove(end, board)){
             return false;
         }
 
@@ -40,13 +40,8 @@ public class JumperPiece extends Piece{
             return true;
         }
 
-        //If trying to move more than 1 tile, no jump
-        if (!isInRange(end)){
-            return false;
-        }
-
-        //If trying to move into a river
-        if (endTile instanceof River){
+        //If trying to move more than 1 tile without jumping OR if trying to move into a river
+        if (!isInRange(end) || endTile instanceof River){
             return false;
         }
 
@@ -76,47 +71,63 @@ public class JumperPiece extends Piece{
         return true;
     }
 
-    //isValidMove helper
-    public boolean isJumping(Location end, Board board) {
+    @Override
+    public ArrayList<Location> getAllValidMoves(Board board){
+        ArrayList<Location> valid = new ArrayList<>();
+        //Look through every location on the board
+        for (Location location : board.getBoard().keySet()){
+            //If the jumper can move there
+            if (isValidMove(location,board)){
+                //..., add it to valid set.
+                valid.add(location);
+            }
+        }
+        return valid;
+    }
+
+    //Answers the question: Is the piece allowed to jump from it's location to end location?
+    private boolean isJumping(Location end, Board board) {
         //Can't jump 1 Tile away lol
         int distance = Location.getDistance(getLocation(), end);
-        String direction = null;
 
         //If moving 3 or 4 places away, could be jumping.
-        //Check that all of the spaces inbetween getLocation and end are river.
+        //Check that all of the spaces between getLocation and end are river.
         if (distance == 3 || distance == 4) {
-            direction = Location.getDirection(getLocation(), end);
+            //Check that landing spot is Open tile
+            if (!(board.getTile(end) instanceof Open)) {
+                return false;
+            }
 
             //Check that the next 2 or 3 tiles are river, and that there are no pieces in any of them.
             for (int i = 0; i < distance - 1; i++) {
                 Location next;
                 //Make new location based on direction
-                if (direction.equals("up")) {
-                    next = new Location(getLocation().getRow() - i - 1, getLocation().getCol());
-                } else if (direction.equals("down")) {
-                    next = new Location(getLocation().getRow() + i + 1, getLocation().getCol());
-                } else if (direction.equals("left")) {
-                    next = new Location(getLocation().getRow(), getLocation().getCol() - i - 1);
-                } else if (direction.equals("right")) {
-                    next = new Location(getLocation().getRow(), getLocation().getCol() + i + 1);
-                } else {
-                    return false; //Bad direction, flaw in move definitely.
+                switch (Location.getDirection(getLocation(), end)) {
+                    case "up":
+                        next = new Location(getLocation().getRow() - i - 1, getLocation().getCol());
+                        break;
+                    case "down":
+                        next = new Location(getLocation().getRow() + i + 1, getLocation().getCol());
+                        break;
+                    case "left":
+                        next = new Location(getLocation().getRow(), getLocation().getCol() - i - 1);
+                        break;
+                    case "right":
+                        next = new Location(getLocation().getRow(), getLocation().getCol() + i + 1);
+                        break;
+                    default:
+                        return false; //Bad direction, flaw in move definitely.
                 }
 
                 //Check that the tile is a river!
-                if (!(board.getTile_(next) instanceof River)) {
+                if (!(board.getTile(next) instanceof River)) {
                     return false;
                 }
 
                 //Check that rat is not in the river
-                else if (board.getTile_(next).getPiece() instanceof Rat){
+                else if (board.getTile(next).getPiece() instanceof Rat){
                     return false;
                 }
-            }
-
-            //Check that landing spot is Open tile
-            if (!(board.getTile_(end) instanceof Open)) {
-                return false;
             }
 
             //Must be jumping
@@ -127,18 +138,4 @@ public class JumperPiece extends Piece{
         return false;
     }
 
-    @Override
-    public ArrayList<Location> getAllValidMoves(Board board){
-        //TODO: Come up with a more clever way of doing this, if we care
-        ArrayList<Location> valid = new ArrayList<>();
-        //Look through every location on the board
-        for (Location location : board.getBoard_().keySet()){
-            //If the jumper can move there
-            if (isValidMove_(location,board)){
-                //..., add it to valid set.
-                valid.add(location);
-            }
-        }
-        return valid;
-    }
 }

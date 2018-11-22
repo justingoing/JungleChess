@@ -4,35 +4,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Location {
-    private int[] location;
-
-    public Location(int[] location) {
-        this.location = new int[2];
-        this.location[0] = location[0];
-        this.location[1] = location[1];
-    }
+    private int row, col;
 
     public Location(int row, int col) {
-        this.location = new int[2];
-        this.location[0] = row;
-        this.location[1] = col;
+        this.row = row;
+        this.col = col;
     }
 
     public Location(Location loc) {
-        this.location = new int[2];
-        this.location[0] = loc.getRow();
-        this.location[1] = loc.getCol();
+        this(loc.getRow(), loc.getCol());
     }
 
     public int getRow() {
-        return this.location[0];
+        return this.row;
     }
 
     public int getCol() {
-        return this.location[1];
+        return this.col;
     }
-
-    public int[] getLocation() {return this.location;}
 
     /**
      * Checks if the next move's location is out of bounds
@@ -46,12 +35,11 @@ public class Location {
 
     /**
      * Checks if the next move's location is out of bounds
-     * @param row the next move's horizontal location on the board
-     * @param col the next move's vertical location on the board
+     * @param location the location in question
      * @return true if it is OOB, false if in bounds
      */
-    public static boolean isOutOfBounds(Location loc) {
-        return isOutOfBounds(loc.getRow(), loc.getCol());
+    public static boolean isOutOfBounds(Location location) {
+        return isOutOfBounds(location.getRow(), location.getCol());
     }
 
     //Checks if the move is 1 up/down/left/right move away. Doesn't care about bounds
@@ -86,6 +74,7 @@ public class Location {
         }
         return adjacent;
     }
+
     //Gives amount of moves to reach location
     public static int getDistance(Location start, Location end){
         return Math.abs(start.getCol()-end.getCol()) + Math.abs(start.getRow() - end.getRow());
@@ -118,13 +107,16 @@ public class Location {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Location location1 = (Location) o;
+        Location location = (Location) o;
 
-        return Arrays.equals(location, location1.location);
+        if (row != location.row) return false;
+        return col == location.col;
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(location);
+        int result = row;
+        result = 31 * result + col;
+        return result;
     }
 }

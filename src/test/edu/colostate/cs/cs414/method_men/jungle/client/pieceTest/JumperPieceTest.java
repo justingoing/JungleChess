@@ -17,64 +17,64 @@ public class JumperPieceTest {
     @BeforeEach
     void init() {
         board = new Board();
-        p = board.getTile_(new Location(0,0)).getPiece();
+        p = board.getTile(new Location(0,0)).getPiece();
     }
 
     @Test
     void testValidMoveJumperRiver(){
         //Move Lion to next to river
         board.move(p, new Location(5, 3));
-        assertTrue(board.getTile_(5,3).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(5,3).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(5,2), board)); //River
-        assertFalse(p.isValidMove_(new Location(5,4), board)); //River
+        assertFalse(p.isValidMove(new Location(5,2), board)); //River
+        assertFalse(p.isValidMove(new Location(5,4), board)); //River
     }
 
     @Test
     void testValidMoveJumperNoMove(){
-        assertFalse(p.isValidMove_(new Location(0,0), board)); //No move
+        assertFalse(p.isValidMove(new Location(0,0), board)); //No move
     }
 
     @Test
     void testValidMoveJumperBackAndForth(){
         //Move Lion to edge, next to lion and friendly trap
         board.move(p, new Location(0, 1));
-        assertTrue(board.getTile_(0,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(0,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
-        assertTrue(p.isValidMove_(new Location(0,0), board)); //Move back
+        assertTrue(p.isValidMove(new Location(0,0), board)); //Move back
     }
 
     @Test
     void testValidMoveJumperSimpleRejection(){
         //Move Lion to edge, next to lion and friendly trap
         board.move(p, new Location(0, 1));
-        assertTrue(board.getTile_(0,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(0,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(-1,1), board)); //Out of bounds
-        assertFalse(p.isValidMove_(new Location(1,1), board)); //Adjacent friend
-        assertFalse(p.isValidMove_(new Location(2,1), board)); //Out of range ; 2 move
+        assertFalse(p.isValidMove(new Location(-1,1), board)); //Out of bounds
+        assertFalse(p.isValidMove(new Location(1,1), board)); //Adjacent friend
+        assertFalse(p.isValidMove(new Location(2,1), board)); //Out of range ; 2 move
     }
 
     @Test
     void testValidMoveJumperCapture(){
         //Move Lion next to capturable enemy, and uncapturable enemy
         board.move(p, new Location(6, 1));
-        assertTrue(board.getTile_(6,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(6,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy lion next to lion
-        board.move(board.getTile_(new Location(8,6)).getPiece(), new Location(6, 2));
-        assertTrue(board.getTile_(6,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        board.move(board.getTile(new Location(8,6)).getPiece(), new Location(6, 2));
+        assertTrue(board.getTile(6,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
 
         //Test capture success and capture fail
-        assertTrue(p.isValidMove_(new Location(7,1), board)); //Enemy is lower rank
-        assertTrue(p.isValidMove_(new Location(6,2), board)); //Enemy same rank
-        assertFalse(p.isValidMove_(new Location(6,0), board)); //Enemy is higher rank
+        assertTrue(p.isValidMove(new Location(7,1), board)); //Enemy is lower rank
+        assertTrue(p.isValidMove(new Location(6,2), board)); //Enemy same rank
+        assertFalse(p.isValidMove(new Location(6,0), board)); //Enemy is higher rank
 
     }
 
@@ -82,17 +82,17 @@ public class JumperPieceTest {
     void testValidMoveJumperCaptureOnFriendlyTrap(){
         //Move Lion next to capturable enemy, and uncapturable enemy
         board.move(p, new Location(1, 2));
-        assertTrue(board.getTile_(1,2).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(1,2).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move an elephant onto the friendly trap
-        Piece q = board.getTile_(6, 0).getPiece(); //Enemy elephant
+        Piece q = board.getTile(6, 0).getPiece(); //Enemy elephant
         board.move(q, new Location(1, 3));
-        assertTrue(board.getTile_(1,3).getPiece() instanceof Elephant);
-        assertTrue(board.getTile_(6,0).getPiece() == null);
+        assertTrue(board.getTile(1,3).getPiece() instanceof Elephant);
+        assertTrue(board.getTile(6,0).getPiece() == null);
 
         //Test capture success on a trap
-        assertTrue(p.isValidMove_(new Location(1,3), board)); //Enemy is higher rank
+        assertTrue(p.isValidMove(new Location(1,3), board)); //Enemy is higher rank
 
     }
 
@@ -100,20 +100,20 @@ public class JumperPieceTest {
     void testValidMoveJumperJumpingUpNoPiece(){
         //Move Lion below river tile
         board.move(p, new Location(6, 1));
-        assertTrue(board.getTile_(6,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(6,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
-        assertTrue(p.isValidMove_(new Location(2,1), board)); //Enemy is higher rank
+        assertTrue(p.isValidMove(new Location(2,1), board)); //Enemy is higher rank
     }
 
     @Test
     void testValidMoveJumperJumpingDownNoPiece(){
         //Move Lion above river tile
         board.move(p, new Location(2, 1));
-        assertTrue(board.getTile_(2,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(2,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
-        assertTrue(p.isValidMove_(new Location(6,1), board)); //Enemy is higher rank
+        assertTrue(p.isValidMove(new Location(6,1), board)); //Enemy is higher rank
 
     }
 
@@ -121,10 +121,10 @@ public class JumperPieceTest {
     void testValidMoveJumperJumpingLeftNoPiece(){
         //Move Lion below river tile
         board.move(p, new Location(3, 3));
-        assertTrue(board.getTile_(3,3).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(3,3).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
-        assertTrue(p.isValidMove_(new Location(3,0), board));
+        assertTrue(p.isValidMove(new Location(3,0), board));
 
     }
 
@@ -132,10 +132,10 @@ public class JumperPieceTest {
     void testValidMoveJumperJumpingRightNoPiece(){
         //Move Lion below river tile
         board.move(p, new Location(3, 0));
-        assertTrue(board.getTile_(3,0).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(3,0).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
-        assertTrue(p.isValidMove_(new Location(3,3), board));
+        assertTrue(p.isValidMove(new Location(3,3), board));
 
     }
 
@@ -143,65 +143,65 @@ public class JumperPieceTest {
     void testValidMoveJumperJumpingUpCapturablePiece(){
         //Move Lion below river tile
         board.move(p, new Location(6, 1));
-        assertTrue(board.getTile_(6,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(6,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy wolf across river
-        Piece q = board.getTile_(6, 2).getPiece(); //Enemy wolf
+        Piece q = board.getTile(6, 2).getPiece(); //Enemy wolf
         board.move(q, new Location(2, 1));
-        assertTrue(board.getTile_(2,1).getPiece() instanceof Wolf);
-        assertTrue(board.getTile_(6,2).getPiece() == null);
+        assertTrue(board.getTile(2,1).getPiece() instanceof Wolf);
+        assertTrue(board.getTile(6,2).getPiece() == null);
 
-        assertTrue(p.isValidMove_(new Location(2,1), board)); //Enemy is higher rank
+        assertTrue(p.isValidMove(new Location(2,1), board)); //Enemy is higher rank
     }
 
     @Test
     void testValidMoveJumperJumpingDownCapturablePiece(){
         //Move Lion above river tile
         board.move(p, new Location(2, 1));
-        assertTrue(board.getTile_(2,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(2,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy wolf across river
-        Piece q = board.getTile_(6, 2).getPiece(); //Enemy wolf
+        Piece q = board.getTile(6, 2).getPiece(); //Enemy wolf
         board.move(q, new Location(6, 1));
-        assertTrue(board.getTile_(6,1).getPiece() instanceof Wolf);
-        assertTrue(board.getTile_(6,2).getPiece() == null);
+        assertTrue(board.getTile(6,1).getPiece() instanceof Wolf);
+        assertTrue(board.getTile(6,2).getPiece() == null);
 
 
-        assertTrue(p.isValidMove_(new Location(6,1), board));
+        assertTrue(p.isValidMove(new Location(6,1), board));
     }
 
     @Test
     void testValidMoveJumperJumpingLeftCapturablePiece(){
         //Move Lion below river tile
         board.move(p, new Location(3, 3));
-        assertTrue(board.getTile_(3,3).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(3,3).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy wolf across river
-        Piece q = board.getTile_(6, 2).getPiece(); //Enemy wolf
+        Piece q = board.getTile(6, 2).getPiece(); //Enemy wolf
         board.move(q, new Location(3, 0));
-        assertTrue(board.getTile_(3,0).getPiece() instanceof Wolf);
-        assertTrue(board.getTile_(6,2).getPiece() == null);
+        assertTrue(board.getTile(3,0).getPiece() instanceof Wolf);
+        assertTrue(board.getTile(6,2).getPiece() == null);
 
-        assertTrue(p.isValidMove_(new Location(3,0), board));
+        assertTrue(p.isValidMove(new Location(3,0), board));
     }
 
     @Test
     void testValidMoveJumperJumpingRightCapturablePiece(){
         //Move Lion below river tile
         board.move(p, new Location(3, 0));
-        assertTrue(board.getTile_(3,0).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(3,0).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy wolf across river
-        Piece q = board.getTile_(6, 2).getPiece(); //Enemy wolf
+        Piece q = board.getTile(6, 2).getPiece(); //Enemy wolf
         board.move(q, new Location(3, 3));
-        assertTrue(board.getTile_(3,3).getPiece() instanceof Wolf);
-        assertTrue(board.getTile_(6,2).getPiece() == null);
+        assertTrue(board.getTile(3,3).getPiece() instanceof Wolf);
+        assertTrue(board.getTile(6,2).getPiece() == null);
 
-        assertTrue(p.isValidMove_(new Location(3,3), board));
+        assertTrue(p.isValidMove(new Location(3,3), board));
 
     }
 
@@ -209,16 +209,16 @@ public class JumperPieceTest {
     void testValidMoveJumperJumpingUpUncapturablePiece(){
         //Move Lion below river tile
         board.move(p, new Location(6, 1));
-        assertTrue(board.getTile_(6,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(6,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy elephant across river
-        Piece q = board.getTile_(6, 0).getPiece(); //Enemy elephant
+        Piece q = board.getTile(6, 0).getPiece(); //Enemy elephant
         board.move(q, new Location(2, 1));
-        assertTrue(board.getTile_(2,1).getPiece() instanceof Elephant);
-        assertTrue(board.getTile_(6,0).getPiece() == null);
+        assertTrue(board.getTile(2,1).getPiece() instanceof Elephant);
+        assertTrue(board.getTile(6,0).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(2,1), board)); //Enemy is higher rank
+        assertFalse(p.isValidMove(new Location(2,1), board)); //Enemy is higher rank
 
     }
 
@@ -226,49 +226,49 @@ public class JumperPieceTest {
     void testValidMoveJumperJumpingDownUncapturablePiece(){
         //Move Lion above river tile
         board.move(p, new Location(2, 1));
-        assertTrue(board.getTile_(2,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(2,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy elephant across river
-        Piece q = board.getTile_(6, 0).getPiece(); //Enemy elephant
+        Piece q = board.getTile(6, 0).getPiece(); //Enemy elephant
         board.move(q, new Location(6, 1));
-        assertTrue(board.getTile_(6,1).getPiece() instanceof Elephant);
-        assertTrue(board.getTile_(6,0).getPiece() == null);
+        assertTrue(board.getTile(6,1).getPiece() instanceof Elephant);
+        assertTrue(board.getTile(6,0).getPiece() == null);
 
 
-        assertFalse(p.isValidMove_(new Location(6,1), board));
+        assertFalse(p.isValidMove(new Location(6,1), board));
     }
 
     @Test
     void testValidMoveJumperJumpingLeftUncapturablePiece(){
         //Move Lion below river tile
         board.move(p, new Location(3, 3));
-        assertTrue(board.getTile_(3,3).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(3,3).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy elephant across river
-        Piece q = board.getTile_(6, 0).getPiece(); //Enemy elephant
+        Piece q = board.getTile(6, 0).getPiece(); //Enemy elephant
         board.move(q, new Location(3, 0));
-        assertTrue(board.getTile_(3,0).getPiece() instanceof Elephant);
-        assertTrue(board.getTile_(6,0).getPiece() == null);
+        assertTrue(board.getTile(3,0).getPiece() instanceof Elephant);
+        assertTrue(board.getTile(6,0).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(3,0), board));
+        assertFalse(p.isValidMove(new Location(3,0), board));
     }
 
     @Test
     void testValidMoveJumperJumpingRightUncapturablePiece(){
         //Move Lion below river tile
         board.move(p, new Location(3, 0));
-        assertTrue(board.getTile_(3,0).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(3,0).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy elephant across river
-        Piece q = board.getTile_(6, 0).getPiece(); //Enemy elephant
+        Piece q = board.getTile(6, 0).getPiece(); //Enemy elephant
         board.move(q, new Location(3, 3));
-        assertTrue(board.getTile_(3,3).getPiece() instanceof Elephant);
-        assertTrue(board.getTile_(6,0).getPiece() == null);
+        assertTrue(board.getTile(3,3).getPiece() instanceof Elephant);
+        assertTrue(board.getTile(6,0).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(3,3), board));
+        assertFalse(p.isValidMove(new Location(3,3), board));
 
     }
 
@@ -276,106 +276,106 @@ public class JumperPieceTest {
     void testValidMoveJumperJumpingUpRatInRiver(){
         //Move Lion below river tile
         board.move(p, new Location(6, 1));
-        assertTrue(board.getTile_(6,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(6,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy rat into river
-        Piece q = board.getTile_(6, 6).getPiece(); //Enemy rat
+        Piece q = board.getTile(6, 6).getPiece(); //Enemy rat
         board.move(q, new Location(5, 1));
-        assertTrue(board.getTile_(5,1).getPiece() instanceof Rat);
-        assertTrue(board.getTile_(6,6).getPiece() == null);
+        assertTrue(board.getTile(5,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile(6,6).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(2,1), board));
+        assertFalse(p.isValidMove(new Location(2,1), board));
 
         //Move enemy rat into river
         board.move(q, new Location(4, 1));
-        assertTrue(board.getTile_(4,1).getPiece() instanceof Rat);
-        assertTrue(board.getTile_(5,1).getPiece() == null);
+        assertTrue(board.getTile(4,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile(5,1).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(2,1), board));
+        assertFalse(p.isValidMove(new Location(2,1), board));
 
         //Move enemy rat into river
         board.move(q, new Location(3, 1));
-        assertTrue(board.getTile_(3,1).getPiece() instanceof Rat);
-        assertTrue(board.getTile_(4,1).getPiece() == null);
+        assertTrue(board.getTile(3,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile(4,1).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(2,1), board));
+        assertFalse(p.isValidMove(new Location(2,1), board));
     }
 
     @Test
     void testValidMoveJumperJumpingDownRatInRiver(){
         //Move Lion below river tile
         board.move(p, new Location(2, 1));
-        assertTrue(board.getTile_(2,1).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(2,1).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy rat into river
-        Piece q = board.getTile_(6, 6).getPiece(); //Enemy rat
+        Piece q = board.getTile(6, 6).getPiece(); //Enemy rat
         board.move(q, new Location(5, 1));
-        assertTrue(board.getTile_(5,1).getPiece() instanceof Rat);
-        assertTrue(board.getTile_(6,6).getPiece() == null);
+        assertTrue(board.getTile(5,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile(6,6).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(6,1), board));
+        assertFalse(p.isValidMove(new Location(6,1), board));
 
         //Move enemy rat into river
         board.move(q, new Location(4, 1));
-        assertTrue(board.getTile_(4,1).getPiece() instanceof Rat);
-        assertTrue(board.getTile_(5,1).getPiece() == null);
+        assertTrue(board.getTile(4,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile(5,1).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(6,1), board));
+        assertFalse(p.isValidMove(new Location(6,1), board));
 
         //Move enemy rat into river
         board.move(q, new Location(3, 1));
-        assertTrue(board.getTile_(3,1).getPiece() instanceof Rat);
-        assertTrue(board.getTile_(4,1).getPiece() == null);
+        assertTrue(board.getTile(3,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile(4,1).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(6,1), board));
+        assertFalse(p.isValidMove(new Location(6,1), board));
     }
 
     @Test
     void testValidMoveJumperJumpingLeftRatInRiver(){
         //Move Lion below river tile
         board.move(p, new Location(3, 3));
-        assertTrue(board.getTile_(3,3).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(3,3).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy rat into river
-        Piece q = board.getTile_(6, 6).getPiece(); //Enemy rat
+        Piece q = board.getTile(6, 6).getPiece(); //Enemy rat
         board.move(q, new Location(3, 1));
-        assertTrue(board.getTile_(3,1).getPiece() instanceof Rat);
-        assertTrue(board.getTile_(6,6).getPiece() == null);
+        assertTrue(board.getTile(3,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile(6,6).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(3,0), board));
+        assertFalse(p.isValidMove(new Location(3,0), board));
 
         //Move enemy rat into river
         board.move(q, new Location(3, 2));
-        assertTrue(board.getTile_(3,2).getPiece() instanceof Rat);
-        assertTrue(board.getTile_(3,1).getPiece() == null);
+        assertTrue(board.getTile(3,2).getPiece() instanceof Rat);
+        assertTrue(board.getTile(3,1).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(3,0), board));
+        assertFalse(p.isValidMove(new Location(3,0), board));
     }
 
     @Test
     void testValidMoveJumperJumpingRightRatInRiver(){
         //Move Lion below river tile
         board.move(p, new Location(3, 0));
-        assertTrue(board.getTile_(3,0).getPiece() instanceof Lion);
-        assertTrue(board.getTile_(0,0).getPiece() == null);
+        assertTrue(board.getTile(3,0).getPiece() instanceof Lion);
+        assertTrue(board.getTile(0,0).getPiece() == null);
 
         //Move enemy rat into river
-        Piece q = board.getTile_(6, 6).getPiece(); //Enemy rat
+        Piece q = board.getTile(6, 6).getPiece(); //Enemy rat
         board.move(q, new Location(3, 1));
-        assertTrue(board.getTile_(3,1).getPiece() instanceof Rat);
-        assertTrue(board.getTile_(6,6).getPiece() == null);
+        assertTrue(board.getTile(3,1).getPiece() instanceof Rat);
+        assertTrue(board.getTile(6,6).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(3,3), board));
+        assertFalse(p.isValidMove(new Location(3,3), board));
 
         //Move enemy rat into river
         board.move(q, new Location(3, 2));
-        assertTrue(board.getTile_(3,2).getPiece() instanceof Rat);
-        assertTrue(board.getTile_(3,1).getPiece() == null);
+        assertTrue(board.getTile(3,2).getPiece() instanceof Rat);
+        assertTrue(board.getTile(3,1).getPiece() == null);
 
-        assertFalse(p.isValidMove_(new Location(3,3), board));
+        assertFalse(p.isValidMove(new Location(3,3), board));
     }
 
 }

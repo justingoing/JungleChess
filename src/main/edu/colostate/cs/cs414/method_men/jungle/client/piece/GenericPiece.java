@@ -12,11 +12,11 @@ public class GenericPiece extends Piece{
     }
 
     @Override
-    public boolean isValidMove_(Location end, Board board){
-        Tile endTile = board.getTile_(end);
+    public boolean isValidMove(Location end, Board board){
+        Tile endTile = board.getTile(end);
 
         //Super check
-        if (!super.isValidMove_(end, board)){
+        if (!super.isValidMove(end, board)){
             return false;
         }
 
