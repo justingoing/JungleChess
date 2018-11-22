@@ -5,20 +5,30 @@ import edu.colostate.cs.cs414.method_men.jungle.client.tile.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * Board class is responsible for board-specific behavior and state. This includes:
+ * 1. Knowing about every Tile on the board.
+ * 2. Knowing about every Piece on the board, moving the pieces, and removing the pieces.
+ * TODO: Move this to TileFactory.java 3. Creating Tiles based on location.
+ * TODO: Move this to PieceFactory.java 4. Creating Pieces based on location.
+ */
 public class Board {
     private HashMap<Location, Tile> board;
 
+    /**
+     * Set up a new Board object for a new Game.
+     */
     public Board() {
         this.board = new HashMap<>();
         setBoard();
     }
 
     /**
-     * Iterates through each row, then each column, and
-     * instantiates each Tile (subtype) based off the location
+     * Set up the board:
+     * 1. Make a new tile based on each Location, out of 63.
+     * 2. Make a new piece and place it on the tiles that start with a piece.
      */
-    public void setBoard() {
+    private void setBoard() {
         int HEIGHT = 9;
         int WIDTH = 7;
         for (int row = 0; row < HEIGHT; ++row) {
@@ -32,8 +42,13 @@ public class Board {
         }
     }
 
+    /**
+     * Create a specific type of Tile (Den, Trap, etc...) based on location.
+     * @param location the coordinate of the Tile in the context of the board. Used to determine what type of Tile.
+     * @return a specific Tile based on location.
+     */
     //TODO: Tile Factory
-    public Tile makeTile(Location location){
+    Tile makeTile(Location location){
         //Den
         if (isRedDen(location)){
             return new Den("red");
@@ -60,8 +75,13 @@ public class Board {
         }
     }
 
+    /**
+     * Create a specific type of Piece (Lion, Elephant, etc...) based on location.
+     * @param location the coordinate of the Piece in the context of the board. Used to determine what type of Piece.
+     * @return a specific Piece based on location.
+     */
     //TODO: Piece factory
-    public Piece makePiece(Location location){
+    private Piece makePiece(Location location){
         //Lion
         if (location.equals(new Location(0, 0))){
             return new Lion("red");
@@ -120,7 +140,11 @@ public class Board {
         return null;
     }
 
-    //Takes a piece and moves it to the new location
+    /**
+     * Moves a piece to a new location, not caring about validation.
+     * @param piece to be moved.
+     * @param location to move piece onto.
+     */
     public void move(Piece piece, Location location){
         //Pick up the piece
         board.get(piece.getLocation()).setPiece(null);
@@ -131,71 +155,64 @@ public class Board {
     }
 
     /**
-     *  makeTile(Location) helpers
+     *  makeTile(Location) helpers.
      */
     private boolean isRedDen(Location location){
-        if (location.equals(new Location(0, 3))){
-            return true;
-        }
-        return false;
+        return location.equals(new Location(0, 3));
     }
 
     private boolean isBlueDen(Location location){
-        if (location.equals(new Location(8, 3))){
-            return true;
-        }
-        return false;
+        return location.equals(new Location(8, 3));
     }
 
     private boolean isRedTrap(Location location){
-        if (location.equals(new Location(0, 2)) ||
+        return location.equals(new Location(0, 2)) ||
                 location.equals(new Location(0, 4))||
-                location.equals(new Location(1, 3))){
-            return true;
-        }
-        return false;
+                location.equals(new Location(1, 3));
     }
 
     private boolean isBlueTrap(Location location){
-        if (location.equals(new Location(8, 2)) ||
+        return location.equals(new Location(8, 2)) ||
                 location.equals(new Location(8, 4)) ||
-                location.equals(new Location(7, 3))){
-            return true;
-        }
-        return false;
+                location.equals(new Location(7, 3));
     }
 
     private boolean isRiver(Location location){
-        if (location.equals(new Location(3, 1)) || location.equals(new Location(3, 4)) ||
+        return location.equals(new Location(3, 1)) || location.equals(new Location(3, 4)) ||
                 location.equals(new Location(4, 1)) || location.equals(new Location(4, 4)) ||
                 location.equals(new Location(5, 1)) || location.equals(new Location(5, 4)) ||
                 location.equals(new Location(3, 2)) || location.equals(new Location(3, 5)) ||
                 location.equals(new Location(4, 2)) || location.equals(new Location(4, 5)) ||
-                location.equals(new Location(5, 2)) || location.equals(new Location(5, 5))){
-            return true;
-        }
-        return false;
+                location.equals(new Location(5, 2)) || location.equals(new Location(5, 5));
     }
 
-    /**
-     * Returns a tile on the board
-     * @param row horizontal location on board
-     * @param col vertical location on board
-     * @return requested tile
-     */
-    public Tile getTile(int row, int col) {
-        return getTile(new Location(row, col));
-    }
 
-    public Tile getTile(Location loc) {
-        return board.get(loc);
-    }
+    /*** Getters, Setters ***/
 
     public HashMap<Location, Tile> getBoard() {
         return board;
     }
 
-    public ArrayList<Piece> getPieces(String color){
+    /**
+     * Returns a tile on the board based on location.
+     * @param location the location in the context of the board.
+     * @return requested tile.
+     */
+    public Tile getTile(Location location) {
+        return board.get(location);
+    }
+
+    //Another way to access getTile(Location).
+    public Tile getTile(int row, int col) {
+        return getTile(new Location(row, col));
+    }
+
+    /**
+     * Retrieve the pieces owned by the _color_ player.
+     * @param color of pieces to look for.
+     * @return the set of pieces which have that color.
+     */
+    ArrayList<Piece> getPieces(String color){
         ArrayList<Piece> bluePieces = new ArrayList<>();
         //Look through every tile on the board
         for (Tile tile : board.values()){

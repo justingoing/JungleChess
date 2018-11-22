@@ -2,6 +2,11 @@ package edu.colostate.cs.cs414.method_men.jungle.client.tile;
 
 import edu.colostate.cs.cs414.method_men.jungle.client.piece.Piece;
 
+/**
+ * Tile class is responsible for tile-specific behavior. This includes:
+ * 1. Knowing what type of piece it is.
+ * 2. Knowing what piece is on it, or if there is no piece on it.
+ */
 public class Tile {
     private char attribute;
     private Piece piece;

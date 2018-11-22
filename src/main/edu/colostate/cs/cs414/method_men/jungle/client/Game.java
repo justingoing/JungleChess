@@ -4,6 +4,12 @@ import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
 
 import java.util.ArrayList;
 
+/**
+ * Game class is responsible for game-specific behavior as well as state. This includes:
+ * 1. Knowing whose turn it is, and changing the turn.
+ * 2. Knowing the state of the board, and relaying commands to Board.java to change the board state.
+ * 3. Checking if the game is won, who won it, and ending the game.
+ */
 public class Game {
     private Player[] players;
     private int turn;
