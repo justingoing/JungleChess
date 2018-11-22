@@ -39,14 +39,13 @@ public class Piece {
         ArrayList<Location> adjacent = Location.getAdjacent(getLocation());
         ArrayList<Location> valid = new ArrayList<>();
 
-
         //Look at each adjacent move
-        for (int i = 0 ; i < adjacent.size() ; i++){
+        for (Location location : adjacent){
             //..., if the move is valid
-            if (isValidMove(adjacent.get(i), board)){
+            if (isValidMove(location, board)){
                 //... then add it to list of valid moves.
-                valid.add(adjacent.get(i));
-                System.out.println(adjacent.get(i));
+                valid.add(location);
+                System.out.println(location);
             }
         }
         //Return all the valid moves
@@ -62,7 +61,7 @@ public class Piece {
     public boolean isValidMove(Location end, Board board){
         Tile endTile = board.getTile(end);
 
-        //If it's obviously out of bounds or too far away
+        //If it's obviously out of bounds
         if (Location.isOutOfBounds(end)){
             return false;
         }
@@ -84,7 +83,7 @@ public class Piece {
      * @param location location we are comparing to the pieces location.
      * @return whether the piece is in range or not.
      */
-    public boolean isInRange(Location location){
+    boolean isInRange(Location location){
         return this.location.isAdjacent(location);
     }
 
