@@ -6,17 +6,90 @@ import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
 
 import java.util.ArrayList;
 
+/**
+ * Piece class is responsible for piece-specific behavior. This includes:
+ * 1. Knowing what type of piece it is; storing the name, rank, color of the piece.
+ * 2. Knowing where the piece is on the board; storing it's location
+ * 3. Calculating valid moves a user could make, knowing the above information.
+ */
 public class Piece {
     private String name;
     private int rank;
     private String color;
     private Location location;
 
+    /**
+     * Make a piece object to represent a player-controlled piece on the game board.
+     * @param name describes the piece, usually to a human. "rat", "lion", etc.
+     * @param rank describes the piece's power. Higher ranked pieces typically beat lower rank pieces.
+     * @param color describes which team the piece belongs to: red or blue.
+     */
     public Piece(String name, int rank, String color) {
         this.name = name;
         this.rank = rank;
         this.color = color;
     }
+
+    /**
+     * Get the set of all valid moves for this piece at this location given this board state.
+     * @param board state of the tiles and pieces.
+     * @return the valid moves for this piece.
+     */
+    public ArrayList<Location> getAllValidMoves(Board board){
+        ArrayList<Location> adjacent = Location.getAdjacent(getLocation());
+        ArrayList<Location> valid = new ArrayList<>();
+
+
+        //Look at each adjacent move
+        for (int i = 0 ; i < adjacent.size() ; i++){
+            //..., if the move is valid
+            if (isValidMove(adjacent.get(i), board)){
+                //... then add it to list of valid moves.
+                valid.add(adjacent.get(i));
+                System.out.println(adjacent.get(i));
+            }
+        }
+        //Return all the valid moves
+        return valid;
+    }
+
+    /**
+     * Checks if the piece can move to the location.
+     * @param end location where the piece is proposed to move.
+     * @param board state of the tiles and pieces.
+     * @return whether the move is valid or not.
+     */
+    public boolean isValidMove(Location end, Board board){
+        Tile endTile = board.getTile(end);
+
+        //If it's obviously out of bounds or too far away
+        if (Location.isOutOfBounds(end)){
+            return false;
+        }
+
+        //If trying to move onto friendly den
+        if (endTile instanceof Den){
+            //If the Den has a color which is not the color of this piece
+            if (((Den)endTile).getColor().equals(this.getColor())) {
+                return false;
+            }
+        }
+
+        //It's a valid move!
+        return true;
+    }
+
+    /**
+     * Checks if the location is within range of movement. Typically range == 1.
+     * @param location location we are comparing to the pieces location.
+     * @return whether the piece is in range or not.
+     */
+    public boolean isInRange(Location location){
+        return this.location.isAdjacent(location);
+    }
+
+
+    /*** Getters, Setters ***/
 
     public void setLocation(int row, int col) {
         this.location = new Location(row, col);
@@ -48,52 +121,6 @@ public class Piece {
 
     public String getColor() {
         return this.color;
-    }
-
-    //Takes a board state, and returns the valid moves for this piece.
-    public ArrayList<Location> getAllValidMoves(Board board){
-        ArrayList<Location> adjacent = Location.getAdjacent(getLocation());
-        ArrayList<Location> valid = new ArrayList<>();
-
-
-        //Look at each adjacent move
-        for (int i = 0 ; i < adjacent.size() ; i++){
-            //..., if the move is valid
-            if (isValidMove(adjacent.get(i), board)){
-                //... then add it to list of valid moves.
-                valid.add(adjacent.get(i));
-                System.out.println(adjacent.get(i));
-            }
-        }
-        //Return all the valid moves
-        return valid;
-    }
-
-    //Checks if the piece can move to the location
-    //It will be used for the generic pieces: dog, leopard, wolf, cat
-    //It will be overwritten for fancy pieces: lion, rat, tiger, elephant
-    public boolean isValidMove(Location end, Board board){
-        Tile endTile = board.getTile(end);
-
-        //If it's obviously out of bounds or too far away
-        if (Location.isOutOfBounds(end)){
-            return false;
-        }
-
-        //If trying to move onto friendly den
-        if (endTile instanceof Den){
-            //If the Den has a color which is not the color of this piece
-            if (((Den)endTile).getColor().equals(this.getColor())) {
-                return false;
-            }
-        }
-
-        //It's a valid move!
-        return true;
-    }
-
-    public boolean isInRange(Location location){
-        return this.location.isAdjacent(location);
     }
 
     @Override
