@@ -3,14 +3,18 @@ package edu.colostate.cs.cs414.method_men.jungle.client;
 import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
 
 import java.util.ArrayList;
-//import java.util.Random;
 
 public class Game {
     private Player[] players;
     private int turn;
     private Board board;
 
-    //Constructor
+    /**
+     * Create a new Game object.
+     * Instantiates two players,
+     * chooses which player goes first,
+     * instantiates a new board.
+     */
     public Game () {
         players = new Player[2];
         players[0] = new Player("red");
@@ -19,15 +23,13 @@ public class Game {
         board = new Board();
     }
 
-    /***NEW MOVE CODE***/
-
-    //Takes current location and end location as int's, returns makeMove(Location,Location).
-    public boolean makeMove(int currentRow, int currentCol, int nextRow, int nextCol){
-        return makeMove(new Location(currentRow, currentCol), new Location(nextRow, nextCol));
-    }
-
-    //Takes a starting location and end location as arguments. Returns true if piece at start is moved to end location.
-    public boolean makeMove(Location start, Location end){
+    /**
+     * Takes a starting location and end location as arguments. Returns true if piece at start is moved to end location.
+     * @param start location the user has selected, intending to move the piece on it. (May not have a piece).
+     * @param end location the user wishes to move their selected piece.
+     * @return whether the move was successful or not.
+     */
+    private boolean makeMove(Location start, Location end){
         System.out.println("Game.makeMove()");
         Piece piece = board.getTile(start).getPiece();
 
@@ -54,17 +56,21 @@ public class Game {
         return false;
     }
 
+    //Simply another way to access the above method, makeMove(Location, Location).
+    public boolean makeMove(int currentRow, int currentCol, int nextRow, int nextCol){
+        return makeMove(new Location(currentRow, currentCol), new Location(nextRow, nextCol));
+    }
+
     /**
      * There are two ways to win in Jungle:
-     * 1. You reach the enemy Den
-     * 2. You have no more Pieces (the count variable is 0)
-     * @return 0 for top Player, 1 for bottom Player, -1 for no Winners yet
+     * 1. One player moves a piece onto the opposing players Den.
+     * 2. One player has no pieces left.
+     * @return 0 for top/red Player, 1 for bottom/blue Player, -1 for no Winners yet.
      */
     public int winnerCheck(){
         Player redPlayer = players[0];
         Player bluePlayer = players[1];
 
-        //First, check if blue has won:
         //Look to see if blue piece on red den
         if (board.getTile(0, 3).getPiece() != null) {
             if (!(board.getTile(0, 3).getPiece().getColor().equals(redPlayer.getColor()))) {
@@ -76,7 +82,6 @@ public class Game {
            return 1; //Blue victory aka bot victory
         }
 
-        //Second, check if red has won:
         //Look to see if red piece on blue den
         if (board.getTile(8, 3).getPiece() != null) {
             if (!(board.getTile(8, 3).getPiece().getColor().equals(bluePlayer.getColor()))) {
@@ -93,7 +98,7 @@ public class Game {
     }
 
     /**
-     * Match has concluded. Prints who won this match.
+     * Match has concluded. Prints who won this match to command line.
      */
     public void endGame() {
         if (turn == 0) {
@@ -103,11 +108,12 @@ public class Game {
         }
     }
 
-    public ArrayList<Location> getValidLocations(int row, int col) {
-        return getValidLocations(new Location(row, col));
-    }
-
-    public ArrayList<Location> getValidLocations(Location location) {
+    /**
+     * Get the moves the piece on location can make.
+     * @param location the location which has the piece.
+     * @return the possible moves the piece can make.
+     */
+    private ArrayList<Location> getValidMoves(Location location) {
         Piece piece = board.getBoard().get(location).getPiece();
 
         //There is a piece there
@@ -121,11 +127,12 @@ public class Game {
         return new ArrayList<>();
     }
 
-    /**
-     * Used to acces the private variable. Will be useful for testing & Ui interface
-     * @return turn {0, 1}
-     */
-    public int getTurn() {
+    //A way to access the above method, getValidLocations(Location).
+    public ArrayList<Location> getValidMoves(int row, int col) {
+        return getValidMoves(new Location(row, col));
+    }
+
+    int getTurn() {
         return this.turn;
     }
 
@@ -134,9 +141,9 @@ public class Game {
     }
 
     /**
-     * Every valid move will increment the turn so it will be the next Player's turn
+     * Makes it the next player's turn.
      */
-    public void incrementTurn() {
+    void incrementTurn() {
         this.turn = (this.turn + 1) % 2;
     }
 
