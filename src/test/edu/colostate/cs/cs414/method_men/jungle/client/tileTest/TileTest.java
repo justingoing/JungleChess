@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TileTest {
 
     @Test
-    void getAttribute() {
+    void testGetAttribute() {
         Tile tile = new Tile('p');
         assertEquals(tile.getAttribute(),'p');
     }

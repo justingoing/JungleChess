@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RiverTest {
 
     @Test
-    void getAttribute() {
+    void testGetAttribute() {
         River river = new River();
         assertEquals(river.getAttribute(),'~');
     }

@@ -3,12 +3,13 @@ package edu.colostate.cs.cs414.method_men.jungle.client.tile;
 public class Trap extends Tile {
     private String color;
 
+    /**
+     * Create a Trap object with a color.
+     * @param color describes which team's den this is: red or blue.
+     */
     public Trap(String color) {
         super('T');
         this.color = color;
-    }
-    public Trap() {
-        super('T');
     }
 
     public String getColor(){
