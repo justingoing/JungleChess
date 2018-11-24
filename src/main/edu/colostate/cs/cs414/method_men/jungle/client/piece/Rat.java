@@ -24,7 +24,11 @@ public class Rat extends Piece {
         if (!super.isValidMove(end, board)){
             return false;
         }
-
+        
+        //If trying to move more than 1 tile
+        else if (!isInRange(end)){
+            return false;
+        }
         //Is it an invalid tile type?
         //Invalid: START ON river, moving onto open tile, holding a piece
         if (startTile instanceof River && !(endTile instanceof River) && !(endTile.getPiece() == null)){
