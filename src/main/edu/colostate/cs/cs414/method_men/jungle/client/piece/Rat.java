@@ -24,7 +24,7 @@ public class Rat extends Piece {
         if (!super.isValidMove(end, board)){
             return false;
         }
-        
+
         //If trying to move more than 1 tile
         else if (!isInRange(end)){
             return false;
