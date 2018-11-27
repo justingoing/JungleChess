@@ -1,3 +1,6 @@
+# This script runs the server in the background. There is currently no way to stop the server unless you find the process and kill it, or find some way to crash the server.
+# Use with caution.
+
 # Compile the server code
 javac src/main/edu/colostate/cs/cs414/method_men/jungle/server/*.java
 
