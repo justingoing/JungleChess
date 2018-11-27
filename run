@@ -2,10 +2,10 @@
 javac src/main/edu/colostate/cs/cs414/method_men/jungle/server/*.java
 
 # Compile the client code
-javac src/main/edu/colostate/cs/cs414/method_men/jungle/client/*.java src/main/edu/colostate/cs/cs414/method_men/jungle/client/gui/*.java
+javac src/main/edu/colostate/cs/cs414/method_men/jungle/client/*.java src/main/edu/colostate/cs/cs414/method_men/jungle/client/*/*.java
 
 # Run the server
 java -cp src/main/ edu/colostate/cs/cs414/method_men/jungle/server/TCPServer &
 
 # Run the client
-java -cp src/main/ edu/colostate/cs/cs414/method_men/jungle/client/gui/Client
+java -cp src/main/ edu/colostate/cs/cs414/method_men/jungle/client/socket/Client
