@@ -18,6 +18,8 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 import spark.utils.IOUtils;
 
+import javax.management.Query;
+
 
 public final class SqlUtils {
     private static final String CSU_DB = "jdbc:mysql://faure.cs.colostate.edu/connorbc";
@@ -145,7 +147,5 @@ public final class SqlUtils {
             return jdbi;
         }
     }
-    public static void main(String[] args) throws Exception{
-        Jdbi jdbi = SqlUtils.getJdbi();
-    }
+
 }
