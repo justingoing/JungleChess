@@ -20,13 +20,14 @@ public class TcpServerSocket extends Thread{
         return this.clientSocket;
     }
 
+    //this is messing things up, too many threads
     public void run(){
         try{
             Scanner scanner = new Scanner(System.in);
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             new Receive(this.clientSocket, this.server).start();
-            new Send(this.clientSocket).start();
+            new Send(this.clientSocket, this.server).start();
         }catch(Exception e){}
     }
 }

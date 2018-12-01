@@ -1,6 +1,8 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import edu.colostate.cs.cs414.method_men.jungle.client.*;
+import edu.colostate.cs.cs414.method_men.jungle.client.piece.Piece;
+import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -111,80 +113,85 @@ public class GamePage extends Page implements ActionListener {
         resetBoard();
 
         for (int i = 0; i < 2; i++) {
-            Player currPlayer = game.getPlayer(i);
-            Piece[] pieces = currPlayer.getValidPieces();
+            //Piece[] pieces = currPlayer.getValidPieces();
+            ArrayList<Piece> pieces = new ArrayList<Piece>();
+            for (Tile tile : game.getBoard().getBoard().values()) {
+                if (tile.getPiece() != null){
+                    pieces.add(tile.getPiece());
+                }
+            }
 
-            for (int n = 0; n < pieces.length; n++) {
+            for (int n = 0; n < pieces.size() ; n++) {
                 Icon icon = null;
 
-                switch (pieces[n].getName()) {
+                switch (pieces.get(n).getName()) {
                     case "Cat":
-                        if (pieces[n].getColor().equals("red")) {
+                        if (pieces.get(n).getColor().equals("red")) {
                             icon = RED_CAT_ICON;
-                        } else if (pieces[n].getColor().equals("blue")) {
+                        } else if (pieces.get(n).getColor().equals("blue")) {
                             icon = BLUE_CAT_ICON;
                         }
                         break;
 
                     case "Dog":
-                        if (pieces[n].getColor().equals("red")) {
+                        if (pieces.get(n).getColor().equals("red")) {
                             icon = RED_DOG_ICON;
-                        } else if (pieces[n].getColor().equals("blue")) {
+                        } else if (pieces.get(n).getColor().equals("blue")) {
                             icon = BLUE_DOG_ICON;
                         }
                         break;
 
                     case "Elephant":
-                        if (pieces[n].getColor().equals("red")) {
+                        if (pieces.get(n).getColor().equals("red")) {
                             icon = RED_ELEPHANT_ICON;
-                        } else if (pieces[n].getColor().equals("blue")) {
+                        } else if (pieces.get(n).getColor().equals("blue")) {
                             icon = BLUE_ELEPHANT_ICON;
                         }
                         break;
 
                     case "Leopard":
-                        if (pieces[n].getColor().equals("red")) {
+                        if (pieces.get(n).getColor().equals("red")) {
                             icon = RED_LEOPARD_ICON;
-                        } else if (pieces[n].getColor().equals("blue")) {
+                        } else if (pieces.get(n).getColor().equals("blue")) {
                             icon = BLUE_LEOPARD_ICON;
                         }
                         break;
 
                     case "Lion":
-                        if (pieces[n].getColor().equals("red")) {
+                        if (pieces.get(n).getColor().equals("red")) {
                             icon = RED_LION_ICON;
-                        } else if (pieces[n].getColor().equals("blue")) {
+                        } else if (pieces.get(n).getColor().equals("blue")) {
                             icon = BLUE_LION_ICON;
                         }
                         break;
 
                     case "Rat":
-                        if (pieces[n].getColor().equals("red")) {
+                        if (pieces.get(n).getColor().equals("red")) {
                             icon = RED_RAT_ICON;
-                        } else if (pieces[n].getColor().equals("blue")) {
+                        } else if (pieces.get(n).getColor().equals("blue")) {
                             icon = BLUE_RAT_ICON;
                         }
                         break;
 
                     case "Tiger":
-                        if (pieces[n].getColor().equals("red")) {
+                        if (pieces.get(n).getColor().equals("red")) {
                             icon = RED_TIGER_ICON;
-                        } else if (pieces[n].getColor().equals("blue")) {
+                        } else if (pieces.get(n).getColor().equals("blue")) {
                             icon = BLUE_TIGER_ICON;
                         }
                         break;
 
                     case "Wolf":
-                        if (pieces[n].getColor().equals("red")) {
+                        if (pieces.get(n).getColor().equals("red")) {
                             icon = RED_WOLF_ICON;
-                        } else if (pieces[n].getColor().equals("blue")) {
+                        } else if (pieces.get(n).getColor().equals("blue")) {
                             icon = BLUE_WOLF_ICON;
                         }
                         break;
                 }
                 //send game state here?
 
-                buttons[pieces[n].getRow()][pieces[n].getCol()].setIcon(icon);
+                buttons[pieces.get(n).getLocation().getRow()][pieces.get(n).getLocation().getCol()].setIcon(icon);
             }
         }
     }
@@ -198,7 +205,8 @@ public class GamePage extends Page implements ActionListener {
             unhighlight();
             selectedButton = null;
         } else if (selectedButton != null) {
-            game.makeMoveUi(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
+            //game.makeMoveUi(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
+            game.makeMove(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
             updateBoard();
             buttons[selectedButton[0]][selectedButton[1]].setBorder(new LineBorder(Color.LIGHT_GRAY));
             selectedButton = null;
@@ -216,10 +224,9 @@ public class GamePage extends Page implements ActionListener {
             button.setBorder(new LineBorder(Color.BLACK));
             selectedButton = new int[]{button.getRow(), button.getCol()};
 
-            ArrayList<Location> validDirectionButtons = game.retrieveValidLocations(button.getRow(), button.getCol());
-            int stop = validDirectionButtons.size();
-            for (int i = 0; i < stop; ++i) {
-                Location curr = validDirectionButtons.remove(0);
+            ArrayList<Location> validDirectionButtons = game.getValidMoves(button.getRow(), button.getCol());
+            for (int i = 0; i < validDirectionButtons.size(); ++i) {
+                Location curr = validDirectionButtons.get(i);
                 int row = curr.getRow();
                 int col = curr.getCol();
                 buttons[row][col].setBorder(new LineBorder(Color.BLUE));
