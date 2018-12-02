@@ -37,6 +37,12 @@ public class ClientSend extends Thread{
         System.out.println("Data sent: " + data);
     }
 
+    public void sendRegister(String data){
+        out.println("register " + data);
+        out.flush();
+        System.out.println("Data sent: " + data);
+    }
+
     //Method to send game state to server
     public void sendGameState(Object gameState) throws Exception{
         ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());

@@ -1,6 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.Socket;
@@ -16,32 +17,52 @@ public class LoginPage extends Page implements ActionListener{
     public LoginPage(GUI frame){
         super(frame);
         this.client = frame.getSocket();
+        GridBagLayout gridbag = new GridBagLayout();
+        this.setLayout(gridbag);
+        GridBagConstraints c = new GridBagConstraints();
+
 
         lbUsername = new JLabel("Username: ");
+        c.gridx = 0;
+        c.gridy = 0;
+        gridbag.setConstraints(lbUsername,c);
         add(lbUsername);
 
-        tfUsername = new JTextField(20);
-        tfUsername.setBounds(0,25,20,20);
+        tfUsername = new JTextField(15);
+        c.gridx = 1;
+        c.gridy = 0;
+        gridbag.setConstraints(tfUsername,c);
         add(tfUsername);
 
         lbPassword = new JLabel("Password: ");
+        c.gridx = 0;
+        c.gridy = 1;
+        gridbag.setConstraints(lbPassword,c);
         add(lbPassword);
 
-        pfPassword = new JPasswordField(20);
-        pfPassword.setBounds(0,50,20,20);
+        pfPassword = new JPasswordField(15);
+        c.gridx = 1;
+        c.gridy = 1;
+        gridbag.setConstraints(pfPassword,c);
         add(pfPassword);
 
 
         JButton login = new JButton("Login");
         login.setActionCommand("Login");
         login.addActionListener(this);
-        login.setBounds(0,75,20,20);
+        c.gridy = 2;
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.CENTER;
+        gridbag.setConstraints(login,c);
         add(login);
 
         JButton cancel = new JButton("Cancel");
         cancel.setActionCommand("Cancel");
         cancel.addActionListener(this);
-        cancel.setBounds(0,100,20,20);
+        c.gridy = 3;
+        c.gridx = 1;
+        c.anchor = GridBagConstraints.CENTER;
+        gridbag.setConstraints(cancel,c);
         add(cancel);
     }
 
