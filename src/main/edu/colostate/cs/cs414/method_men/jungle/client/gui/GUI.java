@@ -7,13 +7,15 @@ import java.net.Socket;
 
 public class GUI extends JFrame {
 
-    JPanel currentPanel;
+    private JPanel currentPanel;
     private Socket socket;
+    private JFrame frame;
 
     public GUI(Socket socket) {
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.socket = socket;
+        this.frame = new JFrame();
     }
 
     public Socket getSocket() {
@@ -24,24 +26,22 @@ public class GUI extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Background b = new Background("src/Images/jungle.jpg");
-        add(b);
-
         currentPanel = new StartPage(this);
         add(currentPanel);
-
-        pack();
         setVisible(true);
+        pack();
     }
 
     public void changePageTo(JPanel comp) {
         remove(currentPanel);
-        add(comp);
         currentPanel = comp;
-        revalidate();
+        add(comp);
         repaint();
-        //pack();
+        revalidate();
+        pack();
     }
+
+
     public void startGUI(){
         javax.swing.SwingUtilities.invokeLater(() -> createAndShowGUI());
     }
