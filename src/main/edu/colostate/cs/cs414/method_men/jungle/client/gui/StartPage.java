@@ -1,6 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,6 +9,9 @@ public class StartPage extends Page implements ActionListener{
 
     public StartPage(GUI frame){
         super(frame);
+        GridBagLayout gridbag = new GridBagLayout();
+        this.setLayout(gridbag);
+
         JButton login = new JButton("Login");
         JButton register = new JButton("Register");
         login.setBounds(0, 0, 20, 20);

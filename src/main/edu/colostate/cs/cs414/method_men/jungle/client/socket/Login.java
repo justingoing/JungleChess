@@ -24,5 +24,4 @@ public class Login {
         System.out.println("b = " + b);
         return b;
     }
-
 }

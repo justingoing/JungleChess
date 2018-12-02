@@ -8,9 +8,11 @@ public class Send extends Thread{
 
     private Scanner scanner;
     private PrintWriter out;
+    private TCPServer server;
 
-    public Send(Socket socket) throws Exception{
+    public Send(Socket socket, TCPServer server) throws Exception{
         this.scanner = new Scanner(System.in);
+        this.server = server;
         this.out = new PrintWriter(socket.getOutputStream(),true);
     }
 
@@ -43,6 +45,24 @@ public class Send extends Thread{
             out.flush();
             System.out.println(s);
         }
+    }
+
+    public void sendRegisterResponse(boolean b){
+        String s = "registerResponse ";
+        if(b == true){
+            out.println(s += "true");
+            out.flush();
+            System.out.println(s);
+        }
+        else{
+            out.println(s += "false");
+            out.flush();
+            System.out.println(s);
+        }
+    }
+
+    public void sendToAll(String msg){
+
     }
 
     public void run(){
