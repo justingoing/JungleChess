@@ -1,6 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +27,26 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
         gridbag.setConstraints(title,c);
         add(title);
 
+        //Table of current received invitations
+        String columns[] = {"Friend", "Actions"};
+        //TODO: Populate this dynamically based on how many invites sent in DB
+        //Each object in rows looks like {Friend name, status of invite}
+        Object rows[][] = {{"Justin", "<Accept/Reject>"}, {"Marcel", "<Accept/Reject>"}};
+        DefaultTableModel model = new DefaultTableModel(rows, columns);
+        JTable table = new JTable(model);
+        JScrollPane sPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        sPane.getViewport().add(table);
+        sPane.setPreferredSize(new Dimension(200, 50));
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.ipady = 40;
+        c.weightx = 0.0;
+        c.gridwidth = 3;
+        c.gridx = 0;
+        c.gridy = 1;
+        c.insets = new Insets(5,25,0,25);
+        gridbag.setConstraints(sPane,c);
+        add(sPane);
+
         //Back to main menu button
         JButton back = new JButton("Back to main menu");
         back.setActionCommand("Back");
@@ -35,7 +56,7 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
         c.weightx = 0.0;
         c.gridwidth = 3;
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
         c.insets = new Insets(10,25,25,25);
         gridbag.setConstraints(back,c);
         add(back);
