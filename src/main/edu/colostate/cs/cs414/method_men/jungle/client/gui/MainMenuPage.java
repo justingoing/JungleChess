@@ -82,8 +82,7 @@ public class MainMenuPage extends Page implements ActionListener {
                 //frame.changePageTo(new ProfilePage(frame));
                 break;
             case "Games":
-                //TODO: Go to game page
-                //frame.changePageTo(new CurrentGamesPage(frame));
+                frame.changePageTo(new CurrentGamesPage(frame));
                 break;
             case "Invitations":
                 //TODO: Go to invitations page
