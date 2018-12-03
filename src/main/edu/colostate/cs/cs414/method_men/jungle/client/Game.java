@@ -74,7 +74,8 @@ public class Game {
             moveCount++;
             ArrayList<Piece> red = this.getBoard().getPieces("red");
             ArrayList<Piece> blue = this.getBoard().getPieces("blue");
-            String state = GameState.makeGameState(this.turn, moveCount, red, blue);
+            int winner = this.winnerCheck();
+            String state = GameState.makeGameState(winner, this.turn, moveCount, red, blue);
             try{
                 ClientSend cSend = new ClientSend(this.socket);
                 cSend.sendState(state);

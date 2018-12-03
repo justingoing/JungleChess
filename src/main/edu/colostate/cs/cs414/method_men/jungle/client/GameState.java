@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class GameState {
 
-    public static String makeGameState(int turn, int moveCount, ArrayList<Piece> red, ArrayList<Piece> blue){
+    public static String makeGameState(int winner, int turn, int moveCount, ArrayList<Piece> red, ArrayList<Piece> blue){
         String nextTurn;
         if(turn == 0){
             nextTurn = "Red";
@@ -15,7 +15,7 @@ public class GameState {
             nextTurn = "Blue";
         }
 
-        String state = "NextTurn:" + nextTurn + " " + "MoveCount:" + moveCount + " ";
+        String state = "Winner:" + winner + " " + "NextTurn:" + nextTurn + " " + "MoveCount:" + moveCount + " ";
         String redPieces = "Red: ";
         String bluePieces = "Blue: ";
         redPieces += getPieces(red);
