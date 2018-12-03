@@ -11,7 +11,6 @@ public class StartPage extends Page implements ActionListener{
 
     public StartPage(GUI frame){
         super(frame);
-        repaint();
         this.background = Toolkit.getDefaultToolkit().createImage("src/Images/jungle.jpg");
         GridBagLayout gridbag = new GridBagLayout();
         this.setLayout(gridbag);

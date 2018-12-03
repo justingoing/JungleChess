@@ -1,5 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.Login;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.net.Socket;
