@@ -23,6 +23,7 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
         title.setFont(title.getFont().deriveFont(32.0f));
         c.gridx = 1;
         c.gridy = 0;
+        c.anchor = GridBagConstraints.CENTER;
         c.insets = new Insets(10,25,0,25);
         gridbag.setConstraints(title,c);
         add(title);
@@ -30,17 +31,20 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
         //Send invite: text
         JLabel inviteText = new JLabel("Send an invite to: ");
         inviteText.setForeground(Color.white);
-        inviteText.setFont(title.getFont().deriveFont(14.0f));
+        inviteText.setFont(inviteText.getFont().deriveFont(14.0f));
         c.gridx = 0;
         c.gridy = 1;
+        c.anchor = GridBagConstraints.EAST;
         c.insets = new Insets(5,25,0,0);
         gridbag.setConstraints(inviteText,c);
         add(inviteText);
 
         //Send invite: user input
-        JTextField userInput = new JTextField(15);
+        JTextField userInput = new JTextField(13);
         c.gridx = 1;
         c.gridy = 1;
+        c.anchor = GridBagConstraints.WEST;
+        //c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(5,0,0,0);
         gridbag.setConstraints(userInput,c);
         add(userInput);
@@ -51,12 +55,15 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
         send.addActionListener(this);
         c.weightx = 0.0;
         c.gridwidth = 3;
-        c.gridx = 2;
+        c.gridx = 1;
         c.gridy = 1;
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.EAST;
         c.insets = new Insets(5,0,0,25);
         gridbag.setConstraints(send,c);
         add(send);
 
+        c.anchor = GridBagConstraints.CENTER;
         //Table of current sent invitations
         String columns[] = {"Friend", "Status"};
         //TODO: Populate this dynamically based on how many invites sent in DB
@@ -74,7 +81,7 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 2;
-        c.insets = new Insets(5,25,10,5);
+        c.insets = new Insets(5,25,10,25);
         gridbag.setConstraints(sPane,c);
         add(sPane);
 
@@ -86,9 +93,9 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
         c.ipady = 40;
         c.weightx = 0.0;
         c.gridwidth = 3;
-        c.gridx = 2;
-        c.gridy = 2;
-        c.insets = new Insets(5,0,10,25);
+        c.gridx = 0;
+        c.gridy = 3;
+        c.insets = new Insets(5,25,10,25);
         gridbag.setConstraints(back,c);
         add(back);
     }
