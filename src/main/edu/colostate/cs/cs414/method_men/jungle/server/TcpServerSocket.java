@@ -1,10 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.server;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.Socket;
-import java.io.PrintWriter;
-import java.util.Scanner;
 
 public class TcpServerSocket extends Thread{
 
@@ -21,13 +17,15 @@ public class TcpServerSocket extends Thread{
     }
 
     //this is messing things up, too many threads
+    @Override
     public void run(){
         try{
-            Scanner scanner = new Scanner(System.in);
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            new Receive(this.clientSocket, this.server).start();
-            new Send(this.clientSocket, this.server).start();
-        }catch(Exception e){}
+            Receive r = new Receive(this.clientSocket, this.server);
+            Send s = new Send(this.clientSocket, this.server);
+            r.start();
+            s.start();
+        }catch(Exception e){
+            System.out.println("Socket or IO: " + e);
+        }
     }
 }

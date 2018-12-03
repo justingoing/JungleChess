@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.server;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.net.Socket;
@@ -9,8 +10,10 @@ public class Send extends Thread{
     private Scanner scanner;
     private PrintWriter out;
     private TCPServer server;
+    private Socket socket;
 
     public Send(Socket socket, TCPServer server) throws Exception{
+        this.socket = socket;
         this.scanner = new Scanner(System.in);
         this.server = server;
         this.out = new PrintWriter(socket.getOutputStream(),true);
@@ -20,6 +23,7 @@ public class Send extends Thread{
         System.out.println("ClientSend thread started");
         String msg = null;
         while(true){
+            System.out.println("Send is running");
             msg = scanner.nextLine();
             if(msg !=null){
                 for(int i = 0; i < server.getUsers().size(); i++){

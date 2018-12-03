@@ -21,19 +21,15 @@ public class Receive extends Thread{
     public void receive(){
         String msg = null;
         System.out.println("Receive thread started");
-        while (true) {
-            try {
-                //Buffered Reader reads from socket
-                while ((msg = in.readLine()) != null) {
-                    System.out.println("Message received: " + msg);
-                    //Parse input into string array
-                    String[] message = parseReceive(msg);
-                    respondToInput(message, msg);
-
-                }
-            } catch (Exception e) {}
-
-        }
+        try {
+            //Buffered Reader reads from socket
+            while ((msg = in.readLine()) != null) {
+                System.out.println("Message received: " + msg);
+                //Parse input into string array
+                String[] message = parseReceive(msg);
+                respondToInput(message, msg);
+            }
+        } catch (Exception e) {}
     }
 
     public String[] parseReceive(String msg) {
