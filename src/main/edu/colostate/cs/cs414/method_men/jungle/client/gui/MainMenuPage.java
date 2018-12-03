@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +12,11 @@ public class MainMenuPage extends Page implements ActionListener {
     MainMenuPage(GUI frame) {
         //Start off by calling super constructor, initializing the grids and getting the background.
         super(frame);
+        try {
+            new ClientReceive(frame.getSocket()).start();
+        } catch (Exception e) {
+        }
+
         this.background = Toolkit.getDefaultToolkit().createImage("src/Images/jungle.jpg");
         GridBagLayout gridbag = new GridBagLayout();
         this.setLayout(gridbag);
@@ -24,8 +30,8 @@ public class MainMenuPage extends Page implements ActionListener {
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(25,25,0,0);
-        gridbag.setConstraints(profile,c);
+        c.insets = new Insets(25, 25, 0, 0);
+        gridbag.setConstraints(profile, c);
         add(profile);
 
         //Current games
@@ -35,8 +41,8 @@ public class MainMenuPage extends Page implements ActionListener {
         c.gridx = 1;
         c.gridy = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(25,0,0,0);
-        gridbag.setConstraints(games,c);
+        c.insets = new Insets(25, 0, 0, 0);
+        gridbag.setConstraints(games, c);
         add(games);
 
         //Invitations
@@ -46,8 +52,8 @@ public class MainMenuPage extends Page implements ActionListener {
         c.gridx = 2;
         c.gridy = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(25,0,0,25);
-        gridbag.setConstraints(invitations,c);
+        c.insets = new Insets(25, 0, 0, 25);
+        gridbag.setConstraints(invitations, c);
         add(invitations);
 
         //Start Game button
@@ -60,12 +66,12 @@ public class MainMenuPage extends Page implements ActionListener {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
-        c.insets = new Insets(5,25,25,25);
-        gridbag.setConstraints(startGame,c);
+        c.insets = new Insets(5, 25, 25, 25);
+        gridbag.setConstraints(startGame, c);
         add(startGame);
 
         //This is probably unnecessary
-        c.insets = new Insets(0,0,0,0);
+        c.insets = new Insets(0, 0, 0, 0);
     }
 
     @Override

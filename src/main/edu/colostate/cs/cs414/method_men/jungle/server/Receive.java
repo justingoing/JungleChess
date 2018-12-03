@@ -28,7 +28,7 @@ public class Receive extends Thread{
                     System.out.println("Message received: " + msg);
                     //Parse input into string array
                     String[] message = parseReceive(msg);
-                    respondToInput(message);
+                    respondToInput(message, msg);
 
                 }
             } catch (Exception e) {}
@@ -41,7 +41,7 @@ public class Receive extends Thread{
         return items;
     }
 
-    public void respondToInput(String [] message){
+    public void respondToInput(String [] message, String wholeString){
         //if logging in, do some stuff to send to database to authenticate, etc.
         //TODO
         if(message[0].equals("login")){
@@ -77,6 +77,23 @@ public class Receive extends Thread{
                 }catch (Exception e) {}
             }
         }
+
+        if(message[0].equals("GameState")){
+            //send to database
+
+            //send to other client
+            String [] getOtherUser  = message[3].split(":");
+            try{
+                Send send = new Send(this.socket, this.server);
+                for(User u: server.getUsers()){
+                    if(u.getUsername().equals(getOtherUser[1])){
+                        u.send(wholeString);
+                        break;
+                    }
+                }
+            }catch(Exception e){}
+        }
+
     }
 
     public boolean authenticateUser(String username, String password){
