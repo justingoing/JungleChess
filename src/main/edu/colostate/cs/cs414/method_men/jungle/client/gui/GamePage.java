@@ -44,10 +44,11 @@ public class GamePage extends Page implements ActionListener {
     private int[] selectedButton = null;
     private ArrayList<Location> currentlyHighlighted;
 
+
     public GamePage(GUI frame) {
         super(frame);
 
-        game = new Game();
+        game = new Game(frame.getSocket());
         currentlyHighlighted = new ArrayList<>();
 
         JPanel buttonPanel = new JPanel();
@@ -189,8 +190,6 @@ public class GamePage extends Page implements ActionListener {
                         }
                         break;
                 }
-                //send game state here?
-
                 buttons[pieces.get(n).getLocation().getRow()][pieces.get(n).getLocation().getCol()].setIcon(icon);
             }
         }

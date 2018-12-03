@@ -1,7 +1,9 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.gui.ClientSend;
 import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
 
+import java.net.Socket;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +16,8 @@ public class Game {
     private Player[] players;
     private int turn;
     private Board board;
+    private Socket socket;
+    int moveCount = 0;
 
     /**
      * Create a new Game object.
@@ -21,6 +25,16 @@ public class Game {
      * chooses which player goes first,
      * instantiates a new board.
      */
+    public Game (Socket socket) {
+        this.socket = socket;
+        players = new Player[2];
+        players[0] = new Player("red");
+        players[1] = new Player("blue");
+        turn = 1; // 1 means that Bottom Player makes the first move
+        board = new Board();
+    }
+
+    //Constructor without socket for tests
     public Game () {
         players = new Player[2];
         players[0] = new Player("red");
@@ -56,9 +70,18 @@ public class Game {
             System.out.println(players[turn].getColor() + "'s move is valid ");
             board.move(piece, end);
             turn = (turn + 1)%2;
+            //send game state
+            moveCount++;
+            ArrayList<Piece> red = this.getBoard().getPieces("red");
+            ArrayList<Piece> blue = this.getBoard().getPieces("blue");
+            String state = GameState.makeGameState(this.turn, moveCount, red, blue);
+            try{
+                ClientSend cSend = new ClientSend(this.socket);
+                cSend.sendState(state);
+            }catch(Exception e){}
             return true;
         }
-        System.out.println(players[turn].getColor() + "'s move is INvalid ");
+        System.out.println(players[turn].getColor() + "'s move is Invalid ");
         return false;
     }
 

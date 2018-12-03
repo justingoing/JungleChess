@@ -12,6 +12,10 @@ public class MainMenuPage extends Page implements ActionListener {
         b.setActionCommand("StartGame");
         b.addActionListener(this);
         add(b);
+
+        try{
+            new ClientReceive(frame.getSocket()).start();
+        }catch(Exception e){}
     }
 
     @Override
