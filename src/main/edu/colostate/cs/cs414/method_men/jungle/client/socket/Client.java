@@ -2,6 +2,7 @@ package edu.colostate.cs.cs414.method_men.jungle.client.socket;
 
 import edu.colostate.cs.cs414.method_men.jungle.client.gui.GUI;
 
+import javax.swing.*;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -43,6 +44,6 @@ public class Client implements Runnable{
 
         GUI g = new GUI(client.socket);
         g.startGUI();
-
+        g.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
