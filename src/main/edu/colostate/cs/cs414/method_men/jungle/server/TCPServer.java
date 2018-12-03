@@ -2,6 +2,7 @@ package edu.colostate.cs.cs414.method_men.jungle.server;
 
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class TCPServer{
@@ -23,14 +24,22 @@ public class TCPServer{
     public void start(TCPServer server) throws Exception{
         System.out.println("Server Started");
         System.out.println("Waiting for connection");
-        while(true) {
-            t = new TcpServerSocket(serverSocket.accept(), server);
-            t.start();
-            System.out.println("Connection accepted.");
-            threadCount++;
-            System.out.println("ThreadCount: " + threadCount);
-            t.sleep(1000);
-            //System.out.println("test: " + t.isAlive());
+        try{
+            while(true) {
+                Socket cSocket = serverSocket.accept();
+                t = new TcpServerSocket(cSocket, server);
+                t.start();
+                System.out.println("Connection accepted.");
+                threadCount++;
+                System.out.println("ThreadCount: " + threadCount);
+            }
+        }catch(Exception e){
+            System.out.println("Server Thread error: " + e);
+        }finally {
+            if(serverSocket != null){
+                System.out.println("closing");
+                serverSocket.close();
+            }
         }
     }
 
@@ -52,6 +61,5 @@ public class TCPServer{
     public static void main(String[] args) throws Exception{
         TCPServer server = new TCPServer(2000);
         server.start(server);
-        t.interrupt();
     }
 }
