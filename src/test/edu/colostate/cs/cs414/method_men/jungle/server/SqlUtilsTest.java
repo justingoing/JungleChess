@@ -71,39 +71,25 @@ public class SqlUtilsTest {
     void testAddMatchState() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
-        boolean user = SQL.addMatchState("connor", "jane", "123", "120420182100");
+        Integer user = SQL.addMatchState("connor", "jane", "123", "120420182100");
         System.out.println(user);
-        assertTrue(user);
-        List<Integer> out = SQL.searchIDMatchState("connor", "jane", "123", "120420182100");
-        SQL.deleteMatchState(out.get(0));
+        assertTrue(user!=0);
+        SQL.deleteMatchState(user);
         SQL.deleteUser("connor");
         SQL.deleteUser("jane");
     }
 
-    @Test
-    void testSearchIDMatchState() {
-        SQL.addUser("connor", "password");
-        SQL.addUser("jane", "doe");
-        SQL.addMatchState("connor", "jane", "123", "120420182100");
-        List<Integer> user = SQL.searchIDMatchState("connor", "jane", "123", "120420182100");
-        System.out.println(user);
-        assertFalse(user.isEmpty());
-        SQL.deleteMatchState(user.get(0));
-        SQL.deleteUser("connor");
-        SQL.deleteUser("jane");
-    }
 
     @Test
     void testSearchStateMatchState() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
-        SQL.addMatchState("connor", "jane", "123", "120420182100");
-        List<Integer> user = SQL.searchIDMatchState("connor", "jane", "123", "120420182100");
-        System.out.println(user.toString());
-        List<String> State = SQL.searchStateMatchState(user.get(0));
+        Integer user = SQL.addMatchState("connor", "jane", "123", "120420182100");
+        System.out.println(user);
+        List<String> State = SQL.searchStateMatchState(user);
         System.out.println(State.toString());
         assertEquals(State.get(0), "123");
-        SQL.deleteMatchState(user.get(0));
+        SQL.deleteMatchState(user);
         SQL.deleteUser("connor");
         SQL.deleteUser("jane");
     }
@@ -112,12 +98,11 @@ public class SqlUtilsTest {
     void testUpdateMatchState() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
-        SQL.addMatchState("connor", "jane", "123", "120420182100");
-        List<Integer> user = SQL.searchIDMatchState("connor", "jane", "123", "120420182100");
-        boolean out = SQL.updateMatchState("567", user.get(0));
+        Integer user = SQL.addMatchState("connor", "jane", "123", "120420182100");
+        boolean out = SQL.updateMatchState("567", user);
         System.out.println(out);
         assertTrue(out);
-        SQL.deleteMatchState(user.get(0));
+        SQL.deleteMatchState(user);
         SQL.deleteUser("connor");
         SQL.deleteUser("jane");
     }
@@ -126,12 +111,11 @@ public class SqlUtilsTest {
     void testSearchStartDateStateMatchState() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
-        SQL.addMatchState("connor", "jane", "123", "120420182100");
-        List<Integer> user = SQL.searchIDMatchState("connor", "jane", "123", "120420182100");
-        List<String> State = SQL.searchStartDateMatchState(user.get(0));
+        Integer user = SQL.addMatchState("connor", "jane", "123", "120420182100");
+        List<String> State = SQL.searchStartDateMatchState(user);
         System.out.println(State.toString());
-        assertEquals(State.get(0), "120420182100");SQL.deleteMatchState(user.get(0));
-        SQL.deleteMatchState(user.get(0));
+        assertEquals(State.get(0), "120420182100");SQL.deleteMatchState(user);
+        SQL.deleteMatchState(user);
         SQL.deleteUser("connor");
         SQL.deleteUser("jane");
     }
@@ -140,9 +124,8 @@ public class SqlUtilsTest {
     void testDeleteMatchState() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
-        SQL.addMatchState("connor", "jane", "123", "120420182100");
-        List<Integer> user = SQL.searchIDMatchState("connor", "jane", "123", "120420182100");
-        boolean out = SQL.deleteMatchState(user.get(0));
+        Integer user = SQL.addMatchState("connor", "jane", "123", "120420182100");
+        boolean out = SQL.deleteMatchState(user);
         System.out.println(out);
         assertTrue(out);
         SQL.deleteUser("connor");
@@ -153,11 +136,10 @@ public class SqlUtilsTest {
     void testAddMatchRecord() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
-        boolean out = SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
-        System.out.println(out);
-        assertTrue(out);
-        List<Integer> user = SQL.searchIDMatchRecord("connor", "jane", "120420182000", "120420182100");
-        SQL.deleteMatchRecord(user.get(0));
+        Integer user = SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
+        System.out.println(user);
+        assertTrue(user!=0);
+        SQL.deleteMatchRecord(user);
         SQL.deleteUser("connor");
         SQL.deleteUser("jane");
     }
@@ -166,11 +148,10 @@ public class SqlUtilsTest {
     void testSearchIDMatchRecord() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
-        SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
-        List<Integer> user = SQL.searchIDMatchRecord("connor", "jane", "120420182000", "120420182100");
+        Integer user = SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
         System.out.println(user);
-        assertFalse(user.isEmpty());
-        SQL.deleteMatchRecord(user.get(0));
+        assertTrue(user!=0);
+        SQL.deleteMatchRecord(user);
         SQL.deleteUser("connor");
         SQL.deleteUser("jane");
     }
@@ -179,12 +160,11 @@ public class SqlUtilsTest {
     void testSearchWinnerMatchRecord() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
-        SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
+        Integer user = SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
         List<String> out = SQL.searchWinnerMatchRecord("connor");
         System.out.println(out);
         assertFalse(out.isEmpty());
-        List<Integer> user = SQL.searchIDMatchRecord("connor", "jane", "120420182000", "120420182100");
-        SQL.deleteMatchRecord(user.get(0));
+        SQL.deleteMatchRecord(user);
         SQL.deleteUser("connor");
         SQL.deleteUser("jane");
     }
@@ -193,12 +173,11 @@ public class SqlUtilsTest {
     void testDeleteMatchRecord() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
-        SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
-        List<Integer> user = SQL.searchIDMatchRecord("connor", "jane", "120420182000", "120420182100");
-        boolean out = SQL.deleteMatchRecord(user.get(0));
+        Integer user = SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
+        boolean out = SQL.deleteMatchRecord(user);
         System.out.println(out);
         assertTrue(out);
-        SQL.deleteMatchRecord(user.get(0));
+        SQL.deleteMatchRecord(user);
         SQL.deleteUser("connor");
         SQL.deleteUser("jane");
     }
@@ -244,12 +223,11 @@ public class SqlUtilsTest {
     void testDeleteWinnerMatchRecord() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
-        SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
-        List<Integer> user = SQL.searchIDMatchRecord("connor", "jane", "120420182000", "120420182100");
+        Integer user = SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
         boolean out = SQL.deleteWinnerMatchRecord("connor");
         System.out.println(out);
         assertTrue(out);
-        SQL.deleteMatchRecord(user.get(0));
+        SQL.deleteMatchRecord(user);
         SQL.deleteUser("connor");
         SQL.deleteUser("jane");
     }
@@ -258,12 +236,11 @@ public class SqlUtilsTest {
     void testDeleteLoserMatchRecord() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
-        SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
-        List<Integer> user = SQL.searchIDMatchRecord("connor", "jane", "120420182000", "120420182100");
+        Integer user = SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
         boolean out = SQL.deleteLoserMatchRecord("jane");
         System.out.println(out);
         assertTrue(out);
-        SQL.deleteMatchRecord(user.get(0));
+        SQL.deleteMatchRecord(user);
         SQL.deleteUser("connor");
         SQL.deleteUser("jane");
     }
