@@ -6,11 +6,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CurrentGamesPage extends Page implements ActionListener {
+public class IncomingInvitationsPage extends Page implements ActionListener {
 
     private Image background;
 
-    CurrentGamesPage(GUI frame){
+    IncomingInvitationsPage(GUI frame){
         super(frame);
         this.background = Toolkit.getDefaultToolkit().createImage("src/Images/jungle.jpg");
         GridBagLayout gridbag = new GridBagLayout();
@@ -18,7 +18,7 @@ public class CurrentGamesPage extends Page implements ActionListener {
         GridBagConstraints c = new GridBagConstraints();
 
         //Title
-        JLabel title = new JLabel("  Current Games  ");
+        JLabel title = new JLabel("  Invitations to Play  ");
         title.setForeground(Color.white);
         title.setFont(title.getFont().deriveFont(32.0f));
         c.gridx = 0;
@@ -27,26 +27,25 @@ public class CurrentGamesPage extends Page implements ActionListener {
         gridbag.setConstraints(title,c);
         add(title);
 
-        //Table of current games
-        String columns[] = {"Opponent", "Play Game"};
-        //TODO: Populate this dynamically based on how many games in DB
-        Object rows[][] = {{"Justin", "<button>"}, {"Julien", "<button>"}, {"Mike", "<button>"}
-                , {"Zane", "<button>"}, {"Marcel", "<button>"}, {"Connor", "<button>"}};
+        //Table of current received invitations
+        String columns[] = {"Friend", "Actions"};
+        //TODO: Populate this dynamically based on how many invites sent in DB
+        //Each object in rows looks like {Friend name, status of invite}
+        Object rows[][] = {{"Justin", "<Accept/Reject>"}, {"Marcel", "<Accept/Reject>"}};
         DefaultTableModel model = new DefaultTableModel(rows, columns);
         JTable table = new JTable(model);
         JScrollPane sPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         sPane.getViewport().add(table);
-        sPane.setPreferredSize(new Dimension(300, 50));
+        sPane.setPreferredSize(new Dimension(200, 50));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;
         c.weightx = 0.0;
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
-        c.insets = new Insets(10,25,10,25);
+        c.insets = new Insets(5,25,0,25);
         gridbag.setConstraints(sPane,c);
         add(sPane);
-
 
         //Back to main menu button
         JButton back = new JButton("Back to main menu");

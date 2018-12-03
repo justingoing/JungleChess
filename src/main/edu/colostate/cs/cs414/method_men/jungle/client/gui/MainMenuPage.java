@@ -45,9 +45,9 @@ public class MainMenuPage extends Page implements ActionListener {
         gridbag.setConstraints(games, c);
         add(games);
 
-        //Invitations
+        //Check incoming invitations
         JButton invitations = new JButton("Invitations");
-        invitations.setActionCommand("Invitations");
+        invitations.setActionCommand("IncomingInvitations");
         invitations.addActionListener(this);
         c.gridx = 2;
         c.gridy = 0;
@@ -57,8 +57,8 @@ public class MainMenuPage extends Page implements ActionListener {
         add(invitations);
 
         //Start Game button
-        JButton startGame = new JButton("Start a new game");
-        startGame.setActionCommand("StartGame");
+        JButton startGame = new JButton("Online Game");
+        startGame.setActionCommand("OnlineGame");
         startGame.addActionListener(this);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;
@@ -66,9 +66,23 @@ public class MainMenuPage extends Page implements ActionListener {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = 1;
-        c.insets = new Insets(5, 25, 25, 25);
+        c.insets = new Insets(5, 25, 0, 25);
         gridbag.setConstraints(startGame, c);
         add(startGame);
+
+        //Play a local game
+        JButton localGame = new JButton("Local Game");
+        localGame.setActionCommand("LocalGame");
+        localGame.addActionListener(this);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.ipady = 40;
+        c.weightx = 0.0;
+        c.gridwidth = 3;
+        c.gridx = 0;
+        c.gridy = 2;
+        c.insets = new Insets(5, 25, 25, 25);
+        gridbag.setConstraints(localGame, c);
+        add(localGame);
 
         //This is probably unnecessary
         c.insets = new Insets(0, 0, 0, 0);
@@ -77,22 +91,20 @@ public class MainMenuPage extends Page implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()) {
-            case "StartGame":
-                //TODO: Go to outgoings invitations page
-                //frame.changePageTo(new InvitationsPage(frame));
-                //TODO: Change below case to be an offline version of the game, or remove it.
+            case "LocalGame":
                 frame.changePageTo(new GamePage(frame));
                 break;
+            case "OnlineGame":
+                frame.changePageTo(new OutgoingInvitationsPage(frame));
+                break;
             case "Profile":
-                //TODO: Go to profile page
-                //frame.changePageTo(new ProfilePage(frame));
+                frame.changePageTo(new ProfilePage(frame));
                 break;
             case "Games":
                 frame.changePageTo(new CurrentGamesPage(frame));
                 break;
-            case "Invitations":
-                //TODO: Go to invitations page
-                //frame.changePageTo(new InvitationsPage(frame));
+            case "IncomingInvitations":
+                frame.changePageTo(new IncomingInvitationsPage(frame));
                 break;
             default:
                 break;
