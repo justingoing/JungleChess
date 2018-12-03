@@ -16,6 +16,16 @@ public class CurrentGamesPage extends Page implements ActionListener {
         this.setLayout(gridbag);
         GridBagConstraints c = new GridBagConstraints();
 
+        //Title
+        JLabel title = new JLabel("  Current Games  ");
+        title.setForeground(Color.white);
+        title.setFont(title.getFont().deriveFont(32.0f));
+        c.gridx = 0;
+        c.gridy = 0;
+        c.insets = new Insets(25,25,0,25);
+        gridbag.setConstraints(title,c);
+        add(title);
+
         //Back to main menu button
         JButton back = new JButton("Back to main menu");
         back.setActionCommand("Back");
@@ -25,8 +35,8 @@ public class CurrentGamesPage extends Page implements ActionListener {
         c.weightx = 0.0;
         c.gridwidth = 3;
         c.gridx = 0;
-        c.gridy = 0;
-        c.insets = new Insets(40,25,25,25);
+        c.gridy = 1;
+        c.insets = new Insets(10,25,25,25);
         gridbag.setConstraints(back,c);
         add(back);
     }
