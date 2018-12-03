@@ -9,6 +9,7 @@ class GameTest {
     private Game g;
     private int turn;
 
+
     @BeforeEach
     void init() {
         g = new Game();

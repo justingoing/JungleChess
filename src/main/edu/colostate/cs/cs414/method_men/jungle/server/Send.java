@@ -25,9 +25,20 @@ public class Send extends Thread{
         while(true){
             System.out.println("Send is running");
             msg = scanner.nextLine();
-            out.println(msg);
-            out.flush();
-            System.out.println("Message sent: " + msg);
+            if(msg !=null){
+                for(int i = 0; i < server.getUsers().size(); i++){
+                    try{
+                        server.getUsers().get(i).send(msg);
+                        System.out.println("Message sent to: " + server.getUsers().get(i).getUsername());
+                    }catch (Exception e){}
+                }
+                msg = null;
+            }
+            msg = null;
+            //msg = scanner.nextLine();
+            //out.println(msg);
+            //out.flush();
+            //System.out.println("Message sent: " + msg);
         }
     }
 

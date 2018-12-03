@@ -212,7 +212,7 @@ public class Board {
      * @param color of pieces to look for.
      * @return the set of pieces which have that color.
      */
-    ArrayList<Piece> getPieces(String color){
+    public ArrayList<Piece> getPieces(String color){
         ArrayList<Piece> bluePieces = new ArrayList<>();
         //Look through every tile on the board
         for (Tile tile : board.values()){

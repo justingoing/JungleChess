@@ -1,4 +1,6 @@
-package edu.colostate.cs.cs414.method_men.jungle.client.gui;
+package edu.colostate.cs.cs414.method_men.jungle.client.socket;
+
+import edu.colostate.cs.cs414.method_men.jungle.client.gui.GUI;
 
 import javax.swing.*;
 import java.net.InetAddress;
@@ -33,7 +35,7 @@ public class Client implements Runnable{
         InetAddress address = InetAddress.getByName("127.0.0.1");
         Client client = new Client(address, 2000);
         System.out.println("Connected to server at " + address.toString() + " on port 2000");
-        System.out.println("Type a message...");
+        //System.out.println("Type a message...");
 
         //Thread t1 = new Thread(client, "Receive");
         //Thread t2 = new Thread(client, "ClientSend");

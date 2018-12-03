@@ -1,5 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
