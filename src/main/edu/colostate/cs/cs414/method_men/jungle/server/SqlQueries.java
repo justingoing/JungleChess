@@ -92,8 +92,16 @@ public interface SqlQueries {
      * @param input Winner: not null String and must be in user table
      * @return List<Long>: IDs from rows from match_record table with matching Winners
      */
-    @SqlQuery("SELECT * from match_record WHERE Winner=:input;")
+    @SqlQuery("SELECT ID from match_record WHERE Winner=:input;")
     List<Long> searchWinnerMatchRecord(@Bind("input") String input);
+
+    /**
+     * Searches for row in match_record table matching Winner
+     * @param input Loser: not null String and must be in user table
+     * @return List<Long>: IDs from rows from match_record table with matching Winners
+     */
+    @SqlQuery("SELECT ID from match_record WHERE Winner=:input;")
+    List<Long> searchLoserMatchRecord(@Bind("input") String input);
 
     /**
      * Searches for Inviter and Invitee in match_invite table by matching Inviter

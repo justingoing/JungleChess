@@ -172,6 +172,21 @@ public class SqlUtilsTest {
     }
 
     @Test
+    void testSearchLoserMatchRecord() {
+        SQL.addUser("connor", "password");
+        SQL.addUser("jane", "doe");
+        Long user = SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
+        Long user2 = SQL.addMatchRecord("jane", "connor", "120420182000", "120420182100");
+        List<Long> out = SQL.searchLoserMatchRecord("connor");
+        System.out.println(out);
+        assertFalse(out.isEmpty());
+        SQL.deleteMatchRecord(user);
+        SQL.deleteMatchRecord(user2);
+        SQL.deleteUser("connor");
+        SQL.deleteUser("jane");
+    }
+
+    @Test
     void testDeleteMatchRecord() {
         SQL.addUser("connor", "password");
         SQL.addUser("jane", "doe");
