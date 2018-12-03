@@ -29,10 +29,8 @@ public class Receive extends Thread{
                     //Parse input into string array
                     String[] message = parseReceive(msg);
                     respondToInput(message);
-
                 }
             } catch (Exception e) {}
-
         }
     }
 
