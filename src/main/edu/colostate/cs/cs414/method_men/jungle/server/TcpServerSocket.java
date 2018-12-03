@@ -26,8 +26,13 @@ public class TcpServerSocket extends Thread{
             Scanner scanner = new Scanner(System.in);
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            new Receive(this.clientSocket, this.server).start();
-            new Send(this.clientSocket, this.server).start();
-        }catch(Exception e){}
+            Receive r = new Receive(this.clientSocket, this.server);
+            r.start();
+            Send s = new Send(this.clientSocket, this.server);
+            r.sleep(1000);
+            s.sleep(1000);
+        }catch(Exception e){
+            System.out.println("Interrupted or IO: " + e);
+        }
     }
 }

@@ -9,6 +9,7 @@ public class TCPServer{
     private ServerSocket serverSocket;
     private ArrayList<User> users;
     public int threadCount = 0;
+    private static TcpServerSocket t;
 
     private TCPServer(int port){
         //List of current users
@@ -22,11 +23,14 @@ public class TCPServer{
     public void start(TCPServer server) throws Exception{
         System.out.println("Server Started");
         System.out.println("Waiting for connection");
-        while(true){
-            new TcpServerSocket(serverSocket.accept(), server).start();
+        while(true) {
+            t = new TcpServerSocket(serverSocket.accept(), server);
+            t.start();
             System.out.println("Connection accepted.");
             threadCount++;
             System.out.println("ThreadCount: " + threadCount);
+            t.sleep(1000);
+            //System.out.println("test: " + t.isAlive());
         }
     }
 
@@ -48,5 +52,6 @@ public class TCPServer{
     public static void main(String[] args) throws Exception{
         TCPServer server = new TCPServer(2000);
         server.start(server);
+        t.interrupt();
     }
 }
