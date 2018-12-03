@@ -15,36 +15,48 @@ public class LoginPage extends Page implements ActionListener{
     private JLabel lbUsername;
     private JLabel lbPassword;
     private Socket client;
+    private Image background;
 
     public LoginPage(GUI frame){
         super(frame);
+        this.background = Toolkit.getDefaultToolkit().createImage("src/Images/jungle.jpg");
         this.client = frame.getSocket();
         GridBagLayout gridbag = new GridBagLayout();
         this.setLayout(gridbag);
         GridBagConstraints c = new GridBagConstraints();
 
 
+
         lbUsername = new JLabel("Username: ");
+        lbUsername.setForeground(Color.white);
         c.gridx = 0;
-        c.gridy = 0;
+        c.gridy = 1;
+        c.insets = new Insets(75,100,0,0);
         gridbag.setConstraints(lbUsername,c);
         add(lbUsername);
 
+        c.insets = new Insets(0,0,0,0);
         tfUsername = new JTextField(15);
         c.gridx = 1;
-        c.gridy = 0;
+        c.gridy = 1;
+        c.insets = new Insets(75,0,0,100);
         gridbag.setConstraints(tfUsername,c);
         add(tfUsername);
 
+        c.insets = new Insets(0,0,0,0);
         lbPassword = new JLabel("Password: ");
+        lbPassword.setForeground(Color.white);
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
+        c.insets = new Insets(0,100,0,0);
         gridbag.setConstraints(lbPassword,c);
         add(lbPassword);
 
+        c.insets = new Insets(0,0,0,0);
         pfPassword = new JPasswordField(15);
         c.gridx = 1;
-        c.gridy = 1;
+        c.gridy = 2;
+        c.insets = new Insets(0,0,0,100);
         gridbag.setConstraints(pfPassword,c);
         add(pfPassword);
 
@@ -52,7 +64,7 @@ public class LoginPage extends Page implements ActionListener{
         JButton login = new JButton("Login");
         login.setActionCommand("Login");
         login.addActionListener(this);
-        c.gridy = 2;
+        c.gridy = 3;
         c.gridx = 1;
         c.anchor = GridBagConstraints.CENTER;
         gridbag.setConstraints(login,c);
@@ -61,9 +73,10 @@ public class LoginPage extends Page implements ActionListener{
         JButton cancel = new JButton("Cancel");
         cancel.setActionCommand("Cancel");
         cancel.addActionListener(this);
-        c.gridy = 3;
+        c.gridy = 4;
         c.gridx = 1;
         c.anchor = GridBagConstraints.CENTER;
+        c.insets = new Insets(0,0,75,100);
         gridbag.setConstraints(cancel,c);
         add(cancel);
     }
@@ -79,6 +92,15 @@ public class LoginPage extends Page implements ActionListener{
     public String getPassword() {
         String s = new String(pfPassword.getPassword()).trim();
         return s;
+    }
+
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.drawImage(this.background, 0, 0, this);
+        g2d.dispose();
     }
 
 
