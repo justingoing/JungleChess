@@ -2,6 +2,7 @@ package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import edu.colostate.cs.cs414.method_men.jungle.client.*;
 import edu.colostate.cs.cs414.method_men.jungle.client.piece.Piece;
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
 
 import javax.swing.*;

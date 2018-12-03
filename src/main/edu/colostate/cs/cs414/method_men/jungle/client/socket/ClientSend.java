@@ -1,4 +1,4 @@
-package edu.colostate.cs.cs414.method_men.jungle.client.gui;
+package edu.colostate.cs.cs414.method_men.jungle.client.socket;
 
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;

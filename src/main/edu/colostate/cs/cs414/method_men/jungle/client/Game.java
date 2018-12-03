@@ -1,6 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.gui.ClientSend;
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
 import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
 
 import java.net.Socket;
