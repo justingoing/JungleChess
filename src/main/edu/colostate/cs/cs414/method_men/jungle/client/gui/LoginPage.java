@@ -125,6 +125,7 @@ public class LoginPage extends Page implements ActionListener{
                     authLogin = Login.authenticate(getUsername(), getPassword(), getClient());
                 }catch(Exception e){}
                 if(authLogin == true){
+                    frame.setUsername(getUsername());
                     JOptionPane.showMessageDialog(frame,
                             "Hi " + getUsername() + "! You have successfully logged in.",
                             "Login",

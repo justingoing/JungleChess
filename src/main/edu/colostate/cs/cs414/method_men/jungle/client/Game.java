@@ -18,6 +18,7 @@ public class Game {
     private Board board;
     private Socket socket;
     int moveCount = 0;
+    private String username;
 
     /**
      * Create a new Game object.
@@ -25,8 +26,9 @@ public class Game {
      * chooses which player goes first,
      * instantiates a new board.
      */
-    public Game (Socket socket) {
+    public Game (Socket socket, String username) {
         this.socket = socket;
+        this.username = username;
         players = new Player[2];
         players[0] = new Player("red");
         players[1] = new Player("blue");
@@ -70,12 +72,13 @@ public class Game {
             System.out.println(players[turn].getColor() + "'s move is valid ");
             board.move(piece, end);
             turn = (turn + 1)%2;
+
             //send game state
             moveCount++;
             ArrayList<Piece> red = this.getBoard().getPieces("red");
             ArrayList<Piece> blue = this.getBoard().getPieces("blue");
             int winner = this.winnerCheck();
-            String state = GameState.makeGameState(winner, this.turn, moveCount, red, blue);
+            String state = GameState.makeGameState(this.username, winner, this.turn, moveCount, red, blue);
             try{
                 ClientSend cSend = new ClientSend(this.socket);
                 cSend.sendState(state);

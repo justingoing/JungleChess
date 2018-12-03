@@ -48,7 +48,7 @@ public class GamePage extends Page implements ActionListener {
     public GamePage(GUI frame) {
         super(frame);
 
-        game = new Game(frame.getSocket());
+        game = new Game(frame.getSocket(), frame.getUsername());
         currentlyHighlighted = new ArrayList<>();
 
         JPanel buttonPanel = new JPanel();

@@ -164,6 +164,7 @@ public class RegisterPage extends Page implements ActionListener{
                         registerSuccess = Register.register(getUsername(), getPassword(), getClient());
                     }catch(Exception e){}
                     if(registerSuccess == true){
+                        frame.setUsername(getUsername());
                         JOptionPane.showMessageDialog(frame,
                                 "Hi " + getUsername() + "! You have successfully logged in.",
                                 "Register",
