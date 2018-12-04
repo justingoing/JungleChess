@@ -94,25 +94,45 @@ public class Receive extends Thread{
         }
 
         if(message[0].equals("Invite")) {
-            System.out.println("Invite Received");
-            server.getSQL().addMatchInvite(message[1], message[2]);
-            System.out.println("Got here");
-            /*
-            if(added){
+            System.out.println("Invite Received Inviter = " + message[1] + " Invitee = " + message[2]);
+            System.out.println(server.getSQL().searchPairMatchInvite(message[1], message[2]));
+            boolean found = findUser(message[2]);
+            if (!found){
                 try{
-                    Send send = new Send(this.socket, this.server);
-                    send.sendRegisterResponse(true);
+                    Send send = new Send(this.socket, this.server, this.gameID);
+                    send.sendString("Fail");
                 }catch(Exception e){}
             }
-            else{
+            else if(!server.getSQL().searchPairMatchInvite(message[1], message[2]).isEmpty()){
+                //System.out.println(server.getSQL().searchPairMatchInvite(message[1], message[2]));
                 try{
-                    Send send = new Send(this.socket, this.server);
-                    send.sendRegisterResponse(false);
+                    Send send = new Send(this.socket, this.server, this.gameID);
+                    send.sendString("There");
                 }catch(Exception e){}
             }
-            */
+            else if(server.getSQL().searchPairMatchInvite(message[1], message[2]).isEmpty()){
+                System.out.println("Found Invitee");
+                addInvite(message[1], message[2]);
+                try{
+                    Send send = new Send(this.socket, this.server, this.gameID);
+                    send.sendString("Success");
+                }catch(Exception e){}
+            }
         }
 
+    }
+
+    public boolean findUser(String user){
+        if(null != server.getSQL().searchUser(user)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public boolean addInvite(String user1, String user2){
+        return server.getSQL().addMatchInvite(user1, user2);
     }
 
     public boolean authenticateUser(String username, String password){

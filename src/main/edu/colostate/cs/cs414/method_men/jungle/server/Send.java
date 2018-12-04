@@ -44,7 +44,7 @@ public class Send extends Thread{
         }
     }
 
-    public void sendOnce(String data){
+    public void sendString(String data){
         out.println(data);
         out.flush();
         System.out.println("Data sent");
