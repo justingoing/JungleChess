@@ -104,6 +104,7 @@ public class MainMenuPage extends Page implements ActionListener {
                 break;
             case "Games":
                 String s = "";
+                /*
                 try{
                     ClientSend send = new ClientSend(frame.getSocket());
                     send.lookupMyGames(frame.getUsername());
@@ -111,6 +112,7 @@ public class MainMenuPage extends Page implements ActionListener {
                     s = rec.recieveGames();
                     System.out.println(s);
                 }catch(Exception e){}
+                */
                 frame.changePageTo(new CurrentGamesPage(frame));
                 break;
             case "IncomingInvitations":
