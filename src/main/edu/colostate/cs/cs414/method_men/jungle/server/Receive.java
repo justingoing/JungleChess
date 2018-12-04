@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Receive extends Thread{
@@ -162,6 +163,37 @@ public class Receive extends Thread{
             }
         }
 
+        if(message[0].equals("AcceptInvite")){
+            String state = buildDefaultGameState(message[1], message[2]);
+            System.out.println("State = " + state);
+            String date = getDateTime();
+            System.out.println("datetime = " + date);
+            long matchID = server.getSQL().addMatchState(message[1], message[2], state, date);
+            System.out.println("match added with id: " + matchID);
+            boolean deleted = server.getSQL().deleteMatchInvite(message[1]);
+            System.out.println("Deleted = " + deleted);
+            //do we need to send matchID back to client???
+        }
+
+        if(message[0].equals("RejectInvite")){
+            boolean deleted = server.getSQL().deleteMatchInvite(message[1]);
+            System.out.println("Deleted = " + deleted);
+        }
+
+    }
+
+    public String buildDefaultGameState(String user1, String user2){
+        String state = "";
+        state += "BluePlayer:" + user1 +  " RedPlayer:" + user2 +  " Winner:-1 NextTurn:Blue MoveCount:0 Red:7,0,0/6,0,6/4,1,1/2,1,5/1,2,0/5,2,2/3,2,4/8,2,6 Blue:8,6,0/3,6,2/5,6,4/1,6,6/2,7,1/4,7,5/6,8,0/7,8,6";
+        return state;
+    }
+
+    public String getDateTime(){
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyyhhmm");
+        String dateTime = dateFormat.format(date);
+        //System.out.println(dateTime);
+        return dateTime;
     }
 
     public boolean findUser(String user){
