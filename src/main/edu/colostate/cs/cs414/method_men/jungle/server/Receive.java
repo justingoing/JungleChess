@@ -11,11 +11,13 @@ public class Receive extends Thread{
     private BufferedReader in;
     private Socket socket;
     private TCPServer server;
+    private long gameID;
 
-    public Receive(Socket socket, TCPServer server) throws IOException{
+    public Receive(Socket socket, TCPServer server, long gameID) throws IOException{
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.socket = socket;
         this.server = server;
+        this.gameID = gameID;
     }
 
     public void receive(){
@@ -44,7 +46,7 @@ public class Receive extends Thread{
             //will need to check/call authentication methods here
             if(authenticateUser(message[1], message[2])){
                 try{
-                    Send send = new Send(this.socket, this.server);
+                    Send send = new Send(this.socket, this.server, gameID);
                     send.sendLoginResponse(true);
                     User user = new User(message[1], this.socket);
                     server.addUser(user);
@@ -52,7 +54,7 @@ public class Receive extends Thread{
             }
             else{
                 try {
-                    Send send = new Send(this.socket, this.server);
+                    Send send = new Send(this.socket, this.server, gameID);
                     send.sendLoginResponse(false);
                 }catch (Exception e) {}
             }
@@ -60,7 +62,7 @@ public class Receive extends Thread{
         if(message[0].equals("register")){
             if(registerUser(message[1], message[2])){
                 try{
-                    Send send = new Send(this.socket, this.server);
+                    Send send = new Send(this.socket, this.server, gameID);
                     send.sendRegisterResponse(true);
                     User user = new User(message[1], this.socket);
                     server.addUser(user);
@@ -68,7 +70,7 @@ public class Receive extends Thread{
             }
             else{
                 try {
-                    Send send = new Send(this.socket, this.server);
+                    Send send = new Send(this.socket, this.server, gameID);
                     send.sendRegisterResponse(false);
                 }catch (Exception e) {}
             }
@@ -76,11 +78,12 @@ public class Receive extends Thread{
 
         if(message[0].equals("GameState")){
             //send to database
-
+            boolean isUpdated = server.getSQL().updateMatchState(wholeString, gameID);
+            System.out.println("State is updated?: " + isUpdated);
             //send to other client
             String [] getOtherUser  = message[3].split(":");
             try{
-                Send send = new Send(this.socket, this.server);
+                Send send = new Send(this.socket, this.server, gameID);
                 for(User u: server.getUsers()){
                     if(u.getUsername().equals(getOtherUser[1])){
                         u.send(wholeString);

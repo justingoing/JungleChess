@@ -11,12 +11,14 @@ public class Send extends Thread{
     private PrintWriter out;
     private TCPServer server;
     private Socket socket;
+    private long gameID;
 
-    public Send(Socket socket, TCPServer server) throws Exception{
+    public Send(Socket socket, TCPServer server, long gameID) throws Exception{
         this.socket = socket;
         this.scanner = new Scanner(System.in);
         this.server = server;
         this.out = new PrintWriter(socket.getOutputStream(),true);
+        this.gameID = gameID;
     }
 
     public void send(){

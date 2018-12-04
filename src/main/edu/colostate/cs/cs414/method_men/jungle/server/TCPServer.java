@@ -15,6 +15,7 @@ public class TCPServer{
     private static TcpServerSocket t;
     private Jdbi jdbi;
     private SqlQueries SQL;
+    private long gameID = 0;
 
     private TCPServer(int port){
         //List of current users
@@ -32,8 +33,9 @@ public class TCPServer{
         System.out.println("Waiting for connection");
         try{
             while(true) {
+                gameID++;
                 Socket cSocket = serverSocket.accept();
-                t = new TcpServerSocket(cSocket, server);
+                t = new TcpServerSocket(cSocket, server, gameID);
                 t.start();
                 System.out.println("Connection accepted.");
                 threadCount++;
