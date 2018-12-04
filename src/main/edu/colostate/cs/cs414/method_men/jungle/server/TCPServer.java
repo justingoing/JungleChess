@@ -4,6 +4,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import org.jdbi.v3.core.Jdbi;
+
 
 public class TCPServer{
 
@@ -11,10 +13,14 @@ public class TCPServer{
     private ArrayList<User> users;
     public int threadCount = 0;
     private static TcpServerSocket t;
+    private Jdbi jdbi;
+    private SqlQueries SQL;
 
     private TCPServer(int port){
         //List of current users
         this.users = new ArrayList<>();
+        this.jdbi = SqlUtils.getJdbi();
+        this.SQL = jdbi.onDemand(SqlQueries.class);
         //Server Socket
         try{
             this.serverSocket = new ServerSocket(port);
@@ -49,6 +55,14 @@ public class TCPServer{
 
     public void setUsers(ArrayList<User> users) {
         this.users = users;
+    }
+
+    public Jdbi getJdbi() {
+        return jdbi;
+    }
+
+    public SqlQueries getSQL() {
+        return SQL;
     }
 
     public void addUser(User u){
