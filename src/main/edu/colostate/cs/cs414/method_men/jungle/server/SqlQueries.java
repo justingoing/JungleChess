@@ -121,6 +121,15 @@ public interface SqlQueries {
     List<String> searchMatchInvitee(@Bind("Invitee") String Invitee);
 
     /**
+     * Searches for Inviter and Invitee pair in match_invite table by matching Inviter and Invitee
+     * @param Inviter: not null String and must be in user table
+     * @param Invitee: not null String and must be in user table
+     * @return String: Inviters from match_invite table with matching Inviter and or empty list if no matches
+     */
+    @SqlQuery("SELECT Inviter from match_invite WHERE Inviter=:Inviter AND Invitee=:Invitee OR Inviter=:Invitee AND Invitee=:Inviter;")
+    List<String> searchPairMatchInvite(@Bind("Inviter") String Inviter, @Bind("Invitee") String Invitee);
+
+    /**
      * Updates State in match_state table matching ID
      * @param State: String representation of the state of the match in match_state table
      * @param ID: Long unique
