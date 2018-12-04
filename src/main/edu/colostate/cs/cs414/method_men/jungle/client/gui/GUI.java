@@ -7,14 +7,12 @@ public class GUI extends JFrame {
 
     private JPanel currentPanel;
     private Socket socket;
-    private JFrame frame;
     private String username;
 
     public GUI(Socket socket) {
 
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.socket = socket;
-        this.frame = new JFrame();
         this.username = "";
     }
 
