@@ -172,10 +172,12 @@ public class Receive extends Thread{
             System.out.println("match added with id: " + matchID);
             boolean deleted = server.getSQL().deleteMatchInvite(message[1]);
             System.out.println("Deleted = " + deleted);
+            //do we need to send matchID back to client???
         }
 
         if(message[0].equals("RejectInvite")){
-
+            boolean deleted = server.getSQL().deleteMatchInvite(message[1]);
+            System.out.println("Deleted = " + deleted);
         }
 
     }

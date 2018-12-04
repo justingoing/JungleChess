@@ -224,7 +224,7 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
                     try{
                         ClientSend cSend = new ClientSend(frame.getSocket());
                         // TODO implement that function
-                        //cSend.sendReject(table.getValueAt(row, 0));
+                        cSend.sendReject(table.getValueAt(row, 0).toString(), frame.getUsername());
                     }catch(Exception e){}
                 }
             }
