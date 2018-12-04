@@ -48,10 +48,13 @@ public class GamePage extends Page implements ActionListener {
 
     public GamePage(GUI frame) {
         super(frame);
+        GridBagLayout gridbag = new GridBagLayout();
+        this.setLayout(gridbag);
+        GridBagConstraints c = new GridBagConstraints();
 
+        //Game board
         game = new Game(frame.getSocket(), frame.getUsername());
         currentlyHighlighted = new ArrayList<>();
-
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(9, 7));
         buttonPanel.setPreferredSize(new Dimension(7*75, 9*75));
@@ -65,8 +68,64 @@ public class GamePage extends Page implements ActionListener {
                 buttonPanel.add(button);
             }
         }
+        c.gridx = 0;
+        c.gridy = 0;
+        c.insets = new Insets(5,5,5,5);
+        c.anchor = GridBagConstraints.NORTHWEST;
+        add(buttonPanel, c);
 
-        add(buttonPanel, BorderLayout.CENTER);
+
+        //Rules
+        JTextArea textArea = new JTextArea(31, 20);
+        textArea.setEditable(false);
+        textArea.append("Rules:\n");
+        textArea.append("Blue goes first, then red.\n");
+        textArea.append("During a turn, the player must move.\n");
+        textArea.append("\n");
+        textArea.append("Win conditions:\n");
+        textArea.append("1. Move a piece into your opponents den.\n");
+        textArea.append("2. Eliminate all opponents pieces.\n");
+        textArea.append("\n");
+        textArea.append("Movement:\n");
+        textArea.append("A player may only move their own pieces.\n");
+        textArea.append("A player may not move a piece onto their own piece.\n");
+        textArea.append("All pieces may move 1 horizontal, or 1 vertical.\n");
+        textArea.append("Only a rat may enter/exit the river.\n");
+        textArea.append("Lion and Tiger may jump a river horizontal or vertical,\n");
+        textArea.append("  but only if no rat is in the river, in their path,\n");
+        textArea.append("  and the move otherwise follows capturing rules.\n");
+        textArea.append("\n");
+        textArea.append("Capturing:\n");
+        textArea.append("A piece can capture any enemy piece that has the same\n");
+        textArea.append("  or lower rank, with the following exceptions:\n");
+        textArea.append("A rat can capture an elephant while both are on land.\n");
+        textArea.append("While on an enemy trap, any piece's rank is 0\n");
+        textArea.append("\n");
+        textArea.append("Ranks:\n");
+        textArea.append("1 - Rat\n");
+        textArea.append("2 - Cat\n");
+        textArea.append("3 - Wolf\n");
+        textArea.append("4 - Dog\n");
+        textArea.append("5 - Leopard\n");
+        textArea.append("6 - Tiger\n");
+        textArea.append("7 - Lion\n");
+        textArea.append("8 - Elephant\n");
+        c.gridx = 1;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.NORTHEAST;
+        c.insets = new Insets(5,0,0,5);
+        add(textArea, c);
+
+        //Back to main menu button
+        JButton back = new JButton("Back to main menu");
+        back.setActionCommand("Back");
+        back.addActionListener(this);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.ipady = 40;
+        c.anchor = GridBagConstraints.SOUTHEAST;
+        c.insets = new Insets(0,0,5,5);
+        add(back, c);
 
         resetBoard();
         updateBoard();
@@ -198,8 +257,13 @@ public class GamePage extends Page implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        //
+        if (actionEvent.getActionCommand().equals("Back")){
+            frame.changePageTo(new MainMenuPage(frame));
+            return;
+        }
+        //
         GameButton button = (GameButton) actionEvent.getSource();
-
         if (((LineBorder)button.getBorder()).getLineColor().equals(Color.BLACK)) {
             button.setBorder(new LineBorder(Color.LIGHT_GRAY));
             unhighlight();
