@@ -256,12 +256,10 @@ public class GamePage extends Page implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        //
         if (actionEvent.getActionCommand().equals("Back")){
             frame.changePageTo(new MainMenuPage(frame));
             return;
         }
-        //
         GameButton button = (GameButton) actionEvent.getSource();
         if (((LineBorder)button.getBorder()).getLineColor().equals(Color.BLACK)) {
             button.setBorder(new LineBorder(Color.LIGHT_GRAY));

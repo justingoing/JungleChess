@@ -42,14 +42,13 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
 
         //Table of current received invitations
         String columns[] = {"Friend", "Accept", "Reject"};
-        //TODO: Populate this dynamically based on how many invites sent in DB
-
         Object rows[][] = populateTable(frame.getUsername());
 
         //Each object in rows looks like {Friend name, status of invite}
         //Object rows[][] = {{"Justin", "<Accept/Reject>"}, {"Marcel", "<Accept/Reject>"}};
         DefaultTableModel model = new DefaultTableModel(rows, columns);
 
+        //Create buttons for accept and reject and have them be associated to the users in the rows.
         JTable table = new JTable(model);
         table.getColumn("Accept").setCellRenderer(new ButtonRenderer());
         table.getColumn("Accept").setCellEditor(
@@ -58,6 +57,7 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
         table.getColumn("Reject").setCellEditor(
                 new ButtonEditor(new JCheckBox(), frame));
 
+        //Create the scroll pane. Essentially just puts the table inside of a box with scroll bars, with a certain size.
         JScrollPane sPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         sPane.getViewport().add(table);
         sPane.setPreferredSize(new Dimension(200, 50));
@@ -161,10 +161,11 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
         }
     }
 
-    /**
-     * @version 1.0 11/09/98
-     */
 
+    /**
+     * This class allows us to have buttons in our JTable.
+     * It is janky, but it is effective!
+     */
     class ButtonEditor extends DefaultCellEditor {
         protected JButton button;
         private JTable table;
