@@ -31,7 +31,6 @@ public class GUI extends JFrame {
     }
 
     private void createAndShowGUI() {
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         currentPanel = new StartPage(this);
