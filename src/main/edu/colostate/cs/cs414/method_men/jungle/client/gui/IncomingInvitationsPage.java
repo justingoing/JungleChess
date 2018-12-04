@@ -1,14 +1,24 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
+import edu.colostate.cs.cs414.method_men.jungle.server.SqlQueries;
+import edu.colostate.cs.cs414.method_men.jungle.server.SqlUtils;
+import org.jdbi.v3.core.Jdbi;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IncomingInvitationsPage extends Page implements ActionListener {
 
     private Image background;
+    private Jdbi jdbi;
+    private SqlQueries SQL;
 
     IncomingInvitationsPage(GUI frame){
         super(frame);
@@ -27,11 +37,16 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
         gridbag.setConstraints(title,c);
         add(title);
 
+        System.out.println("username: "  + frame.getUsername());
+
         //Table of current received invitations
         String columns[] = {"Friend", "Actions"};
         //TODO: Populate this dynamically based on how many invites sent in DB
+
+        Object rows[][] = populateTable(frame.getUsername());
+
         //Each object in rows looks like {Friend name, status of invite}
-        Object rows[][] = {{"Justin", "<Accept/Reject>"}, {"Marcel", "<Accept/Reject>"}};
+        //Object rows[][] = {{"Justin", "<Accept/Reject>"}, {"Marcel", "<Accept/Reject>"}};
         DefaultTableModel model = new DefaultTableModel(rows, columns);
         JTable table = new JTable(model);
         JScrollPane sPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -60,6 +75,39 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
         c.insets = new Insets(10,25,25,25);
         gridbag.setConstraints(back,c);
         add(back);
+    }
+
+    public Object[][] populateTable(String username){
+        ArrayList<String> invites = new ArrayList<>();
+        try {
+            ClientSend send = new ClientSend(frame.getSocket());
+            send.lookupMyInvites(username);
+            ClientReceive rec = new ClientReceive(frame.getSocket());
+            String response = rec.recieveMyInvites();
+
+
+            if(response.equals("Fail")){
+                JOptionPane.showMessageDialog(frame,
+                        "You have no invites",
+                        "myInvites",
+                        JOptionPane.ERROR_MESSAGE);
+            }else{
+               String[] holder = response.split(" ");
+               for(String inv : holder){
+                   System.out.println("printing from split: "  + inv);
+                   invites.add(inv);
+               }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("invs size: " + invites.size());
+        System.out.println("ele 1: " + invites.get(0));
+        Object rows[][] = new Object[invites.size()][2];
+        for(int i = 0; i < invites.size(); i++){
+            rows[i][0] = invites.get(i);
+        }
+        return rows;
     }
 
     @Override
