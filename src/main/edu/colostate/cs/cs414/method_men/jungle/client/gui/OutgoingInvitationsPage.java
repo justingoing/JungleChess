@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
 
 import javax.swing.*;
@@ -115,17 +116,14 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
                 break;
             case "SendInvite":
                 //frame.changePageTo(new MainMenuPage(frame));
-                //String response = "";
+                String response = "";
                 try{
                     ClientSend send = new ClientSend(frame.getSocket());
                     send.sendInvite(frame.getUsername(), getInvite());
+                    ClientReceive rec = new ClientReceive(frame.getSocket());
+                    response = rec.recieveInviteResponse();
                 }catch(Exception e){}
-                JOptionPane.showMessageDialog(frame,
-                        "Invite sent to " + getInvite() + "!",
-                        "Invite",
-                        JOptionPane.INFORMATION_MESSAGE);
-                userInput.setText("");
-                /*
+
                 if(response.equals("Success")){
                     JOptionPane.showMessageDialog(frame,
                             "Invite sent to " + getInvite() + "!",
@@ -133,13 +131,20 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
                             JOptionPane.INFORMATION_MESSAGE);
                     userInput.setText("");
                 }
-                if(response.equals("Fail")){
+                else if(response.equals("There")){
+                    JOptionPane.showMessageDialog(frame,
+                            "Pending Invite to " + getInvite() + " already exists!",
+                            "Invite",
+                            JOptionPane.ERROR_MESSAGE);
+                    userInput.setText("");
+                }
+                else if(response.equals("Fail")){
                     JOptionPane.showMessageDialog(frame,
                             "User " + getInvite() + " does not exist",
                             "Invite",
                             JOptionPane.ERROR_MESSAGE);
                     userInput.setText("");
-                }*/
+                }
                 break;
 
             default:
