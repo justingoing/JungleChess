@@ -113,19 +113,13 @@ public class Receive extends Thread{
     }
 
     public boolean authenticateUser(String username, String password){
-        boolean u = false;
-        boolean p = false;
-        String user = server.getSQL().searchUser(username);
-        //if username in db, check pw
-        if(user.equals(username)){
-            u = true;
-            String pass = server.getSQL().searchUserPassword(username,password);
-            if(pass.equals(username)){
-                p = true;
-            }
+        //if username does not exist
+        if(null == server.getSQL().searchUserPassword(username, password)){
+            return false;
         }
-        //returns true only if username and pw in db
-        return (u && p);
+        else{
+            return true;
+        }
     }
 
 
