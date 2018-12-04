@@ -30,6 +30,14 @@ public class ClientReceive extends Thread{
             } catch (Exception e) {}
     }
 
+    public String recieveMyInvites(){
+        String msg = "";
+        try{
+            msg = in.readLine();
+        }catch (Exception e){}
+        return msg;
+    }
+
     public String recieveInviteResponse(){
         String msg = "";
         try{
