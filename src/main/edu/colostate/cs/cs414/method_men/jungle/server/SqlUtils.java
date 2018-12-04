@@ -23,13 +23,15 @@ import javax.management.Query;
 
 public final class SqlUtils {
     private static final String CSU_DB = "jdbc:mysql://faure.cs.colostate.edu/connorbc";
+    private static final String PI_DB = "jdbc:mysql://jungle.marcelfiore.com/jungle";
     private static final String LOCAL_DB = "jdbc:mysql://localhost/test";
     private static final List<DbSpecification> PLACES_TO_CHECK = Arrays.asList(
             new DbSpecification(CSU_DB, "connorbc", "824229092"),
             new DbSpecification(CSU_DB, System.getenv("CSU_NAME"), System.getenv("CSU_ID")),
             new DbSpecification(CSU_DB, System.getProperty("username"),
                     System.getProperty("password")),
-            new DbSpecification(LOCAL_DB, "", "")
+            new DbSpecification(LOCAL_DB, "", ""),
+            new DbSpecification(PI_DB, "jungle", "MethodMen1")
     );
     private static Pattern DELIM = Pattern.compile("(;(\\r)?\\n)|(--\\n)");
     static {
