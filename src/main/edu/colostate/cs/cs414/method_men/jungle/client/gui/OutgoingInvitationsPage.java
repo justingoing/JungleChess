@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class OutgoingInvitationsPage extends Page implements ActionListener {
 
@@ -67,13 +68,14 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
         gridbag.setConstraints(send,c);
         add(send);
 
+        Object rows[][] = populateTable(frame.getUsername());
+
         c.anchor = GridBagConstraints.CENTER;
         //Table of current sent invitations
         String columns[] = {"Friend", "Status"};
         //TODO: Populate this dynamically based on how many invites sent in DB
         //Each object in rows looks like {Friend name, status of invite}
-        Object rows[][] = {{"Justin", "pending"}, {"Julien", "rejected :rage:"}, {"Mike", "accepted"}
-                , {"Zane", "pending"}, {"Marcel", "pending"}, {"Connor", "pending"}};
+        //Object rows[][] = {{"Justin", "pending"}, {"Julien", "rejected :rage:"}, {"Mike", "accepted"}, {"Zane", "pending"}, {"Marcel", "pending"}, {"Connor", "pending"}};
         DefaultTableModel model = new DefaultTableModel(rows, columns);
         JTable table = new JTable(model);
         JScrollPane sPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -106,6 +108,36 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
 
     public String getInvite(){
         return userInput.getText().trim();
+    }
+
+    public Object[][] populateTable(String username){
+        ArrayList<String> invites = new ArrayList<>();
+        try {
+            ClientSend send = new ClientSend(frame.getSocket());
+            send.lookupMySentInvites(username);
+            ClientReceive rec = new ClientReceive(frame.getSocket());
+            String response = rec.recieveMyInvites();
+
+            if(response.equals("Fail")){
+                JOptionPane.showMessageDialog(frame,
+                        "You have no sent invites",
+                        "myInvites",
+                        JOptionPane.ERROR_MESSAGE);
+            }else{
+                String[] holder = response.split(" ");
+                for(String inv : holder){
+                    invites.add(inv);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Object rows[][] = new Object[invites.size()][2];
+        for(int i = 0; i < invites.size(); i++){
+            rows[i][0] = invites.get(i);
+        }
+        return rows;
     }
 
     @Override
