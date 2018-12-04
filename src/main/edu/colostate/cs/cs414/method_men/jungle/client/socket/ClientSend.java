@@ -41,6 +41,12 @@ public class ClientSend extends Thread{
         System.out.println("Invite sent");
     }
 
+    public void lookupMyInvites(String invitee){
+        out.println("myInvites " + invitee);
+        out.flush();
+        System.out.println("Lookup sent");
+    }
+
     //Should get username and password as combined string
     //with space in between Ex: "username password"
     public void sendLogin(String data){
