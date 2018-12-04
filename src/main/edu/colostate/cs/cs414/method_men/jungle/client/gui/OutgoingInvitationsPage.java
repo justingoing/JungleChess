@@ -126,15 +126,13 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
             }else{
                 String[] holder = response.split(" ");
                 for(String inv : holder){
-                    System.out.println("printing from split: "  + inv);
                     invites.add(inv);
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("invs size: " + invites.size());
-        System.out.println("ele 1: " + invites.get(0));
         Object rows[][] = new Object[invites.size()][2];
         for(int i = 0; i < invites.size(); i++){
             rows[i][0] = invites.get(i);

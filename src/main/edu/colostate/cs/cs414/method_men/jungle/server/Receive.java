@@ -78,8 +78,7 @@ public class Receive extends Thread{
 
         if(message[0].equals("GameState")){
             //send to database
-            boolean isUpdated = server.getSQL().updateMatchState(wholeString, gameID);
-            System.out.println("State is updated?: " + isUpdated);
+            server.getSQL().updateMatchState(wholeString, gameID);
             //send to other client
             String [] getOtherUser  = message[3].split(":");
             try{
@@ -112,7 +111,8 @@ public class Receive extends Thread{
             }
             else if(server.getSQL().searchPairMatchInvite(message[1], message[2]).isEmpty()){
                 System.out.println("Found Invitee");
-                addInvite(message[1], message[2]);
+                boolean value = addInvite(message[1], message[2]);
+                System.out.println("update? " + value);
                 try{
                     Send send = new Send(this.socket, this.server, this.gameID);
                     send.sendString("Success");
