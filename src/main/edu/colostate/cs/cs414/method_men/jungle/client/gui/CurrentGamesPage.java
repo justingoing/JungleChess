@@ -16,7 +16,6 @@ public class CurrentGamesPage extends Page implements ActionListener {
 
     CurrentGamesPage(GUI frame){
         super(frame);
-        System.out.println(games);
         this.background = Toolkit.getDefaultToolkit().createImage("src/Images/jungle.jpg");
         GridBagLayout gridbag = new GridBagLayout();
         this.setLayout(gridbag);
