@@ -1,5 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.server;
 
+import org.jdbi.v3.core.Jdbi;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -186,6 +188,16 @@ public class Receive extends Thread{
         String state = "";
         state += "BluePlayer:" + user1 +  " RedPlayer:" + user2 +  " Winner:-1 NextTurn:Blue MoveCount:0 Red:7,0,0/6,0,6/4,1,1/2,1,5/1,2,0/5,2,2/3,2,4/8,2,6 Blue:8,6,0/3,6,2/5,6,4/1,6,6/2,7,1/4,7,5/6,8,0/7,8,6";
         return state;
+    }
+
+    public List<String> getUser1User2ID(String user1, String user2){
+        List<String> out = SqlUtils.getJdbi().withHandle(h -> {
+            List<String> name = h.createQuery("SELECT User1,User2,ID FROM match_state WHERE User1='" + user1 + "' OR User2='" + user2 +"'").mapTo(String.class).list();
+            System.out.println(name);
+            return name;
+            }
+            );
+        return out;
     }
 
     public String getDateTime(){
