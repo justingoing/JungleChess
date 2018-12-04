@@ -199,7 +199,7 @@ public class Receive extends Thread{
             myList.add(name);
             myList.add(name2);
             myList.add(id);
-            System.out.println(name);
+            System.out.println(myList);
             return myList;
             }
             );
