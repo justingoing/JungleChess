@@ -35,6 +35,12 @@ public class ClientSend extends Thread{
         System.out.println("State sent: " + data);
     }
 
+    public void sendInvite(String inviter, String invitee){
+        out.println("Invite " + inviter + " " + invitee);
+        out.flush();
+        System.out.println("Invite sent");
+    }
+
     //Should get username and password as combined string
     //with space in between Ex: "username password"
     public void sendLogin(String data){

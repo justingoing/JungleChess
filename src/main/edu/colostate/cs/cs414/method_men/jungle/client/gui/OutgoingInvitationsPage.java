@@ -1,5 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -9,6 +11,7 @@ import java.awt.event.ActionListener;
 public class OutgoingInvitationsPage extends Page implements ActionListener {
 
     private Image background;
+    private JTextField  userInput;
 
     OutgoingInvitationsPage(GUI frame){
         super(frame);
@@ -40,7 +43,7 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
         add(inviteText);
 
         //Send invite: user input
-        JTextField userInput = new JTextField(13);
+        userInput = new JTextField(13);
         c.gridx = 1;
         c.gridy = 1;
         c.anchor = GridBagConstraints.WEST;
@@ -100,12 +103,45 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
         add(back);
     }
 
+    public String getInvite(){
+        return userInput.getText().trim();
+    }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()) {
             case "Back":
                 frame.changePageTo(new MainMenuPage(frame));
                 break;
+            case "SendInvite":
+                //frame.changePageTo(new MainMenuPage(frame));
+                //String response = "";
+                try{
+                    ClientSend send = new ClientSend(frame.getSocket());
+                    send.sendInvite(frame.getUsername(), getInvite());
+                }catch(Exception e){}
+                JOptionPane.showMessageDialog(frame,
+                        "Invite sent to " + getInvite() + "!",
+                        "Invite",
+                        JOptionPane.INFORMATION_MESSAGE);
+                userInput.setText("");
+                /*
+                if(response.equals("Success")){
+                    JOptionPane.showMessageDialog(frame,
+                            "Invite sent to " + getInvite() + "!",
+                            "Invite",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    userInput.setText("");
+                }
+                if(response.equals("Fail")){
+                    JOptionPane.showMessageDialog(frame,
+                            "User " + getInvite() + " does not exist",
+                            "Invite",
+                            JOptionPane.ERROR_MESSAGE);
+                    userInput.setText("");
+                }*/
+                break;
+
             default:
                 break;
         }
