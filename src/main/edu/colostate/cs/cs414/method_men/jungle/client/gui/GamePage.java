@@ -74,7 +74,6 @@ public class GamePage extends Page implements ActionListener {
         c.anchor = GridBagConstraints.NORTHWEST;
         add(buttonPanel, c);
 
-
         //Rules
         JTextArea textArea = new JTextArea(31, 20);
         textArea.setEditable(false);
