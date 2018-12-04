@@ -140,6 +140,27 @@ public class Receive extends Thread{
                 }catch (Exception e){}
             }
         }
+        if(message[0].equals(("mySentInvites"))){
+            List<String> mySentInvites = server.getSQL().searchMatchInviter(message[1]);
+            if(mySentInvites.isEmpty()){
+                try{
+                    Send send = new Send(this.socket, this.server, this.gameID);
+                    send.sendString("Fail");
+                }catch (Exception e){}
+            }else{
+                try{
+                    Send send = new Send(this.socket, this.server, this.gameID);
+                    String invites = "";
+                    for(int i = 0; i < mySentInvites.size(); i++){
+                        invites += mySentInvites.get(i);
+                        if(i < mySentInvites.size()-1){
+                            invites += " ";
+                        }
+                    }
+                    send.sendString(invites);
+                }catch (Exception e){}
+            }
+        }
 
     }
 
