@@ -32,6 +32,8 @@ public class Client implements Runnable{
 
     public static void main(String[] args) throws Exception{
         //using localHost for now
+        //InetAddress address = InetAddress.getByName("184.60.76.255");
+        //InetAddress address = InetAddress.getByName("192.168.1.63");
         InetAddress address = InetAddress.getByName("127.0.0.1");
         Client client = new Client(address, 2000);
         System.out.println("Connected to server at " + address.toString() + " on port 2000");
