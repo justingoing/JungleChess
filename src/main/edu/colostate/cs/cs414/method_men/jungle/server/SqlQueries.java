@@ -56,7 +56,7 @@ public interface SqlQueries {
     /**
      * Searches for Username in user table
      * @param Username String
-     * @return String with Username if in table or empty List if not in table
+     * @return String with Username if in table or null if not in user table
      */
     @SqlQuery("SELECT Username FROM user WHERE Username=:Username;")
     String searchUser(@Bind("Username") String Username);
@@ -65,7 +65,7 @@ public interface SqlQueries {
      * Searches for exact Username and Password in user table
      * @param Username: String
      * @param Password: String
-     * @return String Username if in table or null if not in table
+     * @return String Username if in table or null if not in user table
      */
     @SqlQuery("SELECT Username FROM user WHERE Username=:Username AND Password=:Password;")
     String searchUserPassword(@Bind("Username") String Username, @Bind("Password")String Password);
@@ -74,6 +74,7 @@ public interface SqlQueries {
      * Searches for match_state by matching ID
      * @param ID: Long unique in match_state
      * @return String State: String representation of the state of the match in match_state table
+     * which can be null
      */
     @SqlQuery("SELECT State FROM match_state WHERE ID=:ID;")
     String searchStateMatchState(@Bind("ID") Long ID);
@@ -82,7 +83,7 @@ public interface SqlQueries {
     /**
      * Searches for Start_Date in match_state table by matching ID
      * @param ID: Long unique
-     * @return String Start_Date: not null String in format DDMMYYYYTTTT
+     * @return String Start_Date: String in format DDMMYYYYTTTT in match_state or null if not in table
      */
     @SqlQuery("SELECT Start_Date FROM match_state WHERE ID=:ID;")
     String searchStartDateMatchState(@Bind("ID") Long ID);
@@ -90,7 +91,7 @@ public interface SqlQueries {
     /**
      * Searches for row in match_record table matching Winner
      * @param Winner: not null String and must be in user table
-     * @return List<Long>: IDs from rows from match_record table with matching Winners
+     * @return List<Long>: IDs from rows from match_record table with matching Winners or empty list if no matches
      */
     @SqlQuery("SELECT ID from match_record WHERE Winner=:Winner;")
     List<Long> searchWinnerMatchRecord(@Bind("Winner") String Winner);
@@ -98,7 +99,7 @@ public interface SqlQueries {
     /**
      * Searches for row in match_record table matching Winner
      * @param Loser: not null String and must be in user table
-     * @return List<Long>: IDs from rows from match_record table with matching Winners
+     * @return List<Long>: IDs from rows from match_record table with matching Winners or empty list if no matches
      */
     @SqlQuery("SELECT ID from match_record WHERE Loser=:Loser;")
     List<Long> searchLoserMatchRecord(@Bind("Loser") String Loser);
@@ -106,7 +107,7 @@ public interface SqlQueries {
     /**
      * Searches for Inviter and Invitee in match_invite table by matching Inviter
      * @param Inviter: not null String and must be in user table
-     * @return List<String>: Invitees from match_invite table
+     * @return List<String>: Invitees from match_invite table with matching Inviter or empty list if no matches
      */
     @SqlQuery("SELECT Invitee from match_invite WHERE Inviter=:Inviter;")
     List<String> searchMatchInviter(@Bind("Inviter") String Inviter);
@@ -114,7 +115,7 @@ public interface SqlQueries {
     /**
      * Searches for Inviter and Invitee in match_invite table by matching Invitee
      * @param Invitee: not null String and must be in user table
-     * @return List<String>: Inviters from match_invite table
+     * @return List<String>: Inviters from match_invite table with matching Invitee or empty list if no matches
      */
     @SqlQuery("SELECT Inviter from match_invite WHERE Invitee=:Invitee;")
     List<String> searchMatchInvitee(@Bind("Invitee") String Invitee);
