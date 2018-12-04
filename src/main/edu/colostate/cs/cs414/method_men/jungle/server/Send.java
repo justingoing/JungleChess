@@ -20,7 +20,7 @@ public class Send extends Thread{
     }
 
     public void send(){
-        System.out.println("ClientSend thread started");
+        //System.out.println("ClientSend thread started");
         String msg = null;
         while(true){
             System.out.println("Send is running");
