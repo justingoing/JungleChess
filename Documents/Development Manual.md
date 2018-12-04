@@ -2,8 +2,8 @@
 
 ## Development Environment
 
-The development environment requires no dependencies other than a Java SDK version 1.8 or newer and JUnit 5 or newer.  
-The program can be compiled and ran using the IDE of choice.
+The development environment requires a Java SDK version 1.8 or newer and JUnit 5 or newer and Maven.  
+The program can be compiled and ran using the IDE of choice although document only covers the Linux Command Line and IntelliJ.
 
 ### Command Line Instructions
 
@@ -15,13 +15,12 @@ There are not currently any known ways to reliably run the tests from the comman
 
 #### Running the Code
 
-Simply run the command `./run` from the command line.
-It will automatically compile the code, run the server, and run a client all in one command.
+1. Compile the server code with `mvn package` (this may require `mvn install` to be run first).
+2. Run the server with `java -cp ../target/cs414-f18-001-Method-Men-1.0-SNAPSHOT.jar edu.colostate.cs.cs414.method_men.jungle.server.TCPServer`.
+3. Compile the client code with `javac src/main/edu/colostate/cs/cs414/method_men/jungle/client/*.java src/main/edu/colostate/cs/cs414/method_men/jungle/client/*/*.java`.
+4. Run the client with `java -cp src/main/ edu.colostate.cs.cs414.method_men.jungle.client.socket.Client` (note that you may need to run multiple clients to fully test the game and this may require multiple terminals).
 
 ### IntelliJ instructions
-#### Dependencies
-
-Make sure that Java 1.8 or newer and JUnit 5 or newer are installed.
 
 #### Setup
 
@@ -29,8 +28,15 @@ First clone or download the repository into an IntelliJ project.
 
 Make sure the Java SDK is set as the SDK for the project (File -> Project Settings -> Project SDK).
 
-Mark src/main as the Source Root directory (\<right click\> -> Mark Directory As -> Sources Root).
-Mark src/test as the Test Sources Root directory (\<right click\> -> Mark Directory As -> Test Sources Root).
+Then mark the source and test directories:
+1. Mark src/main as the Sources Root directory (\<right click\> -> Mark Directory As -> Sources Root).
+2. Mark src/test as the Test Sources Root directory (\<right click\> -> Mark Directory As -> Test Sources Root).
+
+The configure the project as a Maven Project:
+1. Open a terminal window within IntelliJ.
+2. Run the command `mvn package`.
+3. On the right hand side, there should be a tab titled "Maven Projects".
+4. Within the Maven Projects window, click the "Reimport All Maven Projects" button (it looks like a refresh button).
 
 #### Running the Tests
 
@@ -44,7 +50,7 @@ First run the server:
 * Right click on the TCPServer file located in the source code under the "server" directory, then choose "Run 'TCPServer.main()'
 
 Then run the client:
-* Right click on the TCPServer file located in the source code under "client/gui", then choose "Run 'Client.main()'"
+* Right click on the TCPServer file located in the source code under "client/socket", then choose "Run 'Client.main()'"
 
 ## Contributor Conduct
 

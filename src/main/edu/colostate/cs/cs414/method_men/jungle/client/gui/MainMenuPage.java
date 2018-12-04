@@ -12,10 +12,10 @@ public class MainMenuPage extends Page implements ActionListener {
     MainMenuPage(GUI frame) {
         //Start off by calling super constructor, initializing the grids and getting the background.
         super(frame);
-        try {
+        /*try {
             new ClientReceive(frame.getSocket()).start();
         } catch (Exception e) {
-        }
+        }*/
 
         this.background = Toolkit.getDefaultToolkit().createImage("src/Images/jungle.jpg");
         GridBagLayout gridbag = new GridBagLayout();

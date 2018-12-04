@@ -18,7 +18,6 @@ public class ClientReceive extends Thread{
     public void receive(){
         String msg = null;
         System.out.println("Receive thread started");
-        while (true) {
             try {
                 //Buffered Reader reads from socket
                 while ((msg = in.readLine()) != null) {
@@ -29,8 +28,14 @@ public class ClientReceive extends Thread{
 
                 }
             } catch (Exception e) {}
+    }
 
-        }
+    public String recieveInviteResponse(){
+        String msg = "";
+        try{
+            msg = in.readLine();
+        }catch (Exception e){}
+        return msg;
     }
 
     public void receiveLogin(){

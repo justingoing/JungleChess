@@ -93,30 +93,40 @@ public class Receive extends Thread{
             }catch(Exception e){}
         }
 
+        if(message[0].equals("Invite")) {
+            System.out.println("Invite Received");
+            server.getSQL().addMatchInvite(message[1], message[2]);
+            System.out.println("Got here");
+            /*
+            if(added){
+                try{
+                    Send send = new Send(this.socket, this.server);
+                    send.sendRegisterResponse(true);
+                }catch(Exception e){}
+            }
+            else{
+                try{
+                    Send send = new Send(this.socket, this.server);
+                    send.sendRegisterResponse(false);
+                }catch(Exception e){}
+            }
+            */
+        }
+
     }
 
     public boolean authenticateUser(String username, String password){
-        //need to query database for authentication here, for now hardcoded
-        boolean u = false;
-        boolean p = false;
-        String user = server.getSQL().searchUser(username);
-        //if username in db, check pw
-        if(user.equals(username)){
-            u = true;
-            String pass = server.getSQL().searchUserPassword(username,password);
-            if(pass.equals(username)){
-                p = true;
-            }
+        //if username does not exist
+        if(null == server.getSQL().searchUserPassword(username, password)){
+            return false;
         }
-        //returns true only if username and pw in db
-        return (u && p);
+        else{
+            return true;
+        }
     }
 
 
     public boolean registerUser(String username, String password){
-        //need to check database for duplicate usernames here
-        //will need to add user to database here as well
-        //for now, just return true
         String user = server.getSQL().searchUser(username);
         if (!username.equals(user)){
             server.getSQL().addUser(username, password);
