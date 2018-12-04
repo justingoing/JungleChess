@@ -53,6 +53,12 @@ public class ClientSend extends Thread{
         System.out.println("Lookup sent");
     }
 
+    public void lookupMyGames(String username){
+        out.println("myGames " + username);
+        out.flush();
+        System.out.println("myGames sent");
+    }
+
     public void sendAccept(String user1, String user2){
         out.println("AcceptInvite " + user1 + " " + user2);
         out.flush();

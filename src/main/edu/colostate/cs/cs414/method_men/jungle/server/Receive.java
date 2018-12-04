@@ -180,6 +180,18 @@ public class Receive extends Thread{
             System.out.println("Deleted = " + deleted);
         }
 
+        if(message[0].equals("myGames")){
+            System.out.println("searching for games with " + message[1]);
+            List< List<String> > myGames = server.getSQL().searchUserMatchState(message[1]);
+            System.out.println("searched games");
+            if(myGames.isEmpty()){
+                System.out.println("no Games");
+            }
+            else{
+                System.out.println("found games");
+            }
+        }
+
     }
 
     public String buildDefaultGameState(String user1, String user2){

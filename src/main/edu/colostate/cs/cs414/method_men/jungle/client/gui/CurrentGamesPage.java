@@ -1,10 +1,14 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class CurrentGamesPage extends Page implements ActionListener {
 
@@ -28,7 +32,7 @@ public class CurrentGamesPage extends Page implements ActionListener {
         add(title);
 
         //Table of current games
-        String columns[] = {"Opponent", "Play Game"};
+        String columns[] = {"Blue Player", "Red Player", "Next Move"};
         //TODO: Populate this dynamically based on how many games in DB
         Object rows[][] = {{"Justin", "<button>"}, {"Julien", "<button>"}, {"Mike", "<button>"}
                 , {"Zane", "<button>"}, {"Marcel", "<button>"}, {"Connor", "<button>"}};
@@ -62,6 +66,41 @@ public class CurrentGamesPage extends Page implements ActionListener {
         gridbag.setConstraints(back,c);
         add(back);
     }
+
+    /*public Object[][] populateTable(String username){
+        ArrayList<String> Games = new ArrayList<>();
+        try {
+            ClientSend send = new ClientSend(frame.getSocket());
+            send.lookupMyGames(username);
+            ClientReceive rec = new ClientReceive(frame.getSocket());
+            String response = rec.recieveMyInvites();
+
+
+            if(response.equals("Fail")){
+                JOptionPane.showMessageDialog(frame,
+                        "You have no invites",
+                        "myInvites",
+                        JOptionPane.ERROR_MESSAGE);
+            }else{
+                String[] holder = response.split(" ");
+                for(String inv : holder){
+                    System.out.println("printing from split: "  + inv);
+                    invites.add(inv);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("invs size: " + invites.size());
+        System.out.println("ele 1: " + invites.get(0));
+        Object rows[][] = new Object[invites.size()][3];
+        for(int i = 0; i < invites.size(); i++){
+            rows[i][0] = invites.get(i);
+            rows[i][1] = "Accept";
+            rows[i][2] = "Reject";
+        }
+        return rows;
+    }*/
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {

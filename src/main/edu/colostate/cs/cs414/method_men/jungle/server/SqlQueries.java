@@ -80,6 +80,10 @@ public interface SqlQueries {
     String searchStateMatchState(@Bind("ID") Long ID);
 
 
+    @SqlQuery("SELECT *  FROM match_state WHERE User1=:Username OR User2=:Username;")
+    List< List<String> > searchUserMatchState(@Bind("Username") String Username);
+
+
     /**
      * Searches for Start_Date in match_state table by matching ID
      * @param ID: Long unique
