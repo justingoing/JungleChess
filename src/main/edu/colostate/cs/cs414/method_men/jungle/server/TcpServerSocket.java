@@ -6,10 +6,12 @@ public class TcpServerSocket extends Thread{
 
     private Socket clientSocket;
     private TCPServer server;
+    private long gameID;
 
-    public TcpServerSocket(Socket clientSocket, TCPServer server) throws Exception{
+    public TcpServerSocket(Socket clientSocket, TCPServer server, long gameID) throws Exception{
         this.clientSocket = clientSocket;
         this.server = server;
+        this.gameID = gameID;
     }
 
     public Socket getClientSocket(){
@@ -20,8 +22,8 @@ public class TcpServerSocket extends Thread{
     @Override
     public void run(){
         try{
-            Receive r = new Receive(this.clientSocket, this.server);
-            Send s = new Send(this.clientSocket, this.server);
+            Receive r = new Receive(this.clientSocket, this.server, gameID);
+            Send s = new Send(this.clientSocket, this.server, gameID);
             r.start();
             s.start();
         }catch(Exception e){
