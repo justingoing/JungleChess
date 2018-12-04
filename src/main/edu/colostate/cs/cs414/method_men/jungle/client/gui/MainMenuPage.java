@@ -103,9 +103,13 @@ public class MainMenuPage extends Page implements ActionListener {
                 frame.changePageTo(new ProfilePage(frame));
                 break;
             case "Games":
+                String s = "";
                 try{
                     ClientSend send = new ClientSend(frame.getSocket());
                     send.lookupMyGames(frame.getUsername());
+                    ClientReceive rec = new ClientReceive(frame.getSocket());
+                    s = rec.recieveGames();
+                    System.out.println(s);
                 }catch(Exception e){}
                 frame.changePageTo(new CurrentGamesPage(frame));
                 break;

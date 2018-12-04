@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import static java.lang.Math.toIntExact;
 
 public class Receive extends Thread{
 
@@ -182,16 +183,41 @@ public class Receive extends Thread{
 
         if(message[0].equals("myGames")){
             System.out.println("searching for games with " + message[1]);
-            List< List<String> > myGames = server.getSQL().searchUserMatchState(message[1]);
+            List<Long> myGames = getUser1User2ID(message[1]);
             System.out.println("searched games");
             if(myGames.isEmpty()){
                 System.out.println("no Games");
             }
             else{
+                String games = "";
                 System.out.println("found games");
+                System.out.println(myGames);
+                for(int i = 0; i < myGames.size(); i++){
+                    String u1 = server.getSQL().searchMatchUser1FromID(myGames.get(i));
+                    String u2 = server.getSQL().searchMatchUser2FromID(myGames.get(i));
+                    String id = myGames.get(i).toString();
+                    String game = "game:" + u1 + "," + u2 + "," + id;
+                    games += game + " ";
+                }
+                System.out.println(games);
+                try{
+                    Send send = new Send(this.socket, this.server, this.gameID);
+                    send.sendString(games);
+                }catch(Exception e){}
             }
+
         }
 
+    }
+
+    public List<Long> getUser1User2ID(String user1){
+        List<Long> out = SqlUtils.getJdbi().withHandle(h -> {
+                    List<Long> name = h.createQuery("SELECT ID FROM match_state WHERE User1='" + user1 + "' OR User2='" + user1 +"'").mapTo(Long.class).list();
+                    System.out.println(name);
+                    return name;
+                }
+        );
+        return out;
     }
 
     public String buildDefaultGameState(String user1, String user2){

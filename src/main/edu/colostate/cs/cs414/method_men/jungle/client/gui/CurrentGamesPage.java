@@ -16,6 +16,7 @@ public class CurrentGamesPage extends Page implements ActionListener {
 
     CurrentGamesPage(GUI frame){
         super(frame);
+        System.out.println(games);
         this.background = Toolkit.getDefaultToolkit().createImage("src/Images/jungle.jpg");
         GridBagLayout gridbag = new GridBagLayout();
         this.setLayout(gridbag);
@@ -67,14 +68,16 @@ public class CurrentGamesPage extends Page implements ActionListener {
         add(back);
     }
 
-    /*public Object[][] populateTable(String username){
+    /*
+    public Object[][] populateTable(String username){
         ArrayList<String> Games = new ArrayList<>();
+
         try {
             ClientSend send = new ClientSend(frame.getSocket());
             send.lookupMyGames(username);
             ClientReceive rec = new ClientReceive(frame.getSocket());
-            String response = rec.recieveMyInvites();
-
+            String response = rec.recieveGames();
+            String [] s = response.split(" ");
 
             if(response.equals("Fail")){
                 JOptionPane.showMessageDialog(frame,
@@ -100,7 +103,8 @@ public class CurrentGamesPage extends Page implements ActionListener {
             rows[i][2] = "Reject";
         }
         return rows;
-    }*/
+    }
+    */
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
