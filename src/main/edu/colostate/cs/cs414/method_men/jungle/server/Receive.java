@@ -190,11 +190,17 @@ public class Receive extends Thread{
         return state;
     }
 
-    public List<String> getUser1User2ID(String user1, String user2){
-        List<String> out = SqlUtils.getJdbi().withHandle(h -> {
-            List<String> name = h.createQuery("SELECT User1,User2,ID FROM match_state WHERE User1='" + user1 + "' OR User2='" + user2 +"'").mapTo(String.class).list();
+    public List<List<String>> getUser1User2ID(String user1, String user2){
+        List<List<String>> out = SqlUtils.getJdbi().withHandle(h -> {
+            List<String> name = h.createQuery("SELECT User1 FROM match_state WHERE User1='" + user1 + "' OR User2='" + user2 +"'").mapTo(String.class).list();
+            List<String> name2 = h.createQuery("SELECT User2 FROM match_state WHERE User1='" + user1 + "' OR User2='" + user2 +"'").mapTo(String.class).list();
+            List<String> id = h.createQuery("SELECT ID FROM match_state WHERE User1='" + user1 + "' OR User2='" + user2 +"'").mapTo(String.class).list();
+            List<List<String>> myList = new ArrayList<List<String>>();
+            myList.add(name);
+            myList.add(name2);
+            myList.add(id);
             System.out.println(name);
-            return name;
+            return myList;
             }
             );
         return out;
