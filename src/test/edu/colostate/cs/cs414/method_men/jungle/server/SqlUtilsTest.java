@@ -16,6 +16,8 @@ public class SqlUtilsTest {
     void init() {
         jdbi = SqlUtils.getJdbi();
         SQL = jdbi.onDemand(SqlQueries.class);
+        SQL.deleteUser("jane");
+        SQL.deleteUser("connor");
     }
 
     @Test
@@ -40,6 +42,7 @@ public class SqlUtilsTest {
 
     @Test
     void testSearchUser() {
+        SQL.deleteUser("jane");
         SQL.addUser("jane", "doe");
         String user = SQL.searchUser("jane");
         if(user!=null) System.out.println(user);

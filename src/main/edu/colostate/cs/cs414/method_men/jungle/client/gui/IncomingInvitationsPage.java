@@ -8,6 +8,7 @@ import org.jdbi.v3.core.Jdbi;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,15 +41,23 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
         System.out.println("username: "  + frame.getUsername());
 
         //Table of current received invitations
-        String columns[] = {"Friend", "Actions"};
-        //TODO: Populate this dynamically based on how many invites sent in DB
-
+        String columns[] = {"Friend", "Accept", "Reject"};
         Object rows[][] = populateTable(frame.getUsername());
 
         //Each object in rows looks like {Friend name, status of invite}
         //Object rows[][] = {{"Justin", "<Accept/Reject>"}, {"Marcel", "<Accept/Reject>"}};
         DefaultTableModel model = new DefaultTableModel(rows, columns);
+
+        //Create buttons for accept and reject and have them be associated to the users in the rows.
         JTable table = new JTable(model);
+        table.getColumn("Accept").setCellRenderer(new ButtonRenderer());
+        table.getColumn("Accept").setCellEditor(
+                new ButtonEditor(new JCheckBox(), frame));
+        table.getColumn("Reject").setCellRenderer(new ButtonRenderer());
+        table.getColumn("Reject").setCellEditor(
+                new ButtonEditor(new JCheckBox(), frame));
+
+        //Create the scroll pane. Essentially just puts the table inside of a box with scroll bars, with a certain size.
         JScrollPane sPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         sPane.getViewport().add(table);
         sPane.setPreferredSize(new Dimension(200, 50));
@@ -103,9 +112,11 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
         }
         System.out.println("invs size: " + invites.size());
         System.out.println("ele 1: " + invites.get(0));
-        Object rows[][] = new Object[invites.size()][2];
+        Object rows[][] = new Object[invites.size()][3];
         for(int i = 0; i < invites.size(); i++){
             rows[i][0] = invites.get(i);
+            rows[i][1] = "Accept";
+            rows[i][2] = "Reject";
         }
         return rows;
     }
@@ -129,4 +140,105 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
         g2d.dispose();
     }
 
+
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(UIManager.getColor("Button.background"));
+            }
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+
+    /**
+     * This class allows us to have buttons in our JTable.
+     * It is janky, but it is effective!
+     */
+    class ButtonEditor extends DefaultCellEditor {
+        protected JButton button;
+        private JTable table;
+        private int row;
+        private int column;
+        private String label;
+        GUI frame;
+
+        private boolean isPushed;
+
+        public ButtonEditor(JCheckBox checkBox, GUI frame) {
+            super(checkBox);
+            this.frame = frame;
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                     boolean isSelected, int row, int column) {
+            this.table = table;
+            this.row = row;
+            this.column = column;
+            if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(table.getBackground());
+            }
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            return button;
+        }
+
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                if (label.equals("Accept")) {
+                    JOptionPane.showMessageDialog(button, "Accepted invitation from: " + table.getValueAt(row, 0));
+                    try{
+                        ClientSend cSend = new ClientSend(frame.getSocket());
+                        // TODO implement that function
+                        //cSend.sendAccept(table.getValueAt(row, 0));
+
+                        //TODO (probably) wait for server to create the game and give us the gameID
+                    }catch(Exception e){}
+
+                    frame.changePageTo(new GamePage(frame));
+                } else if (label.equals("Reject")) {
+                    JOptionPane.showMessageDialog(button, "Rejected invitation from: " + table.getValueAt(row, 0));
+                    try{
+                        ClientSend cSend = new ClientSend(frame.getSocket());
+                        // TODO implement that function
+                        //cSend.sendReject(table.getValueAt(row, 0));
+                    }catch(Exception e){}
+                }
+            }
+            isPushed = false;
+            return new String(label);
+        }
+
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
+    }
 }
