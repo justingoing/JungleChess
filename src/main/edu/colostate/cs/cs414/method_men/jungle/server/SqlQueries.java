@@ -4,10 +4,12 @@ package edu.colostate.cs.cs414.method_men.jungle.server;
 
 import java.util.List;
 
+import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
+
 
 public interface SqlQueries {
 
@@ -17,7 +19,7 @@ public interface SqlQueries {
      * @param Password: not null String.
      * @return True if added. False otherwise.
      */
-    @SqlUpdate("INSERT INTO user(Username,Password) values(:Username, :Password);")
+    @SqlUpdate("INSERT INTO user(Username,Password) values(:Username, :Password)")
     boolean addUser(@Bind("Username") String Username, @Bind("Password")String Password);
 
     /**
@@ -28,7 +30,7 @@ public interface SqlQueries {
      * @param Start_Date String in format DDMMYYYYTTTT
      * @return ID: Long unique to match_state row
      */
-    @SqlUpdate("INSERT INTO match_state(User1,User2,State,Start_Date) values(:User1,:User2,:State,:Start_Date);")
+    @SqlUpdate("INSERT INTO match_state(User1,User2,State,Start_Date) values(:User1,:User2,:State,:Start_Date)")
     @GetGeneratedKeys("ID")
     Long addMatchState(@Bind("User1") String User1, @Bind("User2")String User2, @Bind("State") String State, @Bind("Start_Date")String Start_Date);
 
@@ -40,7 +42,7 @@ public interface SqlQueries {
      * @param Game_End String in format DDMMYYYYTTTT
      * @return ID: Long unique to match_record row
      */
-    @SqlUpdate("INSERT INTO match_record(Winner,Loser,Game_Start,Game_End) values(:Winner,:Loser,:Game_Start,:Game_End);")
+    @SqlUpdate("INSERT INTO match_record(Winner,Loser,Game_Start,Game_End) values(:Winner,:Loser,:Game_Start,:Game_End)")
     @GetGeneratedKeys("ID")
     Long addMatchRecord(@Bind("Winner") String Winner, @Bind("Loser")String Loser, @Bind("Game_Start") String Game_Start, @Bind("Game_End")String Game_End);
 
@@ -50,7 +52,7 @@ public interface SqlQueries {
      * @param Invitee: not null String and must be in user table
      * @return True if added. False otherwise.
      */
-    @SqlUpdate("INSERT INTO match_invite(Inviter,Invitee) values(:Inviter,:Invitee);")
+    @SqlUpdate("INSERT INTO match_invite(Inviter,Invitee) values(:Inviter,:Invitee)")
     boolean addMatchInvite(@Bind("Inviter") String Inviter, @Bind("Invitee")String Invitee);
 
     /**
@@ -58,7 +60,7 @@ public interface SqlQueries {
      * @param Username String
      * @return String with Username if in table or null if not in user table
      */
-    @SqlQuery("SELECT Username FROM user WHERE Username=:Username;")
+    @SqlQuery("SELECT Username FROM user WHERE Username=:Username")
     String searchUser(@Bind("Username") String Username);
 
     /**
@@ -67,7 +69,7 @@ public interface SqlQueries {
      * @param Password: String
      * @return String Username if in table or null if not in user table
      */
-    @SqlQuery("SELECT Username FROM user WHERE Username=:Username AND Password=:Password;")
+    @SqlQuery("SELECT Username FROM user WHERE Username=:Username AND Password=:Password")
     String searchUserPassword(@Bind("Username") String Username, @Bind("Password")String Password);
 
     /**
@@ -76,7 +78,7 @@ public interface SqlQueries {
      * @return String State: String representation of the state of the match in match_state table
      * which can be null
      */
-    @SqlQuery("SELECT State FROM match_state WHERE ID=:ID;")
+    @SqlQuery("SELECT State FROM match_state WHERE ID=:ID")
     String searchStateMatchState(@Bind("ID") Long ID);
 
 
@@ -85,7 +87,7 @@ public interface SqlQueries {
      * @param ID: Long unique
      * @return String Start_Date: String in format DDMMYYYYTTTT in match_state or null if not in table
      */
-    @SqlQuery("SELECT Start_Date FROM match_state WHERE ID=:ID;")
+    @SqlQuery("SELECT Start_Date FROM match_state WHERE ID=:ID")
     String searchStartDateMatchState(@Bind("ID") Long ID);
 
     /**
@@ -93,7 +95,7 @@ public interface SqlQueries {
      * @param Winner: not null String and must be in user table
      * @return List<Long>: IDs from rows from match_record table with matching Winners or empty list if no matches
      */
-    @SqlQuery("SELECT ID from match_record WHERE Winner=:Winner;")
+    @SqlQuery("SELECT ID from match_record WHERE Winner=:Winner")
     List<Long> searchWinnerMatchRecord(@Bind("Winner") String Winner);
 
     /**
@@ -101,7 +103,7 @@ public interface SqlQueries {
      * @param Loser: not null String and must be in user table
      * @return List<Long>: IDs from rows from match_record table with matching Winners or empty list if no matches
      */
-    @SqlQuery("SELECT ID from match_record WHERE Loser=:Loser;")
+    @SqlQuery("SELECT ID from match_record WHERE Loser=:Loser")
     List<Long> searchLoserMatchRecord(@Bind("Loser") String Loser);
 
     /**
@@ -109,7 +111,7 @@ public interface SqlQueries {
      * @param Inviter: not null String and must be in user table
      * @return List<String>: Invitees from match_invite table with matching Inviter or empty list if no matches
      */
-    @SqlQuery("SELECT Invitee from match_invite WHERE Inviter=:Inviter;")
+    @SqlQuery("SELECT Invitee from match_invite WHERE Inviter=:Inviter")
     List<String> searchMatchInviter(@Bind("Inviter") String Inviter);
 
     /**
@@ -117,7 +119,7 @@ public interface SqlQueries {
      * @param Invitee: not null String and must be in user table
      * @return List<String>: Inviters from match_invite table with matching Invitee or empty list if no matches
      */
-    @SqlQuery("SELECT Inviter from match_invite WHERE Invitee=:Invitee;")
+    @SqlQuery("SELECT Inviter from match_invite WHERE Invitee=:Invitee")
     List<String> searchMatchInvitee(@Bind("Invitee") String Invitee);
 
     /**
@@ -128,6 +130,25 @@ public interface SqlQueries {
      */
     @SqlQuery("SELECT Inviter from match_invite WHERE Inviter=:Inviter AND Invitee=:Invitee OR Inviter=:Invitee AND Invitee=:Inviter;")
     List<String> searchPairMatchInvite(@Bind("Inviter") String Inviter, @Bind("Invitee") String Invitee);
+
+    /**
+     * Gets row of match_state and maps result to MatchRowState class matching ID
+     * @param ID Long unique
+     * @return MatchStateRow where ID,User1,User2,State,Start_Date are set from match_state row if ID in DB or null if not
+     */
+    @SqlQuery("SELECT * FROM match_state WHERE ID=:ID")
+    @RegisterRowMapper(MatchStateRow.MatchStateRowMapper.class)
+    MatchStateRow searchRowIDMatchState(@Bind("ID") Long ID);
+
+    /**
+     * Gets rows of match_state and maps result to MatchRowState class matching where User1 is in a match_state row
+     * @param User1
+     * @return MatchStateRow where ID,User1,User2,State,Start_Date are set from match_state row
+     */
+    @SqlQuery("SELECT * FROM match_state WHERE User1=:User1 OR User2=:User1")
+    @RegisterRowMapper(MatchStateRow.MatchStateRowMapper.class)
+    List<MatchStateRow> searchRowUserMatchState(@Bind("User1") String User1);
+
 
     /**
      * Updates State in match_state table matching ID
@@ -143,7 +164,7 @@ public interface SqlQueries {
      * @param Username: String
      * @return True if deleted. False otherwise.
      */
-    @SqlUpdate("DELETE FROM user WHERE Username=:Username;")
+    @SqlUpdate("DELETE FROM user WHERE Username=:Username")
     boolean deleteUser(@Bind("Username") String Username);
 
     /**
@@ -159,7 +180,7 @@ public interface SqlQueries {
      * @param ID: Long unique
      * @return True if deleted. False otherwise.
      */
-    @SqlUpdate("DELETE FROM match_record WHERE ID=:ID;")
+    @SqlUpdate("DELETE FROM match_record WHERE ID=:ID")
     boolean deleteMatchRecord(@Bind("ID") Long ID);
 
     /**
@@ -167,7 +188,7 @@ public interface SqlQueries {
      * @param Inviter: not null String and must be in user table
      * @return True if deleted. False otherwise.
      */
-    @SqlUpdate("DELETE FROM match_invite WHERE Inviter=:Inviter;")
+    @SqlUpdate("DELETE FROM match_invite WHERE Inviter=:Inviter")
     boolean deleteMatchInvite(@Bind("Inviter") String Inviter);
 
     /**
