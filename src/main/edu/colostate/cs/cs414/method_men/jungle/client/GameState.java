@@ -71,9 +71,9 @@ public class GameState {
         String[] nextTurnStrings = splitString[1].split(":");
         int nextTurn;
         if (nextTurnStrings[1].equals("Red")) {
-            nextTurn = 1;
-        } else if (nextTurnStrings[1].equals("Blue")) {
             nextTurn = 0;
+        } else if (nextTurnStrings[1].equals("Blue")) {
+            nextTurn = 1;
         } else {
             return false;
         }
