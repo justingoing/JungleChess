@@ -209,20 +209,17 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
                     JOptionPane.showMessageDialog(button, "Accepted invitation from: " + table.getValueAt(row, 0));
                     try{
                         ClientSend cSend = new ClientSend(frame.getSocket());
-                        // TODO implement that function
                         cSend.sendAccept(table.getValueAt(row, 0).toString(), frame.getUsername());
-
-                        //TODO (probably) wait for server to create the game and give us the gameID
                     }catch(Exception e){}
-
-                    //frame.changePageTo(new GamePage(frame));
-                } else if (label.equals("Reject")) {
+                    frame.changePageTo(new IncomingInvitationsPage(frame));
+                }
+                else if (label.equals("Reject")) {
                     JOptionPane.showMessageDialog(button, "Rejected invitation from: " + table.getValueAt(row, 0));
                     try{
                         ClientSend cSend = new ClientSend(frame.getSocket());
-                        // TODO implement that function
                         cSend.sendReject(table.getValueAt(row, 0).toString(), frame.getUsername());
                     }catch(Exception e){}
+                    frame.changePageTo(new IncomingInvitationsPage(frame));
                 }
             }
             isPushed = false;

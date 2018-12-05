@@ -14,6 +14,7 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
 
     private Image background;
     private JTextField  userInput;
+    Object rows[][];
 
     OutgoingInvitationsPage(GUI frame){
         super(frame);
@@ -68,7 +69,7 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
         gridbag.setConstraints(send,c);
         add(send);
 
-        Object rows[][] = populateTable(frame.getUsername());
+        this.rows = populateTable(frame.getUsername());
 
         c.anchor = GridBagConstraints.CENTER;
         //Table of current sent invitations
@@ -119,10 +120,7 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
             String response = rec.recieveMyInvites();
 
             if(response.equals("Fail")){
-                JOptionPane.showMessageDialog(frame,
-                        "You have no sent invites",
-                        "myInvites",
-                        JOptionPane.ERROR_MESSAGE);
+
             }else{
                 String[] holder = response.split(" ");
                 for(String inv : holder){
@@ -136,6 +134,7 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
         Object rows[][] = new Object[invites.size()][2];
         for(int i = 0; i < invites.size(); i++){
             rows[i][0] = invites.get(i);
+            rows[i][1] = "Pending";
         }
         return rows;
     }
@@ -162,6 +161,7 @@ public class OutgoingInvitationsPage extends Page implements ActionListener {
                             "Invite",
                             JOptionPane.INFORMATION_MESSAGE);
                     userInput.setText("");
+                    frame.changePageTo(new OutgoingInvitationsPage(frame));
                 }
                 else if(response.equals("There")){
                     JOptionPane.showMessageDialog(frame,

@@ -1,6 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import edu.colostate.cs.cs414.method_men.jungle.client.Game;
+import edu.colostate.cs.cs414.method_men.jungle.client.GameState;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
 
@@ -209,7 +210,10 @@ public class CurrentGamesPage extends Page implements ActionListener {
                     String blue = table.getValueAt(row, 0).toString();
                     String red = table.getValueAt(row, 1).toString();
                     System.out.println("players = " + blue + " " + red);
+                    //get next move from game state
+                    int nextMove = GameState.getTurn(state);
                     Game game = new Game(frame.getSocket(), blue, red);
+                    game.setTurn(nextMove);
                     //Gimme that game ID
                     Long id = new Long(Integer.parseInt(table.getValueAt(row, 2).toString()));
                     frame.changePageTo(new GamePage(frame, game, state, true, id));
