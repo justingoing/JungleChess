@@ -223,7 +223,7 @@ public class SqlUtilsTest {
         Long user = SQL.addMatchState("connor", "jane", "120420182000", "120420182100");
         System.out.println(user);
         MatchStateRow row = SQL.searchRowIDMatchState(user);
-        System.out.println(row.getID() + row.getUser1() + row.getUser2() + row.getState() + row.getStart_Date());
+        System.out.println(row);
         SQL.deleteMatchState(user);
     }
 
@@ -233,8 +233,8 @@ public class SqlUtilsTest {
         Long user2 = SQL.addMatchState("jane", "john", "120420182000", "120420182100");
         System.out.println(user);
         List<MatchStateRow> row = SQL.searchRowUserMatchState("jane");
-        System.out.println(row.get(0).getID() + row.get(0).getUser1() + row.get(0).getUser2() + row.get(0).getState() + row.get(0).getStart_Date());
-        System.out.println(row.get(1).getID() + row.get(1).getUser1() + row.get(1).getUser2() + row.get(1).getState() + row.get(1).getStart_Date());
+        System.out.println(row.get(0));
+        System.out.println(row.get(1));
         SQL.deleteMatchState(user);
         SQL.deleteMatchState(user2);
     }

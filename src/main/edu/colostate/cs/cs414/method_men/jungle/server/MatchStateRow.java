@@ -61,6 +61,17 @@ public class MatchStateRow {
         Start_Date = start_Date;
     }
 
+    @Override
+    public String toString() {
+        return "MatchStateRow{" +
+                "ID=" + ID +
+                ", User1='" + User1 + '\'' +
+                ", User2='" + User2 + '\'' +
+                ", State='" + State + '\'' +
+                ", Start_Date='" + Start_Date + '\'' +
+                '}';
+    }
+
     public static class MatchStateRowMapper implements RowMapper<MatchStateRow> {
 
         @Override
