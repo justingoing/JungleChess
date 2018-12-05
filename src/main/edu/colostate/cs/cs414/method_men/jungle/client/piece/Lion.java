@@ -9,4 +9,8 @@ public class Lion extends JumperPiece {
             setLocation(8, 6);
         }
     }
+    public Lion(String color, int row, int col) {
+        super("Lion", 7, color);
+        setLocation(row, col);
+    }
 }

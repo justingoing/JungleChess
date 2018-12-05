@@ -3,7 +3,6 @@ package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
 import edu.colostate.cs.cs414.method_men.jungle.server.SqlQueries;
-import edu.colostate.cs.cs414.method_men.jungle.server.SqlUtils;
 import org.jdbi.v3.core.Jdbi;
 
 import javax.swing.*;
@@ -13,7 +12,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class IncomingInvitationsPage extends Page implements ActionListener {
 
@@ -45,7 +43,6 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
         Object rows[][] = populateTable(frame.getUsername());
 
         //Each object in rows looks like {Friend name, status of invite}
-        //Object rows[][] = {{"Justin", "<Accept/Reject>"}, {"Marcel", "<Accept/Reject>"}};
         DefaultTableModel model = new DefaultTableModel(rows, columns);
 
         //Create buttons for accept and reject and have them be associated to the users in the rows.
@@ -111,7 +108,7 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
             e.printStackTrace();
         }
         System.out.println("invs size: " + invites.size());
-        System.out.println("ele 1: " + invites.get(0));
+        //System.out.println("ele 1: " + invites.get(0));
         Object rows[][] = new Object[invites.size()][3];
         for(int i = 0; i < invites.size(); i++){
             rows[i][0] = invites.get(i);
@@ -218,7 +215,7 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
                         //TODO (probably) wait for server to create the game and give us the gameID
                     }catch(Exception e){}
 
-                    frame.changePageTo(new GamePage(frame));
+                    //frame.changePageTo(new GamePage(frame));
                 } else if (label.equals("Reject")) {
                     JOptionPane.showMessageDialog(button, "Rejected invitation from: " + table.getValueAt(row, 0));
                     try{

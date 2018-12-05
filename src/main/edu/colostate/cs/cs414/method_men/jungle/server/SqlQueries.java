@@ -79,6 +79,15 @@ public interface SqlQueries {
     @SqlQuery("SELECT State FROM match_state WHERE ID=:ID;")
     String searchStateMatchState(@Bind("ID") Long ID);
 
+    @SqlQuery("SELECT User1 FROM match_state WHERE ID=:ID;")
+    String searchMatchUser1FromID(@Bind("ID") Long ID);
+
+    @SqlQuery("SELECT User2 FROM match_state WHERE ID=:ID;")
+    String searchMatchUser2FromID(@Bind("ID") Long ID);
+
+    @SqlQuery("SELECT *  FROM match_state WHERE User1=:Username OR User2=:Username;")
+    List< List<String> > searchUserMatchState(@Bind("Username") String Username);
+
 
     /**
      * Searches for Start_Date in match_state table by matching ID

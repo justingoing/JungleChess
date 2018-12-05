@@ -53,6 +53,12 @@ public class ClientSend extends Thread{
         System.out.println("Lookup sent");
     }
 
+    public void lookupMyGames(String username){
+        out.println("myGames " + username);
+        out.flush();
+        System.out.println("myGames sent");
+    }
+
     public void sendAccept(String user1, String user2){
         out.println("AcceptInvite " + user1 + " " + user2);
         out.flush();
@@ -63,6 +69,12 @@ public class ClientSend extends Thread{
         out.println("RejectInvite " + user1 + " " + user2);
         out.flush();
         System.out.println("Reject invite sent");
+    }
+
+    public void sendGameStateRequest(String s){
+        out.println("GetState " + s);
+        out.flush();
+        System.out.println("State request sent");
     }
 
     //Should get username and password as combined string

@@ -19,6 +19,7 @@ public class Game {
     private Socket socket;
     int moveCount = 0;
     private String username;
+    boolean onlineGame = false;
 
     /**
      * Create a new Game object.
@@ -26,6 +27,17 @@ public class Game {
      * chooses which player goes first,
      * instantiates a new board.
      */
+    public Game (Socket socket, String blue, String red) {
+        this.socket = socket;
+        //this.username = username;
+        players = new Player[2];
+        players[0] = new Player("red", red);
+        players[1] = new Player("blue", blue);
+        turn = 1; // 1 means that Bottom Player makes the first move
+        board = new Board();
+        this.onlineGame = true;
+    }
+
     public Game (Socket socket, String username) {
         this.socket = socket;
         this.username = username;
@@ -51,7 +63,7 @@ public class Game {
      * @param end location the user wishes to move their selected piece.
      * @return whether the move was successful or not.
      */
-    private boolean makeMove(Location start, Location end){
+    private boolean makeMove(Location start, Location end, Long ID){
         System.out.println("Game.makeMove()");
         Piece piece = board.getTile(start).getPiece();
 
@@ -78,7 +90,7 @@ public class Game {
             ArrayList<Piece> red = this.getBoard().getPieces("red");
             ArrayList<Piece> blue = this.getBoard().getPieces("blue");
             int winner = this.winnerCheck();
-            String state = GameState.makeGameState(this.username, winner, this.turn, moveCount, red, blue);
+            String state = GameState.makeGameState(this.username, winner, this.turn, moveCount, red, blue, ID);
             try{
                 ClientSend cSend = new ClientSend(this.socket);
                 cSend.sendState(state);
@@ -90,8 +102,8 @@ public class Game {
     }
 
     //Simply another way to access the above method, makeMove(Location, Location).
-    public boolean makeMove(int currentRow, int currentCol, int nextRow, int nextCol){
-        return makeMove(new Location(currentRow, currentCol), new Location(nextRow, nextCol));
+    public boolean makeMove(int currentRow, int currentCol, int nextRow, int nextCol, Long ID){
+        return makeMove(new Location(currentRow, currentCol), new Location(nextRow, nextCol), ID);
     }
 
     /**
@@ -165,7 +177,7 @@ public class Game {
         return getValidMoves(new Location(row, col));
     }
 
-    int getTurn() {
+    public int getTurn() {
         return this.turn;
     }
 
@@ -181,8 +193,7 @@ public class Game {
     }
 
 
-
-
-
-
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
 }

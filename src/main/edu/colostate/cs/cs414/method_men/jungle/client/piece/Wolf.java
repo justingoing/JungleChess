@@ -9,4 +9,9 @@ public class Wolf extends GenericPiece {
             setLocation(6, 2);
         }
     }
+
+    public Wolf(String color, int row, int col) {
+        super("Wolf", 3, color);
+        setLocation(row, col);
+    }
 }

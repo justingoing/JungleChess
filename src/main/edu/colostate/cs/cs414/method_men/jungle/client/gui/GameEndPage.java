@@ -44,7 +44,7 @@ public class GameEndPage extends Page implements ActionListener {
         if (actionEvent.getActionCommand().equals("Exit")) {
             System.exit(0);
         } else if (actionEvent.getActionCommand().equals("Again")) {
-            frame.changePageTo(new GamePage(frame));
+            //frame.changePageTo(new GamePage(frame));
         }
     }
 }

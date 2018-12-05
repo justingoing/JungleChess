@@ -1,6 +1,9 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.Game;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -92,7 +95,9 @@ public class MainMenuPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()) {
             case "LocalGame":
-                frame.changePageTo(new GamePage(frame));
+                Game game = new Game();
+                Long l = new Long(0);
+                frame.changePageTo(new GamePage(frame, game, "", false, l));
                 break;
             case "OnlineGame":
                 frame.changePageTo(new OutgoingInvitationsPage(frame));
@@ -101,6 +106,16 @@ public class MainMenuPage extends Page implements ActionListener {
                 frame.changePageTo(new ProfilePage(frame));
                 break;
             case "Games":
+                String s = "";
+                /*
+                try{
+                    ClientSend send = new ClientSend(frame.getSocket());
+                    send.lookupMyGames(frame.getUsername());
+                    ClientReceive rec = new ClientReceive(frame.getSocket());
+                    s = rec.recieveGames();
+                    System.out.println(s);
+                }catch(Exception e){}
+                */
                 frame.changePageTo(new CurrentGamesPage(frame));
                 break;
             case "IncomingInvitations":

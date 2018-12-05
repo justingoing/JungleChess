@@ -1,10 +1,17 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.Game;
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CurrentGamesPage extends Page implements ActionListener {
 
@@ -18,7 +25,7 @@ public class CurrentGamesPage extends Page implements ActionListener {
         GridBagConstraints c = new GridBagConstraints();
 
         //Title
-        JLabel title = new JLabel("  Current Games  ");
+        JLabel title = new JLabel("         Current Games  ");
         title.setForeground(Color.white);
         title.setFont(title.getFont().deriveFont(32.0f));
         c.gridx = 0;
@@ -28,15 +35,20 @@ public class CurrentGamesPage extends Page implements ActionListener {
         add(title);
 
         //Table of current games
-        String columns[] = {"Opponent", "Play Game"};
-        //TODO: Populate this dynamically based on how many games in DB
-        Object rows[][] = {{"Justin", "<button>"}, {"Julien", "<button>"}, {"Mike", "<button>"}
-                , {"Zane", "<button>"}, {"Marcel", "<button>"}, {"Connor", "<button>"}};
+        String columns[] = {"Blue Player", "Red Player", "Game ID", "Open"};
+        Object rows[][] = populateTable(frame.getUsername());
+
         DefaultTableModel model = new DefaultTableModel(rows, columns);
         JTable table = new JTable(model);
+
+        //Create buttons for accept and reject and have them be associated to the users in the rows.
+        table.getColumn("Open").setCellRenderer(new ButtonRenderer());
+        table.getColumn("Open").setCellEditor(
+                new ButtonEditor(new JCheckBox(), frame));
+
         JScrollPane sPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         sPane.getViewport().add(table);
-        sPane.setPreferredSize(new Dimension(300, 50));
+        sPane.setPreferredSize(new Dimension(400, 60));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;
         c.weightx = 0.0;
@@ -63,6 +75,42 @@ public class CurrentGamesPage extends Page implements ActionListener {
         add(back);
     }
 
+
+    public Object[][] populateTable(String username){
+        ArrayList<String> Games = new ArrayList<>();
+        //String [] gamess;
+        String response = "";
+
+        try {
+            ClientSend send = new ClientSend(frame.getSocket());
+            send.lookupMyGames(username);
+            ClientReceive rec = new ClientReceive(frame.getSocket());
+            response = rec.recieveGames();
+            String [] s = response.split(" ");
+            for(int i = 0; i < s.length; i ++){
+                Games.add(s[i]);
+            }
+        }catch(Exception e){}
+
+
+        System.out.println(response);
+        System.out.println("ele 1: " + Games.get(0));
+        System.out.println("games.size: " + Games.size());
+        Object rows[][] = new Object[Games.size()][4];
+        for(int i = 0; i < Games.size(); i++){
+            String [] t = Games.get(i).split(",");
+            String z = Arrays.toString(t);
+            System.out.println(z);
+            System.out.println(t[0]);
+            rows[i][0] = t[0];
+            rows[i][1] = t[1];
+            rows[i][2] = t[2];
+            rows[i][3] = "Open";
+        }
+        return rows;
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()) {
@@ -80,6 +128,105 @@ public class CurrentGamesPage extends Page implements ActionListener {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.drawImage(this.background, 0, 0, this);
         g2d.dispose();
+    }
+
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(UIManager.getColor("Button.background"));
+            }
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+        protected JButton button;
+        private JTable table;
+        private int row;
+        private int column;
+        private String label;
+        GUI frame;
+
+        private boolean isPushed;
+
+        public ButtonEditor(JCheckBox checkBox, GUI frame) {
+            super(checkBox);
+            this.frame = frame;
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                }
+            });
+        }
+
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                     boolean isSelected, int row, int column) {
+            this.table = table;
+            this.row = row;
+            this.column = column;
+            if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(table.getBackground());
+            }
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            return button;
+        }
+
+        public Object getCellEditorValue() {
+            if (isPushed) {
+                if (label.equals("Open")) {
+                    //JOptionPane.showMessageDialog(button, "Accepted invitation from: " + table.getValueAt(row, 0));
+                    String state = "";
+                    try{
+                        ClientSend cSend = new ClientSend(frame.getSocket());
+                        // TODO implement that function
+                        //System.out.println(table.getValueAt(row, 2));
+                        cSend.sendGameStateRequest(table.getValueAt(row, 2).toString());
+                        ClientReceive rec = new ClientReceive(frame.getSocket());
+                        state = rec.receiveState();
+                        //System.out.println("State = " + state);
+                        //TODO (probably) wait for server to create the game and give us the gameID
+                    }catch(Exception e){}
+                    //get usernames for blue and red players
+                    String blue = table.getValueAt(row, 0).toString();
+                    String red = table.getValueAt(row, 1).toString();
+                    System.out.println("players = " + blue + " " + red);
+                    Game game = new Game(frame.getSocket(), blue, red);
+                    //Gimme that game ID
+                    Long id = new Long(Integer.parseInt(table.getValueAt(row, 2).toString()));
+                    frame.changePageTo(new GamePage(frame, game, state, true, id));
+                }
+            }
+            isPushed = false;
+            return new String(label);
+        }
+
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+        protected void fireEditingStopped() {
+            super.fireEditingStopped();
+        }
     }
 
 }

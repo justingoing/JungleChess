@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import static java.lang.Math.toIntExact;
 
 public class Receive extends Thread{
 
@@ -180,12 +181,79 @@ public class Receive extends Thread{
             System.out.println("Deleted = " + deleted);
         }
 
+        if(message[0].equals("myGames")){
+            System.out.println("searching for games with " + message[1]);
+            List<Long> myGames = getUser1User2ID(message[1]);
+            System.out.println("searched games");
+            if(myGames.isEmpty()){
+                System.out.println("no Games");
+            }
+            else{
+                String games = "";
+                System.out.println("found games");
+                System.out.println(myGames);
+                for(int i = 0; i < myGames.size(); i++){
+                    String u1 = server.getSQL().searchMatchUser1FromID(myGames.get(i));
+                    String u2 = server.getSQL().searchMatchUser2FromID(myGames.get(i));
+                    String id = myGames.get(i).toString();
+                    String game = u1 + "," + u2 + "," + id;
+                    games += game + " ";
+                }
+                System.out.println(games);
+                try{
+                    Send send = new Send(this.socket, this.server, this.gameID);
+                    send.sendString(games);
+                }catch(Exception e){}
+            }
+
+        }
+
+        if(message[0].equals("GetState")){
+            int id = Integer.parseInt(message[1]);
+            Long id1 = new Long(id);
+            String state = server.getSQL().searchStateMatchState(id1);
+            System.out.println(state);
+            try{
+                Send send = new Send(this.socket, this.server, this.gameID);
+                send.sendString(state);
+            }catch(Exception e){}
+        }
+
+        //Oh dear Lord, here we go
+        if(message[0].equals("GameState")){
+            String state = buildGameState(message);
+            Long ID = Long.parseLong(message[1]);
+            //update state in DB if ont local game
+            if(ID > 0) {
+                boolean added = server.getSQL().updateMatchState(state, ID);
+                System.out.println("Added = " + added);
+            }
+            //Send state to other user???
+        }
+
+    }
+
+    public List<Long> getUser1User2ID(String user1){
+        List<Long> out = SqlUtils.getJdbi().withHandle(h -> {
+                    List<Long> name = h.createQuery("SELECT ID FROM match_state WHERE User1='" + user1 + "' OR User2='" + user1 +"'").mapTo(Long.class).list();
+                    System.out.println(name);
+                    return name;
+                }
+        );
+        return out;
     }
 
     public String buildDefaultGameState(String user1, String user2){
-        String state = "";
-        state += "BluePlayer:" + user1 +  " RedPlayer:" + user2 +  " Winner:-1 NextTurn:Blue MoveCount:0 Red:7,0,0/6,0,6/4,1,1/2,1,5/1,2,0/5,2,2/3,2,4/8,2,6 Blue:8,6,0/3,6,2/5,6,4/1,6,6/2,7,1/4,7,5/6,8,0/7,8,6";
+        String state = "Winner:-1 NextTurn:Blue MoveCount:0 Red:7,0,0/6,0,6/4,1,1/2,1,5/1,2,0/5,2,2/3,2,4/8,2,6 Blue:8,6,0/3,6,2/5,6,4/1,6,6/2,7,1/4,7,5/6,8,0/7,8,6";
         return state;
+    }
+
+    public String buildGameState(String [] message){
+        String s = "";
+        for (int i = 2; i < message.length; i++) {
+            s += message[i] + " ";
+        }
+        return s;
     }
 
     public String getDateTime(){

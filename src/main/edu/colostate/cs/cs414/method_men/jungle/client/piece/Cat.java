@@ -9,4 +9,9 @@ public class Cat extends GenericPiece {
             setLocation(7, 1);
         }
     }
+
+    public Cat(String color, int row, int col) {
+        super("Cat", 2, color);
+        setLocation(row, col);
+    }
 }

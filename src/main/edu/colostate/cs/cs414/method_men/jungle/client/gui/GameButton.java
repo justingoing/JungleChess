@@ -2,7 +2,7 @@ package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import javax.swing.*;
 
-public class GameButton extends JButton {
+public class    GameButton extends JButton {
     private int row;
     private int col;
 

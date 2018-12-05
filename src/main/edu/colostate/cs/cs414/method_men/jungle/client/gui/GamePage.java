@@ -41,19 +41,39 @@ public class GamePage extends Page implements ActionListener {
     private final Icon WATER_ICON = new ImageIcon(new ImageIcon("src/Images/water.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
 
     private Game game;
+    private Long gameID;
+    private Boolean useState;
+    private String state;
     private JButton[][] buttons;
     private int[] selectedButton = null;
     private ArrayList<Location> currentlyHighlighted;
+    private boolean stateLoaded = false;
 
 
-    public GamePage(GUI frame) {
+    //if flag = true,
+    public GamePage(GUI frame, Game gameIn, String state, boolean useState, Long id) {
         super(frame);
+        //need this to send updated game state to server
+        this.gameID = id;
+        this.useState = useState;
+        this.state = state;
         GridBagLayout gridbag = new GridBagLayout();
         this.setLayout(gridbag);
         GridBagConstraints c = new GridBagConstraints();
 
+        /*
         //Game board
-        game = new Game(frame.getSocket(), frame.getUsername());
+        if(useState == true){
+            this.game = gameIn;
+            System.out.println("useState = " + useState);
+        }
+        else{
+            game = new Game(frame.getSocket(), frame.getUsername());
+            System.out.println("useState = " + useState);
+        }
+        */
+        //this.game = new Game(frame.getSocket(), frame.getUsername());
+        this.game = gameIn;
         currentlyHighlighted = new ArrayList<>();
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(9, 7));
@@ -127,7 +147,14 @@ public class GamePage extends Page implements ActionListener {
         add(back, c);
 
         resetBoard();
-        updateBoard();
+        if(useState){
+            boolean setState = GameState.setGameState(this.state, this.game);
+            updateBoard();
+            System.out.println("setState = " + setState);
+        }
+        else{
+            updateBoard();
+        }
     }
 
     public void resetBoard() {
@@ -171,10 +198,8 @@ public class GamePage extends Page implements ActionListener {
 
     public void updateBoard() {
         resetBoard();
-
         for (int i = 0; i < 2; i++) {
-            //Piece[] pieces = currPlayer.getValidPieces();
-            ArrayList<Piece> pieces = new ArrayList<Piece>();
+            ArrayList<Piece> pieces = new ArrayList<>();
             for (Tile tile : game.getBoard().getBoard().values()) {
                 if (tile.getPiece() != null){
                     pieces.add(tile.getPiece());
@@ -267,7 +292,7 @@ public class GamePage extends Page implements ActionListener {
             selectedButton = null;
         } else if (selectedButton != null) {
             //game.makeMoveUi(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
-            game.makeMove(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
+            game.makeMove(selectedButton[0], selectedButton[1], button.getRow(), button.getCol(), this.gameID);
             updateBoard();
             buttons[selectedButton[0]][selectedButton[1]].setBorder(new LineBorder(Color.LIGHT_GRAY));
             selectedButton = null;
