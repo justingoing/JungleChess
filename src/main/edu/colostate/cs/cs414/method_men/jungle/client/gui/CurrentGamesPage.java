@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CurrentGamesPage extends Page implements ActionListener {
 
@@ -32,10 +33,9 @@ public class CurrentGamesPage extends Page implements ActionListener {
         add(title);
 
         //Table of current games
-        String columns[] = {"Blue Player", "Red Player", "Next Move"};
+        String columns[] = {"Blue Player", "Red Player", "Game ID"};
         //TODO: Populate this dynamically based on how many games in DB
-        Object rows[][] = {{"Justin", "<button>"}, {"Julien", "<button>"}, {"Mike", "<button>"}
-                , {"Zane", "<button>"}, {"Marcel", "<button>"}, {"Connor", "<button>"}};
+        Object rows[][] = populateTable(frame.getUsername());
         DefaultTableModel model = new DefaultTableModel(rows, columns);
         JTable table = new JTable(model);
         JScrollPane sPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -67,43 +67,40 @@ public class CurrentGamesPage extends Page implements ActionListener {
         add(back);
     }
 
-    /*
+
     public Object[][] populateTable(String username){
         ArrayList<String> Games = new ArrayList<>();
+        //String [] gamess;
+        String response = "";
 
         try {
             ClientSend send = new ClientSend(frame.getSocket());
             send.lookupMyGames(username);
             ClientReceive rec = new ClientReceive(frame.getSocket());
-            String response = rec.recieveGames();
+            response = rec.recieveGames();
             String [] s = response.split(" ");
-
-            if(response.equals("Fail")){
-                JOptionPane.showMessageDialog(frame,
-                        "You have no invites",
-                        "myInvites",
-                        JOptionPane.ERROR_MESSAGE);
-            }else{
-                String[] holder = response.split(" ");
-                for(String inv : holder){
-                    System.out.println("printing from split: "  + inv);
-                    invites.add(inv);
-                }
+            for(int i = 0; i < s.length; i ++){
+                Games.add(s[i]);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("invs size: " + invites.size());
-        System.out.println("ele 1: " + invites.get(0));
-        Object rows[][] = new Object[invites.size()][3];
-        for(int i = 0; i < invites.size(); i++){
-            rows[i][0] = invites.get(i);
-            rows[i][1] = "Accept";
-            rows[i][2] = "Reject";
+        }catch(Exception e){}
+
+
+        System.out.println(response);
+        System.out.println("ele 1: " + Games.get(0));
+        System.out.println("games.size: " + Games.size());
+        Object rows[][] = new Object[Games.size()][3];
+        for(int i = 0; i < Games.size(); i++){
+            String [] t = Games.get(i).split(",");
+            String z = Arrays.toString(t);
+            System.out.println(z);
+            System.out.println(t[0]);
+            rows[i][0] = t[0];
+            rows[i][1] = t[1];
+            rows[i][2] = t[2];
         }
         return rows;
     }
-    */
+
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {

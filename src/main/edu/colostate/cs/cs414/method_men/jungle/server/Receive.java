@@ -196,7 +196,7 @@ public class Receive extends Thread{
                     String u1 = server.getSQL().searchMatchUser1FromID(myGames.get(i));
                     String u2 = server.getSQL().searchMatchUser2FromID(myGames.get(i));
                     String id = myGames.get(i).toString();
-                    String game = "game:" + u1 + "," + u2 + "," + id;
+                    String game = u1 + "," + u2 + "," + id;
                     games += game + " ";
                 }
                 System.out.println(games);
