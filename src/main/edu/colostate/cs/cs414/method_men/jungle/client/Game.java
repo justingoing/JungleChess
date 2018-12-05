@@ -20,6 +20,8 @@ public class Game {
     int moveCount = 0;
     private String username;
     boolean onlineGame = false;
+    private String redName;
+    private String blueName;
 
     /**
      * Create a new Game object.
@@ -28,6 +30,8 @@ public class Game {
      * instantiates a new board.
      */
     public Game (Socket socket, String blue, String red) {
+        this.blueName = blue;
+        this.redName = red;
         this.socket = socket;
         //this.username = username;
         players = new Player[2];
@@ -63,13 +67,13 @@ public class Game {
      * @param end location the user wishes to move their selected piece.
      * @return whether the move was successful or not.
      */
-    private boolean makeMove(Location start, Location end, Long ID){
+    private boolean makeMove(Location start, Location end, Long ID, String currUser){
         System.out.println("Game.makeMove()");
         Piece piece = board.getTile(start).getPiece();
 
         System.out.println("current turn: " + turn);
-        System.out.println("username: " + players[turn].getUsername());
-        System.out.println("this socket? " + socket.getInetAddress());
+        System.out.println("controlling user" + currUser);
+
 
         //Check if we are trying to move not a piece.
         if (piece == null){
@@ -106,8 +110,8 @@ public class Game {
     }
 
     //Simply another way to access the above method, makeMove(Location, Location).
-    public boolean makeMove(int currentRow, int currentCol, int nextRow, int nextCol, Long ID){
-        return makeMove(new Location(currentRow, currentCol), new Location(nextRow, nextCol), ID);
+    public boolean makeMove(int currentRow, int currentCol, int nextRow, int nextCol, Long ID, String currUser){
+        return makeMove(new Location(currentRow, currentCol), new Location(nextRow, nextCol), ID, currUser);
     }
 
     /**

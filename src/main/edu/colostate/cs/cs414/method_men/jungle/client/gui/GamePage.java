@@ -292,7 +292,7 @@ public class GamePage extends Page implements ActionListener {
             selectedButton = null;
         } else if (selectedButton != null) {
             //game.makeMoveUi(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
-            game.makeMove(selectedButton[0], selectedButton[1], button.getRow(), button.getCol(), this.gameID);
+            game.makeMove(selectedButton[0], selectedButton[1], button.getRow(), button.getCol(), this.gameID, frame.getUsername());
             updateBoard();
             buttons[selectedButton[0]][selectedButton[1]].setBorder(new LineBorder(Color.LIGHT_GRAY));
             selectedButton = null;

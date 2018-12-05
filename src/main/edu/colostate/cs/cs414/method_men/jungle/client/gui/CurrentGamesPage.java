@@ -214,6 +214,7 @@ public class CurrentGamesPage extends Page implements ActionListener {
 
                     System.out.println("blue? " + blue);
 
+
                     //Gimme that game ID
                     Long id = new Long(Integer.parseInt(table.getValueAt(row, 2).toString()));
                     frame.changePageTo(new GamePage(frame, game, state, true, id));
