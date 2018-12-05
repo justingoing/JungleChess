@@ -46,7 +46,7 @@
 | Overview: | The users play the match |
 | Actors: | User [primary, initiator] |
 | Pre-conditions: | User is signed in |
-| Main Flow: |  1. Include(Match Invite) <br> 2. The system informs the users the match is starting and the match is setup in its initial or saved string3. <br> 3. The users make moves until one user has won the match. <br> Extension point: Record Match Results. <br> 4. The System removes the users from the match.|
+| Main Flow: |  1. Include(Match Invite) <br> 2. The system informs the users the match is starting and the match is setup in its initial or saved state. <br> 3. The users make moves until one user has won the match. <br> Extension point: Record Match Results. <br> 4. The System removes the users from the match.|
 | Post-conditions: | The match is terminated |
 | Alternate Flows: | **3a An illegal move is attempted** <br> 3a1. A user attempts to make an illegal move. <br> 3a2. The system informs the active user that move is not allowed. Return to 3. <br> **3b Active user has failed to move** <br> 3b1. No move has been made in a fixed time limit. <br> 3b2. The system informs the active user its their turn. Return to 3. <br> **3c User chooses to save match string3** <br> 3c1. User chooses to save the match string3. <br> Extension point: Save Match State. Return to 3. <br> **3d User quits** <br> 3d1. A user chooses to quit the match. <br> 3d2. The system informs the other user that the other user has quit. <br> 3d3. The remaining user is declared the winner. Return to 3. |
 
@@ -54,10 +54,10 @@
 | :--- | :--- |
 | Extends: | R05 |
 | Use case name: | Save Match State |
-| Overview: | The system saves the match string3 indefinitely |
+| Overview: | The system saves the match state indefinitely |
 | Primary actors: | User [Primary, Initiator] |
 | Pre-conditions: | User is currently playing a match |
-| Main Flow: | 1. User or opponent makes move. <br> 2. User signs off or stops playing. <br> 3. System saves the string3 of the match. <br> 4. User returns. 5. System resumes match.|
+| Main Flow: | 1. User or opponent makes move. <br> 2. User signs off or stops playing. <br> 3. System saves the state of the match. <br> 4. User returns. 5. System resumes match.|
 | Post-conditions: | The match is ready to be played where the user left off |
 | Alternate Flows: | - |
 
