@@ -205,24 +205,7 @@ public class GamePage extends Page implements ActionListener {
                     pieces.add(tile.getPiece());
                 }
             }
-            //Piece[] pieces = currPlayer.getValidPieces();
 
-            /*
-            ArrayList<Piece> pieces = new ArrayList<Piece>();
-            if(this.useState == false) {
-                for (Tile tile : this.game.getBoard().getBoard().values()) {
-                    if (tile.getPiece() != null) {
-                        pieces.add(tile.getPiece());
-                    }
-                }
-            }
-
-            else{
-                pieces = GameState.getPiecesArray(state, this.game);
-                this.game.setTurn(GameState.getTurn(state));
-                System.out.println(this.game.getTurn());
-            }
-            */
             for (int n = 0; n < pieces.size() ; n++) {
                 Icon icon = null;
 
