@@ -151,7 +151,7 @@ public interface SqlQueries {
     DBRecord searchRowIDMatchRecord(@Bind("ID") Long ID);
 
     /**
-     * Gets rows of match_state and maps result to MatchRecordRow class matching where user is in a match_record row
+     * Gets rows of match_record and maps result to MatchRecordRow class matching where user is in a match_record row
      * @param user String from user table
      * @return DBRecord where ID,string1,string2,string3,string4 are set from match_record row or empty list if no matches
      */
