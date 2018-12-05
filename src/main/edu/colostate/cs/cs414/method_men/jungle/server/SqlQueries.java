@@ -143,7 +143,7 @@ public interface SqlQueries {
     /**
      * Gets rows of match_state and maps result to MatchRowState class matching where User1 is in a match_state row
      * @param User1
-     * @return MatchStateRow where ID,User1,User2,State,Start_Date are set from match_state row
+     * @return List<MatchStateRow> where ID,User1,User2,State,Start_Date are set from match_state row or empty list if no matches
      */
     @SqlQuery("SELECT * FROM match_state WHERE User1=:User1 OR User2=:User1")
     @RegisterRowMapper(MatchStateRow.MatchStateRowMapper.class)
