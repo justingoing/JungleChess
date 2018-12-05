@@ -61,6 +61,7 @@ public class GamePage extends Page implements ActionListener {
         this.setLayout(gridbag);
         GridBagConstraints c = new GridBagConstraints();
 
+        /*
         //Game board
         if(useState == true){
             this.game = gameIn;
@@ -70,6 +71,9 @@ public class GamePage extends Page implements ActionListener {
             game = new Game(frame.getSocket(), frame.getUsername());
             System.out.println("useState = " + useState);
         }
+        */
+        //this.game = new Game(frame.getSocket(), frame.getUsername());
+        this.game = gameIn;
         currentlyHighlighted = new ArrayList<>();
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(9, 7));
@@ -143,7 +147,14 @@ public class GamePage extends Page implements ActionListener {
         add(back, c);
 
         resetBoard();
-        updateBoard();
+        if(useState){
+            boolean setState = GameState.setGameState(this.state, this.game);
+            updateBoard();
+            System.out.println("setState = " + setState);
+        }
+        else{
+            updateBoard();
+        }
     }
 
     public void resetBoard() {
@@ -188,8 +199,15 @@ public class GamePage extends Page implements ActionListener {
     public void updateBoard() {
         resetBoard();
         for (int i = 0; i < 2; i++) {
+            ArrayList<Piece> pieces = new ArrayList<>();
+            for (Tile tile : game.getBoard().getBoard().values()) {
+                if (tile.getPiece() != null){
+                    pieces.add(tile.getPiece());
+                }
+            }
             //Piece[] pieces = currPlayer.getValidPieces();
-            // TODO Gotta build this pieces array from game state then execute all the following lines
+
+            /*
             ArrayList<Piece> pieces = new ArrayList<Piece>();
             if(this.useState == false) {
                 for (Tile tile : this.game.getBoard().getBoard().values()) {
@@ -200,11 +218,11 @@ public class GamePage extends Page implements ActionListener {
             }
 
             else{
-                pieces = GameState.setGameState(state, this.game);
+                pieces = GameState.getPiecesArray(state, this.game);
                 this.game.setTurn(GameState.getTurn(state));
                 System.out.println(this.game.getTurn());
             }
-
+            */
             for (int n = 0; n < pieces.size() ; n++) {
                 Icon icon = null;
 

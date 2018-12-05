@@ -61,7 +61,53 @@ public class GameState {
 
     // This code assumes the string is in the format "BluePlayer:<username> RedPlayer:<username> Winner:<-1 for no winner, 1 or 0 if there is a winner> MoveCount:<number of moves> Red:<piece locations> Blue:<piece locations>"
     // piece locations are in the format <piece rank>:<row>:<col> where each piece is comma seperated
-    public static ArrayList<Piece> setGameState(String gameState, Game game) {
+    public static boolean setGameState(String gameState, Game game) {
+        String[] splitString = gameState.split(" ");
+
+        // TODO we need to do something with the data about winner when the game is won
+        // there isn't any way to do anything we can do with it right now because it only checks the winner by the locations of the pieces
+
+        // Parse next turn
+        String[] nextTurnStrings = splitString[1].split(":");
+        int nextTurn;
+        if (nextTurnStrings[1].equals("Red")) {
+            nextTurn = 1;
+        } else if (nextTurnStrings[1].equals("Blue")) {
+            nextTurn = 0;
+        } else {
+            return false;
+        }
+
+        // set next turn
+        if (game.getTurn() != nextTurn) {
+            game.incrementTurn();
+        }
+
+        // parse red pieces
+        String[] redPiecesStrings = splitString[3].split(":");
+        String[] redPieceLocations = redPiecesStrings[1].split("/");
+
+        if (!parseAndSetPieces("red", redPieceLocations, game)) {
+            System.out.println("FAILED to set red pieces");
+            return false;
+        }
+
+        // parse blue pieces
+        String[] bluePiecesStrings = splitString[4].split(":");
+        String[] bluePiecesLocations = bluePiecesStrings[1].split("/");
+
+        if (!parseAndSetPieces("blue", bluePiecesLocations, game)) {
+            System.out.println("FAILED to set blue pieces");
+        }
+
+
+        return true;
+    }
+
+
+
+
+    public static ArrayList<Piece> getPiecesArray(String gameState, Game game) {
         String[] splitString = gameState.split(" ");
 
         // TODO we need to do something with the data about winner when the game is won
