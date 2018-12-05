@@ -6,8 +6,13 @@ package edu.colostate.cs.cs414.method_men.jungle.client;
  */
 public class Player {
     private String color;
+    private String username;
 
     Player(String color) {
+        this.color = color;
+    }
+
+    Player(String color, String username) {
         this.color = color;
     }
 

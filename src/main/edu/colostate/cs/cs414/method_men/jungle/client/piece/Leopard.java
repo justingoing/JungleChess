@@ -9,4 +9,9 @@ public class Leopard extends GenericPiece {
             setLocation(6, 4);
         }
     }
+
+    public Leopard(String color, int row, int col) {
+        super("Leopard", 5, color);
+        setLocation(row, col);
+    }
 }

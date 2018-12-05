@@ -208,6 +208,29 @@ public class Receive extends Thread{
 
         }
 
+        if(message[0].equals("GetState")){
+            int id = Integer.parseInt(message[1]);
+            Long id1 = new Long(id);
+            String state = server.getSQL().searchStateMatchState(id1);
+            System.out.println(state);
+            try{
+                Send send = new Send(this.socket, this.server, this.gameID);
+                send.sendString(state);
+            }catch(Exception e){}
+        }
+
+        //Oh dear Lord, here we go
+        if(message[0].equals("GameState")){
+            String state = buildGameState(message);
+            Long ID = Long.parseLong(message[1]);
+            //update state in DB if ont local game
+            if(ID > 0) {
+                boolean added = server.getSQL().updateMatchState(state, ID);
+                System.out.println("Added = " + added);
+            }
+            //Send state to other user???
+        }
+
     }
 
     public List<Long> getUser1User2ID(String user1){
@@ -221,9 +244,16 @@ public class Receive extends Thread{
     }
 
     public String buildDefaultGameState(String user1, String user2){
-        String state = "";
-        state += "BluePlayer:" + user1 +  " RedPlayer:" + user2 +  " Winner:-1 NextTurn:Blue MoveCount:0 Red:7,0,0/6,0,6/4,1,1/2,1,5/1,2,0/5,2,2/3,2,4/8,2,6 Blue:8,6,0/3,6,2/5,6,4/1,6,6/2,7,1/4,7,5/6,8,0/7,8,6";
+        String state = "Winner:-1 NextTurn:Blue MoveCount:0 Red:7,0,0/6,0,6/4,1,1/2,1,5/1,2,0/5,2,2/3,2,4/8,2,6 Blue:8,6,0/3,6,2/5,6,4/1,6,6/2,7,1/4,7,5/6,8,0/7,8,6";
         return state;
+    }
+
+    public String buildGameState(String [] message){
+        String s = "";
+        for (int i = 2; i < message.length; i++) {
+            s += message[i] + " ";
+        }
+        return s;
     }
 
     public String getDateTime(){

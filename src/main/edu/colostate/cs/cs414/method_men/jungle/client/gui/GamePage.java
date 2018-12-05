@@ -41,19 +41,35 @@ public class GamePage extends Page implements ActionListener {
     private final Icon WATER_ICON = new ImageIcon(new ImageIcon("src/Images/water.jpg").getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
 
     private Game game;
+    private Long gameID;
+    private Boolean useState;
+    private String state;
     private JButton[][] buttons;
     private int[] selectedButton = null;
     private ArrayList<Location> currentlyHighlighted;
+    private boolean stateLoaded = false;
 
 
-    public GamePage(GUI frame) {
+    //if flag = true,
+    public GamePage(GUI frame, Game gameIn, String state, boolean useState, Long id) {
         super(frame);
+        //need this to send updated game state to server
+        this.gameID = id;
+        this.useState = useState;
+        this.state = state;
         GridBagLayout gridbag = new GridBagLayout();
         this.setLayout(gridbag);
         GridBagConstraints c = new GridBagConstraints();
 
         //Game board
-        game = new Game(frame.getSocket(), frame.getUsername());
+        if(useState == true){
+            this.game = gameIn;
+            System.out.println("useState = " + useState);
+        }
+        else{
+            game = new Game(frame.getSocket(), frame.getUsername());
+            System.out.println("useState = " + useState);
+        }
         currentlyHighlighted = new ArrayList<>();
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(9, 7));
@@ -171,14 +187,22 @@ public class GamePage extends Page implements ActionListener {
 
     public void updateBoard() {
         resetBoard();
-
         for (int i = 0; i < 2; i++) {
             //Piece[] pieces = currPlayer.getValidPieces();
+            // TODO Gotta build this pieces array from game state then execute all the following lines
             ArrayList<Piece> pieces = new ArrayList<Piece>();
-            for (Tile tile : game.getBoard().getBoard().values()) {
-                if (tile.getPiece() != null){
-                    pieces.add(tile.getPiece());
+            if(this.useState == false) {
+                for (Tile tile : this.game.getBoard().getBoard().values()) {
+                    if (tile.getPiece() != null) {
+                        pieces.add(tile.getPiece());
+                    }
                 }
+            }
+
+            else{
+                pieces = GameState.setGameState(state, this.game);
+                this.game.setTurn(GameState.getTurn(state));
+                System.out.println(this.game.getTurn());
             }
 
             for (int n = 0; n < pieces.size() ; n++) {
@@ -267,7 +291,7 @@ public class GamePage extends Page implements ActionListener {
             selectedButton = null;
         } else if (selectedButton != null) {
             //game.makeMoveUi(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
-            game.makeMove(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
+            game.makeMove(selectedButton[0], selectedButton[1], button.getRow(), button.getCol(), this.gameID);
             updateBoard();
             buttons[selectedButton[0]][selectedButton[1]].setBorder(new LineBorder(Color.LIGHT_GRAY));
             selectedButton = null;

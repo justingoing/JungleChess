@@ -71,6 +71,12 @@ public class ClientSend extends Thread{
         System.out.println("Reject invite sent");
     }
 
+    public void sendGameStateRequest(String s){
+        out.println("GetState " + s);
+        out.flush();
+        System.out.println("State request sent");
+    }
+
     //Should get username and password as combined string
     //with space in between Ex: "username password"
     public void sendLogin(String data){

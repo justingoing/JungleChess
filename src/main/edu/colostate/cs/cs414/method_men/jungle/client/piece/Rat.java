@@ -15,6 +15,11 @@ public class Rat extends Piece {
         }
     }
 
+    public Rat(String color, int row, int col) {
+        super("Rat", 1, color);
+        setLocation(row, col);
+    }
+
     @Override
     public boolean isValidMove(Location end, Board board){
         Tile startTile = board.getTile(getLocation());

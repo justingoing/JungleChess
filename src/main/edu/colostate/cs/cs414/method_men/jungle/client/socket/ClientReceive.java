@@ -54,6 +54,14 @@ public class ClientReceive extends Thread{
         return msg;
     }
 
+    public String receiveState(){
+        String msg = "";
+        try{
+            msg = in.readLine();
+        }catch (Exception e){}
+        return msg;
+    }
+
     public void receiveLogin(){
         String msg = null;
         System.out.println("Getting Login Response");

@@ -1,5 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.Game;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
 
@@ -94,7 +95,9 @@ public class MainMenuPage extends Page implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()) {
             case "LocalGame":
-                frame.changePageTo(new GamePage(frame));
+                Game game = new Game();
+                Long l = new Long(0);
+                frame.changePageTo(new GamePage(frame, game, "", false, l));
                 break;
             case "OnlineGame":
                 frame.changePageTo(new OutgoingInvitationsPage(frame));

@@ -10,4 +10,9 @@ public class Dog extends GenericPiece {
             setLocation(7, 5);
         }
     }
+
+    public Dog(String color, int row, int col) {
+        super("Dog", 4, color);
+        setLocation(row, col);
+    }
 }
