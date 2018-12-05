@@ -2,6 +2,7 @@ package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
 import edu.colostate.cs.cs414.method_men.jungle.client.*;
 import edu.colostate.cs.cs414.method_men.jungle.client.piece.Piece;
+import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
 import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
 
@@ -93,7 +94,17 @@ public class GamePage extends Page implements ActionListener {
         c.insets = new Insets(5,5,5,5);
         c.anchor = GridBagConstraints.NORTHWEST;
         add(buttonPanel, c);
-
+        //Strings for current players and next turn
+        String blLabel = "Blue Player: " + this.game.getBluePlayer();
+        String rdLabel = "RedPlayer: " + this.game.getRedPlayer();
+        int nextMove = this.game.getTurn();
+        String nextTurn = "It is ";
+        if(nextMove == 0){
+            nextTurn += "RED's move";
+        }
+        else {
+            nextTurn += "BLUE's move";
+        }
         //Rules
         JTextArea textArea = new JTextArea(31, 20);
         textArea.setEditable(false);
@@ -129,11 +140,20 @@ public class GamePage extends Page implements ActionListener {
         textArea.append("6 - Tiger\n");
         textArea.append("7 - Lion\n");
         textArea.append("8 - Elephant\n");
+        textArea.append("\n");
+        if(useState){
+            textArea.append(blLabel + "\n");
+            textArea.append(rdLabel + "\n");
+            textArea.append(nextTurn + "\n");
+        }
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = GridBagConstraints.NORTHEAST;
         c.insets = new Insets(5,0,0,5);
         add(textArea, c);
+
+        c.insets = new Insets(0,0,0,0);
+
 
         //Back to main menu button
         JButton back = new JButton("Back to main menu");
@@ -145,6 +165,17 @@ public class GamePage extends Page implements ActionListener {
         c.anchor = GridBagConstraints.SOUTHEAST;
         c.insets = new Insets(0,0,5,5);
         add(back, c);
+
+        //RefreshGame button
+        JButton refresh = new JButton("  Refresh Game  ");
+        refresh.setActionCommand("Refresh");
+        refresh.addActionListener(this);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.ipady = 40;
+        c.anchor = GridBagConstraints.SOUTHWEST;
+        c.insets = new Insets(0,0,5,5);
+        add(refresh, c);
 
         resetBoard();
         if(useState){
@@ -285,6 +316,23 @@ public class GamePage extends Page implements ActionListener {
             frame.changePageTo(new MainMenuPage(frame));
             return;
         }
+
+        //get state from DB, reload page
+        if (actionEvent.getActionCommand().equals("Refresh")){
+            String state = "";
+            try{
+                ClientSend cSend = new ClientSend(frame.getSocket());
+                // TODO implement that function
+                //System.out.println(table.getValueAt(row, 2));
+                cSend.sendGameStateRequest(this.gameID.toString());
+                ClientReceive rec = new ClientReceive(frame.getSocket());
+                state = rec.receiveState();
+                //System.out.println("State = " + state);
+            }catch(Exception e){}
+            frame.changePageTo(new GamePage(frame, this.game, state, true, this.gameID));
+            return;
+        }
+
         GameButton button = (GameButton) actionEvent.getSource();
         if (((LineBorder)button.getBorder()).getLineColor().equals(Color.BLACK)) {
             button.setBorder(new LineBorder(Color.LIGHT_GRAY));

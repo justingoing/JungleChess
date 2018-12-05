@@ -14,6 +14,7 @@ public class Player {
 
     Player(String color, String username) {
         this.color = color;
+        this.username = username;
     }
 
     public String getColor() {
