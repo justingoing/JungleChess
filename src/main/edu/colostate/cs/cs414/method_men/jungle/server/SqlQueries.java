@@ -4,6 +4,7 @@ package edu.colostate.cs.cs414.method_men.jungle.server;
 
 import java.util.List;
 
+import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
@@ -132,23 +133,47 @@ public interface SqlQueries {
     List<String> searchPairMatchInvite(@Bind("Inviter") String Inviter, @Bind("Invitee") String Invitee);
 
     /**
-     * Gets row of match_state and maps result to MatchRowState class matching ID
+     * Gets row of match_state and maps result to DBRecord class matching ID
      * @param ID Long unique
-     * @return MatchStateRow where ID,User1,User2,State,Start_Date are set from match_state row if ID in DB or null if not
+     * @return DBRecord where ID,string1,string2,string3,string4 are set from match_state row if ID in DB or null if not
      */
     @SqlQuery("SELECT * FROM match_state WHERE ID=:ID")
-    @RegisterRowMapper(MatchStateRow.MatchStateRowMapper.class)
-    MatchStateRow searchRowIDMatchState(@Bind("ID") Long ID);
+    @RegisterRowMapper(DBRecordMapper.class)
+    DBRecord searchRowIDMatchState(@Bind("ID") Long ID);
+
+    /**
+     * Gets row of match_record and maps result to DBRecord class matching ID
+     * @param ID Long unique
+     * @return DBRecord where ID,string1,string2,string3,string4 are set from match_record row if ID in DB or null if not
+     */
+    @SqlQuery("SELECT * FROM match_record WHERE ID=:ID")
+    @RegisterRowMapper(DBRecordMapper.class)
+    DBRecord searchRowIDMatchRecord(@Bind("ID") Long ID);
+
+    /**
+     * Gets rows of match_state and maps result to MatchRecordRow class matching where user is in a match_record row
+     * @param user String from user table
+     * @return DBRecord where ID,string1,string2,string3,string4 are set from match_record row or empty list if no matches
+     */
+    @SqlQuery("SELECT * FROM match_record WHERE Winner=:user OR Loser=:user")
+    @RegisterRowMapper(DBRecordMapper.class)
+    List<DBRecord> searchRowUserMatchRecord(@Bind("user") String user);
 
     /**
      * Gets rows of match_state and maps result to MatchRowState class matching where User1 is in a match_state row
      * @param User1
-     * @return List<MatchStateRow> where ID,User1,User2,State,Start_Date are set from match_state row or empty list if no matches
+     * @return List<DBRecord> where ID,string1,string2,string3,string4 are set from match_state row or empty list if no matches
      */
     @SqlQuery("SELECT * FROM match_state WHERE User1=:User1 OR User2=:User1")
-    @RegisterRowMapper(MatchStateRow.MatchStateRowMapper.class)
-    List<MatchStateRow> searchRowUserMatchState(@Bind("User1") String User1);
+    @RegisterRowMapper(DBRecordMapper.class)
+    List<DBRecord> searchRowUserMatchState(@Bind("User1") String User1);
 
+    /**
+     * Gets list of all users in user table
+     * @return List<String> list of users in user table
+     */
+    @SqlQuery("SELECT Username FROM user")
+    List<String> searchAllUsers();
 
     /**
      * Updates State in match_state table matching ID

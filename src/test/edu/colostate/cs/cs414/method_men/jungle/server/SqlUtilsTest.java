@@ -1,7 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.server;
 
 import org.jdbi.v3.core.Jdbi;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,9 +38,7 @@ public class SqlUtilsTest {
     void testAddUser() {
         String user = SQL.searchUser("jake");
         if(user==null) {
-            System.out.println(user);
             boolean added = SQL.addUser("jake", "doe");
-            System.out.println(added);
             assertTrue(added);
             SQL.deleteUser("jake");
         }
@@ -62,8 +60,6 @@ public class SqlUtilsTest {
 
     @Test
     void testDeleteUser() {
-        String user = SQL.searchUser("jane");
-        if(user!=null) System.out.println(user);
         boolean deleted = SQL.deleteUser("jane");
         System.out.println(deleted);
         assertTrue(deleted);
@@ -222,9 +218,20 @@ public class SqlUtilsTest {
     void testSearchRowIDMatchState(){
         Long user = SQL.addMatchState("connor", "jane", "120420182000", "120420182100");
         System.out.println(user);
-        MatchStateRow row = SQL.searchRowIDMatchState(user);
+        DBRecord row = SQL.searchRowIDMatchState(user);
+        assertTrue(row!=null);
         System.out.println(row);
         SQL.deleteMatchState(user);
+    }
+
+    @Test
+    void testSearchRowIDMatchRecord(){
+        Long user = SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
+        System.out.println(user);
+        DBRecord row = SQL.searchRowIDMatchRecord(user);
+        assertTrue(row!=null);
+        System.out.println(row);
+        SQL.deleteMatchRecord(user);
     }
 
     @Test
@@ -232,11 +239,31 @@ public class SqlUtilsTest {
         Long user = SQL.addMatchState("connor", "jane", "120420182000", "120420182100");
         Long user2 = SQL.addMatchState("jane", "john", "120420182000", "120420182100");
         System.out.println(user);
-        List<MatchStateRow> row = SQL.searchRowUserMatchState("jane");
+        List<DBRecord> row = SQL.searchRowUserMatchState("jane");
+        assertTrue(row.size()>=2);
         System.out.println(row.get(0));
         System.out.println(row.get(1));
         SQL.deleteMatchState(user);
         SQL.deleteMatchState(user2);
+    }
+
+    @Test
+    void testSearchRowUserMatchRecord(){
+        Long user = SQL.addMatchRecord("connor", "jane", "120420182000", "120420182100");
+        Long user2 = SQL.addMatchRecord("jane", "connor", "120420182000", "120420182100");
+        List<DBRecord> row = SQL.searchRowUserMatchRecord("jane");
+        assertTrue(row.size()>=2);
+        System.out.println(row.get(0));
+        System.out.println(row.get(1));
+        SQL.deleteMatchRecord(user);
+        SQL.deleteMatchRecord(user2);
+    }
+
+    @Test
+    void testSearchAllUser(){
+        List<String> users = SQL.searchAllUsers();
+        System.out.println(users);
+        assertFalse(users.isEmpty());
     }
 
 }
