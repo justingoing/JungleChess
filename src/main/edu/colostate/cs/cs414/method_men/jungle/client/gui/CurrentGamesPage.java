@@ -206,10 +206,14 @@ public class CurrentGamesPage extends Page implements ActionListener {
                         //TODO (probably) wait for server to create the game and give us the gameID
                     }catch(Exception e){}
                     //get usernames for blue and red players
+
                     String blue = table.getValueAt(row, 0).toString();
                     String red = table.getValueAt(row, 1).toString();
                     System.out.println("players = " + blue + " " + red);
                     Game game = new Game(frame.getSocket(), blue, red);
+
+                    System.out.println("blue? " + blue);
+
                     //Gimme that game ID
                     Long id = new Long(Integer.parseInt(table.getValueAt(row, 2).toString()));
                     frame.changePageTo(new GamePage(frame, game, state, true, id));

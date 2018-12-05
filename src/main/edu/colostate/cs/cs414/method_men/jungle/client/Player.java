@@ -20,4 +20,6 @@ public class Player {
         return this.color;
     }
 
+    public String getUsername(){return this.username;}
+
 }

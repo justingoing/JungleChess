@@ -67,6 +67,10 @@ public class Game {
         System.out.println("Game.makeMove()");
         Piece piece = board.getTile(start).getPiece();
 
+        System.out.println("current turn: " + turn);
+        System.out.println("username: " + players[turn].getUsername());
+        System.out.println("this socket? " + socket.getInetAddress());
+
         //Check if we are trying to move not a piece.
         if (piece == null){
             System.out.println(players[turn].getColor() + "'s trying to move a fricking empty spot");
