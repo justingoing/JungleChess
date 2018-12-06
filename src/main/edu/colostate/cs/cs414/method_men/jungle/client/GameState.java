@@ -140,7 +140,9 @@ public class GameState {
             // delete the piece if it wasn't in the list
             if (pieceInStateList == false && currPiece.getColor().equals(color)) {
                 Tile pieceTile = board.getTile(currPiece.getLocation());
-                pieceTile.setPiece(null);
+                if (pieceTile.getPiece().equals(currPiece)) { // make sure the piece we're trying to delete is on that tile
+                    pieceTile.setPiece(null);
+                }
             }
         }
 
