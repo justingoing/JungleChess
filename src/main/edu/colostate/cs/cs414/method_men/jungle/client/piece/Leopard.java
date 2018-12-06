@@ -1,5 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.piece;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.Location;
+
 public class Leopard extends GenericPiece {
     public Leopard(String color) {
         super("Leopard", 5, color);
@@ -13,5 +15,8 @@ public class Leopard extends GenericPiece {
     public Leopard(String color, int row, int col) {
         super("Leopard", 5, color);
         setLocation(row, col);
+    }
+    public Leopard(String color, Location location){
+        this(color, location.getRow(), location.getCol());
     }
 }

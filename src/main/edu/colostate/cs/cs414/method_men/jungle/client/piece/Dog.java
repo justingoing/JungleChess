@@ -1,6 +1,8 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.piece;
 
 
+import edu.colostate.cs.cs414.method_men.jungle.client.Location;
+
 public class Dog extends GenericPiece {
     public Dog(String color) {
         super("Dog", 4, color);
@@ -14,5 +16,8 @@ public class Dog extends GenericPiece {
     public Dog(String color, int row, int col) {
         super("Dog", 4, color);
         setLocation(row, col);
+    }
+    public Dog(String color, Location location){
+        this(color, location.getRow(), location.getCol());
     }
 }

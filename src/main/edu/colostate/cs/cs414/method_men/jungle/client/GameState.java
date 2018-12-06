@@ -78,149 +78,52 @@ public class GameState {
             game.incrementTurn();
         }
 
-        // parse red pieces
         String[] redPiecesStrings = splitString[3].split(":");
         String[] redPieceLocations = redPiecesStrings[1].split("/");
 
-        if (!parseAndSetPieces("red", redPieceLocations, game)) {
-            System.out.println("FAILED to set red pieces");
+        String[] bluePiecesStrings = splitString[4].split(":");
+        String[] bluePieceLocations = bluePiecesStrings[1].split("/");
+
+        ArrayList<Piece> pieces = new ArrayList<Piece>();
+        pieces = parsePiecesAndAddToList(pieces, "red", redPieceLocations, game);
+
+        if (pieces == null) {
             return false;
         }
 
-        // parse blue pieces
-        String[] bluePiecesStrings = splitString[4].split(":");
-        String[] bluePiecesLocations = bluePiecesStrings[1].split("/");
+        pieces = parsePiecesAndAddToList(pieces, "blue", bluePieceLocations, game);
 
-        if (!parseAndSetPieces("blue", bluePiecesLocations, game)) {
-            System.out.println("FAILED to set blue pieces");
+        if (pieces == null) {
+            return false;
         }
 
+        game.getBoard().setBoard(pieces);
 
         return true;
     }
 
-
-
-
-    public static ArrayList<Piece> getPiecesArray(String gameState, Game game) {
-        String[] splitString = gameState.split(" ");
-
-        // TODO we need to do something with the data about winner when the game is won
-        // there isn't any way to do anything we can do with it right now because it only checks the winner by the locations of the pieces
-
-        // Parse next turn
-        String[] nextTurnStrings = splitString[1].split(":");
-        int nextTurn;
-        if (nextTurnStrings[1].equals("Red")) {
-            nextTurn = 1;
-        } else if (nextTurnStrings[1].equals("Blue")) {
-            nextTurn = 0;
-        }
-
-        // parse red pieces
-        String[] redPiecesStrings = splitString[3].split(":");
-        String[] redPieceLocations = redPiecesStrings[1].split("/");
-        ArrayList<Piece> red = createPiecesArray("red", redPieceLocations);
-        /*
-        if (!parseAndSetPieces("red", redPieceLocations, game)) {
-            System.out.println("FAILED to set red pieces");
-            return false;
-        }
-        */
-        // parse blue pieces
-        String[] bluePiecesStrings = splitString[4].split(":");
-        String[] bluePiecesLocations = bluePiecesStrings[1].split("/");
-        ArrayList<Piece> blue = createPiecesArray("blue", bluePiecesLocations);
-
-        /*
-        if (!parseAndSetPieces("blue", bluePiecesLocations, game)) {
-            System.out.println("FAILED to set blue pieces");
-        }
-        */
-        red.addAll(blue);
-        //System.out.println(red.toString());
-        return red;
-    }
-
-    public static ArrayList<Piece> createPiecesArray(String color, String[] pieceLocations){
-        ArrayList<Piece> pieces = new ArrayList<Piece>();
-        for (int i = 0; i < pieceLocations.length; i++) {
-            String[] currStringStrings = pieceLocations[i].split(",");
-
-            int pieceRank = Integer.parseInt(currStringStrings[0]);
-            int pieceRow = Integer.parseInt(currStringStrings[1]);
-            int pieceCol = Integer.parseInt(currStringStrings[2]);
-
-            if(pieceRank == 1){
-                Rat r = new Rat(color, pieceRow, pieceCol);
-                pieces.add(r);
-            }
-            if(pieceRank == 2){
-                Cat c = new Cat(color, pieceRow, pieceCol);
-                pieces.add(c);
-            }
-            if(pieceRank == 3){
-                Wolf w = new Wolf(color, pieceRow, pieceCol);
-                pieces.add(w);
-            }
-            if(pieceRank == 4){
-                Dog d = new Dog(color, pieceRow, pieceCol);
-                pieces.add(d);
-            }
-            if(pieceRank == 5){
-                Leopard l = new Leopard(color, pieceRow, pieceCol);
-                pieces.add(l);
-            }
-            if(pieceRank == 6){
-                Tiger t = new Tiger(color, pieceRow, pieceCol);
-                pieces.add(t);
-            }
-            if(pieceRank == 7){
-                Lion l = new Lion(color, pieceRow, pieceCol);
-                pieces.add(l);
-            }
-            if(pieceRank == 8){
-                Elephant e = new Elephant(color, pieceRow, pieceCol);
-                pieces.add(e);
-            }
-        }
-        return pieces;
-    }
-
-    public static boolean parseAndSetPieces(String color, String[] locationStrings, Game game) {
-        Board board = game.getBoard();
-
-        ArrayList<Piece> pieces = new ArrayList<Piece>();
-        for (Tile tile : board.getBoard().values()) {
-            if (tile.getPiece() != null){
-                pieces.add(tile.getPiece());
-            }
-        }
-
-        for (int currStringIndex = 0; currStringIndex < locationStrings.length; currStringIndex++) {
-            String[] currStringStrings = locationStrings[currStringIndex].split(",");
+    public static ArrayList<Piece> parsePiecesAndAddToList(ArrayList<Piece> pieces, String color, String[] piecesStrings, Game game) {
+        for (int currPiecesStringIndex = 0;  currPiecesStringIndex < piecesStrings.length; currPiecesStringIndex++) {
+            String[] currPiecesNums = piecesStrings[currPiecesStringIndex].split(",");
 
             int pieceRank;
             int pieceRow;
             int pieceCol;
 
             try {
-                pieceRank = Integer.parseInt(currStringStrings[0]);
-                pieceRow = Integer.parseInt(currStringStrings[1]);
-                pieceCol = Integer.parseInt(currStringStrings[2]);
+                pieceRank = Integer.parseInt(currPiecesNums[0]);
+                pieceRow = Integer.parseInt(currPiecesNums[1]);
+                pieceCol = Integer.parseInt(currPiecesNums[2]);
             } catch (NumberFormatException e) {
-                return false;
+                return null;
             }
 
-            for (int currPieceIndex = 0; currPieceIndex < pieces.size(); currPieceIndex++) {
-                Piece currPiece = pieces.get(currPieceIndex);
-                if (currPiece.getColor().equals(color) && currPiece.getRank() == pieceRank) {
-                    board.move(currPiece, new Location(pieceRow, pieceCol));
-                    break;
-                }
-            }
+            Piece currPiece = game.getBoard().makePiece(color, pieceRank, new Location(pieceRow, pieceCol));
+            pieces.add(currPiece);
+
         }
-        return true;
+
+        return pieces;
     }
 
 }

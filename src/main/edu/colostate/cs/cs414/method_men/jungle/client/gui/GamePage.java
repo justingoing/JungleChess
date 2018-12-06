@@ -75,6 +75,9 @@ public class GamePage extends Page implements ActionListener {
         */
         //this.game = new Game(frame.getSocket(), frame.getUsername());
         this.game = gameIn;
+        int winCheck = this.game.winnerCheck();
+        System.out.println("winCheck = " + winCheck);
+
         currentlyHighlighted = new ArrayList<>();
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(9, 7));
@@ -329,8 +332,20 @@ public class GamePage extends Page implements ActionListener {
                 state = rec.receiveState();
                 //System.out.println("State = " + state);
             }catch(Exception e){}
+            int winCheck = this.game.winnerCheck();
+            if (winCheck == 1) {
+                this.game.endGame();
+                this.frame.changePageTo(new WinnerPage(frame, this.game.getBluePlayer()));
+                return;
+            }
+            if (winCheck == 0) {
+                this.game.endGame();
+                this.frame.changePageTo(new WinnerPage(frame, this.game.getRedPlayer()));
+                return;
+            }
+            else{
             frame.changePageTo(new GamePage(frame, this.game, state, true, this.gameID));
-            return;
+            return;}
         }
 
         GameButton button = (GameButton) actionEvent.getSource();
@@ -348,10 +363,10 @@ public class GamePage extends Page implements ActionListener {
 
             if (game.winnerCheck() == 1) {
                 game.endGame();
-                frame.changePageTo(new GameEndPage(frame, false));
+                frame.changePageTo(new WinnerPage(frame, this.game.getBluePlayer()));
             } else if (game.winnerCheck() == 0) {
                 game.endGame();
-                frame.changePageTo(new GameEndPage(frame, true));
+                frame.changePageTo(new WinnerPage(frame, this.game.getRedPlayer()));
             }
 
         } else if (((LineBorder)button.getBorder()).getLineColor().equals(Color.LIGHT_GRAY)) {

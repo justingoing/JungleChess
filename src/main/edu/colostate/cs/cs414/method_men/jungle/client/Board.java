@@ -42,6 +42,22 @@ public class Board {
         }
     }
 
+    public void setBoard(ArrayList<Piece> pieces){
+        int HEIGHT = 9;
+        int WIDTH = 7;
+        for (int row = 0; row < HEIGHT; ++row) {
+            for (int col = 0; col < WIDTH; ++col) {
+                Location location = new Location(row, col);
+                Tile tile = makeTile(location);
+                board.put(location, tile);
+            }
+        }
+        for (Piece piece: pieces){
+            board.get(piece.getLocation()).setPiece(piece);
+        }
+
+    }
+
     /**
      * Create a specific type of Tile (Den, Trap, etc...) based on location.
      * @param location the coordinate of the Tile in the context of the board. Used to determine what type of Tile.
@@ -138,6 +154,35 @@ public class Board {
             return new Elephant("blue");
         }
         return null;
+    }
+
+    public Piece makePiece(String color, int rank, Location location){
+        switch (rank) {
+            case 8:
+                return new Elephant(color, location);
+            //Lion
+            case 7:     return new Lion(color, location);
+            //Tiger
+            case 6:
+                return new Tiger(color, location);
+            //Leopard
+            case 5:
+                return new Leopard(color, location);
+            //Dog
+            case 4:
+                return new Dog(color, location);
+            //Wolf
+            case 3:
+                return new Wolf(color, location);
+            //Cat
+            case 2:
+                return new Cat(color, location);
+            //Rat
+            case 1:
+                return new Rat(color, location);
+            default:
+                return null;
+        }
     }
 
     /**

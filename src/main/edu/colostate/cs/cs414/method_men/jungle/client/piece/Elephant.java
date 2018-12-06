@@ -18,6 +18,9 @@ public class Elephant extends GenericPiece {
         super("Elephant", 8, color);
         setLocation(row, col);
     }
+    public Elephant(String color, Location location){
+        this(color, location.getRow(), location.getCol());
+    }
 
     @Override
     public boolean isValidMove(Location end, Board board) {

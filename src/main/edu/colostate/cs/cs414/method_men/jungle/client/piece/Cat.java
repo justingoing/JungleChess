@@ -1,5 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.piece;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.Location;
+
 public class Cat extends GenericPiece {
     public Cat(String color) {
         super("Cat", 2, color);
@@ -13,5 +15,8 @@ public class Cat extends GenericPiece {
     public Cat(String color, int row, int col) {
         super("Cat", 2, color);
         setLocation(row, col);
+    }
+    public Cat(String color, Location location){
+        this(color, location.getRow(), location.getCol());
     }
 }

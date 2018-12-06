@@ -1,5 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.piece;
 
+import edu.colostate.cs.cs414.method_men.jungle.client.Location;
+
 public class Lion extends JumperPiece {
     public Lion(String color) {
         super("Lion", 7, color);
@@ -12,5 +14,8 @@ public class Lion extends JumperPiece {
     public Lion(String color, int row, int col) {
         super("Lion", 7, color);
         setLocation(row, col);
+    }
+    public Lion(String color, Location location){
+        this(color, location.getRow(), location.getCol());
     }
 }
