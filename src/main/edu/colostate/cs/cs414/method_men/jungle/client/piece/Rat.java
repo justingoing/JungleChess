@@ -20,6 +20,9 @@ public class Rat extends Piece {
         setLocation(row, col);
     }
 
+    public Rat(String color, Location location){
+        this(color, location.getRow(), location.getCol());
+    }
     @Override
     public boolean isValidMove(Location end, Board board){
         Tile startTile = board.getTile(getLocation());

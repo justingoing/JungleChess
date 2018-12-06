@@ -156,6 +156,49 @@ public class Board {
         return null;
     }
 
+    public Piece makePiece(String color, int rank, Location location){
+        //Elephant
+        if (rank == 8) {
+            return new Elephant(color, location);
+        }
+
+        //Lion
+        if (rank == 7){
+            return new Lion(color, location);
+        }
+
+        //Tiger
+        if (rank == 6){
+            return new Tiger(color, location);
+        }
+
+        //Leopard
+        if (rank == 5){
+            return new Leopard(color, location);
+        }
+
+        //Dog
+        if (rank == 4){
+            return new Dog(color, location);
+        }
+
+        //Wolf
+        if (rank == 3){
+            return new Wolf(color, location);
+        }
+
+        //Cat
+        if (rank == 2){
+            return new Cat(color, location);
+        }
+
+        //Rat
+        if (rank == 1){
+            return new Rat(color, location);
+        }
+        return null;
+    }
+
     /**
      * Moves a piece to a new location, not caring about validation.
      * @param piece to be moved.

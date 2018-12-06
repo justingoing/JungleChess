@@ -30,6 +30,11 @@ public class Piece {
         this.color = color;
     }
 
+    public Piece(String name, int rank, String color, Location location){
+        this(name, rank, color);
+        this.location = location;
+    }
+
     /**
      * Get the set of all valid moves for this piece at this location given this board state.
      * @param board state of the tiles and pieces.
