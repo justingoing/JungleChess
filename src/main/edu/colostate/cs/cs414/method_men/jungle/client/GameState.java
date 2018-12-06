@@ -133,18 +133,18 @@ public class GameState {
                 if (currPiece.getColor().equals(color) && currPiece.getRank() == pieceRank) {
                     currPiece.setLocation(new Location(pieceRow, pieceCol));
                     board.getTile(currPiece.getLocation()).setPiece(currPiece);
-//                    pieceInStateList = true; // don't delete the piece
+                    pieceInStateList = true; // don't delete the piece
                     break;
                 }
             }
-//
-//            // delete the piece if it wasn't in the list
-//            if (pieceInStateList && currPiece.getColor().equals(color)) {
-//                Tile pieceTile = board.getTile(currPiece.getLocation());
-//                if (pieceTile.getPiece().equals(currPiece)) { // make sure the piece we're trying to delete is on that tile
-//                    pieceTile.setPiece(null);
-//                }
-//            }
+
+            // delete the piece if it wasn't in the list
+            if (pieceInStateList && currPiece.getColor().equals(color)) {
+                Tile pieceTile = board.getTile(currPiece.getLocation());
+                if (pieceTile.getPiece().equals(currPiece)) { // make sure the piece we're trying to delete is on that tile
+                    pieceTile.setPiece(null);
+                }
+            }
         }
 
         return true;
