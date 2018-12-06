@@ -110,12 +110,7 @@ public class Game {
 
             //send game state
             moveCount++;
-            ArrayList
-              
-              
-              
-              
-              Piece> red = this.getBoard().getPieces("red");
+            ArrayList<Piece> red = this.getBoard().getPieces("red");
             ArrayList<Piece> blue = this.getBoard().getPieces("blue");
             int winner = this.winnerCheck();
             String state = GameState.makeGameState(this.username, winner, this.turn, moveCount, red, blue, ID);
