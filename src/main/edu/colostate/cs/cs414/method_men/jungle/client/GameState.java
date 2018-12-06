@@ -93,100 +93,14 @@ public class GameState {
 
         if (!parseAndSetPieces("blue", bluePiecesLocations, game)) {
             System.out.println("FAILED to set blue pieces");
+            return false;
         }
 
 
         return true;
     }
 
-
-
-
-    public static ArrayList<Piece> getPiecesArray(String gameState, Game game) {
-        String[] splitString = gameState.split(" ");
-
-        // TODO we need to do something with the data about winner when the game is won
-        // there isn't any way to do anything we can do with it right now because it only checks the winner by the locations of the pieces
-
-        // Parse next turn
-        String[] nextTurnStrings = splitString[1].split(":");
-        int nextTurn;
-        if (nextTurnStrings[1].equals("Red")) {
-            nextTurn = 1;
-        } else if (nextTurnStrings[1].equals("Blue")) {
-            nextTurn = 0;
-        }
-
-        // parse red pieces
-        String[] redPiecesStrings = splitString[3].split(":");
-        String[] redPieceLocations = redPiecesStrings[1].split("/");
-        ArrayList<Piece> red = createPiecesArray("red", redPieceLocations);
-        /*
-        if (!parseAndSetPieces("red", redPieceLocations, game)) {
-            System.out.println("FAILED to set red pieces");
-            return false;
-        }
-        */
-        // parse blue pieces
-        String[] bluePiecesStrings = splitString[4].split(":");
-        String[] bluePiecesLocations = bluePiecesStrings[1].split("/");
-        ArrayList<Piece> blue = createPiecesArray("blue", bluePiecesLocations);
-
-        /*
-        if (!parseAndSetPieces("blue", bluePiecesLocations, game)) {
-            System.out.println("FAILED to set blue pieces");
-        }
-        */
-        red.addAll(blue);
-        //System.out.println(red.toString());
-        return red;
-    }
-
-    public static ArrayList<Piece> createPiecesArray(String color, String[] pieceLocations){
-        ArrayList<Piece> pieces = new ArrayList<Piece>();
-        for (int i = 0; i < pieceLocations.length; i++) {
-            String[] currStringStrings = pieceLocations[i].split(",");
-
-            int pieceRank = Integer.parseInt(currStringStrings[0]);
-            int pieceRow = Integer.parseInt(currStringStrings[1]);
-            int pieceCol = Integer.parseInt(currStringStrings[2]);
-
-            if(pieceRank == 1){
-                Rat r = new Rat(color, pieceRow, pieceCol);
-                pieces.add(r);
-            }
-            if(pieceRank == 2){
-                Cat c = new Cat(color, pieceRow, pieceCol);
-                pieces.add(c);
-            }
-            if(pieceRank == 3){
-                Wolf w = new Wolf(color, pieceRow, pieceCol);
-                pieces.add(w);
-            }
-            if(pieceRank == 4){
-                Dog d = new Dog(color, pieceRow, pieceCol);
-                pieces.add(d);
-            }
-            if(pieceRank == 5){
-                Leopard l = new Leopard(color, pieceRow, pieceCol);
-                pieces.add(l);
-            }
-            if(pieceRank == 6){
-                Tiger t = new Tiger(color, pieceRow, pieceCol);
-                pieces.add(t);
-            }
-            if(pieceRank == 7){
-                Lion l = new Lion(color, pieceRow, pieceCol);
-                pieces.add(l);
-            }
-            if(pieceRank == 8){
-                Elephant e = new Elephant(color, pieceRow, pieceCol);
-                pieces.add(e);
-            }
-        }
-        return pieces;
-    }
-
+    // Parse the pieces strings and move/delete the necessary pieces
     public static boolean parseAndSetPieces(String color, String[] locationStrings, Game game) {
         Board board = game.getBoard();
 
@@ -197,29 +111,39 @@ public class GameState {
             }
         }
 
-        for (int currStringIndex = 0; currStringIndex < locationStrings.length; currStringIndex++) {
-            String[] currStringStrings = locationStrings[currStringIndex].split(",");
+        for (int currPieceIndex = 0; currPieceIndex < pieces.size(); currPieceIndex++) {
+            Piece currPiece = pieces.get(currPieceIndex);
+            boolean pieceInStateList = false;
 
-            int pieceRank;
-            int pieceRow;
-            int pieceCol;
+            for (int currStringIndex = 0; currStringIndex < locationStrings.length; currStringIndex++) {
+                String[] currStringStrings = locationStrings[currStringIndex].split(",");
 
-            try {
-                pieceRank = Integer.parseInt(currStringStrings[0]);
-                pieceRow = Integer.parseInt(currStringStrings[1]);
-                pieceCol = Integer.parseInt(currStringStrings[2]);
-            } catch (NumberFormatException e) {
-                return false;
-            }
+                int pieceRank;
+                int pieceRow;
+                int pieceCol;
 
-            for (int currPieceIndex = 0; currPieceIndex < pieces.size(); currPieceIndex++) {
-                Piece currPiece = pieces.get(currPieceIndex);
+                try {
+                    pieceRank = Integer.parseInt(currStringStrings[0]);
+                    pieceRow = Integer.parseInt(currStringStrings[1]);
+                    pieceCol = Integer.parseInt(currStringStrings[2]);
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+
                 if (currPiece.getColor().equals(color) && currPiece.getRank() == pieceRank) {
                     board.move(currPiece, new Location(pieceRow, pieceCol));
+                    pieceInStateList = true; // don't delete the piece
                     break;
                 }
             }
+
+            // delete the piece if it wasn't in the list
+            if (pieceInStateList == false && currPiece.getColor().equals(color)) {
+                Tile pieceTile = board.getTile(currPiece.getLocation());
+                pieceTile.setPiece(null);
+            }
         }
+
         return true;
     }
 
