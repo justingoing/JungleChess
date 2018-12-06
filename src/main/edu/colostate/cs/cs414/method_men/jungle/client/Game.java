@@ -71,9 +71,7 @@ public class Game {
         System.out.println("Game.makeMove()");
         Piece piece = board.getTile(start).getPiece();
 
-        System.out.println("current turn: " + turn);
-        System.out.println("controlling user" + currUser);
-
+        System.out.println("Controlling user: " + currUser);
 
         //Check if we are trying to move not a piece.
         if (piece == null){
@@ -83,12 +81,16 @@ public class Game {
 
         System.out.println(players[turn].getColor() + "'s trying to move " + piece.getColor() + " " + piece.getName());
 
-        if (!(piece.getColor().equals(players[turn].getColor()))){
+        System.out.println("turn username " + players[turn].getUsername());
+        System.out.println("condition " + !currUser.equals(players[turn].getUsername()));
+
+        if(!currUser.equals(players[turn].getUsername())){
+           System.out.println("Not your turn");
+           return false;
+        }else if (!piece.getColor().equals(players[turn].getColor())){
             System.out.println("Not your piece");
             return false;
-        }
-
-        else if (piece.isValidMove(end, board)){
+        }else if (piece.isValidMove(end, board)){
             System.out.println(players[turn].getColor() + "'s move is valid ");
             board.move(piece, end);
             turn = (turn + 1)%2;
