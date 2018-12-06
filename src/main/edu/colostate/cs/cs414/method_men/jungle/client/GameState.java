@@ -78,80 +78,52 @@ public class GameState {
             game.incrementTurn();
         }
 
-        // parse red pieces
         String[] redPiecesStrings = splitString[3].split(":");
         String[] redPieceLocations = redPiecesStrings[1].split("/");
 
-        if (!parseAndSetPieces("red", redPieceLocations, game)) {
-            System.out.println("FAILED to set red pieces");
-            return false;
-        }
-
-        // parse blue pieces
         String[] bluePiecesStrings = splitString[4].split(":");
-        String[] bluePiecesLocations = bluePiecesStrings[1].split("/");
+        String[] bluePieceLocations = bluePiecesStrings[1].split("/");
 
-        if (!parseAndSetPieces("blue", bluePiecesLocations, game)) {
-            System.out.println("FAILED to set blue pieces");
+        ArrayList<Piece> pieces = new ArrayList<Piece>();
+        pieces = parsePiecesAndAddToList(pieces, "red", redPieceLocations, game);
+
+        if (pieces == null) {
             return false;
         }
 
+        pieces = parsePiecesAndAddToList(pieces, "blue", bluePieceLocations, game);
+
+        if (pieces == null) {
+            return false;
+        }
+
+        game.getBoard().setBoard(pieces);
 
         return true;
     }
 
-    // Parse the pieces strings and move/delete the necessary pieces
-    public static boolean parseAndSetPieces(String color, String[] locationStrings, Game game) {
-        Board board = game.getBoard();
+    public static ArrayList<Piece> parsePiecesAndAddToList(ArrayList<Piece> pieces, String color, String[] piecesStrings, Game game) {
+        for (int currPiecesStringIndex = 0;  currPiecesStringIndex < piecesStrings.length; currPiecesStringIndex++) {
+            String[] currPiecesNums = piecesStrings[currPiecesStringIndex].split(",");
 
-        //Get the pieces on baord
-        ArrayList<Piece> pieces = new ArrayList<Piece>();
-        for (Tile tile : board.getBoard().values()) {
-            if (tile.getPiece() != null){
-                pieces.add(tile.getPiece());
-            }
-        }
- 
-        //TODO: Put this line somewhere:
-        game.getBoard().setBoard(pieces);
+            int pieceRank;
+            int pieceRow;
+            int pieceCol;
 
-        for (int currPieceIndex = 0; currPieceIndex < pieces.size(); currPieceIndex++) {
-            Piece currPiece = pieces.get(currPieceIndex);
-            boolean pieceInStateList = false;
-
-            for (int currStringIndex = 0; currStringIndex < locationStrings.length; currStringIndex++) {
-                String[] currStringStrings = locationStrings[currStringIndex].split(",");
-
-                int pieceRank;
-                int pieceRow;
-                int pieceCol;
-
-                try {
-                    pieceRank = Integer.parseInt(currStringStrings[0]);
-                    pieceRow = Integer.parseInt(currStringStrings[1]);
-                    pieceCol = Integer.parseInt(currStringStrings[2]);
-                } catch (NumberFormatException e) {
-                    return false;
-                }
-
-                if (currPiece.getColor().equals(color) && currPiece.getRank() == pieceRank) {
-                    currPiece.setLocation(new Location(pieceRow, pieceCol));
-                    board.getTile(currPiece.getLocation()).setPiece(currPiece);
-                    pieceInStateList = true; // don't delete the piece
-                    break;
-                }
+            try {
+                pieceRank = Integer.parseInt(currPiecesNums[0]);
+                pieceRow = Integer.parseInt(currPiecesNums[1]);
+                pieceCol = Integer.parseInt(currPiecesNums[2]);
+            } catch (NumberFormatException e) {
+                return null;
             }
 
-            // delete the piece if it wasn't in the list
-            if (pieceInStateList && currPiece.getColor().equals(color)) {
-                Tile pieceTile = board.getTile(currPiece.getLocation());
-                if (pieceTile.getPiece().equals(currPiece)) { // make sure the piece we're trying to delete is on that tile
-                    pieceTile.setPiece(null);
-                }
-            }
+            Piece currPiece = game.getBoard().makePiece(color, pieceRank, new Location(pieceRow, pieceCol));
+            pieces.add(currPiece);
+
         }
 
-        return true;
+        return pieces;
     }
 
 }
