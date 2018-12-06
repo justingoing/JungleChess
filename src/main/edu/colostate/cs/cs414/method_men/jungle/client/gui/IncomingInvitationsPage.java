@@ -93,10 +93,7 @@ public class IncomingInvitationsPage extends Page implements ActionListener {
 
 
             if(response.equals("Fail")){
-                JOptionPane.showMessageDialog(frame,
-                        "You have no invites",
-                        "myInvites",
-                        JOptionPane.ERROR_MESSAGE);
+
             }else{
                String[] holder = response.split(" ");
                for(String inv : holder){
