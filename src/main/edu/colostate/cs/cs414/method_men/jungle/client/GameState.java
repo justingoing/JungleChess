@@ -104,12 +104,16 @@ public class GameState {
     public static boolean parseAndSetPieces(String color, String[] locationStrings, Game game) {
         Board board = game.getBoard();
 
+        //Get the pieces on baord
         ArrayList<Piece> pieces = new ArrayList<Piece>();
         for (Tile tile : board.getBoard().values()) {
             if (tile.getPiece() != null){
                 pieces.add(tile.getPiece());
             }
         }
+
+        //TODO: Put this line somewhere:
+        game.getBoard().setBoard(pieces);
 
         for (int currPieceIndex = 0; currPieceIndex < pieces.size(); currPieceIndex++) {
             Piece currPiece = pieces.get(currPieceIndex);

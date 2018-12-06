@@ -42,7 +42,7 @@ public class Board {
         }
     }
 
-    private void setBoard(ArrayList<Piece> pieces){
+    public void setBoard(ArrayList<Piece> pieces){
         int HEIGHT = 9;
         int WIDTH = 7;
         for (int row = 0; row < HEIGHT; ++row) {
