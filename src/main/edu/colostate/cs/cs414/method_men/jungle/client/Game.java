@@ -80,7 +80,8 @@ public class Game {
      * @param end location the user wishes to move their selected piece.
      * @return whether the move was successful or not.
      */
-    private boolean makeMove(Location start, Location end, Long ID, String currUser){
+    //online game
+    public boolean makeMove(Location start, Location end, Long ID, String currUser){
         System.out.println("Game.makeMove()");
         Piece piece = board.getTile(start).getPiece();
 
@@ -118,6 +119,39 @@ public class Game {
                 ClientSend cSend = new ClientSend(this.socket);
                 cSend.sendState(state);
             }catch(Exception e){}
+            return true;
+        }
+        System.out.println(players[turn].getColor() + "'s move is Invalid ");
+        return false;
+    }
+
+    //Simply another way to access the above method, makeMove(Location, Location).
+    public boolean makeMoveLocalGame(int currentRow, int currentCol, int nextRow, int nextCol){
+        return makeMoveLocal(new Location(currentRow, currentCol), new Location(nextRow, nextCol));
+    }
+
+    //Local Game
+    private boolean makeMoveLocal(Location start, Location end){
+        System.out.println("Game.makeMove()");
+        Piece piece = board.getTile(start).getPiece();
+
+        //Check if we are trying to move not a piece.
+        if (piece == null){
+            System.out.println(players[turn].getColor() + "'s trying to move a fricking empty spot");
+            return false;
+        }
+
+        System.out.println(players[turn].getColor() + "'s trying to move " + piece.getColor() + " " + piece.getName());
+
+        if (!(piece.getColor().equals(players[turn].getColor()))){
+            System.out.println("Not your piece");
+            return false;
+        }
+
+        else if (piece.isValidMove(end, board)){
+            System.out.println(players[turn].getColor() + "'s move is valid ");
+            board.move(piece, end);
+            turn = (turn + 1)%2;
             return true;
         }
         System.out.println(players[turn].getColor() + "'s move is Invalid ");

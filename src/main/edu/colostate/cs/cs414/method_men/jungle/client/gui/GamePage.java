@@ -322,30 +322,38 @@ public class GamePage extends Page implements ActionListener {
 
         //get state from DB, reload page
         if (actionEvent.getActionCommand().equals("Refresh")){
-            String state = "";
-            try{
-                ClientSend cSend = new ClientSend(frame.getSocket());
-                // TODO implement that function
-                //System.out.println(table.getValueAt(row, 2));
-                cSend.sendGameStateRequest(this.gameID.toString());
-                ClientReceive rec = new ClientReceive(frame.getSocket());
-                state = rec.receiveState();
-                //System.out.println("State = " + state);
-            }catch(Exception e){}
-            int winCheck = this.game.winnerCheck();
-            if (winCheck == 1) {
-                this.game.endGame();
-                this.frame.changePageTo(new WinnerPage(frame, this.game.getBluePlayer()));
-                return;
-            }
-            if (winCheck == 0) {
-                this.game.endGame();
-                this.frame.changePageTo(new WinnerPage(frame, this.game.getRedPlayer()));
-                return;
+            if(useState){
+                String state = "";
+                try{
+                    ClientSend cSend = new ClientSend(frame.getSocket());
+                    // TODO implement that function
+                    //System.out.println(table.getValueAt(row, 2));
+                    cSend.sendGameStateRequest(this.gameID.toString());
+                    ClientReceive rec = new ClientReceive(frame.getSocket());
+                    state = rec.receiveState();
+                    //System.out.println("State = " + state);
+                }catch(Exception e){}
+                int winCheck = this.game.winnerCheck();
+                if (winCheck == 1) {
+                    this.game.endGame();
+                    this.frame.changePageTo(new WinnerPage(frame, this.game.getBluePlayer()));
+                    return;
+                }
+                if (winCheck == 0) {
+                    this.game.endGame();
+                    this.frame.changePageTo(new WinnerPage(frame, this.game.getRedPlayer()));
+                    return;
+                }
+                else{
+                    frame.changePageTo(new GamePage(frame, this.game, state, true, this.gameID));
+                    return;}
             }
             else{
-            frame.changePageTo(new GamePage(frame, this.game, state, true, this.gameID));
-            return;}
+                Game game = new Game();
+                Long l = new Long(0);
+                frame.changePageTo(new GamePage(frame, game, "", false, l));
+            }
+
         }
 
         GameButton button = (GameButton) actionEvent.getSource();
@@ -355,7 +363,13 @@ public class GamePage extends Page implements ActionListener {
             selectedButton = null;
         } else if (selectedButton != null) {
             //game.makeMoveUi(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
-            game.makeMove(selectedButton[0], selectedButton[1], button.getRow(), button.getCol(), this.gameID, frame.getUsername());
+            if(this.useState){
+                this.game.makeMove(selectedButton[0], selectedButton[1], button.getRow(), button.getCol(), this.gameID, frame.getUsername());
+            }
+            else{
+                this.game.makeMoveLocalGame(selectedButton[0], selectedButton[1], button.getRow(), button.getCol());
+
+            }
             updateBoard();
             buttons[selectedButton[0]][selectedButton[1]].setBorder(new LineBorder(Color.LIGHT_GRAY));
             selectedButton = null;
