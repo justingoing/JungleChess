@@ -20,8 +20,11 @@ public class Game {
     int moveCount = 0;
     private String username;
     boolean onlineGame = false;
+    private String redName;
+    private String blueName;
     private String blue;
     private String red;
+
 
     /**
      * Create a new Game object.
@@ -30,6 +33,8 @@ public class Game {
      * instantiates a new board.
      */
     public Game (Socket socket, String blue, String red) {
+        this.blueName = blue;
+        this.redName = red;
         this.socket = socket;
         this.blue = blue;
         this.red  =red;
@@ -75,9 +80,11 @@ public class Game {
      * @param end location the user wishes to move their selected piece.
      * @return whether the move was successful or not.
      */
-    private boolean makeMove(Location start, Location end, Long ID){
+    private boolean makeMove(Location start, Location end, Long ID, String currUser){
         System.out.println("Game.makeMove()");
         Piece piece = board.getTile(start).getPiece();
+
+        System.out.println("Controlling user: " + currUser);
 
         //Check if we are trying to move not a piece.
         if (piece == null){
@@ -87,19 +94,28 @@ public class Game {
 
         System.out.println(players[turn].getColor() + "'s trying to move " + piece.getColor() + " " + piece.getName());
 
-        if (!(piece.getColor().equals(players[turn].getColor()))){
+        System.out.println("turn username " + players[turn].getUsername());
+        System.out.println("condition " + !currUser.equals(players[turn].getUsername()));
+
+        if(!currUser.equals(players[turn].getUsername())){
+           System.out.println("Not your turn");
+           return false;
+        }else if (!piece.getColor().equals(players[turn].getColor())){
             System.out.println("Not your piece");
             return false;
-        }
-
-        else if (piece.isValidMove(end, board)){
+        }else if (piece.isValidMove(end, board)){
             System.out.println(players[turn].getColor() + "'s move is valid ");
             board.move(piece, end);
             turn = (turn + 1)%2;
 
             //send game state
             moveCount++;
-            ArrayList<Piece> red = this.getBoard().getPieces("red");
+            ArrayList
+              
+              
+              
+              
+              Piece> red = this.getBoard().getPieces("red");
             ArrayList<Piece> blue = this.getBoard().getPieces("blue");
             int winner = this.winnerCheck();
             String state = GameState.makeGameState(this.username, winner, this.turn, moveCount, red, blue, ID);
@@ -114,8 +130,8 @@ public class Game {
     }
 
     //Simply another way to access the above method, makeMove(Location, Location).
-    public boolean makeMove(int currentRow, int currentCol, int nextRow, int nextCol, Long ID){
-        return makeMove(new Location(currentRow, currentCol), new Location(nextRow, nextCol), ID);
+    public boolean makeMove(int currentRow, int currentCol, int nextRow, int nextCol, Long ID, String currUser){
+        return makeMove(new Location(currentRow, currentCol), new Location(nextRow, nextCol), ID, currUser);
     }
 
     /**
