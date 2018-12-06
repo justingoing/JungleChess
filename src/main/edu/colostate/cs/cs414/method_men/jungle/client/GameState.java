@@ -132,6 +132,7 @@ public class GameState {
 
                 if (currPiece.getColor().equals(color) && currPiece.getRank() == pieceRank) {
                     board.move(currPiece, new Location(pieceRow, pieceCol));
+                    board.getTile(currPiece.getLocation()).setPiece(currPiece);
                     pieceInStateList = true; // don't delete the piece
                     break;
                 }
