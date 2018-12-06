@@ -22,6 +22,9 @@ public class Game {
     boolean onlineGame = false;
     private String redName;
     private String blueName;
+    private String blue;
+    private String red;
+
 
     /**
      * Create a new Game object.
@@ -33,6 +36,8 @@ public class Game {
         this.blueName = blue;
         this.redName = red;
         this.socket = socket;
+        this.blue = blue;
+        this.red  =red;
         //this.username = username;
         players = new Player[2];
         players[0] = new Player("red", red);
@@ -40,6 +45,14 @@ public class Game {
         turn = 1; // 1 means that Bottom Player makes the first move
         board = new Board();
         this.onlineGame = true;
+    }
+
+    public String getBluePlayer(){
+        return this.blue;
+    }
+
+    public String getRedPlayer(){
+        return this.red;
     }
 
     public Game (Socket socket, String username) {
@@ -97,7 +110,12 @@ public class Game {
 
             //send game state
             moveCount++;
-            ArrayList<Piece> red = this.getBoard().getPieces("red");
+            ArrayList
+              
+              
+              
+              
+              Piece> red = this.getBoard().getPieces("red");
             ArrayList<Piece> blue = this.getBoard().getPieces("blue");
             int winner = this.winnerCheck();
             String state = GameState.makeGameState(this.username, winner, this.turn, moveCount, red, blue, ID);
