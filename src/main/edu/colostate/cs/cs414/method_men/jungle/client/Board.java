@@ -42,6 +42,22 @@ public class Board {
         }
     }
 
+    private void setBoard(ArrayList<Piece> pieces){
+        int HEIGHT = 9;
+        int WIDTH = 7;
+        for (int row = 0; row < HEIGHT; ++row) {
+            for (int col = 0; col < WIDTH; ++col) {
+                Location location = new Location(row, col);
+                Tile tile = makeTile(location);
+                board.put(location, tile);
+            }
+        }
+        for (Piece piece: pieces){
+            board.get(piece.getLocation()).setPiece(piece);
+        }
+
+    }
+
     /**
      * Create a specific type of Tile (Den, Trap, etc...) based on location.
      * @param location the coordinate of the Tile in the context of the board. Used to determine what type of Tile.
