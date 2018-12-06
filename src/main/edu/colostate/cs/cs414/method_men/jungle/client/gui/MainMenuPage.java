@@ -60,7 +60,7 @@ public class MainMenuPage extends Page implements ActionListener {
         add(invitations);
 
         //Start Game button
-        JButton startGame = new JButton("Online Game");
+        JButton startGame = new JButton("Send Game Invite");
         startGame.setActionCommand("OnlineGame");
         startGame.addActionListener(this);
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -74,7 +74,7 @@ public class MainMenuPage extends Page implements ActionListener {
         add(startGame);
 
         //Play a local game
-        JButton localGame = new JButton("Local Game");
+        JButton localGame = new JButton("Play Local Game");
         localGame.setActionCommand("LocalGame");
         localGame.addActionListener(this);
         c.fill = GridBagConstraints.HORIZONTAL;
