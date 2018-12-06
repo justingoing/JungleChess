@@ -111,7 +111,7 @@ public class GameState {
                 pieces.add(tile.getPiece());
             }
         }
-   
+ 
         //TODO: Put this line somewhere:
         game.getBoard().setBoard(pieces);
 
