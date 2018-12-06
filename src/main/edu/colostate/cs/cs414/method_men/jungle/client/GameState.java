@@ -31,12 +31,11 @@ public class GameState {
     public static int getTurn(String gameState){
         String[] splitString = gameState.split(" ");
         String[] nextTurnStrings = splitString[1].split(":");
-        int nextTurn = 0;
+        int nextTurn = 1;
         if (nextTurnStrings[1].equals("Red")) {
-            nextTurn = 1;
+            nextTurn = 0;
         }
         return nextTurn;
-
     }
 
     public static String getPieces(ArrayList<Piece> color){
