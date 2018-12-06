@@ -38,6 +38,7 @@ public class RegisterPage extends Page implements ActionListener{
         gridbag.setConstraints(lbUsername,c);
 
         tfUsername = new JTextField(20);
+        tfUsername.addActionListener(this);
         c.gridx = 1;
         c.gridy = 0;
         c.insets = new Insets(75,0,0,100);
@@ -56,6 +57,7 @@ public class RegisterPage extends Page implements ActionListener{
 
         c.insets = new Insets(0,0,0,0);
         pfPassword = new JPasswordField(20);
+        pfPassword.addActionListener(this);
         c.gridx = 1;
         c.gridy = 1;
         c.insets = new Insets(0,0,0,100);
@@ -74,6 +76,7 @@ public class RegisterPage extends Page implements ActionListener{
 
         c.insets = new Insets(0,0,0,0);
         pfVerifyPassword = new JPasswordField(20);
+        pfVerifyPassword.addActionListener(this);
         c.gridx = 1;
         c.gridy = 2;
         c.insets = new Insets(0,0,0,100);
@@ -134,7 +137,8 @@ public class RegisterPage extends Page implements ActionListener{
                 frame.changePageTo(new StartPage(frame));
                 break;
 
-            case "Register":
+            // if any new cases are added, put them above this line
+            default: // Default case happens when the ether Register button is clicked or Enter key is pressed
                 //Passwords don't match
                 if(!getPassword().equals(getVerifyPassword())){
                     JOptionPane.showMessageDialog(frame,
@@ -179,6 +183,7 @@ public class RegisterPage extends Page implements ActionListener{
                                 JOptionPane.ERROR_MESSAGE);
                         tfUsername.setText("");
                         pfPassword.setText("");
+                        pfVerifyPassword.setText("");
                         break;
                     }
 

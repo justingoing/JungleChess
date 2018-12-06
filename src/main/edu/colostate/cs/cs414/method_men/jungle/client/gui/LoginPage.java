@@ -37,6 +37,7 @@ public class LoginPage extends Page implements ActionListener{
 
         c.insets = new Insets(0,0,0,0);
         tfUsername = new JTextField(15);
+        tfUsername.addActionListener(this);
         c.gridx = 1;
         c.gridy = 1;
         c.insets = new Insets(75,0,0,100);
@@ -54,6 +55,7 @@ public class LoginPage extends Page implements ActionListener{
 
         c.insets = new Insets(0,0,0,0);
         pfPassword = new JPasswordField(15);
+        pfPassword.addActionListener(this);
         c.gridx = 1;
         c.gridy = 2;
         c.insets = new Insets(0,0,0,100);
@@ -112,7 +114,8 @@ public class LoginPage extends Page implements ActionListener{
                 frame.changePageTo(new StartPage(frame));
                 break;
 
-            case "Login":
+            // if any new cases are added, put them above this line
+            default: // Default case happens either when Login button is clicked of Enter key is pressed
                 boolean authLogin = false;
                 if(getUsername().equals("") || getPassword().equals("")){
                     JOptionPane.showMessageDialog(frame,
@@ -145,9 +148,6 @@ public class LoginPage extends Page implements ActionListener{
                     break;
                 }
 
-
-            default:
-                break;
         }
     }
 }
