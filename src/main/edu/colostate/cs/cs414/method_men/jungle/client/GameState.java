@@ -118,7 +118,7 @@ public class GameState {
                 return null;
             }
 
-            Piece currPiece = game.getBoard().makePiece(color, pieceRank, new Location(pieceRow, pieceCol));
+            Piece currPiece = PieceFactory.makePiece(color, pieceRank, new Location(pieceRow, pieceCol));
             pieces.add(currPiece);
 
         }
