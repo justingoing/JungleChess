@@ -52,6 +52,25 @@ First run the server:
 Then run the client:
 * Right click on the TCPServer file located in the source code under "client/socket", then choose "Run 'Client.main()'"
 
+### Server and Database Locations
+
+#### Server locations
+The client will search for a server at the following locations:
+1. `localhost:2000`
+2. `jungle.marcelfiore.com:2000`
+
+It is recommended to host a server locally during development, described in the Instructions above. The server at `jungle.marcelfiore.com:2000` will remain active and up to date until December 30, 2018.
+
+
+#### Database locations
+The server will search for databases at the following locations:
+1. `faure.cs.colostate.edu` (only accessible from the 120 lab in the Computer Science building)
+2. `localhost`
+3. `jungle.marcelfiore.com`
+
+It will connect to the first one that accepts a connection. The database at `jungle.marcelfiore.com` will remain active until December 30, 2018. Afterwords, a MariaDB database can be hosted locally using the Jungle.sql script.
+
+
 ## Contributor Conduct
 
 ### Coding Conventions
