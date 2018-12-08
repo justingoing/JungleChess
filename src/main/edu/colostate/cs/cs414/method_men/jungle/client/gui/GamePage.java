@@ -377,10 +377,20 @@ public class GamePage extends Page implements ActionListener {
 
             if (game.winnerCheck() == 1) {
                 game.endGame();
-                frame.changePageTo(new WinnerPage(frame, this.game.getBluePlayer()));
+                if(useState){
+                    frame.changePageTo(new WinnerPage(frame, this.game.getBluePlayer()));
+                }
+                else{
+                    frame.changePageTo(new WinnerPage(frame, "Blue"));
+                }
             } else if (game.winnerCheck() == 0) {
                 game.endGame();
-                frame.changePageTo(new WinnerPage(frame, this.game.getRedPlayer()));
+                if(useState){
+                    frame.changePageTo(new WinnerPage(frame, this.game.getRedPlayer()));
+                }
+                else{
+                    frame.changePageTo(new WinnerPage(frame, "Red"));
+                }
             }
 
         } else if (((LineBorder)button.getBorder()).getLineColor().equals(Color.LIGHT_GRAY)) {
