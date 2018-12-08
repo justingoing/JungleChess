@@ -34,8 +34,8 @@ public class Board {
         for (int row = 0; row < HEIGHT; ++row) {
             for (int col = 0; col < WIDTH; ++col) {
                 Location location = new Location(row, col);
-                Piece piece = makePiece(location);
-                Tile tile = makeTile(location);
+                Piece piece = PieceFactory.makePiece(location);
+                Tile tile = TileFactory.makeTile(location, this);
                 tile.setPiece(piece); //If there is a piece (i.e., (0,0) gets a Lion), set it on the Tile
                 board.put(location, tile);
             }
@@ -48,7 +48,7 @@ public class Board {
         for (int row = 0; row < HEIGHT; ++row) {
             for (int col = 0; col < WIDTH; ++col) {
                 Location location = new Location(row, col);
-                Tile tile = makeTile(location);
+                Tile tile = TileFactory.makeTile(location, this);
                 board.put(location, tile);
             }
         }
@@ -56,133 +56,6 @@ public class Board {
             board.get(piece.getLocation()).setPiece(piece);
         }
 
-    }
-
-    /**
-     * Create a specific type of Tile (Den, Trap, etc...) based on location.
-     * @param location the coordinate of the Tile in the context of the board. Used to determine what type of Tile.
-     * @return a specific Tile based on location.
-     */
-    //TODO: Tile Factory
-    Tile makeTile(Location location){
-        //Den
-        if (isRedDen(location)){
-            return new Den("red");
-        } else if (isBlueDen(location)){
-            return new Den("blue");
-        }
-
-        //Trap
-        else if (isRedTrap(location)){
-            return new Trap("red");
-        }
-        else if (isBlueTrap(location)){
-            return new Trap("blue");
-        }
-
-        //River
-        else if (isRiver(location)){
-            return new River();
-        }
-
-        //Open
-        else {
-            return new Open();
-        }
-    }
-
-    /**
-     * Create a specific type of Piece (Lion, Elephant, etc...) based on location.
-     * @param location the coordinate of the Piece in the context of the board. Used to determine what type of Piece.
-     * @return a specific Piece based on location.
-     */
-    //TODO: Piece factory
-    private Piece makePiece(Location location){
-        //Lion
-        if (location.equals(new Location(0, 0))){
-            return new Lion("red");
-        } else if (location.equals(new Location(8, 6))){
-            return new Lion("blue");
-        }
-
-        //Rat
-        else if (location.equals(new Location(2, 0))){
-            return new Rat("red");
-        } else if (location.equals(new Location(6, 6))){
-            return new Rat("blue");
-        }
-
-        //Dog
-        else if (location.equals(new Location(1, 1))){
-            return new Dog("red");
-        } else if (location.equals(new Location(7, 5))){
-            return new Dog("blue");
-        }
-
-        //Leopard
-        else if (location.equals(new Location(2, 2))){
-            return new Leopard("red");
-        } else if (location.equals(new Location(6, 4))){
-            return new Leopard("blue");
-        }
-
-        //Wolf
-        else if (location.equals(new Location(2, 4))){
-            return new Wolf("red");
-        } else if (location.equals(new Location(6, 2))){
-            return new Wolf("blue");
-        }
-
-        //Cat
-        else if (location.equals(new Location(1, 5))){
-            return new Cat("red");
-        } else if (location.equals(new Location(7, 1))){
-            return new Cat("blue");
-        }
-
-        //Tiger
-        else if (location.equals(new Location(0, 6))){
-            return new Tiger("red");
-        } else if (location.equals(new Location(8, 0))){
-            return new Tiger("blue");
-        }
-
-        //Elephant
-        else if (location.equals(new Location(2, 6))){
-            return new Elephant("red");
-        } else if (location.equals(new Location(6, 0))){
-            return new Elephant("blue");
-        }
-        return null;
-    }
-
-    public Piece makePiece(String color, int rank, Location location){
-        switch (rank) {
-            case 8:
-                return new Elephant(color, location);
-            //Lion
-            case 7:     return new Lion(color, location);
-            //Tiger
-            case 6:
-                return new Tiger(color, location);
-            //Leopard
-            case 5:
-                return new Leopard(color, location);
-            //Dog
-            case 4:
-                return new Dog(color, location);
-            //Wolf
-            case 3:
-                return new Wolf(color, location);
-            //Cat
-            case 2:
-                return new Cat(color, location);
-            //Rat
-            case 1:
-                return new Rat(color, location);
-            default:
-                return null;
-        }
     }
 
     /**
@@ -202,27 +75,27 @@ public class Board {
     /**
      *  makeTile(Location) helpers.
      */
-    private boolean isRedDen(Location location){
+    public boolean isRedDen(Location location){
         return location.equals(new Location(0, 3));
     }
 
-    private boolean isBlueDen(Location location){
+    public boolean isBlueDen(Location location){
         return location.equals(new Location(8, 3));
     }
 
-    private boolean isRedTrap(Location location){
+    public boolean isRedTrap(Location location){
         return location.equals(new Location(0, 2)) ||
                 location.equals(new Location(0, 4))||
                 location.equals(new Location(1, 3));
     }
 
-    private boolean isBlueTrap(Location location){
+    public boolean isBlueTrap(Location location){
         return location.equals(new Location(8, 2)) ||
                 location.equals(new Location(8, 4)) ||
                 location.equals(new Location(7, 3));
     }
 
-    private boolean isRiver(Location location){
+    public boolean isRiver(Location location){
         return location.equals(new Location(3, 1)) || location.equals(new Location(3, 4)) ||
                 location.equals(new Location(4, 1)) || location.equals(new Location(4, 4)) ||
                 location.equals(new Location(5, 1)) || location.equals(new Location(5, 4)) ||
