@@ -33,7 +33,7 @@ public class Receive extends Thread{
     }
 
     /**
-     * Receives the message and passes it to respondToInput for processing
+     * Receives the message and passes it to respondToInput for processing.
      */
     public void receive(){
         System.out.println("Receive is running");
