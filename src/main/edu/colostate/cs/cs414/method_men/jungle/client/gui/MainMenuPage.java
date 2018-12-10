@@ -1,8 +1,6 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.Game;
-import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
-import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Game;
 
 import javax.swing.*;
 import java.awt.*;

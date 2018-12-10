@@ -1,7 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.pieceTest;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
-import edu.colostate.cs.cs414.method_men.jungle.client.Location;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.piece.*;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Location;
 import org.junit.jupiter.api.Test;
 
 import static junit.framework.TestCase.assertEquals;

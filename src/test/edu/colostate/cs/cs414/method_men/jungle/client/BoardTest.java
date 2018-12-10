@@ -1,7 +1,9 @@
 package edu.colostate.cs.cs414.method_men.jungle.client;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.*;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Board;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Location;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.piece.*;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.tile.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

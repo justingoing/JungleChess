@@ -1,10 +1,12 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.*;
-import edu.colostate.cs.cs414.method_men.jungle.client.piece.Piece;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Game;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.GameState;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Location;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.piece.Piece;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.tile.Tile;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -377,10 +379,20 @@ public class GamePage extends Page implements ActionListener {
 
             if (game.winnerCheck() == 1) {
                 game.endGame();
-                frame.changePageTo(new WinnerPage(frame, this.game.getBluePlayer()));
+                if(useState){
+                    frame.changePageTo(new WinnerPage(frame, this.game.getBluePlayer()));
+                }
+                else{
+                    frame.changePageTo(new WinnerPage(frame, "Blue"));
+                }
             } else if (game.winnerCheck() == 0) {
                 game.endGame();
-                frame.changePageTo(new WinnerPage(frame, this.game.getRedPlayer()));
+                if(useState){
+                    frame.changePageTo(new WinnerPage(frame, this.game.getRedPlayer()));
+                }
+                else{
+                    frame.changePageTo(new WinnerPage(frame, "Red"));
+                }
             }
 
         } else if (((LineBorder)button.getBorder()).getLineColor().equals(Color.LIGHT_GRAY)) {
