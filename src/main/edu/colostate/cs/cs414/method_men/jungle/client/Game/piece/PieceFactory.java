@@ -1,6 +1,6 @@
-package edu.colostate.cs.cs414.method_men.jungle.client.piece;
+package edu.colostate.cs.cs414.method_men.jungle.client.Game.piece;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.Location;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Location;
 
 public class PieceFactory {
     /**
@@ -72,7 +72,8 @@ public class PieceFactory {
             case 8:
                 return new Elephant(color, location);
             //Lion
-            case 7:     return new Lion(color, location);
+            case 7:
+                return new Lion(color, location);
             //Tiger
             case 6:
                 return new Tiger(color, location);

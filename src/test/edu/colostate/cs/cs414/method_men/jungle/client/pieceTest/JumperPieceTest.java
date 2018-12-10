@@ -1,8 +1,8 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.pieceTest;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.Board;
-import edu.colostate.cs.cs414.method_men.jungle.client.Location;
-import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Board;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Location;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.piece.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
