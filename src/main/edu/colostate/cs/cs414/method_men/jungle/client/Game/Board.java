@@ -72,38 +72,6 @@ public class Board {
         piece.setLocation(location);
     }
 
-    /**
-     *  makeTile(Location) helpers.
-     */
-    public boolean isRedDen(Location location){
-        return location.equals(new Location(0, 3));
-    }
-
-    public boolean isBlueDen(Location location){
-        return location.equals(new Location(8, 3));
-    }
-
-    public boolean isRedTrap(Location location){
-        return location.equals(new Location(0, 2)) ||
-                location.equals(new Location(0, 4))||
-                location.equals(new Location(1, 3));
-    }
-
-    public boolean isBlueTrap(Location location){
-        return location.equals(new Location(8, 2)) ||
-                location.equals(new Location(8, 4)) ||
-                location.equals(new Location(7, 3));
-    }
-
-    public boolean isRiver(Location location){
-        return location.equals(new Location(3, 1)) || location.equals(new Location(3, 4)) ||
-                location.equals(new Location(4, 1)) || location.equals(new Location(4, 4)) ||
-                location.equals(new Location(5, 1)) || location.equals(new Location(5, 4)) ||
-                location.equals(new Location(3, 2)) || location.equals(new Location(3, 5)) ||
-                location.equals(new Location(4, 2)) || location.equals(new Location(4, 5)) ||
-                location.equals(new Location(5, 2)) || location.equals(new Location(5, 5));
-    }
-
 
     /*** Getters, Setters ***/
 

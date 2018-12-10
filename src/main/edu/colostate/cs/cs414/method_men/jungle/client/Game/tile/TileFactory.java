@@ -1,7 +1,7 @@
-package edu.colostate.cs.cs414.method_men.jungle.client.tile;
+package edu.colostate.cs.cs414.method_men.jungle.client.Game.tile;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.Board;
-import edu.colostate.cs.cs414.method_men.jungle.client.Location;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Board;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Location;
 
 public class TileFactory {
 
@@ -12,22 +12,22 @@ public class TileFactory {
      */
     public static Tile makeTile(Location location, Board board){
         //Den
-        if (board.isRedDen(location)){
+        if (isRedDen(location)){
             return new Den("red");
-        } else if (board.isBlueDen(location)){
+        } else if (isBlueDen(location)){
             return new Den("blue");
         }
 
         //Trap
-        else if (board.isRedTrap(location)){
+        else if (isRedTrap(location)){
             return new Trap("red");
         }
-        else if (board.isBlueTrap(location)){
+        else if (isBlueTrap(location)){
             return new Trap("blue");
         }
 
         //River
-        else if (board.isRiver(location)){
+        else if (isRiver(location)){
             return new River();
         }
 
@@ -36,5 +36,38 @@ public class TileFactory {
             return new Open();
         }
     }
+
+    /**
+     *  makeTile(Location) helpers.
+     */
+    public static boolean isRedDen(Location location){
+        return location.equals(new Location(0, 3));
+    }
+
+    public static boolean isBlueDen(Location location){
+        return location.equals(new Location(8, 3));
+    }
+
+    public static boolean isRedTrap(Location location){
+        return location.equals(new Location(0, 2)) ||
+                location.equals(new Location(0, 4))||
+                location.equals(new Location(1, 3));
+    }
+
+    public static boolean isBlueTrap(Location location){
+        return location.equals(new Location(8, 2)) ||
+                location.equals(new Location(8, 4)) ||
+                location.equals(new Location(7, 3));
+    }
+
+    public static boolean isRiver(Location location){
+        return location.equals(new Location(3, 1)) || location.equals(new Location(3, 4)) ||
+                location.equals(new Location(4, 1)) || location.equals(new Location(4, 4)) ||
+                location.equals(new Location(5, 1)) || location.equals(new Location(5, 4)) ||
+                location.equals(new Location(3, 2)) || location.equals(new Location(3, 5)) ||
+                location.equals(new Location(4, 2)) || location.equals(new Location(4, 5)) ||
+                location.equals(new Location(5, 2)) || location.equals(new Location(5, 5));
+    }
+
 
 }
