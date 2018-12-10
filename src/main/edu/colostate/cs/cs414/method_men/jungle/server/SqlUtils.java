@@ -71,6 +71,10 @@ public final class SqlUtils {
         return jdbi;
     }
 
+    /**
+     * searches for databases to connect to
+     * @return successful database connection
+     */
     private static Jdbi searchPlaces() {
         return PLACES_TO_CHECK.stream()
                 .filter(DbSpecification::canConnect)
@@ -79,14 +83,21 @@ public final class SqlUtils {
                 .orElse(null);
     }
 
+    /**
+     * determines whether or not a database can be connected  to
+     * @param url url to database
+     * @param username username to connect
+     * @param password user password to connect
+     * @return boolean of succcess or fail
+     */
     private static boolean canConnect(String url, String username, String password) {
         System.out.print("Trying to connect to " + url + " with "+username+":"+password+"...");
-        try (Connection c = DriverManager.getConnection(url, username, password)) {
+        try{
+            DriverManager.getConnection(url, username, password);
             System.out.println(" Success.");
             return true;
         } catch (SQLException e) {
             System.out.println(" Failed.");
-            //e.printStackTrace();
             return false;
         }
     }

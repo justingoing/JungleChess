@@ -14,7 +14,7 @@ public class Elephant extends GenericPiece {
             setLocation(6, 0);
         }
     }
-    public Elephant(String color, int row, int col) { 
+    public Elephant(String color, int row, int col) {
         super("Elephant", 8, color);
         setLocation(row, col);
     }

@@ -1,29 +1,35 @@
 package edu.colostate.cs.cs414.method_men.jungle.server;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.net.Socket;
 
+/**
+ * Thread for sending on the server
+ */
 public class Send extends Thread{
 
     private Scanner scanner;
     private PrintWriter out;
     private TCPServer server;
-    private Socket socket;
-    private long gameID;
 
-    public Send(Socket socket, TCPServer server, long gameID) throws Exception{
-        this.socket = socket;
+    /**
+     * constructs a thread for sending
+     * @param socket socket connection
+     * @param server current server
+     * @throws Exception IOException
+     */
+    public Send(Socket socket, TCPServer server) throws Exception{
         this.scanner = new Scanner(System.in);
         this.server = server;
         this.out = new PrintWriter(socket.getOutputStream(),true);
-        this.gameID = gameID;
     }
 
+    /**
+     * Method for sending
+     */
     public void send(){
-        //System.out.println("ClientSend thread started");
-        String msg = null;
+        String msg;
         while(true){
             System.out.println("Send is running");
             msg = scanner.nextLine();
@@ -32,41 +38,49 @@ public class Send extends Thread{
                     try{
                         server.getUsers().get(i).send(msg);
                         System.out.println("Message sent to: " + server.getUsers().get(i).getUsername());
-                    }catch (Exception e){}
+                    }catch (Exception e){
+                        System.out.println("Exception: " + e);
+                    }
                 }
-                msg = null;
             }
-            msg = null;
-            //msg = scanner.nextLine();
-            //out.println(msg);
-            //out.flush();
-            //System.out.println("Message sent: " + msg);
         }
     }
 
+    /**
+     * Sends the string
+     * @param data string to send
+     */
     public void sendString(String data){
         out.println(data);
         out.flush();
         System.out.println("Data sent");
     }
 
+    /**
+     * Sends response from login request
+     * @param b success or fail
+     */
     public void sendLoginResponse(boolean b){
         String s = "loginResponse ";
-        if(b == true){
-            out.println(s += "true");
-            out.flush();
-            System.out.println(s);
-        }
-        else{
-            out.println(s += "false");
-            out.flush();
-            System.out.println(s);
-        }
+        respond(b, s);
     }
 
+    /**
+     * sends response from register request
+     * @param b success or fail
+     */
     public void sendRegisterResponse(boolean b){
         String s = "registerResponse ";
-        if(b == true){
+        respond(b, s);
+    }
+
+    /**
+     * simplified method for both register and login response
+     * @param b success or fail
+     * @param s string
+     */
+    private void respond(boolean b, String s){
+        if(b){
             out.println(s += "true");
             out.flush();
             System.out.println(s);
@@ -78,10 +92,9 @@ public class Send extends Thread{
         }
     }
 
-    public void sendToAll(String msg){
-
-    }
-
+    /**
+     * overridden run method
+     */
     public void run(){
         send();
     }
