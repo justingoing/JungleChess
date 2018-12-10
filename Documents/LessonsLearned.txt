@@ -1,0 +1,23 @@
+Lessons Learned:
+
+As with most group projects, we learned that communication is of the utmost importance.
+We started off this project breaking apart the early assignments really well, and accomplishing all tasks
+as a cohesive unit. As the project progressed and became more complicated however, it became increasingly hard
+to coordinate tasks. Although we were utilizing software such as Github and Zenhub, we could've done a better job
+breaking down tasks into smaller pieces that anyone could pickup and work on.
+
+We also found out that it is hard to just break up the assignment into parts. As a group we discussed who should work
+on what (server, client, DB, etc.) and worked with that direction a lot however, some pieces are reliant on others and
+its not ideal to break things up like that as some pieces are reliant on others e.g. server is reliant on GUI and DB.
+
+Although our use cases never changed, our design changed a lot from the original vision. We had to continually adapt
+to our ever changing idea of what we wanted this game to look like and how we wanted it to play.
+
+We also realized the importance of thorough testing. You can prepare and write all of the test in the world, but theres
+nothing better than many people sitting down with the product and just trying to break it. Time and time again we found
+bugs we didnt plan for.
+
+Lastly, we found refactoring to be very important. By the time our project was finished, we found other members on our
+team had trouble reading some parts of the code because of overly complex methods and printouts. Refactoring those
+methods down to less complex easily readable code is very important. It also allowed us to simplify parts of our
+program by utilizing certain design concepts such as a factory.
