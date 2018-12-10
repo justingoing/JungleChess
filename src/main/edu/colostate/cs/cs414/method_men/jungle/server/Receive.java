@@ -95,7 +95,7 @@ public class Receive extends Thread{
     private void processLogin(String [] message){
         if(authenticateUser(message[1], message[2])){
             try{
-                Send send = new Send(this.socket, this.server, gameID);
+                Send send = new Send(this.socket, this.server);
                 send.sendLoginResponse(true);
                 User user = new User(message[1], this.socket);
                 server.addUser(user);
@@ -105,7 +105,7 @@ public class Receive extends Thread{
         }
         else{
             try {
-                Send send = new Send(this.socket, this.server, gameID);
+                Send send = new Send(this.socket, this.server);
                 send.sendLoginResponse(false);
             }catch (Exception e) {
                 System.out.println("Exception: " + e);
@@ -120,7 +120,7 @@ public class Receive extends Thread{
     private void processRegister(String[] message){
         if(registerUser(message[1], message[2])){
             try{
-                Send send = new Send(this.socket, this.server, gameID);
+                Send send = new Send(this.socket, this.server);
                 send.sendRegisterResponse(true);
                 User user = new User(message[1], this.socket);
                 server.addUser(user);
@@ -130,7 +130,7 @@ public class Receive extends Thread{
         }
         else{
             try {
-                Send send = new Send(this.socket, this.server, gameID);
+                Send send = new Send(this.socket, this.server);
                 send.sendRegisterResponse(false);
             }catch (Exception e) {
                 System.out.println("Exception: " + e);
@@ -167,7 +167,7 @@ public class Receive extends Thread{
         boolean found = findUser(message[2]);
         if (!found){
             try{
-                Send send = new Send(this.socket, this.server, this.gameID);
+                Send send = new Send(this.socket, this.server);
                 send.sendString("Fail");
             }catch(Exception e){
                 System.out.println("Exception: " + e);
@@ -175,7 +175,7 @@ public class Receive extends Thread{
         }
         else if(!server.getSQL().searchPairMatchInvite(message[1], message[2]).isEmpty()){
             try{
-                Send send = new Send(this.socket, this.server, this.gameID);
+                Send send = new Send(this.socket, this.server);
                 send.sendString("There");
             }catch(Exception e){
                 System.out.println("Exception: " + e);
@@ -183,7 +183,7 @@ public class Receive extends Thread{
         }
         else if(server.getSQL().searchPairMatchInvite(message[1], message[2]).isEmpty()){
             try{
-                Send send = new Send(this.socket, this.server, this.gameID);
+                Send send = new Send(this.socket, this.server);
                 send.sendString("Success");
             }catch(Exception e){
                 System.out.println("Exception: " + e);
@@ -218,14 +218,14 @@ public class Receive extends Thread{
     private void myInvitesResponse(List<String> mySentInvites){
         if(mySentInvites.isEmpty()){
             try{
-                Send send = new Send(this.socket, this.server, this.gameID);
+                Send send = new Send(this.socket, this.server);
                 send.sendString("Fail");
             }catch (Exception e){
                 System.out.println("Exception: " + e);
             }
         }else{
             try{
-                Send send = new Send(this.socket, this.server, this.gameID);
+                Send send = new Send(this.socket, this.server);
                 String invites = "";
                 for(int i = 0; i < mySentInvites.size(); i++){
                     invites += mySentInvites.get(i);
@@ -273,7 +273,7 @@ public class Receive extends Thread{
             }
             System.out.println(games);
             try{
-                Send send = new Send(this.socket, this.server, this.gameID);
+                Send send = new Send(this.socket, this.server);
                 send.sendString(games);
             }catch(Exception e){
                 System.out.println("Exception: " + e);
@@ -291,7 +291,7 @@ public class Receive extends Thread{
         String state = server.getSQL().searchStateMatchState(id1);
         System.out.println(state);
         try{
-            Send send = new Send(this.socket, this.server, this.gameID);
+            Send send = new Send(this.socket, this.server);
             send.sendString(state);
         }catch(Exception e){
             System.out.println("Exception: " + e);

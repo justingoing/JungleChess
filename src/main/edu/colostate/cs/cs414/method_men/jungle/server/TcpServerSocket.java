@@ -24,7 +24,7 @@ public class TcpServerSocket extends Thread{
     public void run(){
         try{
             new Receive(this.clientSocket, this.server, gameID).start();
-            new Send(this.clientSocket, this.server, gameID).start();
+            new Send(this.clientSocket, this.server).start();
         }catch(Exception e){
             System.out.println("Socket or IO: " + e);
         }
