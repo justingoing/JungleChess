@@ -337,7 +337,7 @@ public class Receive extends Thread{
      * @return Boolean if user was found.
      */
     private boolean findUser(String user){
-        return null != server.getSQL().searchUser(user);
+        return (null != server.getSQL().searchUser(user));
     }
 
     /**
@@ -347,7 +347,7 @@ public class Receive extends Thread{
      * @return boolean if user exists in database
      */
     private boolean authenticateUser(String username, String password){
-        return null == server.getSQL().searchUserPassword(username, password);
+        return (null == server.getSQL().searchUserPassword(username, password));
     }
 
     /**
