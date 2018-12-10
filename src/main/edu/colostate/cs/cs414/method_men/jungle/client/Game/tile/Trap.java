@@ -1,4 +1,4 @@
-package edu.colostate.cs.cs414.method_men.jungle.client.tile;
+package edu.colostate.cs.cs414.method_men.jungle.client.Game.tile;
 
 public class Trap extends Tile {
     private String color;

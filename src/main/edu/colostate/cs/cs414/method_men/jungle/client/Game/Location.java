@@ -1,4 +1,4 @@
-package edu.colostate.cs.cs414.method_men.jungle.client;
+package edu.colostate.cs.cs414.method_men.jungle.client.Game;
 
 import java.util.ArrayList;
 

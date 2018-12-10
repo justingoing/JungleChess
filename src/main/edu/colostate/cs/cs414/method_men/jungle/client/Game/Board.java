@@ -1,7 +1,7 @@
-package edu.colostate.cs.cs414.method_men.jungle.client;
+package edu.colostate.cs.cs414.method_men.jungle.client.Game;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.*;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.piece.*;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.tile.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +64,7 @@ public class Board {
      * @return a specific Tile based on location.
      */
     //TODO: Tile Factory
-    Tile makeTile(Location location){
+    public Tile makeTile(Location location){
         //Den
         if (isRedDen(location)){
             return new Den("red");

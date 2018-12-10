@@ -1,7 +1,7 @@
-package edu.colostate.cs.cs414.method_men.jungle.client;
+package edu.colostate.cs.cs414.method_men.jungle.client.Game;
 
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
-import edu.colostate.cs.cs414.method_men.jungle.client.piece.*;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.piece.*;
 
 import java.net.Socket;
 import java.util.ArrayList;
@@ -245,7 +245,7 @@ public class Game {
     /**
      * Makes it the next player's turn.
      */
-    void incrementTurn() {
+    public void incrementTurn() {
         this.turn = (this.turn + 1) % 2;
     }
 

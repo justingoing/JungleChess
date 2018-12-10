@@ -1,9 +1,9 @@
-package edu.colostate.cs.cs414.method_men.jungle.client.piece;
+package edu.colostate.cs.cs414.method_men.jungle.client.Game.piece;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.Board;
-import edu.colostate.cs.cs414.method_men.jungle.client.Location;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.Trap;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Board;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Location;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.tile.Tile;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.tile.Trap;
 
 public class Elephant extends GenericPiece {
     public Elephant(String color) {

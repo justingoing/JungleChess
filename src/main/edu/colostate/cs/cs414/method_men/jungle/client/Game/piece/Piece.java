@@ -1,8 +1,9 @@
-package edu.colostate.cs.cs414.method_men.jungle.client.piece;
+package edu.colostate.cs.cs414.method_men.jungle.client.Game.piece;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.*;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.Den;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Board;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Location;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.tile.Den;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.tile.Tile;
 
 import java.util.ArrayList;
 
