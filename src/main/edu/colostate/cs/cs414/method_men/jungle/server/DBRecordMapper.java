@@ -2,10 +2,12 @@ package edu.colostate.cs.cs414.method_men.jungle.server;
 
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Custom mapper
+ */
 public class DBRecordMapper implements RowMapper<DBRecord> {
 
         @Override

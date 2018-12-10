@@ -1,5 +1,8 @@
 package edu.colostate.cs.cs414.method_men.jungle.server;
 
+/**
+ * custom mapper methods
+ */
 public class DBRecord {
     private Long ID;
     private String string1;
