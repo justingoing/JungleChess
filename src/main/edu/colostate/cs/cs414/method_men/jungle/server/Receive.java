@@ -36,6 +36,7 @@ public class Receive extends Thread{
      * Receives the message and passes it to respondToInput for processing
      */
     public void receive(){
+        System.out.println("Receive is running");
         String msg;
         try {
             while ((msg = in.readLine()) != null) {
@@ -104,6 +105,7 @@ public class Receive extends Thread{
             }
         }
         else{
+            System.out.println("in else");
             try {
                 Send send = new Send(this.socket, this.server);
                 send.sendLoginResponse(false);
@@ -337,7 +339,12 @@ public class Receive extends Thread{
      * @return Boolean if user was found.
      */
     private boolean findUser(String user){
-        return (null != server.getSQL().searchUser(user));
+        if(null != server.getSQL().searchUser(user)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -347,7 +354,12 @@ public class Receive extends Thread{
      * @return boolean if user exists in database
      */
     private boolean authenticateUser(String username, String password){
-        return (null == server.getSQL().searchUserPassword(username, password));
+        if(null == server.getSQL().searchUserPassword(username, password)){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     /**
