@@ -59,14 +59,6 @@ public class SqlUtilsTest {
     }
 
     @Test
-    void testDeleteUser() {
-        boolean deleted = SQL.deleteUser("jane");
-        System.out.println(deleted);
-        assertTrue(deleted);
-    }
-
-
-    @Test
     void testAddMatchState() {
         Long user = SQL.addMatchState("connor", "jane", "123", "120420182100");
         System.out.println(user);
