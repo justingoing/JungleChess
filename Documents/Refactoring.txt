@@ -1,0 +1,42 @@
+Refactoring and Design Pattern List:
+
+1. Refactoring Game logic system structure.
+Originally, we had a Game logic system which was very large
+at multiple thousands of lines, of which a very large chunk
+was in Game.java. It was not adhering to encapsulation, 
+polymorphism, low coupling, or really any of the primary
+OOD principles.
+a. We made Piece follow a structure where GenericPiece,
+JumperPiece extended Piece, and had relevant classes extend
+from these pieces based on the logic required of the individual
+piece. This logic (primarily move validation or creation),
+was taken from a over-200 line method in Game.java which
+considered every piece type. If we were ever to create a new
+piece type, especially if this was months away from it's
+original writing, we would have no idea how to do that.
+This reduces coupling between Game and Piece as well. 
+b. Tiles hold Locations and Pieces.
+Before, player held pieces, AND Tile held pieces. 
+This made it very confusing to tell what was the accurate
+state of the game.
+c. Player is now used for color, and username.
+d. Board.board went from Tile[][] to HashMap<Location, Tile>
+e. Tile now contains piece, or null if no piece.
+f. Piece now contains a location and color.
+g. 80% of methods in Game were deprecated after these changes,
+and were thus deleted.
+h. Pieces and Tiles are now created using the Factory pattern,
+using the PieceFactory and TileFactory classes.
+
+2. Refactoring server code.
+a. added javadoc to all server classes. 
+b. simplified Receive.java conditional logic structure. 
+The receive class was a complex lengthy method that is now simplified 
+and broken down into multiple methods, cutting down on complexity, 
+reducing code, and increasing readability. Receive parsing was moved 
+to another method to remove instead of repeating code.
+c. Simplified Send.java. Send, like receive, was more complicated 
+and could be broken down into a few methods. Also, parsing to send 
+was moved to one method instead of repeating code.
+d. Removed unnecessary variables in all classes. 
+e. Changed all classes to private where possible. 
