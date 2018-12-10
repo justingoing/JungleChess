@@ -1,0 +1,79 @@
+Testing Document
+
+Buttons:
+All buttons must execute upon release.
+No freezing of button.
+
+Login:
+Page loads in a reasonable amount of time?
+Can a user login?
+Does a successful login lead to next page?
+Unsuccessful login notifies user and does not login?
+Empty login prompts user?
+Cancel goes back?
+
+Register:
+Page loads in a reasonable amount of time?
+Empty register prompts user?
+Register successful puts information in database?
+Does not register duplicates?
+Cancel goes back?
+Password verification works?
+
+Local Game:
+Page loads in a reasonable amount of time?
+Cannot move blue pieces when red turn?
+Cannot move red pieces when blue turn?
+Pieces capture correctly?
+Piece removed from board and database when captured?
+Rat can move in water?
+Cannot move diagonally?
+Lion and tiger can only jump river?
+Game ends when all pieces are captured?
+Game ends when enemy moves into den?
+Player cannot move into own den?
+Piece loses rank when on trap?
+Return button moves back to main screen?
+Rules display correctly on side of screen?
+
+Online game:
+Page loads in a reasonable amount of time?
+All local game tests pass?
+Correct usernames display in the bottom right?
+Opponent cannot control my pieces no matter who's turn?
+Refresh button loads correct game state?
+
+End game:
+Page loads in a reasonable amount of time?
+Displays correct winner?
+Main menu leads back to main?
+Exit successful?
+
+Send invite:
+Page loads in a reasonable amount of time?
+Nonexistent user prompt?
+Successful invite prompt?
+Successful invite populates in table?
+Table shows all current outgoing unaccepted invites?
+Back to main button works correctly?
+
+Invitations:
+Page loads in a reasonable amount of time?
+Table shows all pending invitations?
+Accept button loads game into games tab?
+Reject deletes game from invites?
+Correct username displays?
+Back to main button works correctly?
+
+Current Games:
+Page loads in a reasonable amount of time?
+Usernames display correctly?
+Usernames are listed under correct color?
+Correct accepted games displayed? (no rejected or unaccepted games)
+Correct game id displays?
+Open launches to correct game with correct state?
+Back to main button works correctly?
+
+Profile:
+Button leads to profile page? (empty)
+Back to main button works correctly?
