@@ -2,6 +2,9 @@ package edu.colostate.cs.cs414.method_men.jungle.server;
 
 import java.net.Socket;
 
+/**
+ * Socket class. Creates the threads that run on the server
+ */
 public class TcpServerSocket extends Thread{
 
     private Socket clientSocket;
@@ -14,17 +17,14 @@ public class TcpServerSocket extends Thread{
         this.gameID = gameID;
     }
 
-    public Socket getClientSocket(){
-        return this.clientSocket;
-    }
-
+    /**
+     * overridden run method. runs the threads that listen for send or receive requests
+     */
     @Override
     public void run(){
         try{
-            Receive r = new Receive(this.clientSocket, this.server, gameID);
-            Send s = new Send(this.clientSocket, this.server, gameID);
-            r.start();
-            s.start();
+            new Receive(this.clientSocket, this.server, gameID).start();
+            new Send(this.clientSocket, this.server, gameID).start();
         }catch(Exception e){
             System.out.println("Socket or IO: " + e);
         }
