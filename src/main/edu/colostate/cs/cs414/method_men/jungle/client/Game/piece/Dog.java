@@ -1,7 +1,7 @@
-package edu.colostate.cs.cs414.method_men.jungle.client.piece;
+package edu.colostate.cs.cs414.method_men.jungle.client.Game.piece;
 
 
-import edu.colostate.cs.cs414.method_men.jungle.client.Location;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Location;
 
 public class Dog extends GenericPiece {
     public Dog(String color) {

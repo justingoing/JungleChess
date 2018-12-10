@@ -31,20 +31,34 @@ public class Client implements Runnable{
     }
 
     public static void main(String[] args) throws Exception{
-        //using localHost for now
-        InetAddress address = InetAddress.getByName("jungle.marcelfiore.com");
-        //InetAddress address = InetAddress.getByName("184.60.76.255");
-        //InetAddress address = InetAddress.getByName("192.168.1.63");
-        //InetAddress address = InetAddress.getByName("127.0.0.1");
-        Client client = new Client(address, 2000);
+        Client client = null;
+        InetAddress localAddress = InetAddress.getByName("127.0.0.1");
+        int localPort = 2000;
+        boolean localConnected = false;
 
-        System.out.println("Connected to server at " + address.toString() + " on port 2000");
-        //System.out.println("Type a message...");
+        try {
+            client = new Client(localAddress, localPort);
+            localConnected = true;
+            System.out.println("Connected to server at " + localAddress.toString() + ":" + localPort);
+        } catch (Exception e) {
+            System.out.println("Failed to connect to server at " + localAddress.toString() + ":" + localPort);
+        }
 
-        //Thread t1 = new Thread(client, "Receive");
-        //Thread t2 = new Thread(client, "ClientSend");
-        //t1.start();
-        //t2.start();
+        InetAddress piAddress = InetAddress.getByName("jungle.marcelfiore.com");
+        int piPort = 2000;
+        try {
+            if (!localConnected) {
+                client = new Client(piAddress, piPort);
+                System.out.println("Connected to server at " + piAddress + ":" + piPort);
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to connect to server at " + piAddress.toString() + ":" + piPort);
+        }
+
+        if (client == null) {
+            System.err.println("No server found");
+            System.exit(1);
+        }
 
         GUI g = new GUI(client.socket);
         g.startGUI();

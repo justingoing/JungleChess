@@ -1,10 +1,12 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.*;
-import edu.colostate.cs.cs414.method_men.jungle.client.piece.Piece;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Game;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.GameState;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Location;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.piece.Piece;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
-import edu.colostate.cs.cs414.method_men.jungle.client.tile.Tile;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.tile.Tile;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;

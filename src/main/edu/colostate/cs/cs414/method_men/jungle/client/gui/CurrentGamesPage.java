@@ -1,7 +1,7 @@
 package edu.colostate.cs.cs414.method_men.jungle.client.gui;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.Game;
-import edu.colostate.cs.cs414.method_men.jungle.client.GameState;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.Game;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.GameState;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientReceive;
 import edu.colostate.cs.cs414.method_men.jungle.client.socket.ClientSend;
 

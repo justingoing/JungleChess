@@ -1,4 +1,4 @@
-package edu.colostate.cs.cs414.method_men.jungle.client;
+package edu.colostate.cs.cs414.method_men.jungle.client.Game;
 
 /**
  * Player class is responsible for which color the player was assigned: red or blue.

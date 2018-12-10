@@ -1,6 +1,6 @@
-package edu.colostate.cs.cs414.method_men.jungle.client.tile;
+package edu.colostate.cs.cs414.method_men.jungle.client.Game.tile;
 
-import edu.colostate.cs.cs414.method_men.jungle.client.piece.Piece;
+import edu.colostate.cs.cs414.method_men.jungle.client.Game.piece.Piece;
 
 /**
  * Tile class is responsible for tile-specific behavior. This includes:
