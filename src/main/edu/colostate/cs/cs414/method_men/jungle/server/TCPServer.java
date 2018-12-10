@@ -1,41 +1,49 @@
 package edu.colostate.cs.cs414.method_men.jungle.server;
 
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import org.jdbi.v3.core.Jdbi;
 
-
+/**
+ * The main class for the server
+ */
 public class TCPServer{
 
     private ServerSocket serverSocket;
     private ArrayList<User> users;
-    public int threadCount = 0;
-    private static TcpServerSocket t;
-    private Jdbi jdbi;
+    private int threadCount = 0;
     private SqlQueries SQL;
     private long gameID = 0;
 
+    /**
+     * Constructs a server and gets information from the database
+     * @param port active port
+     */
     private TCPServer(int port){
-        //List of current users
         this.users = new ArrayList<>();
-        this.jdbi = SqlUtils.getJdbi();
+        Jdbi jdbi = SqlUtils.getJdbi();
         this.SQL = jdbi.onDemand(SqlQueries.class);
-        //Server Socket
         try{
             this.serverSocket = new ServerSocket(port);
-        }catch(Exception e){}
+        }catch(Exception e){
+            System.out.println("Exception: " + e);
+        }
     }
 
-    public void start(TCPServer server) throws Exception{
+    /**
+     * overridden Method for starting the server
+     * @param server object of type server
+     * @throws Exception server exception, IOException
+     */
+    private void start(TCPServer server) throws Exception{
         System.out.println("Server Started");
         System.out.println("Waiting for connection");
         try{
             while(true) {
                 gameID++;
                 Socket cSocket = serverSocket.accept();
-                t = new TcpServerSocket(cSocket, server, gameID);
+                TcpServerSocket t = new TcpServerSocket(cSocket, server, gameID);
                 t.start();
                 System.out.println("Connection accepted.");
                 threadCount++;
@@ -55,18 +63,14 @@ public class TCPServer{
         return users;
     }
 
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
-    }
-
-    public Jdbi getJdbi() {
-        return jdbi;
-    }
-
     public SqlQueries getSQL() {
         return SQL;
     }
 
+    /**
+     * Adds user to local list
+     * @param u user to be added
+     */
     public void addUser(User u){
         this.users.add(u);
         for(int i = 0; i < this.users.size(); i ++){
