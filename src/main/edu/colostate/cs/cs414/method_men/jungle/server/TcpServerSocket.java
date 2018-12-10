@@ -18,7 +18,6 @@ public class TcpServerSocket extends Thread{
         return this.clientSocket;
     }
 
-    //this is messing things up, too many threads
     @Override
     public void run(){
         try{
